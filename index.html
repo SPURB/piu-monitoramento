@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>PIU Monitoramento</title>
+	<link rel="stylesheet" type="text/css" href="dist/styles.min.css">
+</head>
+<body>
+	<div id="app">
+		<ul>
+			<li v-for="d in data">
+				<h3>{{ d.nome }} | id:{{d.id }}</h3>
+				<p>{{ d.texto_longo }}</p>
+			</li>
+		</ul>
+	</div>
+</body>
+
+<!-- <script src="./vendor/vue.js"></script> -->
+<script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
+
+<!-- https://github.com/SheetJS/js-xlsx/blob/master/dist/xlsx.full.min.js -->
+<script src="./vendor/xlsx.full.min.js"></script>
+
+<script src="dist/main.min.js"></script>
+
+</script>
+</html>
