@@ -17,4 +17,4 @@ req.onload = function(e) {
 	myObj.map(function(index){ monitoramento.push(index); })
 }
 req.send();
-console.log(monitoramento); 
+// console.log(monitoramento);

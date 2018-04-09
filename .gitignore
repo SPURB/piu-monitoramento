@@ -3,7 +3,6 @@ node_modules/
 vendor/vue.js
 vendor/vue.min.js
 
-
 # Editor directories and files
 .idea
 *.suo

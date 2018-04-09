@@ -1,9 +1,9 @@
 var gulp = require('gulp');
-var sass = require('gulp-sass');
+var scss = require('gulp-sass');
 var cssnano = require('gulp-cssnano');
 var concat = require('gulp-concat');
 var uglify = require('gulp-uglify');
-
+var babel = require("gulp-babel");
 var browserSync = require('browser-sync').create();
 
 gulp.task('browserSync', function() {
@@ -14,12 +14,12 @@ gulp.task('browserSync', function() {
   })
 })
 
-gulp.task('sass', function() {
+gulp.task('scss', function() {
     gulp.src([
       './dev/styles.scss' 
     ])
     .pipe(concat('styles.min.css'))
-    .pipe(sass())
+    .pipe(scss())
     .pipe(cssnano())
     .pipe(gulp.dest('./dist'))
     .pipe(browserSync.reload({
@@ -29,10 +29,12 @@ gulp.task('sass', function() {
 
 gulp.task('scripts', function() {
     gulp.src([
-      './dev/getData.js', 
+      './dev/data/getDataFromExcel.js', 
+      './dev/components/projects.js',
       './dev/main.js' 
     ])
     .pipe(concat('main.min.js'))
+    .pipe(babel())
     .pipe(uglify())
     .pipe(gulp.dest('./dist/'))
     .pipe(browserSync.reload({
@@ -40,10 +42,52 @@ gulp.task('scripts', function() {
     }))
 });
 
-gulp.task('watch', ['browserSync', 'sass','scripts'], function (){
-  gulp.watch('./dev/**/*.scss', ['sass']); 
+
+gulp.task('scripts-production', function() {
+    gulp.src([
+      './dev/data/monitoramento.js', 
+      './dev/components/projects.js',
+      './dev/main.js' 
+    ])
+    .pipe(concat('main.min.js'))
+    .pipe(babel())
+    .pipe(uglify())
+    .pipe(gulp.dest('./dist/'))
+    .pipe(browserSync.reload({
+      stream: true
+    }))
+});
+
+gulp.task('create-json', function (){
+  var fs = require('fs');
+
+  if(typeof require !== 'undefined') XLSX = require('xlsx');
+  var workbook = XLSX.readFile('monitoramento.xlsx');
+
+  var monitoramento = [];
+
+  var first_sheet_name = workbook.SheetNames[0];
+  var worksheet = workbook.Sheets[first_sheet_name];
+
+  var myObj = XLSX.utils.sheet_to_json(worksheet,{raw:true});
+  myObj.map(function(index){ monitoramento.push(index); })
+
+  var obj = monitoramento;
+  var json = JSON.stringify(obj);
+  var concat = 'var monitoramento =' + json;
+
+  fs.writeFile('./dev/data/monitoramento.js', concat, 'utf8', function (err){
+    if(err){
+      return console.log(err);
+    }
+    console.log("File created")
+  });
+})
+
+gulp.task('watch', ['browserSync', 'scss','scripts'], function (){
+  gulp.watch('./dev/**/*.scss', ['scss']); 
   gulp.watch('./dev/**/*.js', ['scripts']); 
   gulp.watch('./*.html', browserSync.reload); 
 });
 
-gulp.task('build', ['sass','scripts']);
+gulp.task('build', ['scss','create-json','scripts-production']);
