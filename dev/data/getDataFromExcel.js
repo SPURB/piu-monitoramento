@@ -1,9 +1,9 @@
 //https://github.com/SheetJS/js-xlsx
-var url = "monitoramento.xlsx";
+// var url_excel_file = "monitoramento.xlsx"; //from index.html and page-piu-monitormento.php
 var monitoramento = [];
 
 var req = new XMLHttpRequest();
-req.open("GET", url, true);
+req.open("GET", url_excel_file, true);
 req.responseType = "arraybuffer";
 req.onload = function(e) {
 	var data = new Uint8Array(req.response);

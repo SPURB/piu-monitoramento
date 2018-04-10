@@ -4,18 +4,24 @@
 	<meta charset="utf-8">
 	<title>PIU Monitoramento</title>
 	<link rel="stylesheet" type="text/css" href="dist/styles.min.css">
+	<link rel="stylesheet" type="text/css" href="./vendor/ol.4.2.0.css">
 </head>
 <body>
 	<div id="app">
+		<!-- Comentar componentes não utilizados para agilizar desenvolvimento-->
+		<mapa></mapa>
+		<sumario></sumario>
+		<ficha></ficha>
 	</div>
 </body>
 
+<!-- desenvolvimento alterar page-piu-monitormaneto.php em produção-->
 <script src="./vendor/vue.js"></script>
-<!-- <script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script> -->
-
-<!-- https://github.com/SheetJS/js-xlsx/blob/master/dist/xlsx.full.min.js -->
 <script src="./vendor/xlsx.full.min.js"></script>
-
-<script src="dist/main.min.js"></script>
+<script src="./vendor/ol.4.2.0.js"></script>
+<script type="text/javascript">
+	var url_excel_file = "monitoramento.xlsx";
+	var dist_folder = "./dist/"
 </script>
+<script src="dist/main.min.js"></script>
 </html>

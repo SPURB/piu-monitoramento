@@ -30,7 +30,9 @@ gulp.task('scss', function() {
 gulp.task('scripts', function() {
     gulp.src([
       './dev/data/getDataFromExcel.js', 
-      './dev/components/projects.js',
+      './dev/components/mapa.js',
+      './dev/components/sumario.js',
+      './dev/components/ficha.js',
       './dev/main.js' 
     ])
     .pipe(concat('main.min.js'))
@@ -46,7 +48,9 @@ gulp.task('scripts', function() {
 gulp.task('scripts-production', function() {
     gulp.src([
       './dev/data/monitoramento.js', 
-      './dev/components/projects.js',
+      './dev/components/mapa.js',
+      './dev/components/sumario.js',
+      './dev/components/ficha.js',
       './dev/main.js' 
     ])
     .pipe(concat('main.min.js'))

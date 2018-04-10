@@ -1,6 +1,14 @@
+$proposicao: #FFD9B2;// etapas 1-3
+$avaliacao: #FFC68C;// etapas 4-4
+$elaboracao: #FF9E59;// etapas 5-8
+$implantacao: #FF5500;// etapas 9-12
+$nao-iniciado: #FF5500; 
+$suspenso: #BDBDBD; 
+
+@import "./scss/mapa";
+@import "./scss/sumario";
+@import "./scss/ficha";
+
 #app {
-	background-color: fff;
-	li{
-		color: black
-	}
+	// background-color: purple;
 }
