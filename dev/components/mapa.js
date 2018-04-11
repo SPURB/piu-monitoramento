@@ -2,7 +2,7 @@ let mapa = {
 	name:'mapa',
 	data (){
 		return {
-			data: monitoramento
+			// data: monitoramento,
 		}
 	},
 	template: `
