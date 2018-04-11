@@ -10,13 +10,25 @@ let sumario = {
 	},
 	template: `
 	<div id="sumario">
-		<h3>sumário</h3>
+
 		<div v-for="projeto in data">
-			<h4>{{ projeto.nome }}</h4>
-			<p>{{ projeto.texto_longo }}</p>
-			<a :href="pasta_arquivos_kml(projeto.kml)" download>{{projeto.kml}}</a>
+
+			<div v-if="projeto.subetapa<=3">
+				<div>
+					<div>Em proposição</div>
+					<div>PIUs públicos</div>
+					<div>PIUs privados</div>
+				</div>
+
+				<div v-if="projeto.subetapa==1">
+					<div v-for="projeto.natureza==publico">{{ projeto.nome }}</div>
+				</div>
+			</div>
+
 		</div>
+
+
 	</div>
 	`
-	//teremos que aguardar a joyce definir a estrutura (colunas)
+	//teremos que aguardar a joyce definir a estrutura (colunas do excel)
 }
