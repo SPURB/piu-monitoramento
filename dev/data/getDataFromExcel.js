@@ -15,7 +15,7 @@ req.onload = function(e) {
 	// console.log(XLSX.utils.sheet_to_json(worksheet));//array de objetos
 				// XLSX.utils.sheet_to_json(worksheet, {header:1}));//arrays multidensionais
 				// XLSX.utils.sheet_to_json(worksheet, {raw:true}));//array de objetos com valores numéricos 
-	var myObj = XLSX.utils.sheet_to_json(worksheet);
+	var myObj = XLSX.utils.sheet_to_json(worksheet,{raw:true});
 	myObj.map(function(index){ 
 		monitoramento.push(index.nome); 
 	})

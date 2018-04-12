@@ -23,4 +23,4 @@ gulp build
 
 ```
 
-> Nota: O arquivo ``monitoramento.xlsx`` simula a futura base de dados e é a atual base de dados.
+> Nota: O arquivo ``monitoramento.xlsx`` simula a futura base de dados. Neste projeto está sendo compilado nos comandos `gulp watch` e `gulp build`

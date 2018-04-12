@@ -27,24 +27,6 @@ gulp.task('scss', function() {
     }))
 });
 
-gulp.task('scripts', function() {
-    gulp.src([
-      './dev/data/getDataFromExcel.js', 
-      './dev/components/mapa.js',
-      './dev/components/sumario.js',
-      './dev/components/ficha.js',
-      './dev/main.js' 
-    ])
-    .pipe(concat('main.min.js'))
-    .pipe(babel())
-    .pipe(uglify())
-    .pipe(gulp.dest('./dist/'))
-    .pipe(browserSync.reload({
-      stream: true
-    }))
-});
-
-
 gulp.task('scripts-production', function() {
     gulp.src([
       './dev/data/monitoramento.js', 
@@ -64,33 +46,28 @@ gulp.task('scripts-production', function() {
 
 gulp.task('create-json', function (){
   var fs = require('fs');
+  var monitoramento = [];
 
   if(typeof require !== 'undefined') XLSX = require('xlsx');
   var workbook = XLSX.readFile('monitoramento.xlsx');
-
-  var monitoramento = [];
-
-  var first_sheet_name = workbook.SheetNames[0];
+  var first_sheet_name = workbook.SheetNames[0];// -> primeira planilha do arquivo. Ou trocar pelo nome da planilha
   var worksheet = workbook.Sheets[first_sheet_name];
-
   var myObj = XLSX.utils.sheet_to_json(worksheet,{raw:true});
   myObj.map(function(index){ monitoramento.push(index); })
 
-  var obj = monitoramento;
-  var json = JSON.stringify(obj);
+  var json = JSON.stringify(monitoramento);
   var concat = 'var monitoramento =' + json;
-
   fs.writeFile('./dev/data/monitoramento.js', concat, 'utf8', function (err){
     if(err){
       return console.log(err);
     }
-    console.log("File created")
+    console.log("./dev/data/monitoramento.js atualizado")
   });
 })
 
-gulp.task('watch', ['browserSync', 'scss','scripts'], function (){
+gulp.task('watch', ['browserSync', 'scss','create-json','scripts-production'], function (){
   gulp.watch('./dev/**/*.scss', ['scss']); 
-  gulp.watch('./dev/**/*.js', ['scripts']); 
+  gulp.watch('./dev/**/*.js', ['scripts-production']); 
   gulp.watch('./*.html', browserSync.reload); 
 });
 
