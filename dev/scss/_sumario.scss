@@ -1,85 +1,73 @@
-/*#sumario {
-	display: table;
-	min-width: 100%;
-	font-size: 16px;
+#sumario {
+	width: 100%;
 
 	div {
-		display: table-row;
-
 		div {
-			display: table-cell;
-			width: calc(100%/3);
-
-			ul {
-				margin: 0; 
-				padding: 0 0 8px 0;
-				list-style: none inside none;
-
-				li {
-					line-height: 32px;
-
-					a { text-decoration: none; font-weight: 700; color: #000; }
-					a:hover { transition: 100ms; }
-				}
-			}
-		}
-	}
-
-	div.etapa {
-
-		font-weight: 700;
-
-		div { 
-			padding: 8px 0;
-		}
-
-		div:first-child { border-top-left-radius: 2px; border-bottom-left-radius: 2px; padding-left: 8px; text-transform: uppercase; };
-		div:last-child { border-top-right-radius: 2px; border-bottom-right-radius: 2px; };
-	}
-
-	div.subetapa div.titulo_linha {
-		font-size: 12px;
-		span { font-weight: 700; text-transform: uppercase; };
-	}
-
-	#proposicao.etapa div { 
-		background-color: $proposicao; color: #FFF;
-	}
-	#proposicao.subetapa { 
-		div.titulo_linha span { color: $proposicao; };
-		ul li a:hover { color: $proposicao; }; 
-	}
-	#avaliacao.etapa div { 
-		background-color: $avaliacao; color: #FFF;
-	}
-	#avaliacao.subetapa { 
-		div.titulo_linha span { color: $avaliacao; };
-		ul li a:hover { color: $avaliacao; }; 
-	}
-	#elaboracao.etapa div { 
-		background-color: $elaboracao; color: #FFF;
-	}
-	#elaboracao.subetapa { 
-		div.titulo_linha span { color: $elaboracao; };
-		ul li a:hover { color: $elaboracao; }; 
-	}
-	#tramitacao.etapa div { 
-		background-color: $tramitacao; color: #FFF;
-	}
-	#tramitacao.subetapa { 
-		div.titulo_linha span { color: $tramitacao; };
-		ul li a:hover { color: $tramitacao; }; 
-	}
-}*/
-
-#sumario {
-	display: table;
-	div div {
-		div {
-			display: table-row;
+			display: flex;
+			justify-content: flex-start;
 			div {
-				display: table-cell;
-			}
+				display: inline-block;
+				vertical-align: top;
+				width: calc(100%/3);
+			};
+		};
+
+		div.etapa {
+			margin-top: 24px; color: #FFF; border-radius: 2px;
+			div { padding: 8px 0; };
+			div:first-child { padding-left: 8px; text-transform: uppercase; };
+			div:nth-child(2) { margin-left: -8px; };
 		}
+
+		div.subetapa {
+			background-color: transparent; border-bottom: 1px solid #E0E0E0; line-height: 40px;
+			div.titulo { font-size: 12px; span { text-transform: uppercase; }; };
+			div div { display: block; width: 100%; a { color: #000; font-weight: 700; text-decoration: none; }; a:hover { transition: 150ms; }; };
+		}
+
+		div.subetapa:last-child {
+			border-bottom: none;
+		}
+	};
+
+	#proposicao {
+		div.subetapa { 
+			div.titulo span { color: $proposicao; };
+			div div a:hover { color: $proposicao; }
+		}
+		div.etapa { background-color: $proposicao; };
 	}
+
+	#avaliacao {
+		div.subetapa { 
+			div.titulo span { color: $avaliacao; };
+			div div a:hover { color: $avaliacao; }
+		}
+		div.etapa { background-color: $avaliacao; };
+	}
+
+	#elaboracao {
+		div.subetapa { 
+			div.titulo span { color: $elaboracao; };
+			div div a:hover { color: $elaboracao; }
+		}
+		div.etapa { background-color: $elaboracao; };
+	}
+
+	#tramitacao {
+		div.subetapa { 
+			div.titulo span { color: $tramitacao; };
+			div div a:hover { color: $tramitacao; }
+		}
+		div.etapa { background-color: $tramitacao; };
+	}
+
+	#implantacao {
+		div.subetapa { 
+			div.titulo span { color: $implantacao; };
+			div div a:hover { color: $implantacao; }
+		}
+		div.etapa { background-color: $implantacao; };
+	}
+
 }
