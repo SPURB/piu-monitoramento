@@ -50,10 +50,16 @@ gulp.task('create-json', function (){
 
   if(typeof require !== 'undefined') XLSX = require('xlsx');
   var workbook = XLSX.readFile('monitoramento.xlsx');
+
   var first_sheet_name = workbook.SheetNames[0];// -> primeira planilha do arquivo. Ou trocar pelo nome da planilha
   var worksheet = workbook.Sheets[first_sheet_name];
+
   var myObj = XLSX.utils.sheet_to_json(worksheet,{raw:true});
-  myObj.map(function(index){ monitoramento.push(index); })
+  myObj.map(function(index){ 
+    if(typeof(index.id) == 'number'){
+      monitoramento.push(index); 
+    }
+  })
 
   var json = JSON.stringify(monitoramento);
   var concat = 'var monitoramento =' + json;
