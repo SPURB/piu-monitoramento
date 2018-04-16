@@ -7,33 +7,42 @@ let mapa = {
 	},
 	props:['location'],
 	mounted(){
-		//BASE
-		const base_map =  new ol.layer.Tile({ source: new ol.source.OSM() })
-		const msp = new ol.layer.Vector({
-			source: new ol.source.Vector({
-				url: dist_folder + 'kml/limite_msp.kml',//dist_folder definido em index.html ou page-piu-monitoramento.php
-				format: new ol.format.KML()
-			})
-		});
+		let base_map = new ol.layer.Tile();
+		const base_map_source = new ol.source.OSM();
+
+		const msp = new ol.layer.Vector();
+		const msp_source = new ol.source.Vector({
+			url: dist_folder + 'geojson/DEINFO_LimiteMunicipio.geojson',
+			format: new ol.format.GeoJSON()
+		})
 
 		let pde_mem = new ol.layer.Vector();
 		const pde_mem_source = new ol.source.Vector({
-			url: dist_folder + 'geoson/pde_02_macroareaestruturacaometropolitana.geojson',
+			url: dist_folder + 'geojson/PDE_02_MacroareaEstruturacaoMetropolitana.geojson',
 			format: new ol.format.GeoJSON()
 		})
 
 		//PROJETOS
-		// TODO: Montar dinamicamente os projetos
-		let anhembi = new ol.layer.Vector();
+		 var fill = new ol.style.Fill({
+		   color: 'rgba(255,255,255,0.4)'
+		 });
 
-		const anhembi_source = new ol.source.Vector({
-			url: dist_folder + 'kml/piu-anhembi_2018-04.kml',
-			format: new ol.format.KML()
+
+		let pius = new ol.layer.Vector();
+		const pius_source = new ol.source.Vector({
+			url: dist_folder + 'geojson/PIUs_v4_Etapas.geojson',
+			format: new ol.format.GeoJSON()
 		})
+
 
 		new ol.Map({
 			target: 'map',
-			layers: [base_map,msp,pde_mem,anhembi],
+			layers: [
+				base_map,
+				// msp,
+				// pde_mem,
+				pius
+			],
 			view: new ol.View({
 				projection: ol.proj.get('EPSG:3857'),
 				center: this.location.center,
@@ -42,10 +51,13 @@ let mapa = {
 				maxZoom: 19
 			})
 		})
-		setTimeout(()=> pde_mem.setSource(pde_mem_source), 3000);
-		setTimeout(()=> anhembi.setSource(anhembi_source), 4000);
+		setTimeout(()=> pius.setSource(pius_source), 300);
+		setTimeout(()=> pde_mem.setSource(pde_mem_source), 600);
+		setTimeout(()=> msp.setSource(msp_source), 900);
+		setTimeout(()=> base_map.setSource(base_map_source), 1200);
+
 	},
-	// methods:{
+	methods:{
 		// stringProjects(){ // TODO: Montar a variável let map_layers = '[base_map, msp, anhembi, jurubatuba, ..]');
 		// 	let aString = '[base_map, msp,';
 		// 	this.data.map(function(elem) {
@@ -53,7 +65,7 @@ let mapa = {
 		// 	})
 		// 	return aString.slice(0, -2) +']';
 		// },
-	// }, 
+	}, 
 	template: `
 	<div id="mapa">
 		<h3>Projetos de Intervenção Urbana</h3>

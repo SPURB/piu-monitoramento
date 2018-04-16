@@ -7,20 +7,22 @@ Sistema de acompanhamento dos PIUs (Decreto nº 56.901, de 30 de março de 2016)
 * NPM
 * Gulp
 * Excel
+
 ### Instalação
 ``` bash
+
 # Clonar repositório
 git clone https://github.com/spurb/piu-monitoramento
 
-# CD para pasta do projeto. Instalar dependências
+# 'cd' para pasta do projeto. Instale as dependências especificadas em package.json
 npm install
 
 # Serve com 'hot reload' em localhost:3000
 gulp watch
 
-# constrói para produção com minificação (js e css apenas)
+# constrói para produção e minificação 
 gulp build
 
 ```
 
-> Nota: O arquivo ``monitoramento.xlsx`` simula a futura base de dados. Neste projeto está sendo compilado nos comandos `gulp watch` e `gulp build`
+> Nota: O arquivo ``PIUs_infos.xlsx`` simula a futura base de dados. Neste projeto os dados estão sendo compilados pelo gulp (veja `./dev/data/monitoramento.js`).

@@ -49,14 +49,14 @@ gulp.task('create-json', function (){
   var monitoramento = [];
 
   if(typeof require !== 'undefined') XLSX = require('xlsx');
-  var workbook = XLSX.readFile('monitoramento.xlsx');
+  var workbook = XLSX.readFile('PIUs_infos.xlsx');
 
-  var first_sheet_name = workbook.SheetNames[0];// -> primeira planilha do arquivo. Ou trocar pelo nome da planilha
+  var first_sheet_name = workbook.SheetNames[0];//'COMUNICACAO';// -> Nome da tabela a ser lida ou workbook.SheetNames[0]// -> primeira planilha do arquivo.
   var worksheet = workbook.Sheets[first_sheet_name];
 
   var myObj = XLSX.utils.sheet_to_json(worksheet,{raw:true});
   myObj.map(function(index){ 
-    if(typeof(index.id) == 'number'){
+    if(typeof(index.id) == 'number'){ // id da primeira coluna devem ser números
       monitoramento.push(index); 
     }
   })
@@ -64,9 +64,7 @@ gulp.task('create-json', function (){
   var json = JSON.stringify(monitoramento);
   var concat = 'var monitoramento =' + json;
   fs.writeFile('./dev/data/monitoramento.js', concat, 'utf8', function (err){
-    if(err){
-      return console.log(err);
-    }
+    if(err){ return console.log(err)}
     console.log("./dev/data/monitoramento.js atualizado")
   });
 })
