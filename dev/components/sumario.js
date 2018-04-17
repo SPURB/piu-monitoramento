@@ -1,68 +1,69 @@
 let sumario = {
-    name:'sumario',
-    data (){
-        return {
-            data: monitoramento,
-            subetapa: {}
-        }
-    },
-
-    methods: {
-        confirmaSubEtapa(){
-            let obj = {
-                se01: { status: false, counter: 0 },
-                se02: { status: false, counter: 0 },
-                se03: { status: false, counter: 0 },
-                se04: { status: false, counter: 0 },
-                se05: { status: false, counter: 0 },
-                se06: { status: false, counter: 0 },
-                se07: { status: false, counter: 0 },
-                se08: { status: false, counter: 0 },
-                se09: { status: false, counter: 0 },
-                se10: { status: false, counter: 0 },
-            };
-            this.data.map(function(elem) {
-                if (elem.subetapa != 0) {
-                    switch (elem.subetapa){
-                        case 1: obj.se01.status = true; break;
-                        case 2: obj.se02.status = true; break;
-                        case 3: obj.se03.status = true; break;
-                        case 4: obj.se04.status = true; break;
-                        case 5: obj.se05.status = true; break;
-                        case 6: obj.se06.status = true; break;
-                        case 7: obj.se07.status = true; break;
-                        case 8: obj.se08.status = true; break;
-                        case 9: obj.se09.status = true; break;
-                        case 10: obj.se10.status = true; break;
-                    }
-                }
-            })
-            this.subetapa = obj;
-        },
-        addSubetapaCounter(count){
-        	if (this.subetapa.se07.counter == 0) { 
-        		return true; 
-	        	this.subetapa.se07.counter++;
-        	}
-        	else { return false }
-    	}
+	name:'sumario',
+	data (){
+		return {
+			data: monitoramento,
+		}
 	},
-    mounted(){
-        // this.confirmaSubEtapa();
-    },
-    template: `<div id="sumario">
-	    <div v-for="projeto in data">
-	        <div v-if="projeto.subetapa == 7 && subetapa.se07.status">
-	            <h3 v-if="addSubetapaCounter(7)">Título da subetapa: {{ projeto.subetapa }}</h3>
-	            <div>
-	                <div class="publicos" v-if="projeto.natureza == 'Pública'">
-	                    <h4>Projetos públicos: {{ projeto.nome }}</h4>
-	                </div>
-	                <div class="privados" v-if="projeto.natureza == 'Privado'">
-	                    <h4>Projetos privados: {{ projeto.nome }}</h4>
-	                </div>
-	            </div>
-	        </div>
-	    </div>
+	methods: {
+		getStatusNumber(string){
+			switch (string){
+				case 'Não autorizado / Desenvolvido': return 1; break;
+				case 'Elaboração': return 2; break;
+				case 'Não autorizado / Não Desenvolvido': return 3; break;
+				case 'Consolidação': return 4; break;
+				case 'Implantação': return 5; break;
+				case 'Em avaliação SMUL': return 6; break;
+				case 'Avaliação após 1ª Consulta': return 7; break;
+				case 'Em proposição dos elementos prévios': return 8; break;
+				case 'Possível PIU': return 9; break;
+				case 'Possível': return 10; break;
+				default: return 0; 
+			}
+		},
+		hasMembers(first, last, etapa){
+			let position = this.getStatusNumber(etapa);
+			if (first <= position && position <= last) {
+				return true
+			}
+		}
+	},
+	computed:{
+		unique_status_values(){
+			let all = []
+			this.data.map(function(index){
+				all.push(index.etapa_fluxograma)
+			})
+			return Array.from(new Set(all))//filtra etapas repetidas
+		}
+	},
+	template: `
+	<div id="sumario">
+		<div class='proposicao'>
+			<h4>proposicao</h4>
+			<template v-for="projeto in data">
+				<div v-if="hasMembers(1,3, projeto.etapa_fluxograma)">
+					<div v-if="hasMembers(1,1, projeto.etapa_fluxograma)">
+						{{projeto.id_nome}}
+					</div>
+					<div v-if="hasMembers(2,2, projeto.etapa_fluxograma)">
+						{{projeto.id_nome}}
+					</div>
+					<div v-if="hasMembers(3,3, projeto.etapa_fluxograma)">
+						{{projeto.id_nome}}
+					</div>
+				</div>
+			</template>
+		</div>
+		<div class="implantacao">
+			<h4>implantacao</h4>
+			<template v-for="projeto in data">
+				<div class='Implantacao' v-if="hasMembers(4,4, projeto.etapa_fluxograma)">
+					<div>
+						{{projeto.id_nome}}
+					</div>
+				</div>
+			</template>
+			</div>
 	</div>`
 }
