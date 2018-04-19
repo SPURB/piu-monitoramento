@@ -1,74 +1,210 @@
 #ficha {
 
-	div select {
-		width: 100%;
-		height: 60px;
-		padding: 8px 0;
-		font-size: 2em;
-		font-weight: 700;
-		color: $implantacao;
-		border-top-width: 3px;
-		border-top-style: solid;
-		border-top-color: $implantacao;
-		border-left: 0px solid transparent; border-right: 0px solid transparent; border-bottom: 0px solid transparent;
-	};
+	div.menu-titulo {
+		div.titulo {
+			line-height: 2em;
+			font-size: 2em;
+			border-bottom-width: 3px;
+			border-bottom-style: solid;
+			background-color: transparent;
+			i { font-size: 16px; color: #000000; };
+			&:hover { cursor: pointer; };
+		};
+		.proposicao { color: $proposicao; border-bottom-color: $proposicao; };
+		.andamento { color: $andamento; border-bottom-color: $andamento; };
+		.implantacao { color: $implantacao; border-bottom-color: $implantacao; };
+
+		ul {
+			position: absolute;
+			width: 100%;
+			background-color: #FFFFFF;
+			list-style-type: none;
+			list-style-position: inside;
+			color: #000000;
+			border-bottom: 3px solid #000000;
+			border-radius: 2px;
+			li {
+				font-size: 1em;
+				line-height: 3em;
+				padding: 0 8px;
+				border-left: 10px solid $implantacao;
+			};
+			li:hover {
+				background-color: #F8F8F8;
+			};
+		};
+	}
 
 	div.container {
+		margin-top: 16px;
 		display: flex;
 		justify-content: space-between;
 		align-items: flex-start;
 
+
+		div.indicador {
+			border-radius: 2px;
+			font-size: 12px;
+			color: #FFFFFF;
+			line-height: 32px;
+			text-align: center;
+			text-transform: uppercase;
+		};
+		.proposicao { background-color: $proposicao; };
+		.andamento { background-color: $andamento; }
+		.implantacao { background-color: $implantacao; }
+
 		div.colId {
 			width: 20%;
-			div.indicador {
-				border-radius: 2px;
-				font-size: 12px;
-				color: #FFFFFF;
-				line-height: 32px;
-				text-align: center;
-				text-transform: uppercase;
-				background-color: $implantacao;
-			};
+			font-size: 1em;
+			line-height: 1.75em;
 			div.id {
 				border-radius: 2px;
 				border: 1px solid #BDBDBD;
 				padding: 8px;
-				margin-top: 20px;
-				ul {
-					list-style-type: none;
-					padding: 0; margin: 0;
-					li { margin-bottom: 16px; };
-					li:last-child { margin-bottom: 0px; };
+				margin-top: 16px;
+				margin-bottom: 16px;
+				div { font-weight: 700; margin-bottom: 1em; };
+				a {
+					font-weight: 700;
+					text-transform: uppercase;
+				};
+				a::before { 
+					display: inline-block;
+					font-family: 'Material Icons';
+					font-weight: normal;
+					font-size: 16px;
+					float: left;
+					margin-right: 4px;
+					text-transform: none;
+					content: 'launch';
+					color: #000000;
+				};
+			};
+			a.link_pag_completa {
+				display: block;
+				line-height: 2em;
+				border-radius: 2px;
+				text-align: center;
+				background-color: $vermelho-gestao;
+				color: #FFFFFF;
+				text-decoration: none;
+				border: 1px solid $vermelho-gestao;
+				&:hover {
+					background-color: transparent;
+					color: $vermelho-gestao;
+					transition: 150ms;
 				};
 			};
 		};
 
+		h4 {
+			line-height: 32px;
+			margin: 0 0 12px 0;
+			padding: 0;
+		}
+
 		div.aspectos {
 			width: 40%;
-			margin-left: 20px;
+			margin-left: 16px;
+			p { font-size: 1em; }
 		};
 
 		div.tramitacao {
 			width: 40%;
-			margin-left: 20px;
+			margin-left: 16px;
 			ol {
 				list-style-type: decimal-leading-zero;
 				list-style-position: inside;
-				margin-top: 30px; padding: 0;
+				padding: 0;
 				li {
-					display: list-item;
 					line-height: 32px;
 					border-top-width: 3px;
 					border-top-style: solid;
-					span { font-weight: 700; text-transform: uppercase; };
-					i { float: right; line-height: 32px; }
-				}
+					padding-left: 4px;
+					&:hover { background-color: #F8F8F8; };
+					div {
+						display: inline-block;
+						font-weight: 700;
+						span { text-transform: uppercase; };
+						&:hover { cursor: pointer; };
+						div {
+							font-weight: 300;
+							text-transform: none;
+							display: table-cell;
+							padding: 0.6em 0;
+							p { 
+								font-size: 1em;
+								line-height: 1.75em;
+								padding: 0;
+								margin: 0.6em 0 1em 0;
+							};
+							span {
+								font-weight: 700;
+								text-transform: none;
+							};
+							a.tramit_link {
+								display: block;
+								max-width: 300px;
+								white-space: nowrap;
+								overflow: hidden;
+								text-overflow: ellipsis;
+							};
+							a.tramit_link::before {
+								content: attr(type);
+								line-height: 10px;
+								margin-right: 4px;
+								text-transform: uppercase;
+								font-size: 10px;
+								display: inline-block;
+								border-radius: 2px;
+								border: 1px solid #BCBCBC;
+								color: #BCBCBC;
+								padding: 2px;
+							};
+							a.tramit_link:hover::before {
+								color: $vermelho-gestao;
+								border-color: $vermelho-gestao;
+							};
+						};
+					};
+					div.info {
+						display: block;
+						font-weight: 300;
+					};
+				};
+				li.anterior {
+					color: rgba(0,0,0,.4);
+					&::after {
+						font-family: 'Material Icons';
+						font-size: 24px;
+						display: inline-block;
+						float: right;
+						content: 'check_box';
+					};
+				};
+				li.atual::after {
+					font-family: 'Material Icons';
+					font-size: 24px;
+					display: inline-block;
+					float: right;
+					content: 'indeterminate_check_box';
+				};
+				li.posterior {
+					color: rgba(0,0,0,.4);
+					&::after {
+						font-family: 'Material Icons';
+						font-size: 24px;
+						display: inline-block;
+						float: right;
+						content: 'check_box_outline_blank';
+					};
+					div:hover { cursor: default; };
+					div div { display: normal; };
+				};
 				li:nth-child(1), li:nth-child(2), li:nth-child(3) { border-top-color: $proposicao; };
-				li:nth-child(4) { border-top-color: $avaliacao; };
-				li:nth-child(5), li:nth-child(6), li:nth-child(7), li:nth-child(8) { border-top-color: $elaboracao; };
-				li:nth-child(9), li:nth-child(10), li:nth-child(11) { border-top-color: $tramitacao; };
-				li:nth-child(12) { border-top-color: $implantacao; };
-				li.anterior { color: rgba(0,0,0,0.24); }
+				li:nth-child(4), li:nth-child(5), li:nth-child(6), li:nth-child(7) { border-top-color: $andamento; };
+				li:nth-child(8) { border-top-color: $implantacao; };
 			};
 		};
 	};

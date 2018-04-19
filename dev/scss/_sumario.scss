@@ -1,81 +1,99 @@
 #sumario {
-	width: 100%;
+width: 100%;
+font-size: 1.1em;
 
+div {
+	border-radius: 2px;
+	:hover { background-color: #F8F8F8; };
 	div {
+		display: flex;
+		justify-content: flex-start;
+		border-left: 0px;
+		padding: 4px 0;
 		div {
-			display: flex;
-			justify-content: flex-start;
-			div.bg {
-				width: 20px;
-				border-radius: 3px;
-				margin-right: 10px;
-				border: 1px solid #FFF;
-			}
-			div {
+			display: inline-block;
+			vertical-align: baseline;
+			background-color: transparent;
+			width: calc(100%/3);
+			line-height: 16px;
+			div.marcadorEtapa {
 				display: inline-block;
-				vertical-align: top;
-				width: calc((100% - 10px)/3);
-				background-color: transparent;
+				border-radius: 2px;
+				margin-right: 4px;
+				height: 16px;
+				width: 24px;
+				text-align: center;
+				color: #FFFFFF;
+				font-weight: 700;
+				&:hover {
+					background-color: transparent !important;
+					cursor: help;
+				};
 			};
+			a {
+				display: block;
+				border-left: 0px;
+				color: #000000;
+				text-decoration: none;
+				font-weight: 700;
+				line-height: 32px;
+				padding: 0 8px;
+				border-radius: 2px;
+			};
+
+			a:hover { color: #FFFFFF; transition: 150ms; }
 		};
-
-		div.etapa {
-			margin-top: 24px; color: #FFF; border-radius: 2px;
-			div { padding: 8px 0; };
-			div:first-child { padding-left: 8px; text-transform: uppercase; };
-			div:nth-child(2) { margin-left: -8px; };
-		}
-
-		div.subetapa {
-			border-bottom: 1px solid #E0E0E0; line-height: 40px;
-			div.titulo { font-size: 12px; span { text-transform: uppercase; }; };
-			div div { display: block; width: 100%; a { color: #000; font-weight: 700; text-decoration: none; }; a:hover { transition: 150ms; }; };
-		}
+		div:first-child span { 
+			font-size: 11px; 
+			vertical-align: baseline; 
+			text-transform: uppercase; 
+		};
 	};
 
-	#proposicao {
-		div.subetapa { 
-			div.titulo span { color: $proposicao; };
-			div div a:hover { color: $proposicao; }
-		}
-		div.etapa { background-color: $proposicao; };
-		div div.bg { background-color: $proposicao; };
-	}
+	div.thead {
+		height: 20px;
+		font-size: 13px;
+		color: #999999;
+		text-transform: none;
+		margin-bottom: -16px;
+		div:nth-child(2), div:nth-child(3) { margin-left: 24px; };
+		&:hover, div:hover { background-color: transparent; }
+	};
 
-	#avaliacao {
-		div.subetapa { 
-			div.titulo span { color: $avaliacao; };
-			div div a:hover { color: $avaliacao; }
-		}
-		div.etapa { background-color: $avaliacao; };
-		div div.bg { background-color: $avaliacao; };
-	}
+	div.etapa {
+		color: #FFFFFF;
+		border-radius: 2px;
+		line-height: 24px;
+		padding: 0 8px;
+		margin-top: 16px;
+	};
+}
 
-	#elaboracao {
-		div.subetapa { 
-			div.titulo span { color: $elaboracao; };
-			div div a:hover { color: $elaboracao; }
-		}
-		div.etapa { background-color: $elaboracao; };
-		div div.bg { background-color: $elaboracao; };
-	}
+div.proposicao {
+	border-left-color: $proposicao;
+	div.etapa { background-color: $proposicao; };
+	div.etapa div:hover { background-color: $proposicao; };
+	div a:hover { background-color: $proposicao; };
+	div div div.marcadorEtapa { background-color: $proposicao; };
+	div div div.marcadorEtapa:hover { color: $proposicao; }
+}
 
-	#tramitacao {
-		div.subetapa { 
-			div.titulo span { color: $tramitacao; };
-			div div a:hover { color: $tramitacao; }
-		}
-		div.etapa { background-color: $tramitacao; };
-		div div.bg { background-color: $tramitacao; };
-	}
+div.andamento {
+	border-left-color: $andamento;
+	div.etapa { background-color: $andamento; };
+	div.etapa div:hover { background-color: $andamento; };
+	div a:hover { background-color: $andamento; };
+	div div div.marcadorEtapa { background-color: $andamento; };
+	div div div.marcadorEtapa:hover { color: $andamento; }
+}
 
-	#implantacao {
-		div.subetapa { 
-			div.titulo span { color: $implantacao; };
-			div div a:hover { color: $implantacao; }
-		}
-		div.etapa { background-color: $implantacao; };
-		div div.bg { background-color: $implantacao; };
-	}
+div.implantacao {
+	border-left-color: $implantacao;
+	div.etapa { background-color: $implantacao; };
+	div.etapa div:hover { background-color: $implantacao; };
+	div a:hover { background-color: $implantacao; };
+	div div div.marcadorEtapa { background-color: $implantacao; };
+	div div div.marcadorEtapa:hover { color: $implantacao; }
+}
 
 }
