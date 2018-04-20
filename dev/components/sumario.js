@@ -3,6 +3,7 @@ let sumario = {
 	data (){
 		return {
 			data: monitoramento,
+			clickedId: undefined
 		}
 	},
 
@@ -26,6 +27,13 @@ let sumario = {
 			if (first <= position && position <= last) {
 				return true
 			}
+		},
+		setProjectId(id){ 
+			this.clickedId = id;
+			this.sendId()
+		},
+		sendId(event){
+			this.$emit('clicked', this.clickedId)
 		}
 	},
 
@@ -51,14 +59,14 @@ let sumario = {
 				<div><div class="marcadorEtapa">01</div> <span>Em proposição dos elementos prévios</span></div>
 				<div>
 					<template v-for="projeto in data" v-if="hasMembers(1,1, projeto.a_etapa_fluxograma)">
-						<a href="#" v-if="projeto.id_iniciativa_da_proposta=='Pública'">
+						<a href="#" @click="setProjectId(projeto.id)" v-if="projeto.id_iniciativa_da_proposta=='Pública'">
 							{{ projeto.id_nome }}
 						</a>
 					</template>
 				</div>
 				<div>
 					<template v-for="projeto in data" v-if="hasMembers(1,1, projeto.a_etapa_fluxograma)">
-						<a href="#" v-if="projeto.id_iniciativa_da_proposta=='Privado'">
+						<a href="#" @click="setProjectId(projeto.id)" v-if="projeto.id_iniciativa_da_proposta=='Privado'">
 							{{ projeto.id_nome }}
 						</a>
 					</template>
@@ -69,14 +77,14 @@ let sumario = {
 				<div><div class="marcadorEtapa">02</div> <span>Consulta Pública Inicial</span></div>
 				<div>
 					<template v-for="projeto in data" v-if="hasMembers(2,2, projeto.a_etapa_fluxograma)">
-						<a href="#" v-if="projeto.id_iniciativa_da_proposta=='Pública'">
+						<a href="#" @click="setProjectId(projeto.id)" v-if="projeto.id_iniciativa_da_proposta=='Pública'">
 							{{ projeto.id_nome }}
 						</a>
 					</template>
 				</div>
 				<div>
 					<template v-for="projeto in data" v-if="hasMembers(2,2, projeto.a_etapa_fluxograma)">
-						<a href="#" v-if="projeto.id_iniciativa_da_proposta=='Privado'">
+						<a href="#" @click="setProjectId(projeto.id)" v-if="projeto.id_iniciativa_da_proposta=='Privado'">
 							{{ projeto.id_nome }}
 						</a>
 					</template>
@@ -87,14 +95,14 @@ let sumario = {
 				<div><div class="marcadorEtapa">03</div> <span>Em avaliação SMUL</span></div>
 				<div>
 					<template v-for="projeto in data" v-if="hasMembers(3,3, projeto.a_etapa_fluxograma)">
-						<a href="#" v-if="projeto.id_iniciativa_da_proposta=='Pública'">
+						<a href="#" @click="setProjectId(projeto.id)" v-if="projeto.id_iniciativa_da_proposta=='Pública'">
 							{{ projeto.id_nome }}
 						</a>
 					</template>
 				</div>
 				<div>
 					<template v-for="projeto in data" v-if="hasMembers(3,3, projeto.a_etapa_fluxograma)">
-						<a href="#" v-if="projeto.id_iniciativa_da_proposta=='Privado'">
+						<a href="#" @click="setProjectId(projeto.id)" v-if="projeto.id_iniciativa_da_proposta=='Privado'">
 							{{ projeto.id_nome }}
 						</a>
 					</template>
@@ -109,14 +117,14 @@ let sumario = {
 				<div><div class="marcadorEtapa">04</div> <span>Elaboração</span></div>
 				<div>
 					<template v-for="projeto in data" v-if="hasMembers(4,4, projeto.a_etapa_fluxograma)">
-						<a href="#" v-if="projeto.id_iniciativa_da_proposta=='Pública'">
+						<a href="#" @click="setProjectId(projeto.id)" v-if="projeto.id_iniciativa_da_proposta=='Pública'">
 							{{ projeto.id_nome }}
 						</a>
 					</template>
 				</div>
 				<div>
 					<template v-for="projeto in data" v-if="hasMembers(4,4, projeto.a_etapa_fluxograma)">
-						<a href="#" v-if="projeto.id_iniciativa_da_proposta=='Privado'">
+						<a href="#" @click="setProjectId(projeto.id)" v-if="projeto.id_iniciativa_da_proposta=='Privado'">
 							{{ projeto.id_nome }}
 						</a>
 					</template>
@@ -127,14 +135,14 @@ let sumario = {
 				<div><div class="marcadorEtapa">05</div> <span>Discussão pública</span></div>
 				<div>
 					<template v-for="projeto in data" v-if="hasMembers(5,5, projeto.a_etapa_fluxograma)">
-						<a href="#" v-if="projeto.id_iniciativa_da_proposta=='Pública'">
+						<a href="#" @click="setProjectId(projeto.id)" v-if="projeto.id_iniciativa_da_proposta=='Pública'">
 							{{ projeto.id_nome }}
 						</a>
 					</template>
 				</div>
 				<div>
 					<template v-for="projeto in data" v-if="hasMembers(5,5, projeto.a_etapa_fluxograma)">
-						<a href="#" v-if="projeto.id_iniciativa_da_proposta=='Privado'">
+						<a href="#" @click="setProjectId(projeto.id)" v-if="projeto.id_iniciativa_da_proposta=='Privado'">
 							{{ projeto.id_nome }}
 						</a>
 					</template>
@@ -145,14 +153,14 @@ let sumario = {
 				<div><div class="marcadorEtapa">06</div> <span>Consolidação</span></div>
 				<div>
 					<template v-for="projeto in data" v-if="hasMembers(6,6, projeto.a_etapa_fluxograma)">
-						<a href="#" v-if="projeto.id_iniciativa_da_proposta=='Pública'">
+						<a href="#" @click="setProjectId(projeto.id)" v-if="projeto.id_iniciativa_da_proposta=='Pública'">
 							{{ projeto.id_nome }}
 						</a>
 					</template>
 				</div>
 				<div>
 					<template v-for="projeto in data" v-if="hasMembers(6,6, projeto.a_etapa_fluxograma)">
-						<a href="#" v-if="projeto.id_iniciativa_da_proposta=='Privado'">
+						<a href="#" @click="setProjectId(projeto.id)" v-if="projeto.id_iniciativa_da_proposta=='Privado'">
 							{{ projeto.id_nome }}
 						</a>
 					</template>
@@ -163,14 +171,14 @@ let sumario = {
 				<div><div class="marcadorEtapa">07</div> <span>Tramitação Jurídica</span></div>
 				<div>
 					<template v-for="projeto in data" v-if="hasMembers(7,7, projeto.a_etapa_fluxograma)">
-						<a href="#" v-if="projeto.id_iniciativa_da_proposta=='Pública'">
+						<a href="#" @click="setProjectId(projeto.id)" v-if="projeto.id_iniciativa_da_proposta=='Pública'">
 							{{ projeto.id_nome }}
 						</a>
 					</template>
 				</div>
 				<div>
 					<template v-for="projeto in data" v-if="hasMembers(7,7, projeto.a_etapa_fluxograma)">
-						<a href="#" v-if="projeto.id_iniciativa_da_proposta=='Privado'">
+						<a href="#" @click="setProjectId(projeto.id)" v-if="projeto.id_iniciativa_da_proposta=='Privado'">
 							{{ projeto.id_nome }}
 						</a>
 					</template>
@@ -185,14 +193,14 @@ let sumario = {
 				<div><div class="marcadorEtapa">08</div> <span>Implantação</span></div>
 				<div>
 					<template v-for="projeto in data" v-if="hasMembers(8,8, projeto.a_etapa_fluxograma)">
-						<a href="#" v-if="projeto.id_iniciativa_da_proposta=='Pública'">
+						<a href="#" @click="setProjectId(projeto.id)" v-if="projeto.id_iniciativa_da_proposta=='Pública'">
 							{{ projeto.id_nome }}
 						</a>
 					</template>
 				</div>
 				<div>
 					<template v-for="projeto in data" v-if="hasMembers(8,8, projeto.a_etapa_fluxograma)">
-						<a href="#" v-if="projeto.id_iniciativa_da_proposta=='Privado'">
+						<a href="#" @click="setProjectId(projeto.id)" v-if="projeto.id_iniciativa_da_proposta=='Privado'">
 							{{ projeto.id_nome }}
 						</a>
 					</template>

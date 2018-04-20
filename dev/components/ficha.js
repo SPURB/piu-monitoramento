@@ -9,6 +9,7 @@ let ficha = {
 			E05: false, E06: false, E07: false, E08: false,
 		}
 	},
+	props: ['clicked-id'],
 	methods: {
 		getStatusNumber(string) {
 			switch (string){
