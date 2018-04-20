@@ -3,7 +3,8 @@ let ficha = {
 	data (){
 		return {
 			data: monitoramento,
-			projeto: monitoramento[1],
+			projeto: '',
+			menuClickedId: '',
 			menu: false,
 			E01: false, E02: false, E03: false, E04: false,
 			E05: false, E06: false, E07: false, E08: false,
@@ -15,6 +16,7 @@ let ficha = {
 			switch (string){
 				case 'Em proposição dos elementos prévios': return 1; break;
 				case 'Consulta Pública Inicial': return 2; break;
+				case 'Avaliação após 1ª Consulta': return 2.5; break;
 				case 'Em avaliação SMUL': return 3; break;
 				case 'Elaboração': return 4; break;
 				case 'Discussão pública': return 5; break;
@@ -22,15 +24,21 @@ let ficha = {
 				case 'Tramitação Jurídica': return 7; break;
 				case 'Implantação': return 8; break;
 				case 'Não Autorizado / Não desenvolvido': return 9; break;
-				case 'Áreas/Projetos em estudo que demandariam PIUs': return 10; break;
+				case 'Não autorizado /  Não desenvolvido': return 9; break;
+				case 'Desenvolvido / Suspenso': return 10; break;
+				case 'Possível': return 11; break;
 			}
 		},
+
 		atribuiEtapa(etapa) {
 			let etp = this.getStatusNumber(etapa);
 			if (etp <= 3) { return 'proposicao' };
 			if (etp > 3 && etp <= 7) { return 'andamento'};
-			if (etp > 7) { return 'implantacao' };
+			if (etp > 7 && etp <= 8) { return 'implantacao' };
+			if (etp > 8 && etp <= 10) { return 'suspenso' };
+			if (etp >= 11) { return 'possivel' };
 		},
+
 		dataExcelJS(data) {
 		   var utc_days  = Math.floor(data - 25568);
 		   var utc_value = utc_days * 86400;                                        
@@ -49,10 +57,38 @@ let ficha = {
 
 		   return date_info.toLocaleDateString();
 		},
+
+		encontraProjeto(newClickedId) {
+			this.data.map(function(index) {
+				// console.log(par)
+				if (index.id == newClickedId) {
+					this.projeto = index;
+				};
+			});
+		},
+
+		enviaId(event) {
+			this.$emit('clicked', this.menuClickedId)
+		},
+
+		gravaId(id) {
+			this.menuClickedId = id;
+			this.enviaId();
+		}
+	},
+
+	watch:{
+		clickedId(newprop,oldprop){
+			const app = this;
+			app.data.map(function(index) {
+				if (index.id == newprop) {
+					app.projeto = index;
+				};
+			});
+		}
 	},
 
 	template: `
-
 	<div id="ficha">
 		<div @click="menu =! menu" class="menu-titulo">
 			<div class="titulo" v-bind:class=atribuiEtapa(projeto.a_etapa_fluxograma)>
@@ -61,10 +97,11 @@ let ficha = {
 				<i v-if="menu" class="material-icons">expand_less</i>
 			</div>
 			<ul v-if="menu">
-				<li>Proj2</li>
-				<li>Proj3</li>
-				<li>Proj4</li>
-				<li>Proj5</li>
+				<template v-for="projeto in data">
+					<li v-bind:class=atribuiEtapa(projeto.a_etapa_fluxograma)>
+						<a @click="gravaId(projeto.id)">{{ projeto.id_nome }} {{ projeto.id }}</a>
+					</li>
+				</template>
 			</ul>
 		</div>
 

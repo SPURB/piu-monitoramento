@@ -84,7 +84,7 @@ div.andamento {
 	div.etapa div:hover { background-color: $andamento; };
 	div a:hover { background-color: $andamento; };
 	div div div.marcadorEtapa { background-color: $andamento; };
-	div div div.marcadorEtapa:hover { color: $andamento; }
+	div div div.marcadorEtapa:hover { color: red; }
 }
 
 div.implantacao {
@@ -94,6 +94,23 @@ div.implantacao {
 	div a:hover { background-color: $implantacao; };
 	div div div.marcadorEtapa { background-color: $implantacao; };
 	div div div.marcadorEtapa:hover { color: $implantacao; }
+}
+
+div.suspenso {
+	border-left-color: $suspenso;
+	div.etapa { background-color: $suspenso; };
+	div.etapa div:hover { background-color: $suspenso; };
+	div a:hover { background-color: $suspenso; };
+	div div div.marcadorEtapa { background-color: $suspenso; };
+	div div div.marcadorEtapa:hover { color: $suspenso; }
+}
+
+div.possivel {
+	border-left-color: $possivel;
+	div.etapa { background-color: transparent; border: 1px solid $possivel; color: $possivel; };
+	div.etapa div:hover { background-color: transparent; border: 1px solid $possivel; color: $possivel; };
+	div a { border: 1px solid transparent; }
+	div a:hover { background-color: transparent; border: 1px solid $possivel; color: $possivel; };
 }
 
 }
