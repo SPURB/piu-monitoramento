@@ -74,7 +74,7 @@ let ficha = {
 		gravaId(id) {
 			this.menuClickedId = id;
 			this.enviaId();
-		}
+		},
 	},
 
 	watch:{
@@ -90,16 +90,16 @@ let ficha = {
 
 	template: `
 	<div id="ficha">
-		<div @click="menu =! menu" class="menu-titulo">
+		<div @click="menu = !menu" class="menu-titulo">
 			<div class="titulo" v-bind:class=atribuiEtapa(projeto.a_etapa_fluxograma)>
 				{{ projeto.id_nome }}
 				<i v-if="!menu" class="material-icons">expand_more</i>
 				<i v-if="menu" class="material-icons">expand_less</i>
 			</div>
 			<ul v-if="menu">
-				<template v-for="projeto in data">
+				<template v-for="projeto in data.sort()">
 					<li v-bind:class=atribuiEtapa(projeto.a_etapa_fluxograma)>
-						<a @click="gravaId(projeto.id)">{{ projeto.id_nome }} {{ projeto.id }}</a>
+						<a @click="gravaId(projeto.id)">{{ projeto.id_nome }}</a>
 					</li>
 				</template>
 			</ul>
@@ -130,117 +130,105 @@ let ficha = {
 
 			<div class="tramitacao">
 				<h4>Tramitação prevista</h4>
-				<ol>
-					<li class="anterior">
-						<div>
-							<span @click="E01=!E01">Em proposição dos elementos prévios</span>
-							<div v-if="E01">
-								<p>
-									<span>Protocolado</span> em {{ dataExcelJS(projeto.a_data_protocolo) }}
-									<a href="" type="doc" class="tramit_link">Parecer proposição (SPURB)</a>
-								</p>
-							</div>
-						</div>
-					</li>
-					<li class="anterior">
-						<div>
-							<span @click="E02=!E02">Consulta pública inicial</span>
-							<div v-if="E02">
-								<p>
-									Consulta <span>{{ projeto.b_status }}</span> ({{ dataExcelJS(projeto.b_data_inicio) }}–{{ dataExcelJS(projeto.b_data_final) }})
-									<a href="#" type="doc" class="tramit_link">Contribuições</a>
-									<a href="#" type="doc" class="tramit_link">Parecer Consulta Inicial (SPURB)</a>
-								</p>
-							</div>
-						</div>
-					</li>
-					<li class="atual">
-						<div>
-							<span @click="E03=!E03">Em avaliação SMUL</span>
-							<div v-if="E03">
-								<p>
-									<span>Enviado para SMUL</span> em {{ dataExcelJS(projeto.c_data_envio) }}
-									<a href="#" type="doc" class="tramit_link">Parecer SMUL</a>
-								</p>
-							</div>
-						</div>
-					</li>
-					<li class="posterior">
-						<div>
-							<span @click="E04=!E04">Elaboração</span>
-							<div v-if="E04">
-								<p>
-									Departamento responsável<br>
-									<span>{{ projeto.d_secretarias_envolvidas }}</span>
-								</p>
-								<p>
-									Órgãos externos envolvidos<br>
-									<span>{{ projeto.d_orgaos_externos_envolvidos }}</span>
-								</p>
-							</div>
-						</div>
-					</li>
-					<li class="posterior">
-						<div>
-							<span @click="E05=!E05">Discussão pública</span>
-							<div v-if="E05">
-								<p>
-									<span>Evento realizado em {{ projeto.e_data_audiencia_publica }}</span>
-									<a href="#" type="doc" class="tramit_link">Materiais disponibilizados</a>
-									<a href="#" type="doc" class="tramit_link">Ata / Contribuições</a>
-								</p>
-								<p>
-									<span>Instâncias consultadas</span>
-									<a href="#" type="doc" class="tramit_link">Parecer SABESP</a>
-								</p>
-								<p>
-									Consulta pública online <span>{{ projeto.e_status_consulta_internet_minuta }}</span> ({{ dataExcelJS(projeto.e_data_inicio_consulta_minuta) }}–{{ dataExcelJS(projeto.e_data_final_consulta_minuta) }})
-									<a href="#" type="doc" class="tramit_link">Contribuições</a>
-									<a href="#" type="doc" class="tramit_link">Parecer após discussão pública</a>
-								</p>
-							</div>
-						</div>
-					</li>
-					<li class="posterior">
-						<div>
-							<span @click="E06=!E06">Consolidação</span>
-							<div v-if="E06">
-								<p>
-									Instrumento proposto<br>
-									<span>{{ projeto.f_instrumento_urbanistico_proposto }}</span>
-								</p>				
-							</div>
-						</div>
-					</li>
-					<li class="posterior">
-						<div>
-							<span @click="E07=!E07">Tramitação jurídica</span>
-							<div v-if="E07">
-								<p>
-									Órgão em análise<br>
-									<span>{{ projeto.g_nome_orgao_em_analise }}</span>
-								</p>
-								<p>
-									{{ projeto.f_instrumento_juridico_necessario }} !!!!NUMERO!!! - {{ projeto.g_status_aprovacao }}
-								</p>
-							</div>
-						</div>
-					</li>
-					<li class="posterior">
-						<div>
-							<span @click="E08=!E08">Implantação</span>
-							<div v-if="E08">
-								<p>
-									<span>{{ projeto.h_status_implantacao }}</span>
-								</p>
-								<p>
-									Órgão em análise<br>
-									<span>{{ projeto.h_orgao_em_analise }}</span>
-								</p>
-							</div>
-						</div>
-					</li>
-				</ol>
+						
+				<div class="prop">
+					<div @click="E01=!E01">01 <span>Em proposição dos elementos prévios</span></div>
+					<div v-if="E01">
+						<p>
+							<span>Protocolado</span> em {{ dataExcelJS(projeto.a_data_protocolo) }}
+							<a href="" type="doc" class="tramit_link">Parecer proposição (SPURB)</a>
+						</p>
+					</div>
+				</div>
+			
+				<div class="prop">
+					<div @click="E02=!E02">02 <span>Consulta pública inicial</span></div>
+					<div v-if="E02">
+						<p>
+							Consulta <span>{{ projeto.b_status }}</span> ({{ dataExcelJS(projeto.b_data_inicio) }}–{{ dataExcelJS(projeto.b_data_final) }})
+							<a href="#" type="doc" class="tramit_link">Contribuições</a>
+							<a href="#" type="doc" class="tramit_link">Parecer Consulta Inicial (SPURB)</a>
+						</p>
+					</div>
+				</div>
+			
+				<div class="prop">
+					<div @click="E03=!E03">03 <span>Em avaliação SMUL</span></div>
+					<div v-if="E03">
+						<p>
+							<span>Enviado para SMUL</span> em {{ dataExcelJS(projeto.c_data_envio) }}
+							<a href="#" type="doc" class="tramit_link">Parecer SMUL</a>
+						</p>
+					</div>
+				</div>
+			
+				<div class="anda">
+					<div @click="E04=!E04">04 <span>Elaboração</span></div>
+					<div v-if="E04">
+						<p>
+							Departamento responsável<br>
+							<span>{{ projeto.d_secretarias_envolvidas }}</span>
+						</p>
+						<p>
+							Órgãos externos envolvidos<br>
+							<span>{{ projeto.d_orgaos_externos_envolvidos }}</span>
+						</p>
+					</div>
+				</div>
+			
+				<div class="anda">
+					<div @click="E05=!E05">05 <span>Discussão pública</span></div>
+					<div v-if="E05">
+						<p>
+							<span>Evento realizado em {{ projeto.e_data_audiencia_publica }}</span>
+							<a href="#" type="doc" class="tramit_link">Materiais disponibilizados</a>
+							<a href="#" type="doc" class="tramit_link">Ata / Contribuições</a>
+						</p>
+						<p>
+							<span>Instâncias consultadas</span>
+							<a href="#" type="doc" class="tramit_link">Parecer SABESP</a>
+						</p>
+						<p>
+							Consulta pública online <span>{{ projeto.e_status_consulta_internet_minuta }}</span> ({{ dataExcelJS(projeto.e_data_inicio_consulta_minuta) }}–{{ dataExcelJS(projeto.e_data_final_consulta_minuta) }})
+							<a href="#" type="doc" class="tramit_link">Contribuições</a>
+							<a href="#" type="doc" class="tramit_link">Parecer após discussão pública</a>
+						</p>
+					</div>
+				</div>
+			
+				<div class="anda">
+					<div @click="E06=!E06">06 <span>Consolidação</span></div>
+					<div v-if="E06">
+						<p>
+							Instrumento proposto<br>
+							<span>{{ projeto.f_instrumento_urbanistico_proposto }}</span>
+						</p>
+					</div>
+				</div>
+			
+				<div class="anda">
+					<div @click="E07=!E07">07 <span>Tramitação jurídica</span></div>
+					<div v-if="E07">
+						<p>
+							Órgão em análise<br>
+							<span>{{ projeto.g_nome_orgao_em_analise }}</span>
+						</p>
+						<p>
+							{{ projeto.f_instrumento_juridico_necessario }} !!!!NUMERO!!! - {{ projeto.g_status_aprovacao }}
+						</p>
+					</div>
+				</div>
+			
+				<div class="impl">
+					<div @click="E08=!E08">08 <span>Implantação</span></div>
+					<div v-if="E08">
+						<p><span>{{ projeto.h_status_implantacao }}</span></p>
+						<p>
+							Órgão em análise<br>
+							<span>{{ projeto.h_orgao_em_analise }}</span>
+						</p>
+					</div>
+				</div>
 			</div>
 		</div>
 

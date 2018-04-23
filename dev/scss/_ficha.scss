@@ -1,6 +1,7 @@
 #ficha {
 
 	div.menu-titulo {
+
 		div.titulo {
 			line-height: 2em;
 			font-size: 2em;
@@ -12,7 +13,7 @@
 		};
 		.proposicao { color: $proposicao; border-color: $proposicao; };
 		.andamento { color: $andamento; border-color: $andamento; };
-		.implantacao { color: $implantacao; border--color: $implantacao; };
+		.implantacao { color: $implantacao; border-color: $implantacao; };
 		.suspenso { color: $suspenso; border-color: $suspenso; };
 		.possivel { color: $possivel; border-bottom-color: $possivel; border-left-color: transparent; }
 
@@ -33,7 +34,8 @@
 				padding: 0 8px;
 				border-left-width: 10px;
 				border-left-style: solid;
-				a { color: #333333; };
+				display: block;
+				a { color: #333333; display: block; };
 				a:hover { text-decoration: none; cursor: pointer; }
 			};
 			li:hover {
@@ -123,67 +125,16 @@
 		div.tramitacao {
 			width: 40%;
 			margin-left: 16px;
-			ol {
-				list-style-type: decimal-leading-zero;
-				list-style-position: inside;
-				padding: 0;
-				li {
-					line-height: 32px;
-					border-top-width: 3px;
-					border-top-style: solid;
-					padding-left: 4px;
-					&:hover { background-color: #F8F8F8; };
-					div {
-						display: inline-block;
-						font-weight: 700;
-						span { text-transform: uppercase; };
-						&:hover { cursor: pointer; };
-						div {
-							font-weight: 300;
-							text-transform: none;
-							display: table-cell;
-							padding: 0.6em 0;
-							p { 
-								font-size: 1em;
-								line-height: 1.75em;
-								padding: 0;
-								margin: 0.6em 0 1em 0;
-							};
-							span {
-								font-weight: 700;
-								text-transform: none;
-							};
-							a.tramit_link {
-								display: block;
-								max-width: 300px;
-								white-space: nowrap;
-								overflow: hidden;
-								text-overflow: ellipsis;
-							};
-							a.tramit_link::before {
-								content: attr(type);
-								line-height: 10px;
-								margin-right: 4px;
-								text-transform: uppercase;
-								font-size: 10px;
-								display: inline-block;
-								border-radius: 2px;
-								border: 1px solid #BCBCBC;
-								color: #BCBCBC;
-								padding: 2px;
-							};
-							a.tramit_link:hover::before {
-								color: $vermelho-gestao;
-								border-color: $vermelho-gestao;
-							};
-						};
-					};
-					div.info {
-						display: block;
-						font-weight: 300;
-					};
-				};
-				li.anterior {
+
+			div {
+				border-top-width: 3px;
+				border-top-style: solid;
+				line-height: 3em;
+				span { font-weight: 700; text-transform: uppercase; };
+				&:hover { background-color: #F8F8F8; cursor: pointer; };
+				div { border: 0; }
+
+				div.anterior {
 					color: rgba(0,0,0,.4);
 					&::after {
 						font-family: 'Material Icons';
@@ -193,14 +144,14 @@
 						content: 'check_box';
 					};
 				};
-				li.atual::after {
+				div.atual::after {
 					font-family: 'Material Icons';
 					font-size: 24px;
 					display: inline-block;
 					float: right;
 					content: 'indeterminate_check_box';
 				};
-				li.posterior {
+				div.posterior {
 					color: rgba(0,0,0,.4);
 					&::after {
 						font-family: 'Material Icons';
@@ -210,12 +161,50 @@
 						content: 'check_box_outline_blank';
 					};
 					div:hover { cursor: default; };
-					div div { display: normal; };
+					div div { display: none; };
 				};
-				li:nth-child(1), li:nth-child(2), li:nth-child(3) { border-top-color: $proposicao; };
-				li:nth-child(4), li:nth-child(5), li:nth-child(6), li:nth-child(7) { border-top-color: $andamento; };
-				li:nth-child(8) { border-top-color: $implantacao; };
+
+				div:nth-of-type(2) {
+					padding: 0 0 1em 0;
+
+					a.tramit_link {
+						display: block;
+						max-width: 300px;
+						white-space: nowrap;
+						overflow: hidden;
+						text-overflow: ellipsis;
+					};
+					a.tramit_link::before {
+						content: attr(type);
+						line-height: 10px;
+						margin-right: 4px;
+						text-transform: uppercase;
+						font-size: 10px;
+						display: inline-block;
+						border-radius: 2px;
+						border: 1px solid #BCBCBC;
+						color: #BCBCBC;
+						padding: 2px;
+					};
+					a.tramit_link:hover::before {
+						color: $vermelho-gestao;
+						border-color: $vermelho-gestao;
+					};
+
+					p {
+						margin: 0;
+						padding-top: .5em;
+						line-height: 1.5em;
+						font-size: 1em;
+					}
+					p:first-child { margin-top: 0; }
+
+				};
 			};
+
+		div.prop { border-top-color: $proposicao; };
+		div.anda { border-top-color: $andamento; };
+		div.impl { border-top-color: $implantacao; };
 		};
 	};
 }
