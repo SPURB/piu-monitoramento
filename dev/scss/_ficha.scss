@@ -132,8 +132,9 @@
 				line-height: 3em;
 				span { font-weight: 700; text-transform: uppercase; };
 				&:hover { background-color: #F8F8F8; cursor: pointer; };
-				div { border: 0; }
-
+				div { 
+					border: 0;
+				}
 				div.anterior {
 					color: rgba(0,0,0,.4);
 					&::after {
@@ -160,10 +161,14 @@
 						float: right;
 						content: 'check_box_outline_blank';
 					};
-					div:hover { cursor: default; };
-					div div { display: none; };
+					&:hover {
+						cursor: default;
+						background-color: #FFFFFF;
+					};
 				};
-
+				div.posterior + div { 
+					display: none;
+				};
 				div:nth-of-type(2) {
 					padding: 0 0 1em 0;
 
@@ -196,15 +201,23 @@
 						padding-top: .5em;
 						line-height: 1.5em;
 						font-size: 1em;
-					}
-					p:first-child { margin-top: 0; }
-
+					};
+					p:first-child { margin-top: 0; };
 				};
 			};
-
-		div.prop { border-top-color: $proposicao; };
-		div.anda { border-top-color: $andamento; };
-		div.impl { border-top-color: $implantacao; };
+			div:nth-child(2), div:nth-child(3), div:nth-child(4) { border-top-color: $proposicao; };
+			div:nth-child(5), div:nth-child(6), div:nth-child(7), div:nth-child(8) { border-top-color: $andamento; };
+			div:nth-child(9) { border-top-color: $implantacao; };
 		};
 	};
+
+	.menuTransition {
+		transition: opacity 300ms;
+	}
+	.menuTransition-enter, .menuTransition-leave-to {
+		opacity: 0;
+	};
+	.menuTransition-enter-to, .menuTransition-leave {
+		opacity: 1;
+	}
 }

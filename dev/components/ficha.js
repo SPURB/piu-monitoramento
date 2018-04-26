@@ -75,6 +75,13 @@ let ficha = {
 			this.menuClickedId = id;
 			this.enviaId();
 		},
+
+		atribuiEstado(etapa,etpflx) {
+			let e = this.getStatusNumber(etpflx);
+			if (e < etapa) { return 'posterior' };
+			if (e == etapa) { return 'atual' };
+			if (e > etapa) { return 'anterior' };
+		},
 	},
 
 	watch:{
@@ -96,13 +103,17 @@ let ficha = {
 				<i v-if="!menu" class="material-icons">expand_more</i>
 				<i v-if="menu" class="material-icons">expand_less</i>
 			</div>
-			<ul v-if="menu">
-				<template v-for="projeto in data.sort()">
-					<li v-bind:class=atribuiEtapa(projeto.a_etapa_fluxograma)>
-						<a @click="gravaId(projeto.id)">{{ projeto.id_nome }}</a>
-					</li>
-				</template>
-			</ul>
+			
+				<ul v-if="menu">
+					<template v-for="projeto in data.sort(function(a,b){return getStatusNumber(a.a_etapa_fluxograma)-getStatusNumber(b.a_etapa_fluxograma)})">
+						<transition name="menuTransition" tag="ul">
+						<li v-bind:class=atribuiEtapa(projeto.a_etapa_fluxograma)>
+							<a @click="gravaId(projeto.id)">{{ projeto.id_nome }}</a>
+						</li>
+						</transition>
+					</template>
+				</ul>
+				
 		</div>
 
 		<div class="container">
@@ -131,8 +142,10 @@ let ficha = {
 			<div class="tramitacao">
 				<h4>Tramitação prevista</h4>
 						
-				<div class="prop">
-					<div @click="E01=!E01">01 <span>Em proposição dos elementos prévios</span></div>
+				<div>
+					<div @click="E01=!E01" v-bind:class=atribuiEstado(1,projeto.a_etapa_fluxograma)>
+							01 <span>Em proposição dos elementos prévios</span>
+					</div>
 					<div v-if="E01">
 						<p>
 							<span>Protocolado</span> em {{ dataExcelJS(projeto.a_data_protocolo) }}
@@ -141,8 +154,8 @@ let ficha = {
 					</div>
 				</div>
 			
-				<div class="prop">
-					<div @click="E02=!E02">02 <span>Consulta pública inicial</span></div>
+				<div>
+					<div @click="E02=!E02" v-bind:class=atribuiEstado(2,projeto.a_etapa_fluxograma)>02 <span>Consulta pública inicial</span></div>
 					<div v-if="E02">
 						<p>
 							Consulta <span>{{ projeto.b_status }}</span> ({{ dataExcelJS(projeto.b_data_inicio) }}–{{ dataExcelJS(projeto.b_data_final) }})
@@ -152,8 +165,8 @@ let ficha = {
 					</div>
 				</div>
 			
-				<div class="prop">
-					<div @click="E03=!E03">03 <span>Em avaliação SMUL</span></div>
+				<div>
+					<div @click="E03=!E03" v-bind:class=atribuiEstado(3,projeto.a_etapa_fluxograma)>03 <span>Em avaliação SMUL</span></div>
 					<div v-if="E03">
 						<p>
 							<span>Enviado para SMUL</span> em {{ dataExcelJS(projeto.c_data_envio) }}
@@ -162,8 +175,8 @@ let ficha = {
 					</div>
 				</div>
 			
-				<div class="anda">
-					<div @click="E04=!E04">04 <span>Elaboração</span></div>
+				<div>
+					<div @click="E04=!E04" v-bind:class=atribuiEstado(4,projeto.a_etapa_fluxograma)>04 <span>Elaboração</span></div>
 					<div v-if="E04">
 						<p>
 							Departamento responsável<br>
@@ -176,8 +189,8 @@ let ficha = {
 					</div>
 				</div>
 			
-				<div class="anda">
-					<div @click="E05=!E05">05 <span>Discussão pública</span></div>
+				<div>
+					<div @click="E05=!E05" v-bind:class=atribuiEstado(5,projeto.a_etapa_fluxograma)>05 <span>Discussão pública</span></div>
 					<div v-if="E05">
 						<p>
 							<span>Evento realizado em {{ projeto.e_data_audiencia_publica }}</span>
@@ -196,8 +209,8 @@ let ficha = {
 					</div>
 				</div>
 			
-				<div class="anda">
-					<div @click="E06=!E06">06 <span>Consolidação</span></div>
+				<div>
+					<div @click="E06=!E06" v-bind:class=atribuiEstado(6,projeto.a_etapa_fluxograma)>06 <span>Consolidação</span></div>
 					<div v-if="E06">
 						<p>
 							Instrumento proposto<br>
@@ -206,8 +219,8 @@ let ficha = {
 					</div>
 				</div>
 			
-				<div class="anda">
-					<div @click="E07=!E07">07 <span>Tramitação jurídica</span></div>
+				<div>
+					<div @click="E07=!E07" v-bind:class=atribuiEstado(7,projeto.a_etapa_fluxograma)>07 <span>Tramitação jurídica</span></div>
 					<div v-if="E07">
 						<p>
 							Órgão em análise<br>
@@ -219,8 +232,8 @@ let ficha = {
 					</div>
 				</div>
 			
-				<div class="impl">
-					<div @click="E08=!E08">08 <span>Implantação</span></div>
+				<div>
+					<div @click="E08=!E08" v-bind:class=atribuiEstado(8,projeto.a_etapa_fluxograma)>08 <span>Implantação</span></div>
 					<div v-if="E08">
 						<p><span>{{ projeto.h_status_implantacao }}</span></p>
 						<p>
