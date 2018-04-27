@@ -29,7 +29,8 @@ gulp.task('scss', function() {
 
 gulp.task('scripts-production', function() {
     gulp.src([
-      './dev/data/monitoramento.js', 
+      './dev/data/monitoramento.js',
+      './dev/data/hiperlinks.js', 
       './dev/components/mapa.js',
       './dev/components/sumario.js',
       './dev/components/ficha.js',
@@ -65,6 +66,27 @@ gulp.task('create-json', function (){
   });
 })
 
+gulp.task('hiperlinks', function (){
+  var fs = require('fs');
+  var hiperlinks = [];
+
+  if(typeof require !== 'undefined') XLSX = require('xlsx');
+  var workbook = XLSX.readFile('PIUS_Doc_ParticipacaoPublica.xlsx');
+  var first_sheet_name = 'hiperlinks';// -> primeira planilha do arquivo. Ou trocar pelo nome da planilha
+  var worksheet = workbook.Sheets[first_sheet_name];
+  var myObj = XLSX.utils.sheet_to_json(worksheet,{raw:true});
+  myObj.map(function(index){ hiperlinks.push(index); })
+
+  var json = JSON.stringify(hiperlinks);
+  var concat = 'var hiperlinks =' + json;
+  fs.writeFile('./dev/data/hiperlinks.js', concat, 'utf8', function (err){
+    if(err){
+      return console.log(err);
+    }
+    console.log("./dev/data/hiperlinks.js atualizado")
+  });
+})
+
 gulp.task('watch', ['browserSync', 'scss','create-json','scripts-production'], function (){
   gulp.watch('./dev/**/*.scss', ['scss']); 
   gulp.watch('./dev/**/*.js', ['scripts-production']); 
@@ -72,3 +94,4 @@ gulp.task('watch', ['browserSync', 'scss','create-json','scripts-production'], f
 });
 
 gulp.task('build', ['scss','create-json','scripts-production']);
+gulp.task('hp', ['hiperlinks']);

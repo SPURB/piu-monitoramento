@@ -3,6 +3,7 @@ let ficha = {
 	data (){
 		return {
 			data: monitoramento,
+			hiperlinks: hiperlinks,
 			projeto: '',
 			menuClickedId: '',
 			menu: false,
@@ -65,6 +66,11 @@ let ficha = {
 					this.projeto = index;
 				};
 			});
+			this.hiperlinks.map(function(index) {
+				if (index.ID_Projeto == newClickedId) {
+					this.proj == index;
+				};
+			});
 		},
 
 		enviaId(event) {
@@ -82,6 +88,10 @@ let ficha = {
 			if (e == etapa) { return 'atual' };
 			if (e > etapa) { return 'anterior' };
 		},
+
+		// procuraExtensao(caminho) {
+		// 	let ext = caminho
+		// },
 	},
 
 	watch:{
@@ -103,17 +113,11 @@ let ficha = {
 				<i v-if="!menu" class="material-icons">expand_more</i>
 				<i v-if="menu" class="material-icons">expand_less</i>
 			</div>
-			
-				<ul v-if="menu">
-					<template v-for="projeto in data.sort(function(a,b){return getStatusNumber(a.a_etapa_fluxograma)-getStatusNumber(b.a_etapa_fluxograma)})">
-						<transition name="menuTransition" tag="ul">
-						<li v-bind:class=atribuiEtapa(projeto.a_etapa_fluxograma)>
-							<a @click="gravaId(projeto.id)">{{ projeto.id_nome }}</a>
-						</li>
-						</transition>
-					</template>
-				</ul>
-				
+			<transition-group name="menu" tag="ul" v-if="menu" class="menu">
+				<li v-for="projeto in data.sort(function(a,b){return getStatusNumber(a.a_etapa_fluxograma)-getStatusNumber(b.a_etapa_fluxograma)})" v-bind:class=atribuiEtapa(projeto.a_etapa_fluxograma) :key="projeto.id_nome">
+					<a @click="gravaId(projeto.id)">{{ projeto.id_nome }}</a>
+				</li>
+			</transition-group>
 		</div>
 
 		<div class="container">
@@ -146,101 +150,120 @@ let ficha = {
 					<div @click="E01=!E01" v-bind:class=atribuiEstado(1,projeto.a_etapa_fluxograma)>
 							01 <span>Em proposição dos elementos prévios</span>
 					</div>
-					<div v-if="E01">
-						<p>
-							<span>Protocolado</span> em {{ dataExcelJS(projeto.a_data_protocolo) }}
-							<a href="" type="doc" class="tramit_link">Parecer proposição (SPURB)</a>
-						</p>
-					</div>
+					<transition name="tramitTransit" class="tramitTransit">
+						<div v-if="E01">
+							<p>
+								<span>Protocolado</span> em {{ dataExcelJS(projeto.a_data_protocolo) }}
+								<!-- <a href="" type="doc" class="tramit_link">Parecer proposição (SPURB)</a> -->
+								<template v-for="hiperlink in hiperlinks">
+									<a v-if="hiperlink.ID_Projeto == menuClickedId && hiperlink.ID_etapa == 1" class="tramit_link" :href="hiperlink.arquivo">{{ hiperlink.nome_publico_do_arquivo }}</a>
+								</template>
+							</p>
+						</div>
+					</transition>
 				</div>
 			
 				<div>
 					<div @click="E02=!E02" v-bind:class=atribuiEstado(2,projeto.a_etapa_fluxograma)>02 <span>Consulta pública inicial</span></div>
-					<div v-if="E02">
-						<p>
-							Consulta <span>{{ projeto.b_status }}</span> ({{ dataExcelJS(projeto.b_data_inicio) }}–{{ dataExcelJS(projeto.b_data_final) }})
-							<a href="#" type="doc" class="tramit_link">Contribuições</a>
-							<a href="#" type="doc" class="tramit_link">Parecer Consulta Inicial (SPURB)</a>
-						</p>
-					</div>
+					<transition name="tramitTransit" class="tramitTransit">
+						<div v-if="E02">
+							<p>
+								Consulta <span>{{ projeto.b_status }}</span> ({{ dataExcelJS(projeto.b_data_inicio) }}–{{ dataExcelJS(projeto.b_data_final) }})
+								<a href="#" type="doc" class="tramit_link">Contribuições</a>
+								<a href="#" type="doc" class="tramit_link">Parecer Consulta Inicial (SPURB)</a>
+							</p>
+						</div>
+					</transition>
 				</div>
 			
 				<div>
 					<div @click="E03=!E03" v-bind:class=atribuiEstado(3,projeto.a_etapa_fluxograma)>03 <span>Em avaliação SMUL</span></div>
-					<div v-if="E03">
-						<p>
-							<span>Enviado para SMUL</span> em {{ dataExcelJS(projeto.c_data_envio) }}
-							<a href="#" type="doc" class="tramit_link">Parecer SMUL</a>
-						</p>
-					</div>
+					<transition name="tramitTransit" class="tramitTransit">
+						<div v-if="E03">
+							<p>
+								<span>Enviado para SMUL</span> em {{ dataExcelJS(projeto.c_data_envio) }}
+								<a href="#" type="doc" class="tramit_link">Parecer SMUL</a>
+							</p>
+						</div>
+					</transition>
 				</div>
 			
 				<div>
 					<div @click="E04=!E04" v-bind:class=atribuiEstado(4,projeto.a_etapa_fluxograma)>04 <span>Elaboração</span></div>
-					<div v-if="E04">
-						<p>
-							Departamento responsável<br>
-							<span>{{ projeto.d_secretarias_envolvidas }}</span>
-						</p>
-						<p>
-							Órgãos externos envolvidos<br>
-							<span>{{ projeto.d_orgaos_externos_envolvidos }}</span>
-						</p>
-					</div>
+					<transition name="tramitTransit" class="tramitTransit">
+						<div v-if="E04">
+							<p>
+								Departamento responsável<br>
+								<span>{{ projeto.d_secretarias_envolvidas }}</span>
+							</p>
+							<p>
+								Órgãos externos envolvidos<br>
+								<span>{{ projeto.d_orgaos_externos_envolvidos }}</span>
+							</p>
+						</div>
+					</transition>
 				</div>
 			
 				<div>
 					<div @click="E05=!E05" v-bind:class=atribuiEstado(5,projeto.a_etapa_fluxograma)>05 <span>Discussão pública</span></div>
-					<div v-if="E05">
-						<p>
-							<span>Evento realizado em {{ projeto.e_data_audiencia_publica }}</span>
-							<a href="#" type="doc" class="tramit_link">Materiais disponibilizados</a>
-							<a href="#" type="doc" class="tramit_link">Ata / Contribuições</a>
-						</p>
-						<p>
-							<span>Instâncias consultadas</span>
-							<a href="#" type="doc" class="tramit_link">Parecer SABESP</a>
-						</p>
-						<p>
-							Consulta pública online <span>{{ projeto.e_status_consulta_internet_minuta }}</span> ({{ dataExcelJS(projeto.e_data_inicio_consulta_minuta) }}–{{ dataExcelJS(projeto.e_data_final_consulta_minuta) }})
-							<a href="#" type="doc" class="tramit_link">Contribuições</a>
-							<a href="#" type="doc" class="tramit_link">Parecer após discussão pública</a>
-						</p>
-					</div>
+					<transition name="tramitTransit" class="tramitTransit">
+						<div v-if="E05">
+							<p>
+								<span>Evento realizado em {{ projeto.e_data_audiencia_publica }}</span>
+								<a href="#" type="doc" class="tramit_link">Materiais disponibilizados</a>
+								<a href="#" type="doc" class="tramit_link">Ata / Contribuições</a>
+							</p>
+							<p>
+								<span>Instâncias consultadas</span>
+								<a href="#" type="doc" class="tramit_link">Parecer SABESP</a>
+							</p>
+							<p>
+								Consulta pública online <span>{{ projeto.e_status_consulta_internet_minuta }}</span> ({{ dataExcelJS(projeto.e_data_inicio_consulta_minuta) }}–{{ dataExcelJS(projeto.e_data_final_consulta_minuta) }})
+								<a href="#" type="doc" class="tramit_link">Contribuições</a>
+								<a href="#" type="doc" class="tramit_link">Parecer após discussão pública</a>
+							</p>
+						</div>
+					</transition>
 				</div>
 			
 				<div>
 					<div @click="E06=!E06" v-bind:class=atribuiEstado(6,projeto.a_etapa_fluxograma)>06 <span>Consolidação</span></div>
-					<div v-if="E06">
-						<p>
-							Instrumento proposto<br>
-							<span>{{ projeto.f_instrumento_urbanistico_proposto }}</span>
-						</p>
-					</div>
+					<transition name="tramitTransit" class="tramitTransit">
+						<div v-if="E06">
+							<p>
+								Instrumento proposto<br>
+								<span>{{ projeto.f_instrumento_urbanistico_proposto }}</span>
+							</p>
+						</div>
+					</transition>
 				</div>
 			
 				<div>
 					<div @click="E07=!E07" v-bind:class=atribuiEstado(7,projeto.a_etapa_fluxograma)>07 <span>Tramitação jurídica</span></div>
-					<div v-if="E07">
-						<p>
-							Órgão em análise<br>
-							<span>{{ projeto.g_nome_orgao_em_analise }}</span>
-						</p>
-						<p>
-							{{ projeto.f_instrumento_juridico_necessario }} !!!!NUMERO!!! - {{ projeto.g_status_aprovacao }}
-						</p>
-					</div>
+					<transition name="tramitTransit" class="tramitTransit">
+						<div v-if="E07">
+							<p>
+								Órgão em análise<br>
+								<span>{{ projeto.g_nome_orgao_em_analise }}</span>
+							</p>
+							<p>
+								{{ projeto.f_instrumento_juridico_necessario }} !!!!NUMERO!!! - {{ projeto.g_status_aprovacao }}
+							</p>
+						</div>
+					</transition>
 				</div>
 			
 				<div>
 					<div @click="E08=!E08" v-bind:class=atribuiEstado(8,projeto.a_etapa_fluxograma)>08 <span>Implantação</span></div>
-					<div v-if="E08">
-						<p><span>{{ projeto.h_status_implantacao }}</span></p>
-						<p>
-							Órgão em análise<br>
-							<span>{{ projeto.h_orgao_em_analise }}</span>
-						</p>
-					</div>
+					<transition name="tramitTransit" class="tramitTransit">
+						<div v-if="E08">
+							<p><span>{{ projeto.h_status_implantacao }}</span></p>
+							<p>
+								Órgão em análise<br>
+								<span>{{ projeto.h_orgao_em_analise }}</span>
+							</p>
+						</div>
+					</transition>
 				</div>
 			</div>
 		</div>
