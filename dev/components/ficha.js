@@ -37,7 +37,7 @@ let ficha = {
 			if (etp > 3 && etp <= 7) { return 'andamento'};
 			if (etp > 7 && etp <= 8) { return 'implantacao' };
 			if (etp > 8 && etp <= 10) { return 'suspenso' };
-			if (etp >= 11) { return 'possivel' };
+			if (etp >= 11) { return 'prospeccao' };
 		},
 
 		dataExcelJS(data) {
@@ -89,19 +89,35 @@ let ficha = {
 			if (e > etapa) { return 'anterior' };
 		},
 
-		// procuraExtensao(caminho) {
-		// 	let ext = caminho
-		// },
+		ext(filename) {
+			let extensao = filename.substring(filename.lastIndexOf('.')+1, filename.length);
+			if (extensao.length > 4) { return 'url' };
+			if (extensao.length <= 4) { return extensao };
+		},
 	},
 
 	watch:{
 		clickedId(newprop,oldprop){
 			const app = this;
 			app.data.map(function(index) {
-				if (index.id == newprop) {
+				if (index.ID_rev == newprop) {
 					app.projeto = index;
 				};
 			});
+		}
+	},
+
+	mounted: {
+		abreTramitacao() {
+			let etapa = this.projeto.etapas_NUM;
+			if (etapa == 1) { E01: true };
+			if (etapa == 2) { E02: true };
+			if (etapa == 3) { E03: true };
+			if (etapa == 4) { E04: true };
+			if (etapa == 5) { E05: true };
+			if (etapa == 6) { E06: true };
+			if (etapa == 7) { E07: true };
+			if (etapa == 8) { E08: true };
 		}
 	},
 
@@ -113,11 +129,11 @@ let ficha = {
 				<i v-if="!menu" class="material-icons">expand_more</i>
 				<i v-if="menu" class="material-icons">expand_less</i>
 			</div>
-			<transition-group name="menu" tag="ul" v-if="menu" class="menu">
-				<li v-for="projeto in data.sort(function(a,b){return getStatusNumber(a.a_etapa_fluxograma)-getStatusNumber(b.a_etapa_fluxograma)})" v-bind:class=atribuiEtapa(projeto.a_etapa_fluxograma) :key="projeto.id_nome">
-					<a @click="gravaId(projeto.id)">{{ projeto.id_nome }}</a>
-				</li>
-			</transition-group>
+			<!-- <transition-group name="menu" tag="ul" v-if="menu" class="menu"> -->
+				<ul v-if="menu" class="menu"><li v-for="projeto in data.sort(function(a,b){return getStatusNumber(a.a_etapa_fluxograma)-getStatusNumber(b.a_etapa_fluxograma)})" v-bind:class=atribuiEtapa(projeto.a_etapa_fluxograma) :key="projeto.id_nome">
+					<a @click="gravaId(projeto.ID_rev)">{{ projeto.id_nome }}</a>
+				</li></ul>
+			<!-- </transition-group> -->
 		</div>
 
 		<div class="container">
@@ -152,11 +168,13 @@ let ficha = {
 					</div>
 					<transition name="tramitTransit" class="tramitTransit">
 						<div v-if="E01">
-							<p>
+							<p v-if="projeto.a_data_protocolo != null && projeto.a_data_protocolo != '-'">
 								<span>Protocolado</span> em {{ dataExcelJS(projeto.a_data_protocolo) }}
-								<!-- <a href="" type="doc" class="tramit_link">Parecer proposição (SPURB)</a> -->
+								<hr v-if="projeto.a_data_protocolo != null && projeto.a_data_protocolo != '-'">
+							</p>
+							<p>
 								<template v-for="hiperlink in hiperlinks">
-									<a v-if="hiperlink.ID_Projeto == menuClickedId && hiperlink.ID_etapa == 1" class="tramit_link" :href="hiperlink.arquivo">{{ hiperlink.nome_publico_do_arquivo }}</a>
+									<a v-if="hiperlink.ID_Projeto == menuClickedId && hiperlink.ID_etapa == 1" class="tramit_link" :href="hiperlink.arquivo" :type="ext(hiperlink.arquivo)">{{ hiperlink.nome_publico_do_arquivo }}</a>
 								</template>
 							</p>
 						</div>
@@ -167,10 +185,14 @@ let ficha = {
 					<div @click="E02=!E02" v-bind:class=atribuiEstado(2,projeto.a_etapa_fluxograma)>02 <span>Consulta pública inicial</span></div>
 					<transition name="tramitTransit" class="tramitTransit">
 						<div v-if="E02">
+							<p v-if="projeto.b_status != 'null' && projeto.b_status != '-'">
+								Consulta <span>{{ projeto.b_status }}</span> ({{ dataExcelJS(projeto.b_data_inicio) }}—{{ dataExcelJS(projeto.b_data_final) }})
+								<hr v-if="projeto.b_status != 'null' && projeto.b_status != '-'">
+							</p>
 							<p>
-								Consulta <span>{{ projeto.b_status }}</span> ({{ dataExcelJS(projeto.b_data_inicio) }}–{{ dataExcelJS(projeto.b_data_final) }})
-								<a href="#" type="doc" class="tramit_link">Contribuições</a>
-								<a href="#" type="doc" class="tramit_link">Parecer Consulta Inicial (SPURB)</a>
+								<template v-for="hiperlink in hiperlinks">
+									<a v-if="hiperlink.ID_Projeto == menuClickedId && hiperlink.ID_etapa == 2" class="tramit_link" :href="hiperlink.arquivo" :type="ext(hiperlink.arquivo)">{{ hiperlink.nome_publico_do_arquivo }}</a>
+								</template>
 							</p>
 						</div>
 					</transition>
@@ -180,9 +202,14 @@ let ficha = {
 					<div @click="E03=!E03" v-bind:class=atribuiEstado(3,projeto.a_etapa_fluxograma)>03 <span>Em avaliação SMUL</span></div>
 					<transition name="tramitTransit" class="tramitTransit">
 						<div v-if="E03">
-							<p>
+							<p v-if="projeto.c_data_envio != 'null' && projeto.c_data_envio != '-'">
 								<span>Enviado para SMUL</span> em {{ dataExcelJS(projeto.c_data_envio) }}
-								<a href="#" type="doc" class="tramit_link">Parecer SMUL</a>
+								<hr v-if="projeto.c_data_envio != 'null' && projeto.c_data_envio != '-'">
+							</p>
+							<p>
+								<template v-for="hiperlink in hiperlinks">
+									<a v-if="hiperlink.ID_Projeto == menuClickedId && hiperlink.ID_etapa == 3" class="tramit_link" :href="hiperlink.arquivo" :type="ext(hiperlink.arquivo)">{{ hiperlink.nome_publico_do_arquivo }}</a>
+								</template>
 							</p>
 						</div>
 					</transition>
@@ -192,13 +219,19 @@ let ficha = {
 					<div @click="E04=!E04" v-bind:class=atribuiEstado(4,projeto.a_etapa_fluxograma)>04 <span>Elaboração</span></div>
 					<transition name="tramitTransit" class="tramitTransit">
 						<div v-if="E04">
-							<p>
+							<p v-if="projeto.d_status != 'null' && projeto.d_status != '-'">
+								<span>{{ projeto.d_status }}</span>
+								<hr v-if="projeto.d_status != 'null' && projeto.d_status != '-'">
+							</p>
+							<p v-if="projeto.d_secretarias_envolvidas != 'null' && projeto.d_secretarias_envolvidas != '-'">
 								Departamento responsável<br>
 								<span>{{ projeto.d_secretarias_envolvidas }}</span>
+								<hr v-if="projeto.d_secretarias_envolvidas != 'null' && projeto.d_secretarias_envolvidas != '-'">
 							</p>
 							<p>
-								Órgãos externos envolvidos<br>
-								<span>{{ projeto.d_orgaos_externos_envolvidos }}</span>
+								<template v-for="hiperlink in hiperlinks">
+									<a v-if="hiperlink.ID_Projeto == menuClickedId && hiperlink.ID_etapa == 4" class="tramit_link" :href="hiperlink.arquivo" :type="ext(hiperlink.arquivo)">{{ hiperlink.nome_publico_do_arquivo }}</a>
+								</template>
 							</p>
 						</div>
 					</transition>
@@ -208,20 +241,7 @@ let ficha = {
 					<div @click="E05=!E05" v-bind:class=atribuiEstado(5,projeto.a_etapa_fluxograma)>05 <span>Discussão pública</span></div>
 					<transition name="tramitTransit" class="tramitTransit">
 						<div v-if="E05">
-							<p>
-								<span>Evento realizado em {{ projeto.e_data_audiencia_publica }}</span>
-								<a href="#" type="doc" class="tramit_link">Materiais disponibilizados</a>
-								<a href="#" type="doc" class="tramit_link">Ata / Contribuições</a>
-							</p>
-							<p>
-								<span>Instâncias consultadas</span>
-								<a href="#" type="doc" class="tramit_link">Parecer SABESP</a>
-							</p>
-							<p>
-								Consulta pública online <span>{{ projeto.e_status_consulta_internet_minuta }}</span> ({{ dataExcelJS(projeto.e_data_inicio_consulta_minuta) }}–{{ dataExcelJS(projeto.e_data_final_consulta_minuta) }})
-								<a href="#" type="doc" class="tramit_link">Contribuições</a>
-								<a href="#" type="doc" class="tramit_link">Parecer após discussão pública</a>
-							</p>
+							<!-- COMO ORGANIZAR DISCUSSAO PUBLICA??? -->
 						</div>
 					</transition>
 				</div>
@@ -230,9 +250,19 @@ let ficha = {
 					<div @click="E06=!E06" v-bind:class=atribuiEstado(6,projeto.a_etapa_fluxograma)>06 <span>Consolidação</span></div>
 					<transition name="tramitTransit" class="tramitTransit">
 						<div v-if="E06">
-							<p>
-								Instrumento proposto<br>
+							<p v-if="projeto.f_status != 'null' && projeto.f_status != '-'">
+								<span>{{ projeto.f_status }}</span>
+								<hr v-if="projeto.f_status != 'null' && projeto.f_status != '-'">
+							</p>
+							<p v-if="projeto.f_instrumento_urbanistico_proposto != 'null' && projeto.f_instrumento_urbanistico_proposto != '-'">
+								Instrumento proposto<br />
 								<span>{{ projeto.f_instrumento_urbanistico_proposto }}</span>
+								<hr v-if="projeto.f_instrumento_urbanistico_proposto != 'null' && projeto.f_instrumento_urbanistico_proposto != '-'">
+							</p>
+							<p>
+								<template v-for="hiperlink in hiperlinks">
+									<a v-if="hiperlink.ID_Projeto == menuClickedId && hiperlink.ID_etapa == 6" class="tramit_link" :href="hiperlink.arquivo" :type="ext(hiperlink.arquivo)">{{ hiperlink.nome_publico_do_arquivo }}</a>
+								</template>
 							</p>
 						</div>
 					</transition>
@@ -242,12 +272,20 @@ let ficha = {
 					<div @click="E07=!E07" v-bind:class=atribuiEstado(7,projeto.a_etapa_fluxograma)>07 <span>Tramitação jurídica</span></div>
 					<transition name="tramitTransit" class="tramitTransit">
 						<div v-if="E07">
-							<p>
+							<p v-if="projeto.g_nome_orgao_em_analise != 'null' && projeto.g_nome_orgao_em_analise != '-'">
 								Órgão em análise<br>
 								<span>{{ projeto.g_nome_orgao_em_analise }}</span>
+								<hr v-if="projeto.g_nome_orgao_em_analise != 'null' && projeto.g_nome_orgao_em_analise != '-'">
+							</p>
+							<p v-if="projeto.g_registro_publico_de_envio_normativo != 'null' && projeto.g_registro_publico_de_envio_normativo != '-'">
+								{{ projeto.g_registro_publico_de_envio_normativo }}
+								{{ projeto.g_status_aprovacao }}
+								<hr v-if="projeto.g_registro_publico_de_envio_normativo != 'null' && projeto.g_registro_publico_de_envio_normativo != '-'">
 							</p>
 							<p>
-								{{ projeto.f_instrumento_juridico_necessario }} !!!!NUMERO!!! - {{ projeto.g_status_aprovacao }}
+								<template v-for="hiperlink in hiperlinks">
+									<a v-if="hiperlink.ID_Projeto == menuClickedId && hiperlink.ID_etapa == 7" class="tramit_link" :href="hiperlink.arquivo" :type="ext(hiperlink.arquivo)">{{ hiperlink.nome_publico_do_arquivo }}</a>
+								</template>
 							</p>
 						</div>
 					</transition>
@@ -257,10 +295,19 @@ let ficha = {
 					<div @click="E08=!E08" v-bind:class=atribuiEstado(8,projeto.a_etapa_fluxograma)>08 <span>Implantação</span></div>
 					<transition name="tramitTransit" class="tramitTransit">
 						<div v-if="E08">
-							<p><span>{{ projeto.h_status_implantacao }}</span></p>
-							<p>
+							<p v-if="projeto.h_status_implantacao != 'null' && projeto.h_status_implantacao != '-'">
+								<span>{{ projeto.h_status_implantacao }}</span>
+								<hr v-if="projeto.h_status_implantacao != 'null' && projeto.h_status_implantacao != '-'">
+							</p>
+							<p v-if="projeto.h_orgao_em_analise != 'null' && projeto.h_orgao_em_analise != '-'">
 								Órgão em análise<br>
 								<span>{{ projeto.h_orgao_em_analise }}</span>
+								<hr v-if="projeto.h_orgao_em_analise != 'null' && projeto.h_orgao_em_analise != '-'">
+							</p>
+							<p>
+								<template v-for="hiperlink in hiperlinks">
+									<a v-if="hiperlink.ID_Projeto == menuClickedId && hiperlink.ID_etapa == 8" class="tramit_link" :href="hiperlink.arquivo" :type="ext(hiperlink.arquivo)">{{ hiperlink.nome_publico_do_arquivo }}</a>
+								</template>
 							</p>
 						</div>
 					</transition>

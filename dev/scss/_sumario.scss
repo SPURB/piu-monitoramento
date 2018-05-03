@@ -39,9 +39,10 @@ div {
 				line-height: 32px;
 				padding: 0 8px;
 				border-radius: 2px;
+				transition: all 150ms;
 			};
 
-			a:hover { color: #FFFFFF; transition: 150ms; }
+			a:hover { color: #FFFFFF; }
 		};
 		div:first-child span { 
 			font-size: 11px; 
@@ -105,12 +106,12 @@ div.suspenso {
 	div div div.marcadorEtapa:hover { color: $suspenso; }
 }
 
-div.possivel {
-	border-left-color: $possivel;
-	div.etapa { background-color: transparent; border: 1px solid $possivel; color: $possivel; };
-	div.etapa div:hover { background-color: transparent; border: 1px solid $possivel; color: $possivel; };
+div.prospeccao {
+	border-left-color: $prospeccao;
+	div.etapa { background-color: transparent; border: 1px solid $prospeccao; color: $prospeccao; };
+	div.etapa div:hover { background-color: transparent; border: 1px solid $prospeccao; color: $prospeccao; };
 	div a { border: 1px solid transparent; }
-	div a:hover { background-color: transparent; border: 1px solid $possivel; color: $possivel; };
+	div a:hover { background-color: transparent; border: 1px solid $prospeccao; color: $prospeccao; };
 }
 
 }

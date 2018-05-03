@@ -17,7 +17,7 @@ new Vue({
 		}
 	},
 	mounted(){
-		var base_map =  new ol.layer.Tile({ source: new ol.source.OSM() })
+		var base_map = new ol.layer.Tile({ source: new ol.source.OSM() })
 
 		var msp = new ol.layer.Vector({
 			source: new ol.source.Vector({
@@ -40,13 +40,14 @@ new Vue({
 				msp,
 				arco_jurbatuba
 			],
+			loadTilesWhileAnimating: true,
 			view: new ol.View({
 				projection: ol.proj.get('EPSG:3857'),
 				center: this.center,
 				zoom: this.zoom,
 				minZoom: 10.65,
 				maxZoom: 19
-			})
+			}),
 		});
 	}
 })
