@@ -16,6 +16,7 @@
 		.implantacao { color: $implantacao; border-color: $implantacao; };
 		.suspenso { color: $suspenso; border-color: $suspenso; };
 		.prospeccao { color: $prospeccao; border-bottom-color: $prospeccao; border-left-color: transparent !important; }
+		.arquivado { color: $arquivado; border-bottom-color: $arquivado; border-left-color: transparent !important; }
 
 		ul.menu {
 			position: absolute;
@@ -36,21 +37,20 @@
 				display: flex;
 				a { color: #333333; display: block; width: 100%; border-bottom: 1px solid #F0F0F0; padding-left: 8px; };
 				a:hover { text-decoration: none; cursor: pointer; }
+				a.consultaAberta::after { 
+					content: 'Consulta pública aberta';
+					font-size: 9px;
+					text-transform: uppercase;
+					color: #FFFFFF;
+					background-color: green; //MUDAR!! escolher verde
+					padding: 3px;
+					border-radius: 2px;
+					margin-left: 4px;
+				};
 			};
 			li:hover {
 				background-color: #F8F8F8;
 			};
-		};
-
-		.menu-enter, .menu-leave-to {
-			opacity: 0;
-			position:absolute;
-		};
-		.menu-enter-to, .menu-leave {
-			opacity: 1;
-		};
-		.menu-enter-active, .menu-leave-active {
-			transition: all 5s;
 		};
 	}
 
@@ -75,6 +75,7 @@
 		.implantacao { background-color: $implantacao; }
 		.suspenso { background-color: $suspenso; }
 		.prospeccao { color: $prospeccao !important; border: 1px solid $prospeccao; }
+		.arquivado { color: $arquivado !important; border: 1px solid $arquivado; }
 
 		div.colId {
 			width: 20%;

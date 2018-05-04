@@ -9,35 +9,18 @@ let ficha = {
 			menu: false,
 			E01: false, E02: false, E03: false, E04: false,
 			E05: false, E06: false, E07: false, E08: false,
+			isConsultaAberta: false,
 		}
 	},
 	props: ['clicked-id'],
 	methods: {
-		getStatusNumber(string) {
-			switch (string){
-				case 'Em proposição dos elementos prévios': return 1; break;
-				case 'Consulta Pública Inicial': return 2; break;
-				case 'Avaliação após 1ª Consulta': return 2.5; break;
-				case 'Em avaliação SMUL': return 3; break;
-				case 'Elaboração': return 4; break;
-				case 'Discussão pública': return 5; break;
-				case 'Consolidação': return 6; break;
-				case 'Tramitação Jurídica': return 7; break;
-				case 'Implantação': return 8; break;
-				case 'Não Autorizado / Não desenvolvido': return 9; break;
-				case 'Não autorizado /  Não desenvolvido': return 9; break;
-				case 'Desenvolvido / Suspenso': return 10; break;
-				case 'Possível': return 11; break;
-			}
-		},
-
-		atribuiEtapa(etapa) {
-			let etp = this.getStatusNumber(etapa);
+		atribuiEtapa(etp) {
 			if (etp <= 3) { return 'proposicao' };
 			if (etp > 3 && etp <= 7) { return 'andamento'};
-			if (etp > 7 && etp <= 8) { return 'implantacao' };
-			if (etp > 8 && etp <= 10) { return 'suspenso' };
-			if (etp >= 11) { return 'prospeccao' };
+			if (etp == 8) { return 'implantacao' };
+			if (etp == 9) { return 'suspenso' };
+			if (etp == 10) { return 'arquivado' };
+			if (etp == 11) { return 'prospeccao' };
 		},
 
 		dataExcelJS(data) {
@@ -82,8 +65,8 @@ let ficha = {
 			this.enviaId();
 		},
 
-		atribuiEstado(etapa,etpflx) {
-			let e = this.getStatusNumber(etpflx);
+		atribuiEstado(etapa) {
+			let e = this.projeto.etapas_NUM;
 			if (e < etapa) { return 'posterior' };
 			if (e == etapa) { return 'atual' };
 			if (e > etapa) { return 'anterior' };
@@ -94,6 +77,25 @@ let ficha = {
 			if (extensao.length > 4) { return 'url' };
 			if (extensao.length <= 4) { return extensao };
 		},
+
+		abreTramitacao(par) {
+			let etapa = par.etapas_NUM;
+			if (etapa == 1) { this.E01 = true };
+			if (etapa == 2) { this.E02 = true };
+			if (etapa == 3) { this.E03 = true };
+			if (etapa == 4) { this.E04 = true };
+			if (etapa == 5) { this.E05 = true };
+			if (etapa == 6) { this.E06 = true };
+			if (etapa == 7) { this.E07 = true };
+			if (etapa == 8) { this.E08 = true };
+		},
+
+		fConsultaAberta(par) {
+			if (par.b_status == 'aberta' || par.e_status_consulta_internet_minuta == 'aberta') { 
+				return 'consultaAberta'
+			};
+		},
+
 	},
 
 	watch:{
@@ -102,43 +104,32 @@ let ficha = {
 			app.data.map(function(index) {
 				if (index.ID_rev == newprop) {
 					app.projeto = index;
+					app.abreTramitacao(index);
 				};
 			});
-		}
-	},
-
-	mounted: {
-		abreTramitacao() {
-			let etapa = this.projeto.etapas_NUM;
-			if (etapa == 1) { E01: true };
-			if (etapa == 2) { E02: true };
-			if (etapa == 3) { E03: true };
-			if (etapa == 4) { E04: true };
-			if (etapa == 5) { E05: true };
-			if (etapa == 6) { E06: true };
-			if (etapa == 7) { E07: true };
-			if (etapa == 8) { E08: true };
 		}
 	},
 
 	template: `
 	<div id="ficha">
 		<div @click="menu = !menu" class="menu-titulo">
-			<div class="titulo" v-bind:class=atribuiEtapa(projeto.a_etapa_fluxograma)>
+			<div class="titulo" v-bind:class="atribuiEtapa(projeto.etapas_NUM)" v-bind:class="fConsultaAberta(projeto)">
 				{{ projeto.id_nome }}
 				<i v-if="!menu" class="material-icons">expand_more</i>
 				<i v-if="menu" class="material-icons">expand_less</i>
 			</div>
-			<!-- <transition-group name="menu" tag="ul" v-if="menu" class="menu"> -->
-				<ul v-if="menu" class="menu"><li v-for="projeto in data.sort(function(a,b){return getStatusNumber(a.a_etapa_fluxograma)-getStatusNumber(b.a_etapa_fluxograma)})" v-bind:class=atribuiEtapa(projeto.a_etapa_fluxograma) :key="projeto.id_nome">
-					<a @click="gravaId(projeto.ID_rev)">{{ projeto.id_nome }}</a>
-				</li></ul>
-			<!-- </transition-group> -->
+			<ul v-if="menu" class="menu">
+				<li v-for="projeto in data.sort(function(a,b){return a.etapas_NUM - b.etapas_NUM})" 
+				v-bind:class="atribuiEtapa(projeto.etapas_NUM)" 
+				:key="projeto.id_nome">
+					<a v-bind:class="fConsultaAberta(projeto)" @click="gravaId(projeto.ID_rev)"">{{ projeto.id_nome }}</a>
+				</li>
+			</ul>
 		</div>
 
 		<div class="container">
 			<div class="colId">
-				<div class="indicador" v-bind:class=atribuiEtapa(projeto.a_etapa_fluxograma)>{{ projeto.a_etapa_comunicacao }}</div>
+				<div class="indicador" v-bind:class="atribuiEtapa(projeto.etapas_NUM)">{{ projeto.a_etapa_comunicacao }}</div>
 				<div class="id">
 					Natureza da proposta
 					<div>{{projeto.id_iniciativa_da_proposta}}</div>
@@ -163,7 +154,7 @@ let ficha = {
 				<h4>Tramitação prevista</h4>
 						
 				<div>
-					<div @click="E01=!E01" v-bind:class=atribuiEstado(1,projeto.a_etapa_fluxograma)>
+					<div @click="E01=!E01" v-bind:class="atribuiEstado(1,projeto.etapas_NUM)">
 							01 <span>Em proposição dos elementos prévios</span>
 					</div>
 					<transition name="tramitTransit" class="tramitTransit">
@@ -182,7 +173,9 @@ let ficha = {
 				</div>
 			
 				<div>
-					<div @click="E02=!E02" v-bind:class=atribuiEstado(2,projeto.a_etapa_fluxograma)>02 <span>Consulta pública inicial</span></div>
+					<div @click="E02=!E02" v-bind:class="atribuiEstado(2,projeto.etapas_NUM)">
+						02 <span>Consulta pública inicial</span>
+					</div>
 					<transition name="tramitTransit" class="tramitTransit">
 						<div v-if="E02">
 							<p v-if="projeto.b_status != 'null' && projeto.b_status != '-'">
@@ -199,7 +192,9 @@ let ficha = {
 				</div>
 			
 				<div>
-					<div @click="E03=!E03" v-bind:class=atribuiEstado(3,projeto.a_etapa_fluxograma)>03 <span>Em avaliação SMUL</span></div>
+					<div @click="E03=!E03" v-bind:class="atribuiEstado(3,projeto.etapas_NUM)">
+						03 <span>Em avaliação SMUL</span>
+					</div>
 					<transition name="tramitTransit" class="tramitTransit">
 						<div v-if="E03">
 							<p v-if="projeto.c_data_envio != 'null' && projeto.c_data_envio != '-'">
@@ -216,7 +211,9 @@ let ficha = {
 				</div>
 			
 				<div>
-					<div @click="E04=!E04" v-bind:class=atribuiEstado(4,projeto.a_etapa_fluxograma)>04 <span>Elaboração</span></div>
+					<div @click="E04=!E04" v-bind:class="atribuiEstado(4,projeto.etapas_NUM)">
+						04 <span>Elaboração</span>
+					</div>
 					<transition name="tramitTransit" class="tramitTransit">
 						<div v-if="E04">
 							<p v-if="projeto.d_status != 'null' && projeto.d_status != '-'">
@@ -238,7 +235,9 @@ let ficha = {
 				</div>
 			
 				<div>
-					<div @click="E05=!E05" v-bind:class=atribuiEstado(5,projeto.a_etapa_fluxograma)>05 <span>Discussão pública</span></div>
+					<div @click="E05=!E05" v-bind:class="atribuiEstado(5,projeto.etapas_NUM)">
+						05 <span>Discussão pública</span>
+					</div>
 					<transition name="tramitTransit" class="tramitTransit">
 						<div v-if="E05">
 							<!-- COMO ORGANIZAR DISCUSSAO PUBLICA??? -->
@@ -247,7 +246,9 @@ let ficha = {
 				</div>
 			
 				<div>
-					<div @click="E06=!E06" v-bind:class=atribuiEstado(6,projeto.a_etapa_fluxograma)>06 <span>Consolidação</span></div>
+					<div @click="E06=!E06" v-bind:class="atribuiEstado(6,projeto.etapas_NUM)">
+						06 <span>Consolidação</span>
+					</div>
 					<transition name="tramitTransit" class="tramitTransit">
 						<div v-if="E06">
 							<p v-if="projeto.f_status != 'null' && projeto.f_status != '-'">
@@ -269,7 +270,9 @@ let ficha = {
 				</div>
 			
 				<div>
-					<div @click="E07=!E07" v-bind:class=atribuiEstado(7,projeto.a_etapa_fluxograma)>07 <span>Tramitação jurídica</span></div>
+					<div @click="E07=!E07" v-bind:class="atribuiEstado(7,projeto.etapas_NUM)">
+						07 <span>Tramitação jurídica</span>
+					</div>
 					<transition name="tramitTransit" class="tramitTransit">
 						<div v-if="E07">
 							<p v-if="projeto.g_nome_orgao_em_analise != 'null' && projeto.g_nome_orgao_em_analise != '-'">
@@ -292,7 +295,9 @@ let ficha = {
 				</div>
 			
 				<div>
-					<div @click="E08=!E08" v-bind:class=atribuiEstado(8,projeto.a_etapa_fluxograma)>08 <span>Implantação</span></div>
+					<div @click="E08=!E08" v-bind:class="atribuiEstado(8,projeto.etapas_NUM)">
+						08 <span>Implantação</span>
+					</div>
 					<transition name="tramitTransit" class="tramitTransit">
 						<div v-if="E08">
 							<p v-if="projeto.h_status_implantacao != 'null' && projeto.h_status_implantacao != '-'">

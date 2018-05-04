@@ -106,6 +106,14 @@ div.suspenso {
 	div div div.marcadorEtapa:hover { color: $suspenso; }
 }
 
+div.arquivado {
+	border-left-color: $arquivado;
+	div.etapa { background-color: transparent; border: 1px solid $arquivado; color: $arquivado; };
+	div.etapa div:hover { background-color: transparent; border: 1px solid $arquivado; color: $arquivado; };
+	div a { border: 1px solid transparent; }
+	div a:hover { background-color: transparent; border: 1px solid $arquivado; color: $arquivado; };
+}
+
 div.prospeccao {
 	border-left-color: $prospeccao;
 	div.etapa { background-color: transparent; border: 1px solid $prospeccao; color: $prospeccao; };

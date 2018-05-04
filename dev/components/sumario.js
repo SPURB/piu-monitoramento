@@ -217,13 +217,34 @@ let sumario = {
 			<div>
 				<div><span></span></div>
 				<div>
-					<template v-for="projeto in data" v-if="hasMembers(9,10, projeto.a_etapa_fluxograma)">
+					<template v-for="projeto in data" v-if="hasMembers(9,9, projeto.a_etapa_fluxograma)">
 						<a href="#" @click="setProjectId(projeto.ID_rev)" v-if="projeto.id_iniciativa_da_proposta=='Pública'">
 							{{ projeto.id_nome }}
 						</a>
 					</template>
 				</div><div>
-					<template v-for="projeto in data" v-if="hasMembers(9,10, projeto.a_etapa_fluxograma)">
+					<template v-for="projeto in data" v-if="hasMembers(9,9, projeto.a_etapa_fluxograma)">
+						<a href="#" @click="setProjectId(projeto.ID_rev)" v-if="projeto.id_iniciativa_da_proposta=='Privado'">
+							{{ projeto.id_nome }}
+						</a>
+					</template>
+				</div>
+			</div>
+		</div>
+
+		<div class="arquivado">
+			<div class="etapa">Arquivado</div>
+
+			<div>
+				<div><span></span></div>
+				<div>
+					<template v-for="projeto in data" v-if="hasMembers(10,10, projeto.a_etapa_fluxograma)">
+						<a href="#" @click="setProjectId(projeto.ID_rev)" v-if="projeto.id_iniciativa_da_proposta=='Pública'">
+							{{ projeto.id_nome }}
+						</a>
+					</template>
+				</div><div>
+					<template v-for="projeto in data" v-if="hasMembers(10,10, projeto.a_etapa_fluxograma)">
 						<a href="#" @click="setProjectId(projeto.ID_rev)" v-if="projeto.id_iniciativa_da_proposta=='Privado'">
 							{{ projeto.id_nome }}
 						</a>
