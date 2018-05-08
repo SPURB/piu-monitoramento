@@ -64,7 +64,7 @@ gulp.task('create-json', function (){
     }
     console.log("./dev/data/monitoramento.js atualizado")
   });
-})
+});
 
 gulp.task('hiperlinks', function (){
   var fs = require('fs');

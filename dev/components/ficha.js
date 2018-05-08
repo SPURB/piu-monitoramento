@@ -9,7 +9,6 @@ let ficha = {
 			menu: false,
 			E01: false, E02: false, E03: false, E04: false,
 			E05: false, E06: false, E07: false, E08: false,
-			isConsultaAberta: false,
 		}
 	},
 	props: ['clicked-id'],
@@ -67,7 +66,7 @@ let ficha = {
 
 		atribuiEstado(etapa) {
 			let e = this.projeto.etapas_NUM;
-			if (e < etapa) { return 'posterior' };
+			if (e < etapa || e > 8) { return 'posterior' };
 			if (e == etapa) { return 'atual' };
 			if (e > etapa) { return 'anterior' };
 		},
@@ -80,14 +79,14 @@ let ficha = {
 
 		abreTramitacao(par) {
 			let etapa = par.etapas_NUM;
-			if (etapa == 1) { this.E01 = true };
-			if (etapa == 2) { this.E02 = true };
-			if (etapa == 3) { this.E03 = true };
-			if (etapa == 4) { this.E04 = true };
-			if (etapa == 5) { this.E05 = true };
-			if (etapa == 6) { this.E06 = true };
-			if (etapa == 7) { this.E07 = true };
-			if (etapa == 8) { this.E08 = true };
+			if (etapa == 1) { this.E01 = true; this.E02 = false; this.E03 = false; this.E04 = false; this.E05 = false; this.E06 = false; this.E07 = false; this.E08 = false; };
+			if (etapa == 2) { this.E02 = true; this.E01 = false; this.E03 = false; this.E04 = false; this.E05 = false; this.E06 = false; this.E07 = false; this.E08 = false; };
+			if (etapa == 3) { this.E03 = true; this.E01 = false; this.E02 = false; this.E04 = false; this.E05 = false; this.E06 = false; this.E07 = false; this.E08 = false; };
+			if (etapa == 4) { this.E04 = true; this.E01 = false; this.E02 = false; this.E03 = false; this.E05 = false; this.E06 = false; this.E07 = false; this.E08 = false; };
+			if (etapa == 5) { this.E05 = true; this.E01 = false; this.E02 = false; this.E03 = false; this.E04 = false; this.E06 = false; this.E07 = false; this.E08 = false; };
+			if (etapa == 6) { this.E06 = true; this.E01 = false; this.E02 = false; this.E03 = false; this.E04 = false; this.E05 = false; this.E07 = false; this.E08 = false; };
+			if (etapa == 7) { this.E07 = true; this.E01 = false; this.E02 = false; this.E03 = false; this.E04 = false; this.E05 = false; this.E06 = false; this.E08 = false; };
+			if (etapa == 8) { this.E08 = true; this.E01 = false; this.E02 = false; this.E03 = false; this.E04 = false; this.E05 = false; this.E06 = false; this.E07 = false; };
 		},
 
 		fConsultaAberta(par) {
@@ -113,8 +112,8 @@ let ficha = {
 	template: `
 	<div id="ficha">
 		<div @click="menu = !menu" class="menu-titulo">
-			<div class="titulo" v-bind:class="atribuiEtapa(projeto.etapas_NUM)" v-bind:class="fConsultaAberta(projeto)">
-				{{ projeto.id_nome }}
+			<div class="titulo" v-bind:class="atribuiEtapa(projeto.etapas_NUM)">
+				<span v-bind:class="fConsultaAberta(projeto)">{{ projeto.id_nome }}</span>
 				<i v-if="!menu" class="material-icons">expand_more</i>
 				<i v-if="menu" class="material-icons">expand_less</i>
 			</div>
@@ -122,7 +121,7 @@ let ficha = {
 				<li v-for="projeto in data.sort(function(a,b){return a.etapas_NUM - b.etapas_NUM})" 
 				v-bind:class="atribuiEtapa(projeto.etapas_NUM)" 
 				:key="projeto.id_nome">
-					<a v-bind:class="fConsultaAberta(projeto)" @click="gravaId(projeto.ID_rev)"">{{ projeto.id_nome }}</a>
+					<a v-bind:class="fConsultaAberta(projeto)" @click="gravaId(projeto.ID_rev)" v-if="projeto.etapas_NUM <= 10">{{ projeto.id_nome }}</a>
 				</li>
 			</ul>
 		</div>
@@ -154,6 +153,9 @@ let ficha = {
 				<h4>Tramitação prevista</h4>
 						
 				<div>
+					<div class="periodoEtapaTramit">
+						DD/MM/AAAA—DD/MM/AAAA <!-- período da etapa -->
+					</div>
 					<div @click="E01=!E01" v-bind:class="atribuiEstado(1,projeto.etapas_NUM)">
 							01 <span>Em proposição dos elementos prévios</span>
 					</div>
@@ -161,7 +163,6 @@ let ficha = {
 						<div v-if="E01">
 							<p v-if="projeto.a_data_protocolo != null && projeto.a_data_protocolo != '-'">
 								<span>Protocolado</span> em {{ dataExcelJS(projeto.a_data_protocolo) }}
-								<hr v-if="projeto.a_data_protocolo != null && projeto.a_data_protocolo != '-'">
 							</p>
 							<p>
 								<template v-for="hiperlink in hiperlinks">
@@ -173,6 +174,9 @@ let ficha = {
 				</div>
 			
 				<div>
+					<div class="periodoEtapaTramit">
+						DD/MM/AAAA—DD/MM/AAAA <!-- período da etapa -->
+					</div>
 					<div @click="E02=!E02" v-bind:class="atribuiEstado(2,projeto.etapas_NUM)">
 						02 <span>Consulta pública inicial</span>
 					</div>
@@ -180,7 +184,6 @@ let ficha = {
 						<div v-if="E02">
 							<p v-if="projeto.b_status != 'null' && projeto.b_status != '-'">
 								Consulta <span>{{ projeto.b_status }}</span> ({{ dataExcelJS(projeto.b_data_inicio) }}—{{ dataExcelJS(projeto.b_data_final) }})
-								<hr v-if="projeto.b_status != 'null' && projeto.b_status != '-'">
 							</p>
 							<p>
 								<template v-for="hiperlink in hiperlinks">
@@ -192,6 +195,9 @@ let ficha = {
 				</div>
 			
 				<div>
+					<div class="periodoEtapaTramit">
+						DD/MM/AAAA—DD/MM/AAAA <!-- período da etapa -->
+					</div>
 					<div @click="E03=!E03" v-bind:class="atribuiEstado(3,projeto.etapas_NUM)">
 						03 <span>Em avaliação SMUL</span>
 					</div>
@@ -199,7 +205,6 @@ let ficha = {
 						<div v-if="E03">
 							<p v-if="projeto.c_data_envio != 'null' && projeto.c_data_envio != '-'">
 								<span>Enviado para SMUL</span> em {{ dataExcelJS(projeto.c_data_envio) }}
-								<hr v-if="projeto.c_data_envio != 'null' && projeto.c_data_envio != '-'">
 							</p>
 							<p>
 								<template v-for="hiperlink in hiperlinks">
@@ -211,6 +216,9 @@ let ficha = {
 				</div>
 			
 				<div>
+					<div class="periodoEtapaTramit">
+						DD/MM/AAAA—DD/MM/AAAA <!-- período da etapa -->
+					</div>
 					<div @click="E04=!E04" v-bind:class="atribuiEstado(4,projeto.etapas_NUM)">
 						04 <span>Elaboração</span>
 					</div>
@@ -218,12 +226,10 @@ let ficha = {
 						<div v-if="E04">
 							<p v-if="projeto.d_status != 'null' && projeto.d_status != '-'">
 								<span>{{ projeto.d_status }}</span>
-								<hr v-if="projeto.d_status != 'null' && projeto.d_status != '-'">
 							</p>
 							<p v-if="projeto.d_secretarias_envolvidas != 'null' && projeto.d_secretarias_envolvidas != '-'">
 								Departamento responsável<br>
 								<span>{{ projeto.d_secretarias_envolvidas }}</span>
-								<hr v-if="projeto.d_secretarias_envolvidas != 'null' && projeto.d_secretarias_envolvidas != '-'">
 							</p>
 							<p>
 								<template v-for="hiperlink in hiperlinks">
@@ -235,17 +241,37 @@ let ficha = {
 				</div>
 			
 				<div>
+					<div class="periodoEtapaTramit">
+						DD/MM/AAAA—DD/MM/AAAA <!-- período da etapa -->
+					</div>
 					<div @click="E05=!E05" v-bind:class="atribuiEstado(5,projeto.etapas_NUM)">
 						05 <span>Discussão pública</span>
 					</div>
 					<transition name="tramitTransit" class="tramitTransit">
 						<div v-if="E05">
-							<!-- COMO ORGANIZAR DISCUSSAO PUBLICA??? -->
+							<p v-if="projeto.e_status_consulta_internet_minuta != 'null' && projeto.e_status_consulta_internet_minuta != '-'">
+								Consulta online <span>{{ projeto.e_status_consulta_internet_minuta }}</span> ({{ dataExcelJS(projeto.e_data_inicio_consulta_minuta) }}—{{ dataExcelJS(projeto.e_data_final_consulta_minuta) }})
+							</p>
+							<p v-if="projeto.e_data_audiencia_publica != 'null' && projeto.e_data_audiencia_publica != '-'">
+								Audiência pública realizada em <span>{{ dataExcelJS(projeto.e_data_audiencia_publica) }}</span>
+							</p>
+							<p v-if="projeto.e_outras_atividades_participativas != 'null' && projeto.e_outras_atividades_participativas != '-'">
+								Outras atividades participativas<br>
+								<span>{{ projeto.e_outras_atividades_participativas }}</span>
+							</p>
+							<p>
+								<template v-for="hiperlink in hiperlinks">
+									<a v-if="hiperlink.ID_Projeto == menuClickedId && hiperlink.ID_etapa == 5" class="tramit_link" :href="hiperlink.arquivo" :type="ext(hiperlink.arquivo)">{{ hiperlink.nome_publico_do_arquivo }}</a>
+								</template>
+							</p>
 						</div>
 					</transition>
 				</div>
 			
 				<div>
+					<div class="periodoEtapaTramit">
+						DD/MM/AAAA—DD/MM/AAAA <!-- período da etapa -->
+					</div>
 					<div @click="E06=!E06" v-bind:class="atribuiEstado(6,projeto.etapas_NUM)">
 						06 <span>Consolidação</span>
 					</div>
@@ -253,12 +279,10 @@ let ficha = {
 						<div v-if="E06">
 							<p v-if="projeto.f_status != 'null' && projeto.f_status != '-'">
 								<span>{{ projeto.f_status }}</span>
-								<hr v-if="projeto.f_status != 'null' && projeto.f_status != '-'">
 							</p>
 							<p v-if="projeto.f_instrumento_urbanistico_proposto != 'null' && projeto.f_instrumento_urbanistico_proposto != '-'">
 								Instrumento proposto<br />
 								<span>{{ projeto.f_instrumento_urbanistico_proposto }}</span>
-								<hr v-if="projeto.f_instrumento_urbanistico_proposto != 'null' && projeto.f_instrumento_urbanistico_proposto != '-'">
 							</p>
 							<p>
 								<template v-for="hiperlink in hiperlinks">
@@ -270,6 +294,9 @@ let ficha = {
 				</div>
 			
 				<div>
+					<div class="periodoEtapaTramit">
+						DD/MM/AAAA—DD/MM/AAAA <!-- período da etapa -->
+					</div>
 					<div @click="E07=!E07" v-bind:class="atribuiEstado(7,projeto.etapas_NUM)">
 						07 <span>Tramitação jurídica</span>
 					</div>
@@ -278,12 +305,10 @@ let ficha = {
 							<p v-if="projeto.g_nome_orgao_em_analise != 'null' && projeto.g_nome_orgao_em_analise != '-'">
 								Órgão em análise<br>
 								<span>{{ projeto.g_nome_orgao_em_analise }}</span>
-								<hr v-if="projeto.g_nome_orgao_em_analise != 'null' && projeto.g_nome_orgao_em_analise != '-'">
 							</p>
 							<p v-if="projeto.g_registro_publico_de_envio_normativo != 'null' && projeto.g_registro_publico_de_envio_normativo != '-'">
 								{{ projeto.g_registro_publico_de_envio_normativo }}
 								{{ projeto.g_status_aprovacao }}
-								<hr v-if="projeto.g_registro_publico_de_envio_normativo != 'null' && projeto.g_registro_publico_de_envio_normativo != '-'">
 							</p>
 							<p>
 								<template v-for="hiperlink in hiperlinks">
@@ -295,6 +320,9 @@ let ficha = {
 				</div>
 			
 				<div>
+					<div class="periodoEtapaTramit">
+						DD/MM/AAAA—DD/MM/AAAA <!-- período da etapa -->
+					</div>
 					<div @click="E08=!E08" v-bind:class="atribuiEstado(8,projeto.etapas_NUM)">
 						08 <span>Implantação</span>
 					</div>
@@ -302,12 +330,10 @@ let ficha = {
 						<div v-if="E08">
 							<p v-if="projeto.h_status_implantacao != 'null' && projeto.h_status_implantacao != '-'">
 								<span>{{ projeto.h_status_implantacao }}</span>
-								<hr v-if="projeto.h_status_implantacao != 'null' && projeto.h_status_implantacao != '-'">
 							</p>
 							<p v-if="projeto.h_orgao_em_analise != 'null' && projeto.h_orgao_em_analise != '-'">
 								Órgão em análise<br>
 								<span>{{ projeto.h_orgao_em_analise }}</span>
-								<hr v-if="projeto.h_orgao_em_analise != 'null' && projeto.h_orgao_em_analise != '-'">
 							</p>
 							<p>
 								<template v-for="hiperlink in hiperlinks">

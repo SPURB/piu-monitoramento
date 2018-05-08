@@ -37,20 +37,22 @@
 				display: flex;
 				a { color: #333333; display: block; width: 100%; border-bottom: 1px solid #F0F0F0; padding-left: 8px; };
 				a:hover { text-decoration: none; cursor: pointer; }
-				a.consultaAberta::after { 
-					content: 'Consulta pública aberta';
-					font-size: 9px;
-					text-transform: uppercase;
-					color: #FFFFFF;
-					background-color: green; //MUDAR!! escolher verde
-					padding: 3px;
-					border-radius: 2px;
-					margin-left: 4px;
-				};
 			};
 			li:hover {
 				background-color: #F8F8F8;
 			};
+		};
+
+		.consultaAberta::after { 
+			content: 'Consulta pública aberta';
+			font-size: 10px;
+			text-transform: uppercase;
+			color: #FFFFFF;
+			background-color: $verde;
+			padding: 4px 5px;
+			border-radius: 2px;
+			margin-left: 8px;
+			vertical-align: middle;
 		};
 	}
 
@@ -140,23 +142,30 @@
 			div {
 				border-top-width: .25em;
 				border-top-style: solid;
-				line-height: 3em;
+				line-height: 4.5em;
 				padding: 0 0 0 .1em;
 				span { font-weight: 700; text-transform: uppercase; };
 				&:hover { background-color: #F8F8F8; cursor: pointer; };
+				div.periodoEtapaTramit {
+					padding: 0 !important;
+					margin-bottom: -1.6em;
+					font-size: .6em;
+					line-height: 1.6em;
+					color: rgba(0,0,0,.4);
+					text-align: right;
+					text-transform: uppercase;
+				};
 				div { 
 					border: 0;
 					overflow: hidden;
 					p {
-						margin: 0;
+						margin: 1em 0;
 						padding: 0;
-						line-height: 1.5em;
 						font-size: 1em;
+						line-height: 1.5em;
 					};
-					hr {
-						border: 0;
-						margin: .5em 0;
-					};
+					p:first-child { margin-top: 0 !important; };
+					p:last-child { margin-bottom: 0 !important; };
 				}
 				div p span { text-transform: none; }
 				div.anterior {
@@ -193,7 +202,7 @@
 				div.posterior + div { 
 					display: none;
 				};
-				div:nth-of-type(2) {
+				div:nth-of-type(3) {
 					padding: 0 0 1em 0;
 
 					a.tramit_link {
@@ -231,4 +240,5 @@
 			div:nth-child(9) { border-top-color: $implantacao; };
 		};
 	};
+
 }
