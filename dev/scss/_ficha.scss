@@ -149,27 +149,28 @@
 				div.periodoEtapaTramit {
 					padding: 0 !important;
 					margin-bottom: -1.6em;
-					font-size: .6em;
+					font-size: .75em;
 					line-height: 1.6em;
-					color: rgba(0,0,0,.4);
+					color: rgba(0,0,0,.2);
 					text-align: right;
 					text-transform: uppercase;
 				};
 				div { 
 					border: 0;
 					overflow: hidden;
+					color: rgba(0,0,0,.4);
 					p {
 						margin: 1em 0;
 						padding: 0;
 						font-size: 1em;
 						line-height: 1.5em;
+						color: #333333;
 					};
 					p:first-child { margin-top: 0 !important; };
 					p:last-child { margin-bottom: 0 !important; };
 				}
 				div p span { text-transform: none; }
 				div.anterior {
-					color: rgba(0,0,0,.4);
 					&::after {
 						font-family: 'Material Icons';
 						font-size: 24px;
@@ -177,6 +178,9 @@
 						float: right;
 						content: 'check_box';
 					};
+				};
+				div.atual {
+					color: #333333;
 				};
 				div.atual::after {
 					font-family: 'Material Icons';

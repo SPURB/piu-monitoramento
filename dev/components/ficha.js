@@ -111,14 +111,14 @@ let ficha = {
 
 	template: `
 	<div id="ficha">
-		<div @click="menu = !menu" class="menu-titulo">
+		<div @click="menu=!menu" class="menu-titulo">
 			<div class="titulo" v-bind:class="atribuiEtapa(projeto.etapas_NUM)">
-				<span v-bind:class="fConsultaAberta(projeto)">{{ projeto.id_nome }}</span>
+				<span v-bind:class="fConsultaAberta(this.projeto)">{{ projeto.id_nome }}</span>
 				<i v-if="!menu" class="material-icons">expand_more</i>
 				<i v-if="menu" class="material-icons">expand_less</i>
 			</div>
 			<ul v-if="menu" class="menu">
-				<li v-for="projeto in data.sort(function(a,b){return a.etapas_NUM - b.etapas_NUM})" 
+				<li v-for="projeto in data.slice().sort(function(a,b){return a.etapas_NUM - b.etapas_NUM})" 
 				v-bind:class="atribuiEtapa(projeto.etapas_NUM)" 
 				:key="projeto.id_nome">
 					<a v-bind:class="fConsultaAberta(projeto)" @click="gravaId(projeto.ID_rev)" v-if="projeto.etapas_NUM <= 10">{{ projeto.id_nome }}</a>

@@ -30,8 +30,7 @@ let sumario = {
 
 	template: `
 	<div id="sumario">
-
-		<div class="proposicao">
+		<div>		
 			<div class="thead">
 				<div>
 					Etapas
@@ -43,7 +42,8 @@ let sumario = {
 					PIUs de iniciativa privada
 				</div>
 			</div>
-
+		</div>
+		<div class="proposicao">
 			<div class="etapa">Em proposição</div>
 
 			<div>
