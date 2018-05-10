@@ -30,6 +30,7 @@ let sumario = {
 
 	template: `
 	<div id="sumario">
+
 		<div>		
 			<div class="thead">
 				<div>
@@ -43,9 +44,9 @@ let sumario = {
 				</div>
 			</div>
 		</div>
+		
 		<div class="proposicao">
 			<div class="etapa">Em proposição</div>
-
 			<div>
 				<div><div class="marcadorEtapa">01</div> <span>Em proposição dos elementos prévios</span></div>
 				<div>
@@ -83,7 +84,7 @@ let sumario = {
 			</div>
 
 			<div>
-				<div><div class="marcadorEtapa">03</div> <span>Em avaliação SMUL</span></div>
+				<div><div class="marcadorEtapa">03</div> <span>Avaliação SMUL</span></div>
 				<div>
 					<template v-for="projeto in data" v-if="hasMembers(3,3, projeto.etapas_NUM)">
 						<a href="#" @click="setProjectId(projeto.ID_rev)" v-if="projeto.id_iniciativa_da_proposta=='Pública'" v-bind:class="fConsultaAberta(projeto)">
@@ -159,7 +160,7 @@ let sumario = {
 			</div>
 
 			<div>
-				<div><div class="marcadorEtapa">07</div> <span>Tramitação Jurídica</span></div>
+				<div><div class="marcadorEtapa">07</div> <span>Encaminhamento Jurídico</span></div>
 				<div>
 					<template v-for="projeto in data" v-if="hasMembers(7,7, projeto.etapas_NUM)">
 						<a href="#" @click="setProjectId(projeto.ID_rev)" v-if="projeto.id_iniciativa_da_proposta=='Pública'" v-bind:class="fConsultaAberta(projeto)">

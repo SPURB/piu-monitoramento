@@ -110,7 +110,7 @@ let ficha = {
 	},
 
 	template: `
-	<div id="ficha">
+	<div id="ficha" lang="pt-br">
 		<div @click="menu=!menu" class="menu-titulo">
 			<div class="titulo" v-bind:class="atribuiEtapa(projeto.etapas_NUM)">
 				<span v-bind:class="fConsultaAberta(this.projeto)">{{ projeto.id_nome }}</span>
@@ -145,30 +145,71 @@ let ficha = {
 
 			<div class="aspectos">
 				<h4>Aspectos técnico-urbanísticos</h4>
-				<p>Sed viverra, risus at tincidunt convallis, magna libero sollicitudin velit, sit amet porta nulla sem at metus. Nam sit amet gravida purus, id aliquam nibh. Aenean ac augue non lectus molestie interdum non ac risus. Suspendisse eu vestibulum libero, a hendrerit nibh. Nullam sed lacus et mauris molestie efficitur eget eget neque. Mauris non faucibus tellus. Pellentesque non dapibus dui, vel aliquam risus. Sed posuere faucibus lectus.</p>
+
+				<!--DESCRICAO-->
 				<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean tristique dolor eu porttitor rutrum. Cras consectetur nisi sed nibh suscipit iaculis. Vivamus eu enim at metus tristique rutrum. Suspendisse orci lacus, ornare blandit leo quis, blandit pellentesque felis. Fusce ornare cursus eros non tincidunt. Sed ut urna dui. Nunc nec mauris eu sapien venenatis scelerisque. Maecenas volutpat aliquet sapien, vel condimentum tellus ultrices et. Nulla facilisi. Donec a interdum ante, eu blandit sapien. Sed rhoncus nibh sed eros efficitur, a tincidunt tellus ultricies. Suspendisse gravida metus dolor, a pulvinar ligula semper nec. Morbi imperdiet maximus elementum. Duis rutrum eleifend justo, et pellentesque arcu ultricies sit amet. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; </p>
+				
+				<!--ESCOPO-->
+				<p>Sed viverra, risus at tincidunt convallis, magna libero sollicitudin velit, sit amet porta nulla sem at metus. Nam sit amet gravida purus, id aliquam nibh. Aenean ac augue non lectus molestie interdum non ac risus. Suspendisse eu vestibulum libero, a hendrerit nibh. Nullam sed lacus et mauris molestie efficitur eget eget neque. Mauris non faucibus tellus. Pellentesque non dapibus dui, vel aliquam risus. Sed posuere faucibus lectus.</p>
+
+				<template v-if="projeto.urb_elemento_da_rede_de_estruturacao_urbana != 'null' && projeto.urb_elemento_da_rede_de_estruturacao_urbana != '-'">
+					<div>
+						<h6>Elemento da rede de estruturação urbana</h6>
+						{{ projeto.urb_elemento_da_rede_de_estruturacao_urbana }}
+					</div>
+				</template>
+				<template v-if="projeto.urb_area_total != 'null' && projeto.urb_area_total != '-'">
+					<div>
+						<h6>Área total</h6>
+						{{ projeto.urb_area_total }}
+					</div>
+				</template>
+				<template v-if="projeto.urb_area_total != 'null' && projeto.urb_area_total != '-'">
+					<div>
+						<h6>Zonas especiais</h6>
+						{{ projeto.urb_area_total }} <!--MUDAR-->
+					</div>
+				</template>
+				<template v-if="projeto.urb_justificativa_interesse_publico != 'null' && projeto.urb_justificativa_interesse_publico != '-'">
+					<div>
+						<h6>Interesse público</h6>
+						{{ projeto.urb_justificativa_interesse_publico }}
+					</div>
+				</template>
+				<template v-if="projeto.urb_justificativa_interesse_publico != 'null' && projeto.urb_justificativa_interesse_publico != '-'">
+					<div>
+						<h6>Interesse privado</h6>
+						{{ projeto.urb_justificativa_interesse_publico }} <!--MUDAR PRA PRIVADO-->
+					</div>
+				</template>
+				<template v-if="projeto.urb_contrapartida_prevista != 'null' && projeto.urb_contrapartida_prevista != '-'">
+					<div>
+						<h6>Contrapartidas previstas</h6>
+						{{ projeto.urb_contrapartida_prevista }}
+					</div>
+				</template>
 			</div>
 
 			<div class="tramitacao">
-				<h4>Tramitação prevista</h4>
+				<h4>Tramitação</h4>
 						
 				<div>
 					<div class="periodoEtapaTramit">
-						DD/MM/AAAA—DD/MM/AAAA <!-- período da etapa -->
+						{{ dataExcelJS(projeto.a_data_protocolo) }}—DD/MM/AAAA <!-- período da etapa -->
 					</div>
 					<div @click="E01=!E01" v-bind:class="atribuiEstado(1,projeto.etapas_NUM)">
-							01 <span>Em proposição dos elementos prévios</span>
+							01 <span>Proposição dos elementos prévios</span>
 					</div>
 					<transition name="tramitTransit" class="tramitTransit">
 						<div v-if="E01">
-							<p v-if="projeto.a_data_protocolo != null && projeto.a_data_protocolo != '-'">
-								<span>Protocolado</span> em {{ dataExcelJS(projeto.a_data_protocolo) }}
-							</p>
-							<p>
-								<template v-for="hiperlink in hiperlinks">
-									<a v-if="hiperlink.ID_Projeto == menuClickedId && hiperlink.ID_etapa == 1" class="tramit_link" :href="hiperlink.arquivo" :type="ext(hiperlink.arquivo)">{{ hiperlink.nome_publico_do_arquivo }}</a>
-								</template>
-							</p>
+							<template v-if="projeto.a_data_protocolo != null && projeto.a_data_protocolo != '-'">
+								<p>
+									<span>Protocolado</span> em {{ dataExcelJS(projeto.a_data_protocolo) }}
+								</p>
+							</template>
+							<template v-for="hiperlink in hiperlinks">
+								<p class="tramit_link" v-if="hiperlink.ID_Projeto == clickedId && hiperlink.ID_etapa == 1"><a class="tramit_link" :href="hiperlink.arquivo" :type="ext(hiperlink.arquivo)">{{ hiperlink.nome_publico_do_arquivo }}</a></p>
+							</template>
 						</div>
 					</transition>
 				</div>
@@ -182,35 +223,35 @@ let ficha = {
 					</div>
 					<transition name="tramitTransit" class="tramitTransit">
 						<div v-if="E02">
-							<p v-if="projeto.b_status != 'null' && projeto.b_status != '-'">
-								Consulta <span>{{ projeto.b_status }}</span> ({{ dataExcelJS(projeto.b_data_inicio) }}—{{ dataExcelJS(projeto.b_data_final) }})
-							</p>
-							<p>
-								<template v-for="hiperlink in hiperlinks">
-									<a v-if="hiperlink.ID_Projeto == menuClickedId && hiperlink.ID_etapa == 2" class="tramit_link" :href="hiperlink.arquivo" :type="ext(hiperlink.arquivo)">{{ hiperlink.nome_publico_do_arquivo }}</a>
-								</template>
-							</p>
+							<template v-if="projeto.b_status != 'null' && projeto.b_status != '-'">
+								<p>
+									Consulta <span>{{ projeto.b_status }}</span> ({{ dataExcelJS(projeto.b_data_inicio) }}—{{ dataExcelJS(projeto.b_data_final) }})
+								</p>
+							</template>
+							<template v-for="hiperlink in hiperlinks">
+								<p class="tramit_link" v-if="hiperlink.ID_Projeto == clickedId && hiperlink.ID_etapa == 2"><a class="tramit_link" :href="hiperlink.arquivo" :type="ext(hiperlink.arquivo)">{{ hiperlink.nome_publico_do_arquivo }}</a></p>
+							</template>
 						</div>
 					</transition>
 				</div>
 			
 				<div>
 					<div class="periodoEtapaTramit">
-						DD/MM/AAAA—DD/MM/AAAA <!-- período da etapa -->
+						{{ dataExcelJS(projeto.c_data_envio) }}—DD/MM/AAAA <!-- período da etapa -->
 					</div>
 					<div @click="E03=!E03" v-bind:class="atribuiEstado(3,projeto.etapas_NUM)">
-						03 <span>Em avaliação SMUL</span>
+						03 <span>Avaliação SMUL</span>
 					</div>
 					<transition name="tramitTransit" class="tramitTransit">
 						<div v-if="E03">
-							<p v-if="projeto.c_data_envio != 'null' && projeto.c_data_envio != '-'">
-								<span>Enviado para SMUL</span> em {{ dataExcelJS(projeto.c_data_envio) }}
-							</p>
-							<p>
-								<template v-for="hiperlink in hiperlinks">
-									<a v-if="hiperlink.ID_Projeto == menuClickedId && hiperlink.ID_etapa == 3" class="tramit_link" :href="hiperlink.arquivo" :type="ext(hiperlink.arquivo)">{{ hiperlink.nome_publico_do_arquivo }}</a>
-								</template>
-							</p>
+							<template v-if="projeto.c_data_envio != 'null' && projeto.c_data_envio != '-'">
+								<p>
+									<span>Enviado para SMUL</span> em {{ dataExcelJS(projeto.c_data_envio) }}
+								</p>
+							</template>
+							<template v-for="hiperlink in hiperlinks">
+								<p class="tramit_link" v-if="hiperlink.ID_Projeto == clickedId && hiperlink.ID_etapa == 3"><a class="tramit_link" :href="hiperlink.arquivo" :type="ext(hiperlink.arquivo)">{{ hiperlink.nome_publico_do_arquivo }}</a></p>
+							</template>
 						</div>
 					</transition>
 				</div>
@@ -224,18 +265,27 @@ let ficha = {
 					</div>
 					<transition name="tramitTransit" class="tramitTransit">
 						<div v-if="E04">
-							<p v-if="projeto.d_status != 'null' && projeto.d_status != '-'">
-								<span>{{ projeto.d_status }}</span>
-							</p>
-							<p v-if="projeto.d_secretarias_envolvidas != 'null' && projeto.d_secretarias_envolvidas != '-'">
-								Departamento responsável<br>
-								<span>{{ projeto.d_secretarias_envolvidas }}</span>
-							</p>
-							<p>
-								<template v-for="hiperlink in hiperlinks">
-									<a v-if="hiperlink.ID_Projeto == menuClickedId && hiperlink.ID_etapa == 4" class="tramit_link" :href="hiperlink.arquivo" :type="ext(hiperlink.arquivo)">{{ hiperlink.nome_publico_do_arquivo }}</a>
-								</template>
-							</p>
+							<template>
+								<p>
+									Responsável
+									<span>{{responsavel}}</span>
+								</p>
+							</template>
+							<template v-if="projeto.d_secretarias_envolvidas != 'null' && projeto.d_secretarias_envolvidas != '-'">
+								<p>
+									Secretarias envolvidas<br>
+									<span>{{ projeto.d_secretarias_envolvidas }}</span>
+								</p>
+							</template>
+							<template v-if="projeto.d_orgaos_externos_envolvidos != 'null' && projeto.d_orgaos_externos_envolvidos != '-'">
+								<p>
+									Órgãos externos envolvidos<br>
+									<span>{{ projeto.d_orgaos_externos_envolvidos }}</span>
+								</p>
+							</template>
+							<template v-for="hiperlink in hiperlinks">
+								<p class="tramit_link" v-if="hiperlink.ID_Projeto == clickedId && hiperlink.ID_etapa == 4"><a class="tramit_link" :href="hiperlink.arquivo" :type="ext(hiperlink.arquivo)">{{ hiperlink.nome_publico_do_arquivo }}</a></p>
+							</template>
 						</div>
 					</transition>
 				</div>
@@ -249,21 +299,25 @@ let ficha = {
 					</div>
 					<transition name="tramitTransit" class="tramitTransit">
 						<div v-if="E05">
-							<p v-if="projeto.e_status_consulta_internet_minuta != 'null' && projeto.e_status_consulta_internet_minuta != '-'">
-								Consulta online <span>{{ projeto.e_status_consulta_internet_minuta }}</span> ({{ dataExcelJS(projeto.e_data_inicio_consulta_minuta) }}—{{ dataExcelJS(projeto.e_data_final_consulta_minuta) }})
-							</p>
-							<p v-if="projeto.e_data_audiencia_publica != 'null' && projeto.e_data_audiencia_publica != '-'">
-								Audiência pública realizada em <span>{{ dataExcelJS(projeto.e_data_audiencia_publica) }}</span>
-							</p>
-							<p v-if="projeto.e_outras_atividades_participativas != 'null' && projeto.e_outras_atividades_participativas != '-'">
-								Outras atividades participativas<br>
-								<span>{{ projeto.e_outras_atividades_participativas }}</span>
-							</p>
-							<p>
-								<template v-for="hiperlink in hiperlinks">
-									<a v-if="hiperlink.ID_Projeto == menuClickedId && hiperlink.ID_etapa == 5" class="tramit_link" :href="hiperlink.arquivo" :type="ext(hiperlink.arquivo)">{{ hiperlink.nome_publico_do_arquivo }}</a>
-								</template>
-							</p>
+							<template v-if="projeto.e_status_consulta_internet_minuta != 'null' && projeto.e_status_consulta_internet_minuta != '-'">
+								<p>
+									Consulta online <span>{{ projeto.e_status_consulta_internet_minuta }}</span> ({{ dataExcelJS(projeto.e_data_inicio_consulta_minuta) }}—{{ dataExcelJS(projeto.e_data_final_consulta_minuta) }})
+								</p>
+							</template>
+							<template v-if="projeto.e_data_audiencia_publica != 'null' && projeto.e_data_audiencia_publica != '-'">
+								<p>
+									Audiência pública realizada em <span>{{ dataExcelJS(projeto.e_data_audiencia_publica) }}</span>
+								</p>
+							</template>
+							<template v-if="projeto.e_outras_atividades_participativas != 'null' && projeto.e_outras_atividades_participativas != '-'">
+								<p>
+									Outras atividades participativas<br>
+									<span>{{ projeto.e_outras_atividades_participativas }}</span>
+								</p>
+							</template>
+							<template v-for="hiperlink in hiperlinks">
+								<p class="tramit_link" v-if="hiperlink.ID_Projeto == clickedId && hiperlink.ID_etapa == 5"><a class="tramit_link" :href="hiperlink.arquivo" :type="ext(hiperlink.arquivo)">{{ hiperlink.nome_publico_do_arquivo }}</a></p>
+							</template>
 						</div>
 					</transition>
 				</div>
@@ -277,18 +331,27 @@ let ficha = {
 					</div>
 					<transition name="tramitTransit" class="tramitTransit">
 						<div v-if="E06">
-							<p v-if="projeto.f_status != 'null' && projeto.f_status != '-'">
-								<span>{{ projeto.f_status }}</span>
-							</p>
-							<p v-if="projeto.f_instrumento_urbanistico_proposto != 'null' && projeto.f_instrumento_urbanistico_proposto != '-'">
-								Instrumento proposto<br />
-								<span>{{ projeto.f_instrumento_urbanistico_proposto }}</span>
-							</p>
-							<p>
-								<template v-for="hiperlink in hiperlinks">
-									<a v-if="hiperlink.ID_Projeto == menuClickedId && hiperlink.ID_etapa == 6" class="tramit_link" :href="hiperlink.arquivo" :type="ext(hiperlink.arquivo)">{{ hiperlink.nome_publico_do_arquivo }}</a>
-								</template>
-							</p>
+							<template v-if="projeto.f_instrumento_urbanistico_proposto != 'null' && projeto.f_instrumento_urbanistico_proposto != '-'">
+								<p>
+									Instrumento urbanístico proposto<br />
+									<span>{{ projeto.f_instrumento_urbanistico_proposto }}</span>
+								</p>
+							</template>
+							<template v-if="projeto.f_instrumento_juridico_necessario != 'null' && projeto.f_instrumento_juridico_necessario != '-'">
+								<p>
+									Instrumento jurídico necessário<br />
+									<span>{{ projeto.f_instrumento_juridico_necessario}}</span>
+								</p>
+							</template>
+							<template v-if="projeto.f_instancias_consultadas != 'null' && projeto.f_instancias_consultadas != '-'">
+								<p>
+									Instâncias consultadas<br />
+									<span>{{ projeto.f_instancias_consultadas }}</span>
+								</p>
+							</template>
+							<template v-for="hiperlink in hiperlinks">
+								<p class="tramit_link" v-if="hiperlink.ID_Projeto == clickedId && hiperlink.ID_etapa == 6"><a class="tramit_link" :href="hiperlink.arquivo" :type="ext(hiperlink.arquivo)">{{ hiperlink.nome_publico_do_arquivo }}</a></p>
+							</template>
 						</div>
 					</transition>
 				</div>
@@ -298,23 +361,20 @@ let ficha = {
 						DD/MM/AAAA—DD/MM/AAAA <!-- período da etapa -->
 					</div>
 					<div @click="E07=!E07" v-bind:class="atribuiEstado(7,projeto.etapas_NUM)">
-						07 <span>Tramitação jurídica</span>
+						07 <span>Encaminhamento jurídico</span>
 					</div>
 					<transition name="tramitTransit" class="tramitTransit">
 						<div v-if="E07">
-							<p v-if="projeto.g_nome_orgao_em_analise != 'null' && projeto.g_nome_orgao_em_analise != '-'">
-								Órgão em análise<br>
-								<span>{{ projeto.g_nome_orgao_em_analise }}</span>
-							</p>
-							<p v-if="projeto.g_registro_publico_de_envio_normativo != 'null' && projeto.g_registro_publico_de_envio_normativo != '-'">
-								{{ projeto.g_registro_publico_de_envio_normativo }}
-								{{ projeto.g_status_aprovacao }}
-							</p>
-							<p>
-								<template v-for="hiperlink in hiperlinks">
-									<a v-if="hiperlink.ID_Projeto == menuClickedId && hiperlink.ID_etapa == 7" class="tramit_link" :href="hiperlink.arquivo" :type="ext(hiperlink.arquivo)">{{ hiperlink.nome_publico_do_arquivo }}</a>
-								</template>
-							</p>
+							<template v-if="projeto.f_instrumento_juridico_necessario == 'Lei'">
+								<p>
+									<span>Enviado para CMSP</span> em (data??)<br>
+									<span>(tramitacao CMSP??)</span><br>
+									<span>Registro</span> 
+								</p>
+							</template>
+							<template v-for="hiperlink in hiperlinks">
+								<p class="tramit_link" v-if="hiperlink.ID_Projeto == clickedId && hiperlink.ID_etapa == 7"><a class="tramit_link" :href="hiperlink.arquivo" :type="ext(hiperlink.arquivo)">{{ hiperlink.nome_publico_do_arquivo }}</a></p>
+							</template>
 						</div>
 					</transition>
 				</div>
@@ -328,18 +388,26 @@ let ficha = {
 					</div>
 					<transition name="tramitTransit" class="tramitTransit">
 						<div v-if="E08">
-							<p v-if="projeto.h_status_implantacao != 'null' && projeto.h_status_implantacao != '-'">
-								<span>{{ projeto.h_status_implantacao }}</span>
-							</p>
-							<p v-if="projeto.h_orgao_em_analise != 'null' && projeto.h_orgao_em_analise != '-'">
-								Órgão em análise<br>
-								<span>{{ projeto.h_orgao_em_analise }}</span>
-							</p>
-							<p>
-								<template v-for="hiperlink in hiperlinks">
-									<a v-if="hiperlink.ID_Projeto == menuClickedId && hiperlink.ID_etapa == 8" class="tramit_link" :href="hiperlink.arquivo" :type="ext(hiperlink.arquivo)">{{ hiperlink.nome_publico_do_arquivo }}</a>
-								</template>
-							</p>
+							<template v-if="projeto.h_status_implantacao != 'null' && projeto.h_status_implantacao != '-'">
+								<p>
+									<span>{{ projeto.h_status_implantacao }}</span>
+								</p>
+							</template>
+							<template v-if="projeto.h_orgao_em_analise != 'null' && projeto.h_orgao_em_analise != '-'">
+								<p>
+									Órgão em análise<br>
+									<span>{{ projeto.h_orgao_em_analise }}</span>
+								</p>
+							</template>
+							<template v-if="projeto.h_registro_administrativo != 'null' && projeto.h_registro_administrativo != '-'">
+								<p>
+									Número do Processo Administrativo
+									<span>{{ projeto.h_registro_administrativo }}</span>
+								</p>
+							</template>
+							<template v-for="hiperlink in hiperlinks">
+								<p class="tramit_link" v-if="hiperlink.ID_Projeto == clickedId && hiperlink.ID_etapa == 8"><a class="tramit_link" :href="hiperlink.arquivo" :type="ext(hiperlink.arquivo)">{{ hiperlink.nome_publico_do_arquivo }}</a></p>
+							</template>
 						</div>
 					</transition>
 				</div>

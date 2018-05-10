@@ -26,7 +26,7 @@
 			list-style-type: none;
 			list-style-position: inside;
 			color: #000000;
-			border-bottom: 3px solid #000000;
+			border-bottom: 3px solid #333333;
 			border-radius: 2px;
 			padding: 0;
 			li {
@@ -44,7 +44,7 @@
 		};
 
 		.consultaAberta::after { 
-			content: 'Consulta pública aberta';
+			content: 'Em consulta';
 			font-size: 10px;
 			text-transform: uppercase;
 			color: #FFFFFF;
@@ -61,7 +61,6 @@
 		display: flex;
 		justify-content: space-between;
 		align-items: flex-start;
-
 
 		div.indicador {
 			border-radius: 2px;
@@ -83,6 +82,11 @@
 			width: 20%;
 			font-size: 1em;
 			line-height: 1.75em;
+			word-wrap: break-word;
+			overflow-wrap: break-word;
+			-webkit-hyphens: auto;
+			-moz-hyphens: auto;
+			hyphens: auto;
 			div.id {
 				border-radius: 2px;
 				border: 1px solid #BDBDBD;
@@ -132,7 +136,26 @@
 		div.aspectos {
 			width: 40%;
 			margin-left: 16px;
-			p { font-size: 1em; }
+			word-wrap: break-word;
+			overflow-wrap: break-word;
+			-webkit-hyphens: auto;
+			-moz-hyphens: auto;
+			hyphens: auto;
+			p { font-size: 1em; line-height: 1.6em; };
+			div {
+				position: relative;
+				border-top: 1px solid #BCBCBC;
+				padding: 1em 0.25em;
+				margin: 0;
+				line-height: 1.6em;
+				h6 { 
+					font-size: 1em; 
+					color: #BCBCBC;
+					margin: 0;
+					padding: 0;
+					font-weight: 500;
+				};
+			};
 		};
 
 		div.tramitacao {
@@ -143,7 +166,7 @@
 				border-top-width: .25em;
 				border-top-style: solid;
 				line-height: 4.5em;
-				padding: 0 0 0 .1em;
+				padding: 0 .1em;
 				span { font-weight: 700; text-transform: uppercase; };
 				&:hover { background-color: #F8F8F8; cursor: pointer; };
 				div.periodoEtapaTramit {
@@ -161,13 +184,13 @@
 					color: rgba(0,0,0,.4);
 					p {
 						margin: 1em 0;
-						padding: 0;
+						padding: 0 .1em;
 						font-size: 1em;
 						line-height: 1.5em;
 						color: #333333;
 					};
 					p:first-child { margin-top: 0 !important; };
-					p:last-child { margin-bottom: 0 !important; };
+					p:last-child { margin-bottom: 1.5em !important; };
 				}
 				div p span { text-transform: none; }
 				div.anterior {
@@ -207,8 +230,9 @@
 					display: none;
 				};
 				div:nth-of-type(3) {
-					padding: 0 0 1em 0;
+					padding: 0;
 
+					p.tramit_link { margin: 0; padding: 0; };
 					a.tramit_link {
 						display: block;
 						max-width: 300px;
@@ -228,15 +252,20 @@
 						border: 1px solid #BCBCBC;
 						color: #BCBCBC;
 						padding: 2px;
+						min-width: 40px;
+						text-align: center;
+						vertical-align: text-bottom;
+						transition: all 100ms;
 					};
 					a.tramit_link:hover::before {
-						color: $vermelho-gestao;
+						background-color: $vermelho-gestao;
+						color: #FFFFFF;
 						border-color: $vermelho-gestao;
 					};
 				};
 
 				.tramitTransit-enter, .tramitTransit-leave-to { max-height: 0; opacity: 0; transition: all 150ms; margin: 0; padding: 0; };
-				.tramitTransit-enter-to, .tramitTransit-leave { max-height: 6em; transition: all 150ms }
+				.tramitTransit-enter-to, .tramitTransit-leave { max-height: 6em; transition: all 150ms; }
 				.tramitTransit-enter-active, .tramitTransit-leave-active { transition: all 150ms }
 			};
 			div:nth-child(2), div:nth-child(3), div:nth-child(4) { border-top-color: $proposicao; };
