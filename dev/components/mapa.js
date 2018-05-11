@@ -16,6 +16,7 @@ let mapa = {
 				};
 			});
 		},
+
 	},
 	template: `
 	<div id="mapa">

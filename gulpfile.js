@@ -87,11 +87,10 @@ gulp.task('hiperlinks', function (){
   });
 })
 
-gulp.task('watch', ['browserSync', 'scss','create-json','scripts-production'], function (){
+gulp.task('watch', ['browserSync', 'scss','create-json','hiperlinks','scripts-production'], function (){
   gulp.watch('./dev/**/*.scss', ['scss']); 
   gulp.watch('./dev/**/*.js', ['scripts-production']); 
   gulp.watch('./*.html', browserSync.reload); 
 });
 
-gulp.task('build', ['scss','create-json','scripts-production']);
-gulp.task('hp', ['hiperlinks']);
+gulp.task('build', ['scss','create-json','hiperlinks','scripts-production']);

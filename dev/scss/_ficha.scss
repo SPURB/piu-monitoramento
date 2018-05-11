@@ -1,6 +1,7 @@
 #ficha {
 
 	div.menu-titulo {
+		position: relative;
 
 		div.titulo {
 			line-height: 2em;
@@ -20,7 +21,7 @@
 
 		ul.menu {
 			position: absolute;
-			margin-top: 0px;
+			margin-top: 0;
 			width: 100%;
 			background-color: #FFFFFF;
 			list-style-type: none;
@@ -41,6 +42,13 @@
 			li:hover {
 				background-color: #F8F8F8;
 			};
+		};
+		.menuSlide-enter, .menuSlide-leave-to {
+			font-size: 0;
+			li a::after { font-size: 0; opacity: 0; transition: all .2s; };
+		};
+		.menuSlide-enter-active, .menuSlide-leave-active {
+			transition: all .2s;
 		};
 
 		.consultaAberta::after { 
@@ -143,7 +151,6 @@
 			hyphens: auto;
 			p { font-size: 1em; line-height: 1.6em; };
 			div {
-				position: relative;
 				border-top: 1px solid #BCBCBC;
 				padding: 1em 0.25em;
 				margin: 0;
@@ -193,14 +200,12 @@
 					p:last-child { margin-bottom: 1.5em !important; };
 				}
 				div p span { text-transform: none; }
-				div.anterior {
-					&::after {
-						font-family: 'Material Icons';
-						font-size: 24px;
-						display: inline-block;
-						float: right;
-						content: 'check_box';
-					};
+				div.anterior::after {
+					font-family: 'Material Icons';
+					font-size: 24px;
+					display: inline-block;
+					float: right;
+					content: 'check_box';
 				};
 				div.atual {
 					color: #333333;
@@ -212,22 +217,12 @@
 					float: right;
 					content: 'indeterminate_check_box';
 				};
-				div.posterior {
-					color: rgba(0,0,0,.4);
-					&::after {
-						font-family: 'Material Icons';
-						font-size: 24px;
-						display: inline-block;
-						float: right;
-						content: 'check_box_outline_blank';
-					};
-					&:hover {
-						cursor: default;
-						background-color: #FFFFFF;
-					};
-				};
-				div.posterior + div { 
-					display: none;
+				div.posterior::after {
+					font-family: 'Material Icons';
+					font-size: 24px;
+					display: inline-block;
+					float: right;
+					content: 'check_box_outline_blank';
 				};
 				div:nth-of-type(3) {
 					padding: 0;
@@ -235,7 +230,7 @@
 					p.tramit_link { margin: 0; padding: 0; };
 					a.tramit_link {
 						display: block;
-						max-width: 300px;
+						max-width: 100%;
 						white-space: nowrap;
 						overflow: hidden;
 						text-overflow: ellipsis;
@@ -259,7 +254,7 @@
 					};
 					a.tramit_link:hover::before {
 						background-color: $vermelho-gestao;
-						color: #FFFFFF;
+						color: #F8F8F8;
 						border-color: $vermelho-gestao;
 					};
 				};
