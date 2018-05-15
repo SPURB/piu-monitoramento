@@ -7,21 +7,20 @@
 	<link rel="stylesheet" type="text/css" href="./vendor/ol.4.2.0.css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 </head>
-<body>
+<body style="max-width: 960px;">
 	<div id="app">
 		<!-- Comente componentes não utilizados para agilizar o desenvolvimento-->
-		<!--<mapa></mapa>-->
-		<!-- <sumario @clicked="receiveId"></sumario> -->
-		<ficha :clicked-id="projectId" @clicked="receiveId"></ficha>
+		<mapa :clicked-id="projectId" @clicked="receiveId"></mapa>
+		<sumario @clicked="receiveId"></sumario>
+		<!-- <ficha :clicked-id="projectId" @clicked="receiveId"></ficha> -->
 	</div>
 </body>
 
 <!-- desenvolvimento alterar page-piu-monitormaneto.php em produção-->
 <script src="./vendor/vue.js"></script>
-<!-- <script src="./vendor/xlsx.full.min.js"></script> -->
 <script src="./vendor/ol.4.2.0.js"></script>
 <script type="text/javascript">
-	var url_excel_file = "monitoramento.xlsx";
+	var url_excel_file = "PIUs_infos.xlsx";
 	var dist_folder = "./dist/"
 </script>
 <script src="dist/main.min.js"></script>
