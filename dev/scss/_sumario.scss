@@ -4,6 +4,7 @@ font-size: 1.1em;
 
 div {
 	border-radius: 2px;
+	transition: background-color .1s ease-out;
 	:hover { background-color: #F8F8F8; };
 	div {
 		display: flex;
