@@ -1,3 +1,14 @@
+/* Open Layers -> declara view
+Dado que a view será alterada de dentro da instância da classe Vue declaramos ela fora do seu escopo
+*/
+let view = new ol.View({
+	projection: ol.proj.get('EPSG:3857'),
+	center: [-5190080.00000,-2708530.34945],
+	zoom: 10.65,
+	minZoom: 4,
+	maxZoom: 19
+});
+
 let mapa = {
 	name:'mapa',
 	data (){
@@ -7,25 +18,8 @@ let mapa = {
 		}
 	},
 	props: ['clicked-id'],
-	methods: {
-	},
-	computed:{
-		centro(){return [-5190080.00000,-2708530.34945]},
-		embu(){return [-5210080.00000,-2708530.34945]},
-	},
 	mounted(){
 		let base_map = new ol.layer.Tile({ source: new ol.source.OSM() });
-
-		// primeira view
-		let view = new ol.View({
-			projection: ol.proj.get('EPSG:3857'),
-			center: this.centro,
-			zoom: 10.65,
-			minZoom: 4,
-			maxZoom: 19
-		});
-
-		// instância mapa
 		let map = new ol.Map({
 			target: 'map',
 			layers: [ base_map],
@@ -39,25 +33,21 @@ let mapa = {
 			app.data.map(function(index) {
 				if (index.ID_rev == newprop) {
 					app.projeto = index
-
-					// alterar centro aqui
-					app.changeCenter(app.embu)
-
+					app.alteraView([ index.mapateste_x, index.mapateste_y ]);
 				};
 			});
 
 		}
 	},
 	methods:{
-		changeCenter(novocentro){
-			console.log(novocentro)
-			let map = document.getElementById('map')
-			console.log(map.view)
-			map.view.animate({
-				center: novocentro,
-				duration: 2000
-			});
+		alteraView(coordernadas){
+			console.log(coordernadas)
 
+			// Open Layers -> altera view
+			view.animate({
+				center: coordernadas,
+				duration: 2500
+			});
 		}
 	}, 
 
