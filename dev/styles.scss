@@ -1,9 +1,9 @@
-$proposicao: #FFD9B2;// etapas 1-3
-$avaliacao: #FFC68C;// etapas 4-4
-$elaboracao: #FF9E59;// etapas 5-8
-$implantacao: #FF5500;// etapas 9-12
-$nao-iniciado: #FF5500; 
-$suspenso: #BDBDBD; 
+$proposicao: #FFCCB3; // etapas 1-3
+$andamento: #FF5500; // etapas 4-7
+$implantacao: #802B00; // etapa 8
+$possivel: #FF5500; // outline
+$suspenso: #BDBDBD; // cinza
+$vermelho-gestao: #D7322F;
 
 @import "./scss/mapa";
 @import "./scss/sumario";

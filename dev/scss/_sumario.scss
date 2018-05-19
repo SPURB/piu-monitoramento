@@ -1,3 +1,116 @@
 #sumario {
-	// background-color: yellow;
+width: 100%;
+font-size: 1.1em;
+
+div {
+	border-radius: 2px;
+	:hover { background-color: #F8F8F8; };
+	div {
+		display: flex;
+		justify-content: flex-start;
+		border-left: 0px;
+		padding: 4px 0;
+		div {
+			display: inline-block;
+			vertical-align: baseline;
+			background-color: transparent;
+			width: calc(100%/3);
+			line-height: 16px;
+			div.marcadorEtapa {
+				display: inline-block;
+				border-radius: 2px;
+				margin-right: 4px;
+				height: 16px;
+				width: 24px;
+				text-align: center;
+				color: #FFFFFF;
+				font-weight: 700;
+				&:hover {
+					background-color: transparent !important;
+					cursor: help;
+				};
+			};
+			a {
+				display: block;
+				border-left: 0px;
+				color: #000000;
+				text-decoration: none;
+				font-weight: 700;
+				line-height: 32px;
+				padding: 0 8px;
+				border-radius: 2px;
+			};
+
+			a:hover { color: #FFFFFF; transition: 150ms; }
+		};
+		div:first-child span { 
+			font-size: 11px; 
+			vertical-align: baseline; 
+			text-transform: uppercase; 
+		};
+	};
+
+	div.thead {
+		height: 20px;
+		font-size: 13px;
+		color: #999999;
+		text-transform: none;
+		margin-bottom: -16px;
+		div:nth-child(2), div:nth-child(3) { margin-left: 24px; };
+		&:hover, div:hover { background-color: transparent; }
+	};
+
+	div.etapa {
+		color: #FFFFFF;
+		border-radius: 2px;
+		line-height: 24px;
+		padding: 0 8px;
+		margin-top: 16px;
+	};
+}
+
+div.proposicao {
+	border-left-color: $proposicao;
+	div.etapa { background-color: $proposicao; };
+	div.etapa div:hover { background-color: $proposicao; };
+	div a:hover { background-color: $proposicao; };
+	div div div.marcadorEtapa { background-color: $proposicao; };
+	div div div.marcadorEtapa:hover { color: $proposicao; }
+}
+
+div.andamento {
+	border-left-color: $andamento;
+	div.etapa { background-color: $andamento; };
+	div.etapa div:hover { background-color: $andamento; };
+	div a:hover { background-color: $andamento; };
+	div div div.marcadorEtapa { background-color: $andamento; };
+	div div div.marcadorEtapa:hover { color: red; }
+}
+
+div.implantacao {
+	border-left-color: $implantacao;
+	div.etapa { background-color: $implantacao; };
+	div.etapa div:hover { background-color: $implantacao; };
+	div a:hover { background-color: $implantacao; };
+	div div div.marcadorEtapa { background-color: $implantacao; };
+	div div div.marcadorEtapa:hover { color: $implantacao; }
+}
+
+div.suspenso {
+	border-left-color: $suspenso;
+	div.etapa { background-color: $suspenso; };
+	div.etapa div:hover { background-color: $suspenso; };
+	div a:hover { background-color: $suspenso; };
+	div div div.marcadorEtapa { background-color: $suspenso; };
+	div div div.marcadorEtapa:hover { color: $suspenso; }
+}
+
+div.possivel {
+	border-left-color: $possivel;
+	div.etapa { background-color: transparent; border: 1px solid $possivel; color: $possivel; };
+	div.etapa div:hover { background-color: transparent; border: 1px solid $possivel; color: $possivel; };
+	div a { border: 1px solid transparent; }
+	div a:hover { background-color: transparent; border: 1px solid $possivel; color: $possivel; };
+}
+
 }

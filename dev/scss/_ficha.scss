@@ -1,3 +1,223 @@
 #ficha {
-	background-color: green;
+
+	div.menu-titulo {
+
+		div.titulo {
+			line-height: 2em;
+			font-size: 2em;
+			border-bottom-width: 3px;
+			border-bottom-style: solid;
+			background-color: transparent;
+			i { font-size: 16px; color: #000000; };
+			&:hover { cursor: pointer; };
+		};
+		.proposicao { color: $proposicao; border-color: $proposicao; };
+		.andamento { color: $andamento; border-color: $andamento; };
+		.implantacao { color: $implantacao; border-color: $implantacao; };
+		.suspenso { color: $suspenso; border-color: $suspenso; };
+		.possivel { color: $possivel; border-bottom-color: $possivel; border-left-color: transparent; }
+
+		ul {
+			position: absolute;
+			width: 100%;
+			background-color: #FFFFFF;
+			list-style-type: none;
+			list-style-position: inside;
+			color: #000000;
+			border-bottom: 3px solid #000000;
+			border-radius: 2px;
+			padding: 0;
+			margin-top: 0px;
+			li {
+				font-size: 1em;
+				line-height: 3em;
+				padding: 0 8px;
+				border-left-width: 10px;
+				border-left-style: solid;
+				display: block;
+				a { color: #333333; display: block; };
+				a:hover { text-decoration: none; cursor: pointer; }
+			};
+			li:hover {
+				background-color: #F8F8F8;
+			};
+		};
+	}
+
+	div.container {
+		margin-top: 16px;
+		display: flex;
+		justify-content: space-between;
+		align-items: flex-start;
+
+
+		div.indicador {
+			border-radius: 2px;
+			font-size: 12px;
+			color: #FFFFFF;
+			line-height: 32px;
+			text-align: center;
+			text-transform: uppercase;
+		};
+
+		.proposicao { background-color: $proposicao; };
+		.andamento { background-color: $andamento; }
+		.implantacao { background-color: $implantacao; }
+		.suspenso { background-color: $suspenso; }
+		.possivel { color: $possivel !important; border: 1px solid $possivel; }
+
+		div.colId {
+			width: 20%;
+			font-size: 1em;
+			line-height: 1.75em;
+			div.id {
+				border-radius: 2px;
+				border: 1px solid #BDBDBD;
+				padding: 8px;
+				margin-top: 16px;
+				margin-bottom: 16px;
+				div { font-weight: 700; margin-bottom: 1em; };
+				a {
+					font-weight: 700;
+					text-transform: uppercase;
+				};
+				a::before { 
+					display: inline-block;
+					font-family: 'Material Icons';
+					font-weight: normal;
+					font-size: 16px;
+					float: left;
+					margin-right: 4px;
+					text-transform: none;
+					content: 'launch';
+					color: #000000;
+				};
+			};
+			a.link_pag_completa {
+				display: block;
+				line-height: 2em;
+				border-radius: 2px;
+				text-align: center;
+				background-color: $vermelho-gestao;
+				color: #FFFFFF;
+				text-decoration: none;
+				border: 1px solid $vermelho-gestao;
+				&:hover {
+					background-color: transparent;
+					color: $vermelho-gestao;
+					transition: 150ms;
+				};
+			};
+		};
+
+		h4 {
+			line-height: 32px;
+			margin: 0 0 12px 0;
+			padding: 0;
+		}
+
+		div.aspectos {
+			width: 40%;
+			margin-left: 16px;
+			p { font-size: 1em; }
+		};
+
+		div.tramitacao {
+			width: 40%;
+			margin-left: 16px;
+
+			div {
+				border-top-width: 3px;
+				border-top-style: solid;
+				line-height: 3em;
+				span { font-weight: 700; text-transform: uppercase; };
+				&:hover { background-color: #F8F8F8; cursor: pointer; };
+				div { 
+					border: 0;
+				}
+				div.anterior {
+					color: rgba(0,0,0,.4);
+					&::after {
+						font-family: 'Material Icons';
+						font-size: 24px;
+						display: inline-block;
+						float: right;
+						content: 'check_box';
+					};
+				};
+				div.atual::after {
+					font-family: 'Material Icons';
+					font-size: 24px;
+					display: inline-block;
+					float: right;
+					content: 'indeterminate_check_box';
+				};
+				div.posterior {
+					color: rgba(0,0,0,.4);
+					&::after {
+						font-family: 'Material Icons';
+						font-size: 24px;
+						display: inline-block;
+						float: right;
+						content: 'check_box_outline_blank';
+					};
+					&:hover {
+						cursor: default;
+						background-color: #FFFFFF;
+					};
+				};
+				div.posterior + div { 
+					display: none;
+				};
+				div:nth-of-type(2) {
+					padding: 0 0 1em 0;
+
+					a.tramit_link {
+						display: block;
+						max-width: 300px;
+						white-space: nowrap;
+						overflow: hidden;
+						text-overflow: ellipsis;
+					};
+					a.tramit_link::before {
+						content: attr(type);
+						line-height: 10px;
+						margin-right: 4px;
+						text-transform: uppercase;
+						font-size: 10px;
+						display: inline-block;
+						border-radius: 2px;
+						border: 1px solid #BCBCBC;
+						color: #BCBCBC;
+						padding: 2px;
+					};
+					a.tramit_link:hover::before {
+						color: $vermelho-gestao;
+						border-color: $vermelho-gestao;
+					};
+
+					p {
+						margin: 0;
+						padding-top: .5em;
+						line-height: 1.5em;
+						font-size: 1em;
+					};
+					p:first-child { margin-top: 0; };
+				};
+			};
+			div:nth-child(2), div:nth-child(3), div:nth-child(4) { border-top-color: $proposicao; };
+			div:nth-child(5), div:nth-child(6), div:nth-child(7), div:nth-child(8) { border-top-color: $andamento; };
+			div:nth-child(9) { border-top-color: $implantacao; };
+		};
+	};
+
+	.menuTransition {
+		transition: opacity 300ms;
+	}
+	.menuTransition-enter, .menuTransition-leave-to {
+		opacity: 0;
+	};
+	.menuTransition-enter-to, .menuTransition-leave {
+		opacity: 1;
+	}
 }
