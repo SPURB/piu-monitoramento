@@ -151,7 +151,7 @@
 			-webkit-hyphens: auto;
 			-moz-hyphens: auto;
 			hyphens: auto;
-			p { font-size: 1em; line-height: 1.6em; };
+			p { font-size: 1em; line-height: 1.75em; };
 			div {
 				border-top: 1px solid #BCBCBC;
 				padding: 1em 0.25em;
@@ -196,7 +196,7 @@
 					div.arquivos::before {
 						content: attr(nome);
 						display: block;
-						line-height: 1em;
+						line-height: 1.5em;
 					};
 					p {
 						margin: 1em 0;
@@ -237,6 +237,7 @@
 					padding: 0;
 
 					p.tramit_link { margin: 0; padding: 0; };
+					p.tramit_link:last-child { margin-bottom: 1em !important; }
 					a.tramit_link {
 						display: block;
 						max-width: 100%;
