@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kml xmlns="http://www.opengis.net/kml/2.2" xmlns:gx="http://www.google.com/kml/ext/2.2" xmlns:kml="http://www.opengis.net/kml/2.2" xmlns:atom="http://www.w3.org/2005/Atom">
+<Document>
+	<name>PIU Vila Olimpia.kmz</name>
+	<Schema name="PIUs_v5" id="S_PIUs_v5_SSISI">
+		<SimpleField type="string" name="Layer"><displayName>&lt;b&gt;Layer&lt;/b&gt;</displayName>
+</SimpleField>
+		<SimpleField type="string" name="id_2"><displayName>&lt;b&gt;id_2&lt;/b&gt;</displayName>
+</SimpleField>
+		<SimpleField type="int" name="NÂ__p__leg"><displayName>&lt;b&gt;NÂ° p/ leg&lt;/b&gt;</displayName>
+</SimpleField>
+		<SimpleField type="string" name="Etapas"><displayName>&lt;b&gt;Etapas&lt;/b&gt;</displayName>
+</SimpleField>
+		<SimpleField type="int" name="ID"><displayName>&lt;b&gt;ID&lt;/b&gt;</displayName>
+</SimpleField>
+	</Schema>
+	<Style id="falseColor">
+		<IconStyle>
+			<color>fff0f0f0</color>
+		</IconStyle>
+		<BalloonStyle>
+			<text><![CDATA[<table border="0">
+  <tr><td><b>Layer</b></td><td>$[PIUs_v5/Layer]</td></tr>
+  <tr><td><b>id_2</b></td><td>$[PIUs_v5/id_2]</td></tr>
+  <tr><td><b>NÂ° p/ leg</b></td><td>$[PIUs_v5/NÂ__p__leg]</td></tr>
+  <tr><td><b>Etapas</b></td><td>$[PIUs_v5/Etapas]</td></tr>
+  <tr><td><b>ID</b></td><td>$[PIUs_v5/ID]</td></tr>
+</table>]]></text>
+		</BalloonStyle>
+		<LineStyle>
+			<color>fff0f0f0</color>
+		</LineStyle>
+		<PolyStyle>
+			<color>b22d8afc</color>
+		</PolyStyle>
+	</Style>
+	<Style id="falseColor30">
+		<IconStyle>
+			<color>fff0f0f0</color>
+		</IconStyle>
+		<BalloonStyle>
+			<text><![CDATA[<table border="0">
+  <tr><td><b>Layer</b></td><td>$[PIUs_v5/Layer]</td></tr>
+  <tr><td><b>id_2</b></td><td>$[PIUs_v5/id_2]</td></tr>
+  <tr><td><b>NÂ° p/ leg</b></td><td>$[PIUs_v5/NÂ__p__leg]</td></tr>
+  <tr><td><b>Etapas</b></td><td>$[PIUs_v5/Etapas]</td></tr>
+  <tr><td><b>ID</b></td><td>$[PIUs_v5/ID]</td></tr>
+</table>]]></text>
+		</BalloonStyle>
+		<LineStyle>
+			<color>fff0f0f0</color>
+		</LineStyle>
+		<PolyStyle>
+			<color>b22d8afc</color>
+		</PolyStyle>
+		<gx:IconStackStyle>
+		</gx:IconStackStyle>
+	</Style>
+	<StyleMap id="falseColor33">
+		<Pair>
+			<key>normal</key>
+			<styleUrl>#falseColor</styleUrl>
+		</Pair>
+		<Pair>
+			<key>highlight</key>
+			<styleUrl>#falseColor30</styleUrl>
+		</Pair>
+	</StyleMap>
+	<Placemark>
+		<name>PIU Vila Olimpia</name>
+		<styleUrl>#falseColor33</styleUrl>
+		<ExtendedData>
+			<SchemaData schemaUrl="#S_PIUs_v5_SSISI">
+				<SimpleData name="Layer">PIU Vila Olimpia</SimpleData>
+				<SimpleData name="id_2">9</SimpleData>
+				<SimpleData name="NÂ__p__leg">9</SimpleData>
+				<SimpleData name="Etapas">Pré-PIU</SimpleData>
+				<SimpleData name="ID">9</SimpleData>
+			</SchemaData>
+		</ExtendedData>
+		<Polygon>
+			<outerBoundaryIs>
+				<LinearRing>
+					<coordinates>
+						-46.68419325222164,-23.59224497664321,0 -46.68332585761948,-23.59509593659452,0 -46.68293854755592,-23.59523052146547,0 -46.68224153402315,-23.59508067704187,0 -46.67983831513404,-23.59619942316721,0 -46.67844459583046,-23.59680626199222,0 -46.67872543790083,-23.59589856897015,0 -46.67931817459482,-23.59401613205642,0 -46.67723520835165,-23.59348550906436,0 -46.67811233025296,-23.59068187852569,0 -46.68419325222164,-23.59224497664321,0 
+					</coordinates>
+				</LinearRing>
+			</outerBoundaryIs>
+		</Polygon>
+	</Placemark>
+</Document>
+</kml>

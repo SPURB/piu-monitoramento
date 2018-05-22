@@ -1,7 +1,8 @@
 .DS_Store
 node_modules/
 vendor/vue.min.js
-dist/
+dist/main.min.js
+dist/styles.min.css
 dev/data/*.js
 .idea
 *.suo
