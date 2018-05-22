@@ -2,15 +2,9 @@
 node_modules/
 vendor/vue.min.js
 dist/
-
-# Editor directories and files
+dev/data/*.js
 .idea
 *.suo
 *.ntvs*
 *.njsproj
 *.sln
-
-# Arquivos enormes
-Basebranca_MSP.geojson
-DEINFO_LimiteMunicipio.geojson
-DEINFO_Represas.geojson

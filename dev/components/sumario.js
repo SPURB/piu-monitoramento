@@ -30,6 +30,7 @@ let sumario = {
 
 	template: `
 	<div id="sumario">
+
 		<div>		
 			<div class="thead">
 				<div>

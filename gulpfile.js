@@ -31,6 +31,7 @@ gulp.task('scripts-production', function() {
     gulp.src([
       './dev/data/monitoramento.js',
       './dev/data/hiperlinks.js', 
+      './dev/data/kmls.js', 
       './dev/components/mapa.js',
       './dev/components/sumario.js',
       './dev/components/ficha.js',
@@ -66,19 +67,42 @@ gulp.task('create-json', function (){
     var filePath = './dev/data/' + outputJS +'.js';
     fs.writeFile( filePath, concat, 'utf8', function (err){
       if(err){
-        return console.log(err);
+        console.log(err);
       }
     });
     console.log(filePath + ' atualizado')
   }
-  createJsFromExcel('PIUs_infos.xlsx','COMUNICACAO', 'monitoramento');
-  createJsFromExcel('PIUS_Doc_ParticipacaoPublica.xlsx','hiperlinks', 'hiperlinks');
+  createJsFromExcel('./data_src/monitoramento.xlsx','COMUNICACAO', 'monitoramento');
+  createJsFromExcel('./data_src/hiperlinks.xlsx','hiperlinks', 'hiperlinks');
 });
 
-gulp.task('watch', [
+
+gulp.task('kmls', function(){
+  var fs = require('fs');
+  var kmls = [];
+
+  fs.readdir('./dist/kml', (err, files) => {
+    if(err){
+      console.log(err)
+    }
+    else{
+      files.map(function(index) {
+        kmls.push(index)
+      })
+      var concat = 'var kmls = ' + JSON.stringify(files)
+      fs.writeFile( './dev/data/kmls.js', concat, 'utF8', function (err){
+        if (err) { console.log(err) }
+      })
+      console.log('.dev/data/kmls.js atualizado')
+    }
+  })
+})
+
+gulp.task('default', [
   'browserSync', 
   'scss',
   'create-json',
+  'kmls',
   'scripts-production'
   ], function (){
     gulp.watch('./dev/**/*.scss', ['scss']); 

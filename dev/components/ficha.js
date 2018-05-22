@@ -95,6 +95,21 @@ let ficha = {
 			};
 		},
 
+		arquivosDiscussao(N) {
+			var output = '';
+			for (var i = 0; i < hiperlinks.length; i++) {
+				if (hiperlinks[i].ID_Projeto == this.projeto.ID_rev && hiperlinks[i].ID_subetapa == N) {
+					if (N == 1) { output = 'Consulta Instâncias' };
+					if (N == 2) { output = 'Consulta Caderno' };
+					if (N == 3) { output = 'Consulta Minuta' };
+					if (N == 4) { output = 'Audiência Pública' };
+					if (N == 5) { output = 'Reuniões Bilaterais' };
+					if (N == 6) { output = 'Outras' };
+				}
+			};
+			return output;
+		},
+
 	},
 
 	watch:{
@@ -233,11 +248,48 @@ let ficha = {
 									Consulta <span>{{ projeto.b_status }}</span> ({{ dataExcelJS(projeto.b_data_inicio) }}—{{ dataExcelJS(projeto.b_data_final) }})
 								</p>
 							</template>
-							<template v-for="hiperlink in hiperlinks">
-								<p class="tramit_link" v-if="hiperlink.ID_Projeto == clickedId && hiperlink.ID_etapa == 2">
-									<a class="tramit_link" :href="hiperlink.arquivo" :type="ext(hiperlink.arquivo)" :title="hiperlink.nome_publico_do_arquivo" target="_blank">{{ hiperlink.nome_publico_do_arquivo }}</a>
-								</p>
-							</template>
+							<div class="arquivos" :nome="arquivosDiscussao(1)">
+								<template v-for="hiperlink in hiperlinks">
+									<p class="tramit_link" v-if="hiperlink.ID_Projeto == clickedId && hiperlink.ID_etapa == 2 && hiperlink.ID_subetapa == 1">
+										<a class="tramit_link" :href="hiperlink.arquivo" :type="ext(hiperlink.arquivo)" :title="hiperlink.nome_publico_do_arquivo" target="_blank">{{ hiperlink.nome_publico_do_arquivo }}</a>
+									</p>
+								</template>
+							</div>
+							<div class="arquivos" :nome="arquivosDiscussao(2)">
+								<template v-for="hiperlink in hiperlinks">
+									<p class="tramit_link" v-if="hiperlink.ID_Projeto == clickedId && hiperlink.ID_etapa == 2 && hiperlink.ID_subetapa == 2">
+										<a class="tramit_link" :href="hiperlink.arquivo" :type="ext(hiperlink.arquivo)" :title="hiperlink.nome_publico_do_arquivo" target="_blank">{{ hiperlink.nome_publico_do_arquivo }}</a>
+									</p>
+								</template>
+							</div>
+							<div class="arquivos" :nome="arquivosDiscussao(3)">
+								<template v-for="hiperlink in hiperlinks">
+									<p class="tramit_link" v-if="hiperlink.ID_Projeto == clickedId && hiperlink.ID_etapa == 2 && hiperlink.ID_subetapa == 3">
+										<a class="tramit_link" :href="hiperlink.arquivo" :type="ext(hiperlink.arquivo)" :title="hiperlink.nome_publico_do_arquivo" target="_blank">{{ hiperlink.nome_publico_do_arquivo }}</a>
+									</p>
+								</template>
+							</div>
+							<div class="arquivos" :nome="arquivosDiscussao(4)">
+								<template v-for="hiperlink in hiperlinks">
+									<p class="tramit_link" v-if="hiperlink.ID_Projeto == clickedId && hiperlink.ID_etapa == 2 && hiperlink.ID_subetapa == 4">
+										<a class="tramit_link" :href="hiperlink.arquivo" :type="ext(hiperlink.arquivo)" :title="hiperlink.nome_publico_do_arquivo" target="_blank">{{ hiperlink.nome_publico_do_arquivo }}</a>
+									</p>
+								</template>
+							</div>
+							<div class="arquivos" :nome="arquivosDiscussao(5)">
+								<template v-for="hiperlink in hiperlinks">
+									<p class="tramit_link" v-if="hiperlink.ID_Projeto == clickedId && hiperlink.ID_etapa == 2 && hiperlink.ID_subetapa == 5">
+										<a class="tramit_link" :href="hiperlink.arquivo" :type="ext(hiperlink.arquivo)" :title="hiperlink.nome_publico_do_arquivo" target="_blank">{{ hiperlink.nome_publico_do_arquivo }}</a>
+									</p>
+								</template>
+							</div>
+							<div class="arquivos" :nome="arquivosDiscussao(6)">
+								<template v-for="hiperlink in hiperlinks">
+									<p class="tramit_link" v-if="hiperlink.ID_Projeto == clickedId && hiperlink.ID_etapa == 2 && hiperlink.ID_subetapa == 6">
+										<a class="tramit_link" :href="hiperlink.arquivo" :type="ext(hiperlink.arquivo)" :title="hiperlink.nome_publico_do_arquivo" target="_blank">{{ hiperlink.nome_publico_do_arquivo }}</a>
+									</p>
+								</template>
+							</div>
 						</div>
 					</transition>
 				</div>
@@ -326,11 +378,48 @@ let ficha = {
 									<span>{{ projeto.e_outras_atividades_participativas }}</span>
 								</p>
 							</template>
-							<template v-for="hiperlink in hiperlinks">
-								<p class="tramit_link" v-if="hiperlink.ID_Projeto == clickedId && hiperlink.ID_etapa == 5">
-									<a class="tramit_link" :href="hiperlink.arquivo" :type="ext(hiperlink.arquivo)" :title="hiperlink.nome_publico_do_arquivo" target="_blank">{{ hiperlink.nome_publico_do_arquivo }}</a>
-								</p>
-							</template>
+							<div class="arquivos" nome="Consulta Instâncias">
+								<template v-for="hiperlink in hiperlinks">
+									<p class="tramit_link" v-if="hiperlink.ID_Projeto == clickedId && hiperlink.ID_etapa == 5 && ID_subetapa == 1">
+										<a class="tramit_link" :href="hiperlink.arquivo" :type="ext(hiperlink.arquivo)" :title="hiperlink.nome_publico_do_arquivo" target="_blank">{{ hiperlink.nome_publico_do_arquivo }}</a>
+									</p>
+								</template>
+							</div>
+							<div class="arquivos" nome="Consulta Caderno">
+								<template v-for="hiperlink in hiperlinks">
+									<p class="tramit_link" v-if="hiperlink.ID_Projeto == clickedId && hiperlink.ID_etapa == 5 && ID_subetapa == 2">
+										<a class="tramit_link" :href="hiperlink.arquivo" :type="ext(hiperlink.arquivo)" :title="hiperlink.nome_publico_do_arquivo" target="_blank">{{ hiperlink.nome_publico_do_arquivo }}</a>
+									</p>
+								</template>
+							</div>
+							<div class="arquivos" nome="Consulta Minuta">
+								<template v-for="hiperlink in hiperlinks">
+									<p class="tramit_link" v-if="hiperlink.ID_Projeto == clickedId && hiperlink.ID_etapa == 5 && ID_subetapa == 3">
+										<a class="tramit_link" :href="hiperlink.arquivo" :type="ext(hiperlink.arquivo)" :title="hiperlink.nome_publico_do_arquivo" target="_blank">{{ hiperlink.nome_publico_do_arquivo }}</a>
+									</p>
+								</template>
+							</div>
+							<div class="arquivos" nome="Audiência Pública">
+								<template v-for="hiperlink in hiperlinks">
+									<p class="tramit_link" v-if="hiperlink.ID_Projeto == clickedId && hiperlink.ID_etapa == 5 && ID_subetapa == 4">
+										<a class="tramit_link" :href="hiperlink.arquivo" :type="ext(hiperlink.arquivo)" :title="hiperlink.nome_publico_do_arquivo" target="_blank">{{ hiperlink.nome_publico_do_arquivo }}</a>
+									</p>
+								</template>
+							</div>
+							<div class="arquivos" nome="Reuniões Bilaterais">
+								<template v-for="hiperlink in hiperlinks">
+									<p class="tramit_link" v-if="hiperlink.ID_Projeto == clickedId && hiperlink.ID_etapa == 5 && ID_subetapa == 5">
+										<a class="tramit_link" :href="hiperlink.arquivo" :type="ext(hiperlink.arquivo)" :title="hiperlink.nome_publico_do_arquivo" target="_blank">{{ hiperlink.nome_publico_do_arquivo }}</a>
+									</p>
+								</template>
+							</div>
+							<div class="arquivos" nome="Outras">
+								<template v-for="hiperlink in hiperlinks">
+									<p class="tramit_link" v-if="hiperlink.ID_Projeto == clickedId && hiperlink.ID_etapa == 5 && ID_subetapa == 6">
+										<a class="tramit_link" :href="hiperlink.arquivo" :type="ext(hiperlink.arquivo)" :title="hiperlink.nome_publico_do_arquivo" target="_blank">{{ hiperlink.nome_publico_do_arquivo }}</a>
+									</p>
+								</template>
+							</div>
 						</div>
 					</transition>
 				</div>

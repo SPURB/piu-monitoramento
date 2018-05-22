@@ -25,4 +25,4 @@ gulp build
 
 ```
 
-> Nota: O arquivo ``PIUs_infos.xlsx`` simula a futura base de dados. Neste projeto os dados estão sendo compilados pelo gulp (veja `./dev/data/monitoramento.js`).
+> Nota: O arquivo ``data_src/monitoramento.xlsx``  e ``data/src/hiperlinks`` simula a futura base de dados. Neste projeto os dados estão sendo compilados pelo gulp (veja `./dev/data/`).
