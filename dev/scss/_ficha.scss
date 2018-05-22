@@ -9,7 +9,7 @@
 			border-bottom-width: 3px;
 			border-bottom-style: solid;
 			background-color: transparent;
-			i { font-size: 16px; color: #000000; };
+			i { font-size: 36px; color: #000000; vertical-align: -0.25em; };
 			&:hover { cursor: pointer; };
 		};
 		.proposicao { color: $proposicao; border-color: $proposicao; };
