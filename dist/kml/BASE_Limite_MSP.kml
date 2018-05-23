@@ -10,27 +10,6 @@
 		<SimpleField type="double" name="area"><displayName>&lt;b&gt;area&lt;/b&gt;</displayName>
 </SimpleField>
 	</Schema>
-	<Style id="falseColor">
-		<IconStyle>
-			<colorMode>random</colorMode>
-		</IconStyle>
-		<BalloonStyle>
-			<text><![CDATA[<table border="0">
-  <tr><td><b>limite_id</b></td><td>$[IBGE_RMSP_Municipios/limite_id]</td></tr>
-  <tr><td><b>municipio</b></td><td>$[IBGE_RMSP_Municipios/municipio]</td></tr>
-  <tr><td><b>area</b></td><td>$[IBGE_RMSP_Municipios/area]</td></tr>
-</table>]]></text>
-		</BalloonStyle>
-		<LineStyle>
-			<color>ff000000</color>
-			<colorMode>random</colorMode>
-			<width>2</width>
-		</LineStyle>
-		<PolyStyle>
-			<color>00ffffff</color>
-			<colorMode>random</colorMode>
-		</PolyStyle>
-	</Style>
 	<Style id="falseColor0">
 		<IconStyle>
 			<colorMode>random</colorMode>
@@ -62,6 +41,27 @@
 			<styleUrl>#falseColor0</styleUrl>
 		</Pair>
 	</StyleMap>
+	<Style id="falseColor">
+		<IconStyle>
+			<colorMode>random</colorMode>
+		</IconStyle>
+		<BalloonStyle>
+			<text><![CDATA[<table border="0">
+  <tr><td><b>limite_id</b></td><td>$[IBGE_RMSP_Municipios/limite_id]</td></tr>
+  <tr><td><b>municipio</b></td><td>$[IBGE_RMSP_Municipios/municipio]</td></tr>
+  <tr><td><b>area</b></td><td>$[IBGE_RMSP_Municipios/area]</td></tr>
+</table>]]></text>
+		</BalloonStyle>
+		<LineStyle>
+			<color>ff000000</color>
+			<colorMode>random</colorMode>
+			<width>2</width>
+		</LineStyle>
+		<PolyStyle>
+			<color>00ffffff</color>
+			<colorMode>random</colorMode>
+		</PolyStyle>
+	</Style>
 	<Placemark>
 		<name>São Paulo</name>
 		<styleUrl>#falseColor1</styleUrl>

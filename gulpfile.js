@@ -31,6 +31,7 @@ gulp.task('scripts-production', function() {
     gulp.src([
       './dev/data/monitoramento.js',
       './dev/data/hiperlinks.js', 
+      './dev/data/kmls.js', 
       './dev/components/mapa.js',
       './dev/components/sumario.js',
       './dev/components/ficha.js',
@@ -47,50 +48,71 @@ gulp.task('scripts-production', function() {
 
 gulp.task('create-json', function (){
   var fs = require('fs');
+  var XLSX = require('xlsx');
   var monitoramento = [];
-
-  if(typeof require !== 'undefined') XLSX = require('xlsx');
-  var workbook = XLSX.readFile('data_src/monitoramento.xlsx');
-  var first_sheet_name = workbook.SheetNames[0];// -> primeira planilha do arquivo. Ou trocar pelo nome da planilha
-  var worksheet = workbook.Sheets[first_sheet_name];
-  var myObj = XLSX.utils.sheet_to_json(worksheet,{raw:true});
-  myObj.map(function(index){ monitoramento.push(index); })
-
-  var json = JSON.stringify(monitoramento);
-  var concat = 'var monitoramento =' + json;
-  fs.writeFile('./dev/data/monitoramento.js', concat, 'utf8', function (err){
-    if(err){
-      return console.log(err);
-    }
-    console.log("./dev/data/monitoramento.js atualizado")
-  });
-});
-
-gulp.task('hiperlinks', function (){
-  var fs = require('fs');
   var hiperlinks = [];
 
-  if(typeof require !== 'undefined') XLSX = require('xlsx');
-  var workbook = XLSX.readFile('data_src/hiperlinks.xlsx');
-  var first_sheet_name = 'hiperlinks';// -> primeira planilha do arquivo. Ou trocar pelo nome da planilha
-  var worksheet = workbook.Sheets[first_sheet_name];
-  var myObj = XLSX.utils.sheet_to_json(worksheet,{raw:true});
-  myObj.map(function(index){ hiperlinks.push(index); })
-
-  var json = JSON.stringify(hiperlinks);
-  var concat = 'var hiperlinks =' + json;
-  fs.writeFile('./dev/data/hiperlinks.js', concat, 'utf8', function (err){
-    if(err){
-      return console.log(err);
+  function createJsFromExcel(inputExcel, tableName, outputJS){
+    var worksheet = XLSX.readFile(inputExcel).Sheets[tableName];
+    var myObj = XLSX.utils.sheet_to_json(worksheet,{raw:true});
+    if(outputJS == 'monitoramento'){
+      myObj.map(function(index){ monitoramento.push(index); })
+      var json = JSON.stringify(monitoramento);
     }
-    console.log("./dev/data/hiperlinks.js atualizado")
-  });
-})
-
-gulp.task('default', ['browserSync', 'scss','create-json','hiperlinks','scripts-production'], function (){
-  gulp.watch('./dev/**/*.scss', ['scss']); 
-  gulp.watch('./dev/**/*.js', ['scripts-production']); 
-  gulp.watch('./*.html', browserSync.reload); 
+    else if(outputJS == 'hiperlinks'){
+      myObj.map(function(index){ hiperlinks.push(index); })
+      var json = JSON.stringify(hiperlinks);
+    }
+    var concat = 'var ' + outputJS + '=' + json;
+    var filePath = './dev/data/' + outputJS +'.js';
+    fs.writeFile( filePath, concat, 'utf8', function (err){
+      if(err){
+        console.log(err);
+      }
+    });
+    console.log(filePath + ' atualizado')
+  }
+  createJsFromExcel('./data_src/monitoramento.xlsx','COMUNICACAO', 'monitoramento');
+  createJsFromExcel('./data_src/hiperlinks.xlsx','hiperlinks', 'hiperlinks');
 });
 
-gulp.task('build', ['scss','create-json','hiperlinks','scripts-production']);
+
+gulp.task('kmls', function(){
+  var fs = require('fs');
+  var kmls = [];
+
+  fs.readdir('./dist/kml', (err, files) => {
+    if(err){
+      console.log(err)
+    }
+    else{
+      files.map(function(index) {
+        kmls.push(index)
+      })
+      var concat = 'var kmls = ' + JSON.stringify(files)
+      fs.writeFile( './dev/data/kmls.js', concat, 'utF8', function (err){
+        if (err) { console.log(err) }
+      })
+      console.log('.dev/data/kmls.js atualizado')
+    }
+  })
+})
+
+gulp.task('default', [
+  'browserSync', 
+  'scss',
+  'create-json',
+  'kmls',
+  'scripts-production'
+  ], function (){
+    gulp.watch('./dev/**/*.scss', ['scss']); 
+    gulp.watch('./dev/**/*.js', ['scripts-production']); 
+    gulp.watch('./*.xlsx', ['scripts-production']); 
+    gulp.watch('./*.html', browserSync.reload); 
+});
+
+gulp.task('build', [
+  'scss',
+  'create-json',
+  'scripts-production'
+]);

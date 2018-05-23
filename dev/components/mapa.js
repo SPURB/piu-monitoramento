@@ -1,98 +1,151 @@
-function tst(){
-	const centroInicial = [-5190080.00000,-2708530.34945];
-
-	var base_map = new ol.layer.Tile({ source: new ol.source.OSM() });
-
-	var view = new ol.View({
-		projection: ol.proj.get('EPSG:3857'),
-		center: ol.proj.fromLonLat([-51.9,-27]),
-		zoom: 0,
-		minZoom: 4,
-		maxZoom: 19
-	});
-
-	var map = new ol.Map({
-		target: 'map',
-		layers: [
-			base_map	
-			// msp,
-			// arco_jurbatuba
-		],
-		view: view,
-		loadTilesWhileAnimating: true,
-	});
-}
-function teste(x,y){
-	const centroInicial = [-5190080.00000,-2708530.34945];
-
-	var base_map = new ol.layer.Tile({ source: new ol.source.OSM() });
-
-	var view = new ol.View({
-		projection: ol.proj.get('EPSG:3857'),
-		center: ol.proj.fromLonLat([-51.9,-27]),
-		zoom: 0,
-		minZoom: 4,
-		maxZoom: 19
-	});
-
-	var map = new ol.Map({
-		target: 'map',
-		layers: [
-			base_map	
-			// msp,
-			// arco_jurbatuba
-		],
-		view: view,
-		loadTilesWhileAnimating: true,
-	});
-	console.log(x,y);
-	view.animate({
-		center: ol.proj.fromLonLat([x,y]),
-		duration: 5000
-	});
-}
+/* Open Layers -> declara view
+Dado que a view será alterada de dentro da instância da classe Vue declaramos ela fora do seu escopo
+*/
+let view = new ol.View({
+	projection: ol.proj.get('EPSG:3857'),
+	center: [-5190080.00000,-2708530.34945],
+	zoom: 10.65,
+	minZoom: 4,
+	maxZoom: 19
+});
 
 let mapa = {
 	name:'mapa',
 	data (){
 		return {
 			data: monitoramento,
-			projeto: '',
-			centro_x: '', centro_y: '',
+			projeto: undefined
 		}
 	},
 	props: ['clicked-id'],
-	methods: {
+	computed:{
+		kmls(){ 
+			let parseKml = [];
+			kmls.map(function(str) { // dev/data/kmls.js
+				let outputid
+				let baseNumber = str.substring(0,2) // primeiros dois strings -> 1_ ou 10 
+				let numericStr = parseInt(baseNumber,10) // converte strings para número ou retorna NaN
+				Number.isNaN(numericStr) ? // se string não é numérica  
+					outputid = str.substring(0, 4) : // retorna 4 caracteres -> 'BASE'
+					outputid = numericStr.toString() // Converte valor numérico em string 
+				parseKml.push({
+					id:	outputid,
+					fileName: str
+				})
+			})
+			return parseKml;
+		},
+		kmlLayers(){
+			let output = [
+				new ol.layer.Tile({ 
+					source: new ol.source.OSM()
+				}) 
+			]
+
+			function defineStyle(id){
+				let id_projeto = undefined
+				let etapa = undefined
+				let outputColor = {
+					stroke: 'rgba()',
+					fill: 'rgba(200,200,200, 0.5)'
+				}
+
+				monitoramento.map(function(index) {
+					if(index.ID_rev == id) {
+						id_projeto = id;
+						etapa = index.etapas_NUM
+					}
+				}) 
+
+				// console.log('id: '+ id, 'etapa: ' + parseInt(etapa, 10))
+				let etapaNumber = parseInt(etapa, 10)
+
+				// #ffccb3 	-> Em proposiçao
+				// #f50 	-> Em andamento
+				// #802b00 	-> Implantação
+				// #bdbdbd 	-> Suspenso
+				if (id == 'BASE'){
+					outputColor.stroke = 'rgba(50,50,50, 0)'
+					outputColor.fill = 'rgba(255,255,255, 0.75)'
+				}
+				else if(etapaNumber <= 3){
+					outputColor.stroke = 'rgba(255, 204, 179, 1)'
+					outputColor.fill = 'rgba(255, 204, 179, .75)'
+				}
+				else if(3 < etapaNumber <= 7){
+					outputColor.stroke = 'rgba(255, 85, 0, 1)'
+					outputColor.fill = 'rgba(255, 85, 0, .75)'
+				}
+				else if(7 < etapaNumber <= 8){
+					outputColor.stroke = 'rgba(128, 43, 0, 1)'
+					outputColor.fill = 'rgba(128, 43, 0, .75)'
+				}
+				else if(8 < etapaNumber){
+					outputColor.stroke = 'rgba(189, 189, 189, 1)'
+					outputColor.fill = 'rgba(189, 189, 189, .75)'
+				}
+
+				let style = new ol.style.Style({
+					stroke: new ol.style.Stroke({
+						color: outputColor.stroke,
+						width: 1
+					}),
+						fill: new ol.style.Fill({
+						color: outputColor.fill
+					})
+				});
+				return style
+			}
+
+			this.kmls.map(function(object) {
+				let src = new ol.source.Vector({
+					url: dist_folder + 'kml/' + object.fileName,
+					format: new ol.format.KML({
+						extractStyles: false,
+					}),
+      				useSpatialIndex: true,
+				});
+				let layer =  new ol.layer.Vector({ 
+					style: defineStyle(object.id),
+					source: src,
+					updateWhileAnimating: true,
+					renderBuffer:100,
+					renderMode: 'image',
+				});
+				output.splice(1,0,layer)
+			})
+			return output
+		}
 	},
 	mounted(){
-		// tst()
-		// var msp = new ol.layer.Vector({
-		// 	source: new ol.source.Vector({
-		// 		url: dist_folder + 'kml/limite_msp.kml',//dist_folder definido em index.html ou page-piu-monitoramento.php
-		// 		format: new ol.format.KML()
-		// 	})
-		// });
-
-		// var arco_jurbatuba = new ol.layer.Vector({
-		// 	source: new ol.source.Vector({
-		// 		url: dist_folder + 'kml/piu-arco-jurubatuba_2018-04.kml',
-		// 		format: new ol.format.KML()
-		// 	})
-		// });
+		let map = new ol.Map({
+			target: 'map',
+			layers: this.kmlLayers,
+			loadTilesWhileAnimating: true,
+			view: view
+		});
+		// console.log(this.kmlLayers.getSource().getExtent());
 	},
 	watch:{
-		clickedId(newprop,oldprop){
-			const app = this;
+		clickedId(newprop, oldprop){
+			const app = this
 			app.data.map(function(index) {
 				if (index.ID_rev == newprop) {
-					app.projeto = index;
-					app.centro_x = app.projeto.mapateste_x;
-					app.centro_y = app.projeto.mapateste_y;
-					teste(app.centro_x, app.centro_y);
+					app.projeto = index
+					app.alteraView([ index.urb_x, index.urb_y ]);
 				};
 			});
 		}
 	},
+	methods:{
+		alteraView(coordernadas){ // Altera view de Open Layers (linha 4)
+			view.animate({
+				center: coordernadas,
+				zoom: 14,
+				duration: 1500
+			});
+		}
+	}, 
 	template: `
 	<div id="mapa">
 		<h3>Projetos de Intervenção Urbana</h3>

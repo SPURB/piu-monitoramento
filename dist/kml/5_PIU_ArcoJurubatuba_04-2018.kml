@@ -14,26 +14,6 @@
 		<SimpleField type="int" name="ID"><displayName>&lt;b&gt;ID&lt;/b&gt;</displayName>
 </SimpleField>
 	</Schema>
-	<Style id="falseColor15">
-		<IconStyle>
-			<color>fff0f0f0</color>
-		</IconStyle>
-		<BalloonStyle>
-			<text><![CDATA[<table border="0">
-  <tr><td><b>Layer</b></td><td>$[PIUs_v5/Layer]</td></tr>
-  <tr><td><b>id_2</b></td><td>$[PIUs_v5/id_2]</td></tr>
-  <tr><td><b>NÂ° p/ leg</b></td><td>$[PIUs_v5/NÂ__p__leg]</td></tr>
-  <tr><td><b>Etapas</b></td><td>$[PIUs_v5/Etapas]</td></tr>
-  <tr><td><b>ID</b></td><td>$[PIUs_v5/ID]</td></tr>
-</table>]]></text>
-		</BalloonStyle>
-		<LineStyle>
-			<color>fff0f0f0</color>
-		</LineStyle>
-		<PolyStyle>
-			<color>b23c39cf</color>
-		</PolyStyle>
-	</Style>
 	<Style id="falseColor8">
 		<IconStyle>
 			<color>fff0f0f0</color>
@@ -53,6 +33,28 @@
 		<PolyStyle>
 			<color>b23c39cf</color>
 		</PolyStyle>
+	</Style>
+	<Style id="falseColor15">
+		<IconStyle>
+			<color>fff0f0f0</color>
+		</IconStyle>
+		<BalloonStyle>
+			<text><![CDATA[<table border="0">
+  <tr><td><b>Layer</b></td><td>$[PIUs_v5/Layer]</td></tr>
+  <tr><td><b>id_2</b></td><td>$[PIUs_v5/id_2]</td></tr>
+  <tr><td><b>NÂ° p/ leg</b></td><td>$[PIUs_v5/NÂ__p__leg]</td></tr>
+  <tr><td><b>Etapas</b></td><td>$[PIUs_v5/Etapas]</td></tr>
+  <tr><td><b>ID</b></td><td>$[PIUs_v5/ID]</td></tr>
+</table>]]></text>
+		</BalloonStyle>
+		<LineStyle>
+			<color>fff0f0f0</color>
+		</LineStyle>
+		<PolyStyle>
+			<color>b23c39cf</color>
+		</PolyStyle>
+		<gx:IconStackStyle>
+		</gx:IconStackStyle>
 	</Style>
 	<StyleMap id="falseColor17">
 		<Pair>

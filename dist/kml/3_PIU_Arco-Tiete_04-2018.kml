@@ -14,7 +14,17 @@
 		<SimpleField type="int" name="ID"><displayName>&lt;b&gt;ID&lt;/b&gt;</displayName>
 </SimpleField>
 	</Schema>
-	<Style id="falseColor18">
+	<StyleMap id="falseColor10">
+		<Pair>
+			<key>normal</key>
+			<styleUrl>#falseColor18</styleUrl>
+		</Pair>
+		<Pair>
+			<key>highlight</key>
+			<styleUrl>#falseColor32</styleUrl>
+		</Pair>
+	</StyleMap>
+	<Style id="falseColor32">
 		<IconStyle>
 			<color>fff0f0f0</color>
 		</IconStyle>
@@ -33,18 +43,10 @@
 		<PolyStyle>
 			<color>b2eeeeee</color>
 		</PolyStyle>
+		<gx:IconStackStyle>
+		</gx:IconStackStyle>
 	</Style>
-	<StyleMap id="falseColor10">
-		<Pair>
-			<key>normal</key>
-			<styleUrl>#falseColor18</styleUrl>
-		</Pair>
-		<Pair>
-			<key>highlight</key>
-			<styleUrl>#falseColor32</styleUrl>
-		</Pair>
-	</StyleMap>
-	<Style id="falseColor32">
+	<Style id="falseColor18">
 		<IconStyle>
 			<color>fff0f0f0</color>
 		</IconStyle>

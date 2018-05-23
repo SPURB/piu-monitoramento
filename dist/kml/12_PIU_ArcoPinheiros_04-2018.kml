@@ -14,7 +14,7 @@
 		<SimpleField type="int" name="ID"><displayName>&lt;b&gt;ID&lt;/b&gt;</displayName>
 </SimpleField>
 	</Schema>
-	<Style id="falseColor5">
+	<Style id="falseColor22">
 		<IconStyle>
 			<color>fff0f0f0</color>
 		</IconStyle>
@@ -44,7 +44,7 @@
 			<styleUrl>#falseColor22</styleUrl>
 		</Pair>
 	</StyleMap>
-	<Style id="falseColor22">
+	<Style id="falseColor5">
 		<IconStyle>
 			<color>fff0f0f0</color>
 		</IconStyle>
