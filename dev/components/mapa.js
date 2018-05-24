@@ -98,16 +98,14 @@ let mapa = {
 			}
 
 			this.kmls.map(function(object) {
-				let src = new ol.source.Vector({
-					url: dist_folder + 'kml/' + object.fileName,
-					format: new ol.format.KML({
-						extractStyles: false,
-					}),
-      				useSpatialIndex: true,
-				});
-				let layer =  new ol.layer.Vector({ 
+				let layer = new ol.layer.Vector({ 
 					style: defineStyle(object.id),
-					source: src,
+					source: new ol.source.Vector({
+						url: dist_folder + 'kml/' + object.fileName,
+						format: new ol.format.KML({
+							extractStyles: false,
+						}),
+					}),
 					updateWhileAnimating: true,
 					renderBuffer:100,
 					renderMode: 'image',
@@ -124,7 +122,8 @@ let mapa = {
 			loadTilesWhileAnimating: true,
 			view: view
 		});
-		// console.log(this.kmlLayers.getSource().getExtent());
+		let x = map.getLayers().item(1);
+		console.log(x);
 	},
 	watch:{
 		clickedId(newprop, oldprop){
@@ -135,6 +134,7 @@ let mapa = {
 					app.alteraView([ index.urb_x, index.urb_y ]);
 				};
 			});
+
 		}
 	},
 	methods:{

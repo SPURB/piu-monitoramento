@@ -23,22 +23,22 @@ let ficha = {
 		},
 
 		dataExcelJS(data) {
-		   var utc_days  = Math.floor(data - 25568);
-		   var utc_value = utc_days * 86400;                                        
-		   var date_info = new Date(utc_value * 1000);
+			var utc_days = Math.floor(data - 25568);
+			var utc_value = utc_days * 86400;
+			var date_info = new Date(utc_value * 1000);
 
-		   var fractional_day = data - Math.floor(data) + 0.0000001;
+			var fractional_day = data - Math.floor(data) + 0.0000001;
 
-		   var total_seconds = Math.floor(86400 * fractional_day);
+			var total_seconds = Math.floor(86400 * fractional_day);
 
-		   var seconds = total_seconds % 60;
+			var seconds = total_seconds % 60;
 
-		   total_seconds -= seconds;
+			total_seconds -= seconds;
 
-		   var hours = Math.floor(total_seconds / (60 * 60));
-		   var minutes = Math.floor(total_seconds / 60) % 60;
+			var hours = Math.floor(total_seconds / (60 * 60));
+			var minutes = Math.floor(total_seconds / 60) % 60;
 
-		   return date_info.toLocaleDateString();
+			return date_info.toLocaleDateString();
 		},
 
 		encontraProjeto(newClickedId) {
