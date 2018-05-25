@@ -3,7 +3,12 @@ new Vue({
 	data:{
 		zoom: 10.65,
 		center: [-5190080.00000,-2708530.34945],
-		projectId: undefined
+		projectId: undefined, 
+		display:{
+			mapa: true,
+			sumario: true,
+			ficha: false
+		}
 	}, 
 	components: {
 		mapa,
