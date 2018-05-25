@@ -14,7 +14,8 @@ let mapa = {
 	data (){
 		return {
 			data: monitoramento,
-			projeto: undefined
+			projeto: undefined,
+			layers: undefined
 		}
 	},
 	props: ['clicked-id'],
@@ -36,76 +37,26 @@ let mapa = {
 			return parseKml;
 		},
 		kmlLayers(){
+			let app = this
 			let output = [
 				new ol.layer.Tile({ 
 					source: new ol.source.OSM()
-				}) 
+				}),
 			]
-
-			function defineStyle(id){
-				let id_projeto = undefined
-				let etapa = undefined
-				let outputColor = {
-					stroke: 'rgba()',
-					fill: 'rgba(200,200,200, 0.5)'
-				}
-
-				monitoramento.map(function(index) {
-					if(index.ID_rev == id) {
-						id_projeto = id;
-						etapa = index.etapas_NUM
-					}
-				}) 
-
-				// console.log('id: '+ id, 'etapa: ' + parseInt(etapa, 10))
-				let etapaNumber = parseInt(etapa, 10)
-
-				// #ffccb3 	-> Em proposiçao
-				// #f50 	-> Em andamento
-				// #802b00 	-> Implantação
-				// #bdbdbd 	-> Suspenso
-				if (id == 'BASE'){
-					outputColor.stroke = 'rgba(50,50,50, 1)'
-					outputColor.fill = 'rgba(255,255,255, 0.75)'
-				}
-				else if(etapaNumber < 3){
-					outputColor.fill = '#ffccb3'
-				}
-				else if(3 < etapaNumber < 6){
-					outputColor.fill = '#f50'
-				}
-				else if(6 < etapaNumber < 9){
-					outputColor.fill = '#802b00'
-				}
-				else if(9 < etapaNumber){
-					outputColor.fill = '#bdbdbd'
-				}
-
-				let style = new ol.style.Style({
-					stroke: new ol.style.Stroke({
-						color: outputColor.stroke,
-						width: 1
-					}),
-						fill: new ol.style.Fill({
-						color: outputColor.fill
-					})
-				});
-				return style
-			}
-
 			this.kmls.map(function(object) {
-				let layer =  new ol.layer.Vector({ 
-					style: defineStyle(object.id),
+				let layer = new ol.layer.Vector({ 
+					style: app.defineStyle(object.id),
 					source: new ol.source.Vector({
 						url: dist_folder + 'kml/' + object.fileName,
 						format: new ol.format.KML({
 							extractStyles: false,
-						}),
+						})
 					}),
-					updateWhileAnimating: true,
+					updateWhileAnimating: false,
 					renderBuffer:100,
-					renderMode: 'image'
-				})
+					renderMode: 'image',
+				});
+				layer.set('id_projeto', object.id)
 				output.splice(1,0,layer)
 			})
 			return output
@@ -116,8 +67,16 @@ let mapa = {
 			target: 'map',
 			layers: this.kmlLayers,
 			loadTilesWhileAnimating: true,
-			view: view
+			view: view,
+			controls: ol.control.defaults({
+				attributionOptions: {
+					collapsible: false
+				}
+				}).extend([
+					new ol.control.ScaleLine()
+				])
 		});
+		this.layers = map.getLayers()
 	},
 	watch:{
 		clickedId(newprop, oldprop){
@@ -125,18 +84,80 @@ let mapa = {
 			app.data.map(function(index) {
 				if (index.ID_rev == newprop) {
 					app.projeto = index
-					app.alteraView([ index.urb_x, index.urb_y ]);
+					app.fitToLayer(newprop)
 				};
 			});
+
 		}
 	},
 	methods:{
-		alteraView(coordernadas){ // Altera view de Open Layers (linha 4)
-			view.animate({
-				center: coordernadas,
-				zoom: 14,
-				duration: 1500
+		fitToLayer(id_projeto){
+			view.cancelAnimations()
+			let app = this
+			this.kmlLayers.map(function(value, index) {
+				app.layers.item(index).setOpacity(1)
+				let id_from_layer = app.layers.item(index).get('id_projeto')// atributo setado durante montagem do mapa
+				if(id_from_layer == id_projeto){
+					view.fit(app.layers.item(index).getSource().getExtent(), { 
+						duration: 1500 
+					})
+				}
+				else if(index > 0) {
+					app.layers.item(index).setOpacity(0)
+				}
+			})
+		}, 
+		defineStyle(id){
+			let id_projeto = undefined
+			let etapa = undefined
+			let outputColor = {
+				stroke: undefined,
+				fill: undefined
+			}
+
+			monitoramento.map(function(index) {
+				if(index.ID_rev == id) {
+					id_projeto = id;
+					etapa = index.etapas_NUM
+				}
+			}) 
+
+			let etapaNumber = parseInt(etapa, 10)
+			if (id == 'BASE'){
+				outputColor.stroke = 'rgba(50,50,50, 0)'
+				outputColor.fill = 'rgba(255,255,255, 0.75)'
+			}
+			else if(etapaNumber <= 3){ 
+				outputColor.stroke = 'rgba(255, 204, 179, 1)'
+				outputColor.fill = 'rgba(255, 204, 179, .75)'
+			}
+			else if(3 < etapaNumber <= 7){ 
+				outputColor.stroke = 'rgba(255, 85, 0, 1)'
+				outputColor.fill = 'rgba(255, 85, 0, .75)'
+			}
+			else if(7 < etapaNumber <= 8){ 
+				outputColor.stroke = 'rgba(128, 43, 0, 1)'
+				outputColor.fill = 'rgba(128, 43, 0, .75)'
+			}
+			else if(8 < etapaNumber){
+				outputColor.stroke = 'rgba(0, 0, 0, 1)'
+				outputColor.fill = 'rgba(255, 255, 255, .75)'
+			}
+			else{
+				outputColor.stroke = 'rgba()'
+				outputColor.fill = 'rgba(200,200,200, 0.5)'
+			}
+
+			let style = new ol.style.Style({
+				stroke: new ol.style.Stroke({
+					color: outputColor.stroke,
+					width: 1
+				}),
+				fill: new ol.style.Fill({
+					color: outputColor.fill
+				})
 			});
+			return style
 		}
 	}, 
 	template: `
