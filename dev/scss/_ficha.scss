@@ -1,6 +1,7 @@
 #ficha {
 
 	div.menu-titulo {
+		position: relative;
 
 		div.titulo {
 			line-height: 2em;
@@ -8,39 +9,59 @@
 			border-bottom-width: 3px;
 			border-bottom-style: solid;
 			background-color: transparent;
-			i { font-size: 16px; color: #000000; };
+			i { font-size: 36px; color: #000000; vertical-align: -0.25em; };
 			&:hover { cursor: pointer; };
 		};
 		.proposicao { color: $proposicao; border-color: $proposicao; };
 		.andamento { color: $andamento; border-color: $andamento; };
 		.implantacao { color: $implantacao; border-color: $implantacao; };
 		.suspenso { color: $suspenso; border-color: $suspenso; };
-		.possivel { color: $possivel; border-bottom-color: $possivel; border-left-color: transparent; }
+		.prospeccao { color: $prospeccao; border-bottom-color: $prospeccao; border-left-color: transparent !important; }
+		.arquivado { color: $arquivado; border-bottom-color: $arquivado; border-left-color: transparent !important; }
 
-		ul {
+		ul.menu {
 			position: absolute;
+			margin-top: 0;
 			width: 100%;
 			background-color: #FFFFFF;
 			list-style-type: none;
 			list-style-position: inside;
 			color: #000000;
-			border-bottom: 3px solid #000000;
+			border-bottom: 3px solid #333333;
 			border-radius: 2px;
 			padding: 0;
-			margin-top: 0px;
 			li {
 				font-size: 1em;
 				line-height: 3em;
-				padding: 0 8px;
 				border-left-width: 10px;
 				border-left-style: solid;
-				display: block;
-				a { color: #333333; display: block; };
+				display: flex;
+				a { color: #333333; display: block; width: 100%; border-bottom: 1px solid #F0F0F0; padding-left: 8px; };
 				a:hover { text-decoration: none; cursor: pointer; }
 			};
 			li:hover {
 				background-color: #F8F8F8;
 			};
+		};
+		.menuSlide-enter, .menuSlide-leave-to {
+			font-size: 0;
+			li a::after { font-size: 0; background-color: transparent; };
+		};
+		.menuSlide-enter-active, .menuSlide-leave-active {
+			transition: all .2s;
+		};
+
+		.consultaAberta::after { 
+			content: 'Em consulta';
+			visibility: visible;
+			font-size: 10px;
+			text-transform: uppercase;
+			color: #FFFFFF;
+			background-color: $verde;
+			padding: 4px 5px;
+			border-radius: 2px;
+			margin-left: 8px;
+			vertical-align: middle;
 		};
 	}
 
@@ -49,7 +70,6 @@
 		display: flex;
 		justify-content: space-between;
 		align-items: flex-start;
-
 
 		div.indicador {
 			border-radius: 2px;
@@ -64,12 +84,18 @@
 		.andamento { background-color: $andamento; }
 		.implantacao { background-color: $implantacao; }
 		.suspenso { background-color: $suspenso; }
-		.possivel { color: $possivel !important; border: 1px solid $possivel; }
+		.prospeccao { color: $prospeccao !important; border: 1px solid $prospeccao; }
+		.arquivado { color: $arquivado !important; border: 1px solid $arquivado; }
 
 		div.colId {
 			width: 20%;
 			font-size: 1em;
 			line-height: 1.75em;
+			word-wrap: break-word;
+			overflow-wrap: break-word;
+			-webkit-hyphens: auto;
+			-moz-hyphens: auto;
+			hyphens: auto;
 			div.id {
 				border-radius: 2px;
 				border: 1px solid #BDBDBD;
@@ -95,17 +121,18 @@
 			};
 			a.link_pag_completa {
 				display: block;
-				line-height: 2em;
+				hyphens: none;
+				padding: .4em;
 				border-radius: 2px;
 				text-align: center;
 				background-color: $vermelho-gestao;
 				color: #FFFFFF;
 				text-decoration: none;
 				border: 1px solid $vermelho-gestao;
+				transition: all 200ms;
 				&:hover {
 					background-color: transparent;
 					color: $vermelho-gestao;
-					transition: 150ms;
 				};
 			};
 		};
@@ -119,31 +146,78 @@
 		div.aspectos {
 			width: 40%;
 			margin-left: 16px;
-			p { font-size: 1em; }
+			word-wrap: break-word;
+			overflow-wrap: break-word;
+			-webkit-hyphens: auto;
+			-moz-hyphens: auto;
+			hyphens: auto;
+			p { font-size: 1em; line-height: 1.75em; };
+			div {
+				border-top: 1px solid #BCBCBC;
+				padding: 1em 0.25em;
+				margin: 0;
+				line-height: 1.6em;
+				h6 { 
+					font-size: 1em; 
+					color: #BCBCBC;
+					margin: 0;
+					padding: 0;
+					font-weight: 500;
+				};
+			};
 		};
 
 		div.tramitacao {
-			width: 40%;
+			min-width: 40%;
+			max-width: 40%;
 			margin-left: 16px;
 
 			div {
-				border-top-width: 3px;
+				border-top-width: .25em;
 				border-top-style: solid;
-				line-height: 3em;
+				line-height: 4.5em;
+				padding: 0 .1em;
+				transition: background-color .2s ease-out;
 				span { font-weight: 700; text-transform: uppercase; };
 				&:hover { background-color: #F8F8F8; cursor: pointer; };
+				div.periodoEtapaTramit {
+					padding: 0 !important;
+					margin-bottom: -1.6em;
+					font-size: .75em;
+					line-height: 1.6em;
+					color: rgba(0,0,0,.2);
+					text-align: right;
+					text-transform: uppercase;
+				};
 				div { 
 					border: 0;
-				}
-				div.anterior {
+					overflow: hidden;
 					color: rgba(0,0,0,.4);
-					&::after {
-						font-family: 'Material Icons';
-						font-size: 24px;
-						display: inline-block;
-						float: right;
-						content: 'check_box';
+					div.arquivos::before {
+						content: attr(nome);
+						display: block;
+						line-height: 1.5em;
 					};
+					p {
+						margin: 1em 0;
+						padding: 0 .1em;
+						font-size: 1em;
+						line-height: 1.5em;
+						color: #333333;
+					};
+					p:first-child { margin-top: 0 !important; };
+					p:last-child { margin-bottom: 1.5em !important; };
+				}
+				div p span { text-transform: none; }
+				div.anterior::after {
+					font-family: 'Material Icons';
+					font-size: 24px;
+					display: inline-block;
+					float: right;
+					content: 'check_box';
+				};
+				div.atual {
+					color: #333333;
 				};
 				div.atual::after {
 					font-family: 'Material Icons';
@@ -152,32 +226,25 @@
 					float: right;
 					content: 'indeterminate_check_box';
 				};
-				div.posterior {
-					color: rgba(0,0,0,.4);
-					&::after {
-						font-family: 'Material Icons';
-						font-size: 24px;
-						display: inline-block;
-						float: right;
-						content: 'check_box_outline_blank';
-					};
-					&:hover {
-						cursor: default;
-						background-color: #FFFFFF;
-					};
+				div.posterior::after {
+					font-family: 'Material Icons';
+					font-size: 24px;
+					display: inline-block;
+					float: right;
+					content: 'check_box_outline_blank';
 				};
-				div.posterior + div { 
-					display: none;
-				};
-				div:nth-of-type(2) {
-					padding: 0 0 1em 0;
+				div:nth-of-type(3) {
+					padding: 0;
 
+					p.tramit_link { margin: 0; padding: 0; };
+					p.tramit_link:last-child { margin-bottom: 1em !important; }
 					a.tramit_link {
 						display: block;
-						max-width: 300px;
+						max-width: 100%;
 						white-space: nowrap;
 						overflow: hidden;
 						text-overflow: ellipsis;
+						line-height: 2em;
 					};
 					a.tramit_link::before {
 						content: attr(type);
@@ -185,25 +252,27 @@
 						margin-right: 4px;
 						text-transform: uppercase;
 						font-size: 10px;
-						display: inline-block;
 						border-radius: 2px;
-						border: 1px solid #BCBCBC;
-						color: #BCBCBC;
+						border: 1px solid #bcbcbc;
+						color: #bcbcbc;
 						padding: 2px;
+						min-width: 40px;
+						text-align: center;
+						transition: all .1s;
+						float: left;
+						line-height: 1em;
+						margin: .5em 4px .5em 0;
 					};
 					a.tramit_link:hover::before {
-						color: $vermelho-gestao;
+						background-color: $vermelho-gestao;
+						color: #F8F8F8;
 						border-color: $vermelho-gestao;
 					};
-
-					p {
-						margin: 0;
-						padding-top: .5em;
-						line-height: 1.5em;
-						font-size: 1em;
-					};
-					p:first-child { margin-top: 0; };
 				};
+
+				.tramitTransit-enter, .tramitTransit-leave-to { max-height: 0; opacity: 0; transition: all .2s ease-in; margin: 0; padding: 0; };
+				.tramitTransit-enter-to, .tramitTransit-leave { max-height: 150em; transition: all .2s ease-in; }
+				.tramitTransit-enter-active, .tramitTransit-leave-active { transition: all .2s ease-in }
 			};
 			div:nth-child(2), div:nth-child(3), div:nth-child(4) { border-top-color: $proposicao; };
 			div:nth-child(5), div:nth-child(6), div:nth-child(7), div:nth-child(8) { border-top-color: $andamento; };
@@ -211,13 +280,4 @@
 		};
 	};
 
-	.menuTransition {
-		transition: opacity 300ms;
-	}
-	.menuTransition-enter, .menuTransition-leave-to {
-		opacity: 0;
-	};
-	.menuTransition-enter-to, .menuTransition-leave {
-		opacity: 1;
-	}
 }
