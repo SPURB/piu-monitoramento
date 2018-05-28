@@ -98,7 +98,7 @@ let mapa = {
 				app.layers.item(index).setOpacity(1)
 				let id_from_layer = app.layers.item(index).get('id_projeto')// atributo setado durante montagem do mapa
 				if(id_from_layer == id_projeto){
-					view.fit(app.layers.item(index).getSource().getExtent(), { 
+					view.fit(app.layers.item(index).getSource().getExtent(), {
 						duration: 1500 
 					})
 				}
