@@ -55,27 +55,30 @@ gulp.task('create-json', function (){
   function createJsFromExcel(inputExcel, tableName, outputJS){
     var worksheet = XLSX.readFile(inputExcel).Sheets[tableName];
     var myObj = XLSX.utils.sheet_to_json(worksheet,{raw:true});
-    if(outputJS == 'monitoramento'){
-      myObj.map(function(index){ monitoramento.push(index); })
-      var json = JSON.stringify(monitoramento);
-    }
-    else if(outputJS == 'hiperlinks'){
-      myObj.map(function(index){ hiperlinks.push(index); })
-      var json = JSON.stringify(hiperlinks);
-    }
-    var concat = 'var ' + outputJS + '=' + json;
-    var filePath = './dev/data/' + outputJS +'.js';
-    fs.writeFile( filePath, concat, 'utf8', function (err){
-      if(err){
-        console.log(err);
+
+    function createJs(){
+      if(outputJS == 'monitoramento'){
+        myObj.map(function(index){ monitoramento.push(index); })
+        var json = JSON.stringify(monitoramento);
       }
-    });
-    console.log(filePath + ' atualizado')
+      else if(outputJS == 'hiperlinks'){
+        myObj.map(function(index){ hiperlinks.push(index); })
+        var json = JSON.stringify(hiperlinks);
+      }
+      var concat = 'var ' + outputJS + '=' + json;
+      var filePath = './dev/data/' + outputJS +'.js';
+      fs.writeFile( filePath, concat, 'utf8', function (err){
+        if(err){
+          console.log(err);
+        }
+      });
+      console.log(filePath + ' atualizado')
+    }
+    fs.existsSync('./dev/data') ? createJs() : (function(){fs.mkdirSync('./dev/data'); createJs()})();
   }
   createJsFromExcel('./data_src/monitoramento.xlsx','COMUNICACAO', 'monitoramento');
   createJsFromExcel('./data_src/hiperlinks.xlsx','hiperlinks', 'hiperlinks');
 });
-
 
 gulp.task('kmls', function(){
   var fs = require('fs');

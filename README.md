@@ -4,7 +4,6 @@ Sistema de acompanhamento dos PIUs (Decreto nº 56.901, de 30 de março de 2016)
 
 ### Pré-requisitos
 * Nodejs 
-* NPM
 * Gulp
 * Excel
 
@@ -25,4 +24,6 @@ gulp build
 
 ```
 
-> Nota: O arquivo ``data_src/monitoramento.xlsx``  e ``data/src/hiperlinks`` simula a futura base de dados. Neste projeto os dados estão sendo compilados pelo gulp (veja `./dev/data/`).
+> Nota1 : O arquivo ``data_src/monitoramento.xlsx``  e ``data/src/hiperlinks`` simula a futura base de dados. Neste projeto os dados estão sendo compilados em `dist/main.min.js`.
+> Nota2: Os kmls a serem colocados em `dist/kml` devem ter a nomenclatura numérica da coluna `rev_id` do `monitoramento.xlsx`. 
+
