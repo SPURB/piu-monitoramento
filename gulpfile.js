@@ -31,7 +31,7 @@ gulp.task('scripts-production', function() {
     gulp.src([
       './dev/data/monitoramento.js',
       './dev/data/hiperlinks.js', 
-      './dev/data/kmls.js', 
+      './dev/data/kmls.js',
       './dev/components/mapa.js',
       './dev/components/sumario.js',
       './dev/components/ficha.js',

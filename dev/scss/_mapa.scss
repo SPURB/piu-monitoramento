@@ -3,4 +3,26 @@
 		min-height: 500px;
 		margin-top: 1em
 	}
+	div.title{
+		display: flex;
+		align-items: baseline;
+		h3, ul, li, {
+			list-style: none;
+			a{
+				color: #999;
+				padding-left: .5em;
+				padding-right: 1em
+			}
+			a:after {
+				content:"»";
+				padding-left: .5em ;
+				text-decoration: none;
+			}
+			li:last-child{ font-weight: 700}
+			li:last-child:after{ content:"" }
+		}
+		ul{
+			display: flex
+		} 
+	}
 }

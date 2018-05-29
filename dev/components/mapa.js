@@ -15,7 +15,8 @@ let mapa = {
 		return {
 			data: monitoramento,
 			projeto: undefined,
-			layers: undefined
+			layers: undefined,
+			breadcrumb: false
 		}
 	},
 	props: ['clicked-id'],
@@ -39,9 +40,9 @@ let mapa = {
 		kmlLayers(){
 			let app = this
 			let output = [
-				new ol.layer.Tile({ 
-					source: new ol.source.OSM()
-				}),
+				// new ol.layer.Tile({ 
+				// 	source: new ol.source.OSM()
+				// }),
 			]
 			this.kmls.map(function(object) {
 				let layer = new ol.layer.Vector({ 
@@ -85,9 +86,9 @@ let mapa = {
 				if (index.ID_rev == newprop) {
 					app.projeto = index
 					app.fitToLayer(newprop)
+					app.breadcrumb = true
 				};
 			});
-
 		}
 	},
 	methods:{
@@ -159,10 +160,17 @@ let mapa = {
 			});
 			return style
 		}
-	}, 
+	},
 	template: `
 	<div id="mapa">
-		<h3>Projetos de Intervenção Urbana</h3>
+		<div class="title">
+			<h3>Projetos de Intervenção Urbana</h3>
+			<ul v-if="breadcrumb" class="mapa_breadcrumb">
+				<li><a href="#">PIUs</a></li>
+				<li><a href="#">{{ projeto.a_etapa_comunicacao }}</a></li>
+				<li>{{ projeto.id_nome }}</li>
+			</ul>
+		</div>
 		<div id="map" class="map"></div>
 	</div>
 	`

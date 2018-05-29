@@ -10,9 +10,9 @@
 <body>
 	<div id="app">
 		<!-- Comente componentes não utilizados para agilizar o desenvolvimento-->
-		<mapa :clicked-id="projectId" @clicked="receiveId" v-if="display.mapa"></mapa>
-		<sumario @clicked="receiveId" v-if="display.sumario"></sumario>
-		<ficha :clicked-id="projectId" @clicked="receiveId" v-if="display.ficha"></ficha>
+		<mapa :clicked-id="projectId" @clicked="receiveId" v-show="display.mapa"></mapa>
+		<sumario @clicked="receiveId" v-show="display.sumario"></sumario>
+		<ficha :clicked-id="projectId" @clicked="receiveId" v-show="display.ficha"></ficha>
 	</div>
 </body>
 <!-- desenvolvimento alterar page-piu-monitormaneto.php em produção-->

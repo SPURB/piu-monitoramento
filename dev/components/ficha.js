@@ -26,11 +26,8 @@ let ficha = {
 			var utc_days = Math.floor(data - 25568);
 			var utc_value = utc_days * 86400;
 			var date_info = new Date(utc_value * 1000);
-
 			var fractional_day = data - Math.floor(data) + 0.0000001;
-
 			var total_seconds = Math.floor(86400 * fractional_day);
-
 			var seconds = total_seconds % 60;
 
 			total_seconds -= seconds;
@@ -43,7 +40,6 @@ let ficha = {
 
 		encontraProjeto(newClickedId) {
 			this.data.map(function(index) {
-				// console.log(par)
 				if (index.id == newClickedId) {
 					this.projeto = index;
 				};

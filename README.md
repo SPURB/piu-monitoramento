@@ -17,7 +17,7 @@ git clone https://github.com/spurb/piu-monitoramento
 npm install
 
 # Serve com 'hot reload' em localhost:3000
-gulp watch
+gulp
 
 # constrói para produção e minificação 
 gulp build
