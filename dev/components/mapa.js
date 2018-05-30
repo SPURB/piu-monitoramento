@@ -3,9 +3,9 @@ Dado que a view será alterada de dentro da instância da classe Vue declaramos 
 */
 let view = new ol.View({
 	projection: ol.proj.get('EPSG:3857'),
-	center: [-5190080.00000,-2708530.34945],
-	zoom: 10.65,
-	minZoom: 4,
+	center: [ -5195135.816167192, -2698303.8770360295 ],
+	zoom: 10.9,
+	minZoom: 10.9,
 	maxZoom: 19
 });
 
@@ -16,7 +16,9 @@ let mapa = {
 			data: monitoramento,
 			projeto: undefined,
 			layers: undefined,
-			breadcrumb: false
+			breadcrumb: false,
+			center: view.getCenter(),		// registro de primeira view
+			zoom: view.getZoom() 			//
 		}
 	},
 	props: ['clicked-id'],
@@ -25,7 +27,7 @@ let mapa = {
 			let parseKml = [];
 			kmls.map(function(str) { // dev/data/kmls.js
 				let outputid
-				let baseNumber = str.substring(0,2) // primeiros dois strings -> 1_ ou 10 
+				let baseNumber = str.substring(0,2) // primeiros dois strings -> 1_ ou 10
 				let numericStr = parseInt(baseNumber,10) // converte strings para número ou retorna NaN
 				Number.isNaN(numericStr) ? // se string não é numérica  
 					outputid = str.substring(0, 4) : // retorna 4 caracteres -> 'BASE'
@@ -40,9 +42,9 @@ let mapa = {
 		kmlLayers(){
 			let app = this
 			let output = [
-				// new ol.layer.Tile({ 
-				// 	source: new ol.source.OSM()
-				// }),
+				new ol.layer.Tile({ 
+					source: new ol.source.OSM()
+				})
 			]
 			this.kmls.map(function(object) {
 				let layer = new ol.layer.Vector({ 
@@ -95,18 +97,24 @@ let mapa = {
 		fitToLayer(id_projeto){
 			view.cancelAnimations()
 			let app = this
-			this.kmlLayers.map(function(value, index) {
-				app.layers.item(index).setOpacity(1)
-				let id_from_layer = app.layers.item(index).get('id_projeto')// atributo setado durante montagem do mapa
-				if(id_from_layer == id_projeto){
-					view.fit(app.layers.item(index).getSource().getExtent(),  { 
-						duration: 1500 
-					})
-				}
-				else if(index > 0) {
-					app.layers.item(index).setOpacity(0)
-				}
-			})
+
+			if(id_projeto != 'BASE'){
+				this.kmlLayers.map(function(value, index) {
+					app.layers.item(index).setOpacity(1)
+					let id_from_layer = app.layers.item(index).get('id_projeto')// 'id_projeto' atributo setado durante montagem do mapa
+					if(id_from_layer == id_projeto){
+						view.fit(app.layers.item(index).getSource().getExtent(),  { 
+							duration: 1500 
+						})
+					}
+					else if(index > 0) {
+						app.layers.item(index).setOpacity(0)
+					}
+				})
+			}
+			else{
+				console.log('id_projeto inválido')
+			}
 		}, 
 		defineStyle(id){
 			let id_projeto = undefined
@@ -159,6 +167,19 @@ let mapa = {
 				})
 			});
 			return style
+		},
+		resetApp(){
+			const app = this
+			this.kmlLayers.map(function(value, index) {
+				app.layers.item(index).setOpacity(1)
+			})
+			view.animate({
+				center: this.center,
+				zoom: this.zoom,
+				duration: 1500
+			});
+			this.$emit('clicked', undefined)
+			this.breadcrumb = false
 		}
 	},
 	template: `
@@ -166,8 +187,8 @@ let mapa = {
 		<div class="title">
 			<h3>Projetos de Intervenção Urbana</h3>
 			<ul v-if="breadcrumb" class="mapa_breadcrumb">
-				<li><a href="#">PIUs</a></li>
-				<li><a href="#">{{ projeto.a_etapa_comunicacao }}</a></li>
+				<li><a href="#todos" @click="resetApp">PIUs</a></li>
+				<li>{{ projeto.a_etapa_comunicacao }}</li>
 				<li>{{ projeto.id_nome }}</li>
 			</ul>
 		</div>

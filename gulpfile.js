@@ -117,5 +117,6 @@ gulp.task('default', [
 gulp.task('build', [
   'scss',
   'create-json',
+  'kmls',
   'scripts-production'
 ]);

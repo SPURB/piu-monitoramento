@@ -13,9 +13,9 @@
 				padding-left: .5em;
 				padding-right: 1em
 			}
-			a:after {
+			li:after {
 				content:"»";
-				padding-left: .5em ;
+				padding: 0 .5em;
 				text-decoration: none;
 			}
 			li:last-child{ font-weight: 700}

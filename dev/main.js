@@ -1,8 +1,6 @@
-new Vue({
+let vm = new Vue({
 	el: '#app',
 	data:{
-		zoom: 10.65,
-		center: [-5190080.00000,-2708530.34945],
 		projectId: undefined, 
 		display:{
 			mapa: true,
@@ -29,8 +27,12 @@ new Vue({
 		}
 	},
 	methods:{
-		receiveId(value){
-			this.projectId = value
+		receiveId(id){
+			this.projectId = id
+			if (id == undefined){
+				this.display.sumario = true
+				this.display.ficha = false
+			} 
 		}
 	}
 })

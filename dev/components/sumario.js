@@ -16,10 +16,7 @@ let sumario = {
 		},
 		setProjectId(id){ 
 			this.clickedId = id;
-			this.sendId()
-		},
-		sendId(event){
-			this.$emit('clicked', this.clickedId)
+			this.$emit('clicked', id)
 		},
 		fConsultaAberta(par) {
 			if (par.b_status == 'aberta' || par.e_status_consulta_internet_minuta == 'aberta') { 
