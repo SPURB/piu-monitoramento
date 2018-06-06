@@ -138,19 +138,19 @@ let mapa = {
 			}
 			else if(etapaNumber <= 3){ 
 				outputColor.stroke = 'rgba(255, 204, 179, 1)'
-				outputColor.fill = 'rgba(255, 204, 179, .75)'
+				outputColor.fill = 'rgba(255, 204, 179, .60)'
 			}
-			else if(3 < etapaNumber <= 7){ 
+			else if(3 < etapaNumber && etapaNumber <= 7){ 
 				outputColor.stroke = 'rgba(255, 85, 0, 1)'
-				outputColor.fill = 'rgba(255, 85, 0, .75)'
+				outputColor.fill = 'rgba(255, 85, 0, .60)'
 			}
-			else if(7 < etapaNumber <= 8){ 
+			else if(7 < etapaNumber && etapaNumber <= 8){ 
 				outputColor.stroke = 'rgba(128, 43, 0, 1)'
-				outputColor.fill = 'rgba(128, 43, 0, .75)'
+				outputColor.fill = 'rgba(128, 43, 0, .60)'
 			}
 			else if(8 < etapaNumber){
-				outputColor.stroke = 'rgba(0, 0, 0, 1)'
-				outputColor.fill = 'rgba(255, 255, 255, .75)'
+				outputColor.stroke = 'rgba(189, 189, 189, 1)'
+				outputColor.fill = 'rgba(189, 189, 189, .20)'
 			}
 			else{
 				outputColor.stroke = 'rgba()'
