@@ -7,6 +7,8 @@ let sumario = {
 		}
 	},
 
+	components: { sumario_linha },
+
 	methods: {
 		hasMembers(first, last, etapa){
 			let position = etapa;
@@ -271,7 +273,10 @@ let sumario = {
 					<span v-if="projeto.id_iniciativa_da_proposta=='Privado'">{{ projeto.id_nome }}</span>
 				</template>
 			</div>
+
 		</div>
+
+		<sumario_linha></sumario_linha>
 
 	</div>
 	`

@@ -33,6 +33,7 @@ gulp.task('scripts-production', function() {
       './dev/data/hiperlinks.js', 
       './dev/data/kmls.js',
       './dev/components/mapa.js',
+      './dev/components/sumario_linha.js',
       './dev/components/sumario.js',
       './dev/components/ficha.js',
       './dev/main.js' 
