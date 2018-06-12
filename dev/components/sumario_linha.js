@@ -6,35 +6,59 @@ let sumario_linha = {
 			clickedId: undefined,
 		}
 	},
+	methods: {
+	},
 	mounted() {
+		let app = this;		
 		let container = document.getElementById('linha_do_tempo');
 
-		let items = new vis.DataSet([
-			{id: 1, content: 'item 1', start: '2013-05-25', group: 1},
-			{id: 2, content: 'item 2', start: '2013-04-14', end: '2013-05-15', group: 2},
-			{id: 3, content: 'item 3', start: '2013-04-18', group: 1},
-			{id: 4, content: 'item 4', start: '2013-04-16', end: '2013-04-19', group: 1, type: 'background'},
-			{id: 5, content: 'item 5', start: '2013-04-25', group: 2},
-			{id: 6, content: 'item 6', start: '2013-04-27', group: 1},
-			{id: 7, content: 'item 7', start: '2013-05-15', group: 2},
-		]);
+		let itemsTemp = [];
 
-		let groups = [
-			{id: 1, content: 'G1', title: 'tttt'},
-			{id: 2, content: 'G2'},
-			{id: 3, content: 'G3'},
-		];
+		let preencheItems = function() {
+			for (var i = 0; i < app.data.length; i++) {
+				let inicio = new Date((Math.floor(app.data[i].b_data_inicio - 25568))*86400000);
+				let start = inicio.getFullYear()+'-'+inicio.getMonth()+'-'+inicio.getDate();
+				let final = new Date((Math.floor(app.data[i].b_data_final - 25568))*86400000);
+				let end = final.getFullYear()+'-'+final.getMonth()+'-'+final.getDate();
+				itemsTemp.push({
+					id: app.data[i].ID_rev+i,
+					group: app.data[i].ID_rev,
+					content: 'Consulta pública inicial',
+					start: start,
+					end: end,
+					title: start+' até '+end
+				});
+			};
+			console.log(itemsTemp);
+		}();
+
+		let items = new vis.DataSet(itemsTemp);
+
+		let groups = [];
+
+		let preencheGroups = function() {
+			for (var i = 0; i < app.data.length; i++) {
+				groups.push({
+					id: app.data[i].ID_rev,
+					content: app.data[i].id_nome
+				});
+			};
+		}();
 
 		let options = {
-			stackSubgroups: false,
 			align: 'left',
+			stackSubgroups: false,
+			stack: false,
+			tooltip: {
+				followMouse: true,
+			},
 		};
 
 		let timeline = new vis.Timeline(container, items, groups, options);
 	},
 	template: `
-	<div id="sumario_linha">
+	<section id="sumario_linha">
 		<div id="linha_do_tempo"></div>
-	</div>
+	</section>
 	`
 }

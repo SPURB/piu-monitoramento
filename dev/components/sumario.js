@@ -30,7 +30,7 @@ let sumario = {
 	template: `
 	<div id="sumario">
 
-		<div>		
+		<div class="bloco">		
 			<div class="thead">
 				<div>
 					Etapas
@@ -44,7 +44,7 @@ let sumario = {
 			</div>
 		</div>
 		
-		<div class="proposicao">
+		<div class="bloco proposicao">
 			<div class="etapa">Em proposição</div>
 			<div>
 				<div><div class="marcadorEtapa">01</div> <span>Em proposição dos elementos prévios</span></div>
@@ -101,7 +101,7 @@ let sumario = {
 			</div>
 		</div>
 
-		<div class="andamento">
+		<div class="bloco andamento">
 			<div class="etapa">Em andamento</div>
 
 			<div>
@@ -177,7 +177,7 @@ let sumario = {
 			</div>
 		</div>
 
-		<div class="implantacao">
+		<div class="bloco implantacao">
 			<div class="etapa">Implantação</div>
 
 			<div>
@@ -199,7 +199,7 @@ let sumario = {
 			</div>
 		</div>
 
-		<div class="suspenso">
+		<div class="bloco suspenso">
 			<div class="etapa">Suspenso</div>
 
 			<div>
@@ -220,7 +220,7 @@ let sumario = {
 			</div>
 		</div>
 
-		<div class="arquivado">
+		<div class="bloco arquivado">
 			<div class="etapa">Arquivado</div>
 
 			<div>
@@ -241,7 +241,7 @@ let sumario = {
 			</div>
 		</div>
 
-		<div class="prospeccao">
+		<div class="bloco prospeccao">
 			<div class="etapa">Em prospecção</div>
 
 			<!-- <div>

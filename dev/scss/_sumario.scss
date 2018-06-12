@@ -2,7 +2,7 @@
 width: 100%;
 font-size: 1.1em;
 
-div {
+div.bloco {
 	border-radius: 2px;
 	transition: background-color .1s ease-out;
 	:hover { background-color: #F8F8F8; };
@@ -126,6 +126,7 @@ div.arquivado {
 
 div.prospeccao {
 	border-left-color: $prospeccao;
+	margin: 2em 0;
 	div.etapa {
 		background-color: transparent;
 		border-radius: 0;
