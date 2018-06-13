@@ -142,3 +142,67 @@ div.prospeccao {
 }
 
 }
+
+#sumario_linha {
+	.vis-timeline {
+		border-radius: 2px;
+		color: #333 !important;
+	};
+	.vis-group {
+		border-bottom-width: 0px;
+	};
+	.vis-foreground .vis-group:nth-child(2n+1) {
+		background-color: rgba(0,0,0,.1);
+	};
+	.vis-label {
+		border-bottom-width: 0px;
+	};
+	.vis-label:nth-child(2n+1) {
+		background-color: rgba(0,0,0,.1);
+	};
+	.vis-item {
+		border: 1px solid #FFF;
+		border-radius: 2px;
+		padding: 4px;
+		color: #FFF;
+		line-height: 30px;
+		box-shadow: 0 0 4px rgba(0,0,0,.4);
+		background: unset;
+	};
+	.vis-current-time {
+		width: 2px;
+		background-color: $implantacao;
+	};
+	.vis-current-time::before {
+		display: block;
+		content: 'HOJE';
+		color: $implantacao;
+		font-size: small;
+		font-weight: 700;
+		margin-left: -50px;
+		width: 50px;
+		text-align: right;
+		padding: 2px 10px;
+		box-sizing: border-box;
+	};
+	.lt_proposicao {
+		background-color: $proposicao;
+	};
+	.lt_andamento {
+		background-color: $andamento;
+	};
+	.lt_implantacao {
+		background-color: $implantacao;
+	};
+	.vis-point {
+		background-color: transparent !important;
+		box-shadow: none;
+		border-width: 0px;
+		color: #333 !important;
+		.vis-dot {
+			box-shadow: none;
+			border-radius: 100%;
+			margin-right: -10px;
+		}
+	};
+}
