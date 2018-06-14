@@ -23,16 +23,12 @@ let ficha = {
 		},
 
 		dataExcelJS(data) {
-			var utc_days = Math.floor(data - 25568);
-			var utc_value = utc_days * 86400;
-			var date_info = new Date(utc_value * 1000);
+			let d = new Date((Math.floor(data - 25568))*86400000);
 
-			if (data != null && data != '-') {
-				return date_info.toLocaleDateString();
-			}
-			else if (data == null || data == '-') {
-				return '';
-			}
+			if (data != null && data != '-' && data != 'NA') {
+				let string = ('0' + d.getDate()).slice(-2)+'/'+('0' + (d.getMonth()+1)).slice(-2)+'/'+d.getFullYear();
+				return string;
+			} else { return ''; };
 		},
 
 		encontraProjeto(newClickedId) {
@@ -152,7 +148,6 @@ let ficha = {
 					<div>{{projeto.id_origem}}</div>
 					Registro administrativo
 					<div>{{projeto.id_registro_administrativo}}</div>
-					<a href="#">Documentos</a>
 				</div>
 				<a class="link_pag_completa" href="#">Página completa do projeto</a>
 			</div>

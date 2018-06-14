@@ -79,7 +79,7 @@ let mapa = {
 					new ol.control.ScaleLine()
 				])
 		});
-		this.layers = map.getLayers()
+		this.layers = map.getLayers();
 	},
 	watch:{
 		clickedId(newprop, oldprop){
@@ -180,7 +180,7 @@ let mapa = {
 			});
 			this.$emit('clicked', undefined)
 			this.breadcrumb = false
-		}
+		},
 	},
 	template: `
 	<div id="mapa">

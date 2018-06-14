@@ -53,7 +53,7 @@ let sumario_linha = {
 							inc = app.data[i].h_data_inicio; fnl = app.data[i].Data_fim_8; etp = 'Implantação'; clsN = 'lt_implantacao'; break;
 					};
 
-					if (inc != null && inc != '' && inc != '-') {
+					if (inc != null && inc != '' && inc != '-' && inc != 'NA') {
 
 						let inicio = new Date((Math.floor(inc - 25568))*86400000);
 						let final = new Date((Math.floor(fnl - 25568))*86400000);
@@ -62,11 +62,11 @@ let sumario_linha = {
 						let inicio_str = ('0' + inicio.getDate()).slice(-2)+'/'+('0' + (inicio.getMonth()+1)).slice(-2)+'/'+inicio.getFullYear();
 						let final_str = ('0' + final.getDate()).slice(-2)+'/'+('0' + (final.getMonth()+1)).slice(-2)+'/'+final.getFullYear();
 
-						if (fnl != null && fnl != '' && fnl != '-') {
+						if (fnl != null && fnl != '' && fnl != '-' && fnl != 'NA') {
 							itemsTemp.push({
 								id: i+'_'+j,
 								group: app.data[i].ID_rev,
-								content: etp,
+								content: etp+'<span>'+inicio_str+'–'+final_str+'</span>',
 								start: inicio_comp,
 								end: final_comp,
 								title: etp+': '+inicio_str+' – '+final_str,
@@ -77,13 +77,12 @@ let sumario_linha = {
 								id: i+'_'+j,
 								type: 'point',
 								group: app.data[i].ID_rev,
-								content: etp,
+								content: etp+'<span>INÍCIO EM '+inicio_str+'</span>',
 								start: inicio_comp,
-								title: etp+': '+inicio_str,
+								title: etp+': início em '+inicio_str,
 								className: clsN,
 							});
 						};
-						console.log(itemsTemp);
 					} else { };
 
 				};
@@ -108,22 +107,26 @@ let sumario_linha = {
 		let maximo = new Date(hoje.getFullYear(), (hoje.getMonth()+2), hoje.getDate());
 
 		let options = {
+			autoResize: true,
 			align: 'left',
 			margin: {
-				axis: 40,
-				item: 10,
+				axis: 10,
+				item: 20,
 			},
-			min: 1970,
+			min: 2000,
 			max: maximo,
-			selectable: false,
+			end: maximo,
 			stack: false,
 			stackSubgroups: false,
 			timeAxis: {
 				scale: 'month',
-				step: 3,
+				step: 1,
 			},
-			zoomMax: 315576000000,
-			zoomMin: 2592000000
+			tooltip: {
+				followMouse: true,
+			},
+			zoomMax: 189341556000,
+			zoomMin: 5184000000
 		};
 
 		let timeline = new vis.Timeline(container, items, groups, options);

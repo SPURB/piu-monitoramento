@@ -1,208 +1,143 @@
 #sumario {
-width: 100%;
-font-size: 1.1em;
+	width: 100%;
+	font-size: 1.1em;
 
-div.bloco {
-	border-radius: 2px;
-	transition: background-color .1s ease-out;
-	:hover { background-color: #F8F8F8; };
-	div {
-		display: flex;
-		justify-content: flex-start;
-		border-left: 0px;
-		padding: 4px 0;
+	div.bloco {
+		border-radius: 2px;
+		transition: background-color .1s ease-out;
+		:hover { background-color: #F8F8F8; };
 		div {
-			display: inline-block;
-			vertical-align: baseline;
-			background-color: transparent;
-			width: calc(100%/3);
-			line-height: 16px;
-			div.marcadorEtapa {
+			display: flex;
+			justify-content: flex-start;
+			border-left: 0px;
+			padding: 4px 0;
+			div {
 				display: inline-block;
-				border-radius: 2px;
-				margin-right: 4px;
-				height: 16px;
-				width: 24px;
-				text-align: center;
-				color: #FFFFFF;
-				font-weight: 700;
-			};
-			a {
-				display: block;
-				border-left: 0px;
-				color: #000000;
-				text-decoration: none;
-				font-weight: 700;
-				line-height: 24px;
-				padding: 6px 8px;
-				border-radius: 2px;
-				transition: all 150ms;
-				margin-bottom: 8px;
-			};
-			a:last-child {
-				margin-bottom: 0;
-			};
+				vertical-align: baseline;
+				background-color: transparent;
+				width: calc(100%/3);
+				line-height: 16px;
+				div.marcadorEtapa {
+					display: inline-block;
+					border-radius: 2px;
+					margin-right: 4px;
+					height: 16px;
+					width: 24px;
+					text-align: center;
+					color: #FFFFFF;
+					font-weight: 700;
+				};
+				a {
+					display: block;
+					border-left: 0px;
+					color: #000000;
+					text-decoration: none;
+					font-weight: 700;
+					line-height: 24px;
+					padding: 6px 8px;
+					border-radius: 2px;
+					transition: all 150ms;
+					margin-bottom: 8px;
+				};
+				a:last-child {
+					margin-bottom: 0;
+				};
 
-			a:hover { color: #FFFFFF; };
+				a:hover { color: #FFFFFF; };
 
-			a.consultaAberta::after { 
-				content: 'Em consulta';
-				font-size: 10px;
-				text-transform: uppercase;
-				color: #FFFFFF;
-				font-weight: 500;
-				background-color: $verde;
-				padding: 4px 5px;
-				border-radius: 2px;
-				vertical-align: top;
-				white-space: nowrap;
+				a.consultaAberta::after { 
+					content: 'Em consulta';
+					font-size: 10px;
+					text-transform: uppercase;
+					color: #FFFFFF;
+					font-weight: 500;
+					background-color: $verde;
+					padding: 4px 5px;
+					border-radius: 2px;
+					vertical-align: top;
+					white-space: nowrap;
+				};
+			};
+			div:first-child span { 
+				font-size: 11px; 
+				vertical-align: baseline; 
+				text-transform: uppercase; 
 			};
 		};
-		div:first-child span { 
-			font-size: 11px; 
-			vertical-align: baseline; 
-			text-transform: uppercase; 
+
+		div.thead {
+			height: 20px;
+			font-size: 13px;
+			color: #999999;
+			text-transform: none;
+			margin-bottom: -16px;
+			div:nth-child(2), div:nth-child(3) { margin-left: 24px; };
+			&:hover, div:hover { background-color: transparent; }
 		};
-	};
 
-	div.thead {
-		height: 20px;
-		font-size: 13px;
-		color: #999999;
-		text-transform: none;
-		margin-bottom: -16px;
-		div:nth-child(2), div:nth-child(3) { margin-left: 24px; };
-		&:hover, div:hover { background-color: transparent; }
-	};
+		div.etapa {
+			color: #FFFFFF;
+			border-radius: 2px;
+			line-height: 24px;
+			padding: 0 8px;
+			margin-top: 16px;
+		};
+	}
 
-	div.etapa {
-		color: #FFFFFF;
-		border-radius: 2px;
-		line-height: 24px;
-		padding: 0 8px;
-		margin-top: 16px;
-	};
-}
+	div.proposicao {
+		border-left-color: $proposicao;
+		div.etapa { background-color: $proposicao; };
+		div.etapa div:hover { background-color: $proposicao; };
+		div a:hover { background-color: $proposicao; };
+		div div div.marcadorEtapa { background-color: $proposicao; };
+	}
 
-div.proposicao {
-	border-left-color: $proposicao;
-	div.etapa { background-color: $proposicao; };
-	div.etapa div:hover { background-color: $proposicao; };
-	div a:hover { background-color: $proposicao; };
-	div div div.marcadorEtapa { background-color: $proposicao; };
-}
+	div.andamento {
+		border-left-color: $andamento;
+		div.etapa { background-color: $andamento; };
+		div.etapa div:hover { background-color: $andamento; };
+		div a:hover { background-color: $andamento; };
+		div div div.marcadorEtapa { background-color: $andamento; };
+	}
 
-div.andamento {
-	border-left-color: $andamento;
-	div.etapa { background-color: $andamento; };
-	div.etapa div:hover { background-color: $andamento; };
-	div a:hover { background-color: $andamento; };
-	div div div.marcadorEtapa { background-color: $andamento; };
-}
+	div.implantacao {
+		border-left-color: $implantacao;
+		div.etapa { background-color: $implantacao; };
+		div.etapa div:hover { background-color: $implantacao; };
+		div a:hover { background-color: $implantacao; };
+		div div div.marcadorEtapa { background-color: $implantacao; };
+	}
 
-div.implantacao {
-	border-left-color: $implantacao;
-	div.etapa { background-color: $implantacao; };
-	div.etapa div:hover { background-color: $implantacao; };
-	div a:hover { background-color: $implantacao; };
-	div div div.marcadorEtapa { background-color: $implantacao; };
-}
+	div.suspenso {
+		border-left-color: $suspenso;
+		div.etapa { background-color: $suspenso; };
+		div.etapa div:hover { background-color: $suspenso; };
+		div a:hover { background-color: $suspenso; };
+		div div div.marcadorEtapa { background-color: $suspenso; };
+	}
 
-div.suspenso {
-	border-left-color: $suspenso;
-	div.etapa { background-color: $suspenso; };
-	div.etapa div:hover { background-color: $suspenso; };
-	div a:hover { background-color: $suspenso; };
-	div div div.marcadorEtapa { background-color: $suspenso; };
-}
+	div.arquivado {
+		border-left-color: $arquivado;
+		div.etapa { background-color: transparent; border: 1px solid $arquivado; color: $arquivado; };
+		div.etapa div:hover { background-color: transparent; border: 1px solid $arquivado; color: $arquivado; };
+		div a { border: 1px solid transparent; }
+		div a:hover { background-color: transparent; border: 1px solid $arquivado; color: $arquivado !important; };
+	}
 
-div.arquivado {
-	border-left-color: $arquivado;
-	div.etapa { background-color: transparent; border: 1px solid $arquivado; color: $arquivado; };
-	div.etapa div:hover { background-color: transparent; border: 1px solid $arquivado; color: $arquivado; };
-	div a { border: 1px solid transparent; }
-	div a:hover { background-color: transparent; border: 1px solid $arquivado; color: $arquivado; };
-}
+	div.prospeccao {
+		border-left-color: $prospeccao;
+		margin: -1em 0 2em 0;
+		div.etapa {
+			background-color: transparent;
+			border-radius: 0;
+			color: $prospeccao;
+			padding: 0;
+			margin-top: 2em;
+		};
+		div:hover, div span:hover { background-color: transparent; };
+		div span.titulo { color: #BDBDBD; margin-right: 8px; &:after { content: ''; }; };
+		div span:after { content: ', '; };
+		div span:last-child::after { content: ''; };
+	}
 
-div.prospeccao {
-	border-left-color: $prospeccao;
-	margin: 2em 0;
-	div.etapa {
-		background-color: transparent;
-		border-radius: 0;
-		border-top: 1px solid #333333;
-		color: $prospeccao;
-		padding: 0;
-		margin-top: 2em;
-	};
-	div:hover, div span:hover { background-color: transparent; };
-	div span.titulo { color: #BDBDBD; margin-right: 8px; &:after { content: ''; }; };
-	div span:after { content: ', '; };
-	div span:last-child::after { content: ''; };
-}
-
-}
-
-#sumario_linha {
-	.vis-timeline {
-		border-radius: 2px;
-		color: #333 !important;
-	};
-	.vis-group {
-		border-bottom-width: 0px;
-	};
-	.vis-foreground .vis-group:nth-child(2n+1) {
-		background-color: rgba(0,0,0,.1);
-	};
-	.vis-label {
-		border-bottom-width: 0px;
-	};
-	.vis-label:nth-child(2n+1) {
-		background-color: rgba(0,0,0,.1);
-	};
-	.vis-item {
-		border: 1px solid #FFF;
-		border-radius: 2px;
-		padding: 4px;
-		color: #FFF;
-		line-height: 30px;
-		box-shadow: 0 0 4px rgba(0,0,0,.4);
-		background: unset;
-	};
-	.vis-current-time {
-		width: 2px;
-		background-color: $implantacao;
-	};
-	.vis-current-time::before {
-		display: block;
-		content: 'HOJE';
-		color: $implantacao;
-		font-size: small;
-		font-weight: 700;
-		margin-left: -50px;
-		width: 50px;
-		text-align: right;
-		padding: 2px 10px;
-		box-sizing: border-box;
-	};
-	.lt_proposicao {
-		background-color: $proposicao;
-	};
-	.lt_andamento {
-		background-color: $andamento;
-	};
-	.lt_implantacao {
-		background-color: $implantacao;
-	};
-	.vis-point {
-		background-color: transparent !important;
-		box-shadow: none;
-		border-width: 0px;
-		color: #333 !important;
-		.vis-dot {
-			box-shadow: none;
-			border-radius: 100%;
-			margin-right: -10px;
-		}
-	};
 }
