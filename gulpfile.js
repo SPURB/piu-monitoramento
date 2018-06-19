@@ -5,6 +5,7 @@ var concat = require('gulp-concat');
 var uglify = require('gulp-uglify');
 var babel = require("gulp-babel");
 var browserSync = require('browser-sync').create();
+var browserify = require('gulp-browserify'); 
 
 gulp.task('browserSync', function() {
   browserSync.init({
@@ -77,7 +78,7 @@ gulp.task('create-json', function (){
     }
     fs.existsSync('./dev/data') ? createJs() : (function(){fs.mkdirSync('./dev/data'); createJs()})();
   }
-  createJsFromExcel('./data_src/monitoramento.xlsx','COMUNICACAO', 'monitoramento');
+  createJsFromExcel('./data_src/monitoramento.xlsx','Plan1', 'monitoramento');
   createJsFromExcel('./data_src/hiperlinks.xlsx','hiperlinks', 'hiperlinks');
 });
 
@@ -100,6 +101,33 @@ gulp.task('kmls', function(){
       console.log('.dev/data/kmls.js atualizado')
     }
   })
+})
+
+gulp.task('createVis', function(){
+  var dataSet = require('./lib/DataSet');
+  var timeline = require('./lib/timeline/Timeline');
+  // var fs = require('fs');
+  // var kmls = [];
+
+  // fs.readdir('./dist/kml', (err, files) => {
+  //   if(err){
+  //     console.log(err)
+  //   }
+  //   else{
+  //     files.map(function(index) {
+  //       kmls.push(index)
+  //     })
+  //     var concat = 'var kmls = ' + JSON.stringify(files)
+  //     fs.writeFile( './dev/data/kmls.js', concat, 'utF8', function (err){
+  //       if (err) { console.log(err) }
+  //     })
+  //     console.log('.dev/data/kmls.js atualizado')
+  //   }
+  // // })
+  gulp.src('bundles/bundle1.js', {read: false})
+  .pipe(browserify({ 'standalone': true }))
+  .pipe(rename('bundle1Output.js'))
+  .pipe(gulp.dest('./dist/'));
 })
 
 gulp.task('default', [
