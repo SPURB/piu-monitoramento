@@ -13,5 +13,6 @@ $verde: #008015;
 @import "./scss/ficha";
 
 #app {
-	// background-color: purple;
+	max-width: 960px;
+	margin: auto;
 }

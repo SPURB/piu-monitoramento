@@ -103,6 +103,7 @@
 				margin-top: 16px;
 				margin-bottom: 16px;
 				div { font-weight: 700; margin-bottom: 1em; };
+				div:last-child { margin-bottom: 0; };
 				a {
 					font-weight: 700;
 					text-transform: uppercase;
@@ -204,6 +205,24 @@
 						font-size: 1em;
 						line-height: 1.5em;
 						color: #333333;
+						.linkConsulta {
+							display: block;
+							width: 100%;
+							background: green;
+							color: white;
+							padding: 8px 4px;
+							font-family: initial;
+							font-size: .75em;
+							margin: 12px 0;
+							border-radius: 2px;
+							border-width: 0;
+							text-transform: uppercase;
+							transition: color .2s;						
+						};
+						.linkConsulta:hover {
+							color: rgba(255,255,255,.25);
+							cursor: pointer;
+						};
 					};
 					p:first-child { margin-top: 0 !important; };
 					p:last-child { margin-bottom: 1.5em !important; };

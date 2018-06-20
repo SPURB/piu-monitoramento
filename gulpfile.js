@@ -78,7 +78,7 @@ gulp.task('create-json', function (){
     }
     fs.existsSync('./dev/data') ? createJs() : (function(){fs.mkdirSync('./dev/data'); createJs()})();
   }
-  createJsFromExcel('./data_src/monitoramento.xlsx','Plan1', 'monitoramento');
+  createJsFromExcel('./data_src/monitoramento.xlsx','Plan2', 'monitoramento');
   createJsFromExcel('./data_src/hiperlinks.xlsx','hiperlinks', 'hiperlinks');
 });
 
