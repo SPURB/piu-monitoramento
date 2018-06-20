@@ -103,6 +103,7 @@
 				margin-top: 16px;
 				margin-bottom: 16px;
 				div { font-weight: 700; margin-bottom: 1em; };
+				div:last-child { margin-bottom: 0; };
 				a {
 					font-weight: 700;
 					text-transform: uppercase;
