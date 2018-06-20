@@ -41,7 +41,7 @@ gulp.task('scripts-production', function() {
     ])
     .pipe(concat('main.min.js'))
     .pipe(babel())
-    .pipe(uglify())
+    // .pipe(uglify())
     .pipe(gulp.dest('./dist/'))
     .pipe(browserSync.reload({
       stream: true
@@ -101,33 +101,6 @@ gulp.task('kmls', function(){
       console.log('.dev/data/kmls.js atualizado')
     }
   })
-})
-
-gulp.task('createVis', function(){
-  var dataSet = require('./lib/DataSet');
-  var timeline = require('./lib/timeline/Timeline');
-  // var fs = require('fs');
-  // var kmls = [];
-
-  // fs.readdir('./dist/kml', (err, files) => {
-  //   if(err){
-  //     console.log(err)
-  //   }
-  //   else{
-  //     files.map(function(index) {
-  //       kmls.push(index)
-  //     })
-  //     var concat = 'var kmls = ' + JSON.stringify(files)
-  //     fs.writeFile( './dev/data/kmls.js', concat, 'utF8', function (err){
-  //       if (err) { console.log(err) }
-  //     })
-  //     console.log('.dev/data/kmls.js atualizado')
-  //   }
-  // // })
-  gulp.src('bundles/bundle1.js', {read: false})
-  .pipe(browserify({ 'standalone': true }))
-  .pipe(rename('bundle1Output.js'))
-  .pipe(gulp.dest('./dist/'));
 })
 
 gulp.task('default', [
