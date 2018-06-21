@@ -82,7 +82,34 @@ let mapa = {
 		});
 		this.layers = map.getLayers();
 		
-		// TODO Modularizar a partir daqui		
+		// TODO Modularizar a partir daqui
+
+		/**
+		*   ILUMINA FEATURE AO PASSAR O MOUSE POR ELA 
+		*	E EXIBE INFORMAÇÕES NO POPUP
+		*/
+		var highlight;
+		var highlightStyleCache = {};
+		var featureOverlay = new ol.layer.Vector({
+		    source: new ol.source.Vector(),
+		    map: map,
+		    style: function(feature, resolution) {
+		        var text = resolution < 5000 ? feature.get('NOME') : feature.get('NOME');          
+		        if (!highlightStyleCache[text]) {
+		        highlightStyleCache[text] = new ol.style.Style({
+		          stroke: new ol.style.Stroke({
+		            color: 'rgba(31, 60, 147, 0.4)',
+		            width: 2
+		          }),
+		          fill: new ol.style.Fill({
+		            color: 'rgba(31, 60, 147, 0.2)'
+		          })
+		        });
+		        }
+		        return highlightStyleCache[text];
+		    }
+		});
+
 		function getFeatureLayerInfo(pixel) {
 			var cLayer;
 			var nomePIU;
@@ -98,9 +125,17 @@ let mapa = {
 			var feature = map.forEachFeatureAtPixel(pixel, function(feature){				
 				return feature;				
 			});
-			if (feature) {
+			// Se houver feature no ponto clicado, mostra suas propriedades
+			if (highlight !== undefined) {
+				featureOverlay.getSource().removeFeature(highlight);
+				highlight = undefined;
+			}
+			if (feature && feature.get('name') !== "São Paulo") {
 				nomePIU = feature.get('name');
+				featureOverlay.getSource().addFeature(feature);
+				highlight = feature;
 			}			
+			console.log(nomePIU);
 		};
 		map.on('click', function(evt){
 			getFeatureLayerInfo(evt.pixel);
