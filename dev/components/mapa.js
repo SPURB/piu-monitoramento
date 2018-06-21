@@ -13,6 +13,7 @@ let mapa = {
 	name:'mapa',
 	data (){
 		return {
+			// cLayer: undefined,		
 			data: monitoramento,
 			projeto: undefined,
 			layers: undefined,
@@ -42,9 +43,9 @@ let mapa = {
 		kmlLayers(){
 			let app = this
 			let output = [
-				new ol.layer.Tile({ 
-					source: new ol.source.OSM()
-				})
+				// new ol.layer.Tile({ 
+				// 	source: new ol.source.OSM()
+				// })
 			]
 			this.kmls.map(function(object) {
 				let layer = new ol.layer.Vector({ 
@@ -80,6 +81,31 @@ let mapa = {
 				])
 		});
 		this.layers = map.getLayers();
+		
+		// TODO Modularizar a partir daqui		
+		function getFeatureLayerInfo(pixel) {
+			var cLayer;
+			var nomePIU;
+			// Layer atual (Current Layer - cLayer)			
+			cLayer = map.forEachLayerAtPixel(pixel, function (layer) {
+				/*if (layer.get('name') != undefined) {
+					return layer;
+				}*/
+				return layer;
+			});
+
+			// Região selecionada - feature
+			var feature = map.forEachFeatureAtPixel(pixel, function(feature){				
+				return feature;				
+			});
+			if (feature) {
+				nomePIU = feature.get('name');
+			}			
+		};
+		map.on('click', function(evt){
+			getFeatureLayerInfo(evt.pixel);
+		});
+		// TODO Fim modularizacao
 	},
 	watch:{
 		clickedId(newprop, oldprop){
