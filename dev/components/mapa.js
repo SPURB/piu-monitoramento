@@ -13,7 +13,18 @@ let mapa = {
 	name:'mapa',
 	data (){
 		return {
-			// cLayer: undefined,		
+			featureInfo: '',
+			infoBoxStyle: {
+				"background-color": "#EEF",
+			    "max-width": "200px",
+			    "max-height": "60px",
+			    "border-radius": "10px",
+			    "padding": "10px",
+			    "text-align": "center",
+			    "left": "0",
+			    "top": "0",
+			    "position": "fixed"
+			},
 			data: monitoramento,
 			projeto: undefined,
 			layers: undefined,
@@ -24,7 +35,7 @@ let mapa = {
 	},
 	props: ['clicked-id'],
 	computed:{
-		kmls(){ 
+		kmls(){
 			let parseKml = [];
 			kmls.map(function(str) { // dev/data/kmls.js
 				let outputid
@@ -38,14 +49,16 @@ let mapa = {
 					fileName: str
 				})
 			})
+			let baseFeature = parseKml.pop();
+			parseKml.reverse().push(baseFeature);
 			return parseKml;
 		},
 		kmlLayers(){
 			let app = this
 			let output = [
-				// new ol.layer.Tile({ 
-				// 	source: new ol.source.OSM()
-				// })
+				new ol.layer.Tile({ 
+					source: new ol.source.OSM()
+				})
 			]
 			this.kmls.map(function(object) {
 				let layer = new ol.layer.Vector({ 
@@ -88,13 +101,14 @@ let mapa = {
 		*   ILUMINA FEATURE AO PASSAR O MOUSE POR ELA 
 		*	E EXIBE INFORMAÇÕES NO POPUP
 		*/
-		var highlight;
-		var highlightStyleCache = {};
-		var featureOverlay = new ol.layer.Vector({
+		let app = this;
+		let highlight;
+		let highlightStyleCache = {};
+		let featureOverlay = new ol.layer.Vector({
 		    source: new ol.source.Vector(),
 		    map: map,
 		    style: function(feature, resolution) {
-		        var text = resolution < 5000 ? feature.get('NOME') : feature.get('NOME');          
+		        let text = resolution < 5000 ? feature.get('NOME') : feature.get('NOME');          
 		        if (!highlightStyleCache[text]) {
 		        highlightStyleCache[text] = new ol.style.Style({
 		          stroke: new ol.style.Stroke({
@@ -111,31 +125,38 @@ let mapa = {
 		});
 
 		function getFeatureLayerInfo(pixel) {
-			var cLayer;
-			var nomePIU;
+			let cLayer;
+
 			// Layer atual (Current Layer - cLayer)			
 			cLayer = map.forEachLayerAtPixel(pixel, function (layer) {
-				/*if (layer.get('name') != undefined) {
-					return layer;
-				}*/
 				return layer;
 			});
 
 			// Região selecionada - feature
-			var feature = map.forEachFeatureAtPixel(pixel, function(feature){				
+			let feature = map.forEachFeatureAtPixel(pixel, function(feature){				
 				return feature;				
 			});
 			// Se houver feature no ponto clicado, mostra suas propriedades
 			if (highlight !== undefined) {
 				featureOverlay.getSource().removeFeature(highlight);
-				highlight = undefined;
+				// Altera info e posicao da caixa
+				app.featureInfo = null;
+				
+				if (feature !== highlight) {
+					highlight = undefined;
+				}				
 			}
 			if (feature && feature.get('name') !== "São Paulo") {
-				nomePIU = feature.get('name');
+				if (feature === highlight) {
+					highlight = undefined;
+					return
+				}
+				app.infoBoxStyle.left = pixel[0]+"px";
+				app.infoBoxStyle.top = pixel[1]+"px";
+				app.featureInfo = feature.get('name');
 				featureOverlay.getSource().addFeature(feature);
 				highlight = feature;
-			}			
-			console.log(nomePIU);
+			}
 		};
 		map.on('click', function(evt){
 			getFeatureLayerInfo(evt.pixel);
@@ -254,6 +275,7 @@ let mapa = {
 			</ul>
 		</div>
 		<div id="map" class="map"></div>
+		<div id="infoModal" v-if="featureInfo" v-bind:style="infoBoxStyle">{{ featureInfo }}</div>
 	</div>
 	`
 }
