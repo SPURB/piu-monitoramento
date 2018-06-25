@@ -9,6 +9,9 @@ let view = new ol.View({
 	maxZoom: 19
 });
 
+let featureOverlay;
+let highlight;
+
 let mapa = {
 	name:'mapa',
 	data (){
@@ -105,9 +108,8 @@ let mapa = {
 		*	E EXIBE INFORMAÇÕES NO POPUP
 		*/
 		let app = this;
-		let highlight;
 		let highlightStyleCache = {};
-		let featureOverlay = new ol.layer.Vector({
+		featureOverlay = new ol.layer.Vector({
 		    source: new ol.source.Vector(),
 		    map: map,
 		    style: function(feature, resolution) {
@@ -126,14 +128,14 @@ let mapa = {
 		        return highlightStyleCache[text];
 		    }
 		});
-
+		
 		function getFeatureLayerInfo(pixel, event) {
-			let cLayer;
+			// let cLayer;
 
-			// Layer atual (Current Layer - cLayer)			
-			cLayer = map.forEachLayerAtPixel(pixel, function (layer) {
-				return layer;
-			});
+			// // Layer atual (Current Layer - cLayer)			
+			// cLayer = map.forEachLayerAtPixel(pixel, function (layer) {
+			// 	return layer;
+			// });
 
 			// Região selecionada - feature
 			let feature = map.forEachFeatureAtPixel(pixel, function(feature){				
@@ -141,9 +143,8 @@ let mapa = {
 			});
 			// Se houver feature no ponto clicado, mostra suas propriedades
 			if (highlight !== undefined) {
-				featureOverlay.getSource().removeFeature(highlight);
-				// Altera info e posicao da caixa
-				app.featureInfo.nome = null;
+				featureOverlay.getSource().removeFeature(highlight); // Remove o highlight
+				app.featureInfo.nome = null; // Altera info e posicao da caixa
 				
 				if (feature !== highlight) {
 					highlight = undefined;
@@ -158,6 +159,7 @@ let mapa = {
 				app.infoBoxStyle.left = event.clientX+"px";
 				app.infoBoxStyle.top = event.clientY+"px";
 				app.featureInfo.nome = feature.get('name');
+				app.featureInfo.ID = feature.get('ID');
 				featureOverlay.getSource().addFeature(feature);
 				highlight = feature;
 			}
@@ -201,7 +203,12 @@ let mapa = {
 			else{
 				console.log('id_projeto inválido')
 			}
-		}, 
+		},
+		removeHighlight(){
+			// featureOverlay.getSource().removeFeature(highlight); // Remove o highlight
+			// mapa.featureInfo.nome = null; // Altera info e posicao da caixa
+			// this.mapa.getFeatureLayerInfo(0, 0);
+		},
 		defineStyle(id){
 			let id_projeto = undefined
 			let etapa = undefined
@@ -254,10 +261,9 @@ let mapa = {
 			});
 			return style
 		},
-		// setProjectId(id){
-		// 	console.log();
-		// 	this.$root.$children[1].setProjectId(id);
-		// },
+		setProjectId(id){
+			this.$emit('clicked', id)
+		},
 		resetApp(){
 			const app = this
 			this.kmlLayers.map(function(value, index) {
@@ -273,7 +279,7 @@ let mapa = {
 		},
 	},
 	template: `
-	<div id="mapa">
+	<div id="mapa" @click="removeHighlight()">
 		<div class="title">
 			<h3>Projetos de Intervenção Urbana</h3>
 			<ul v-if="breadcrumb" class="mapa_breadcrumb">
@@ -283,7 +289,7 @@ let mapa = {
 			</ul>
 		</div>
 		<div id="map" class="map"></div>
-		<div id="infoModal" v-if="featureInfo.nome" v-bind:style="infoBoxStyle"><a @click="$root.$children[1].setProjectId(featureInfo.ID)" href="#">{{ featureInfo.nome }}</a></div>
+		<div id="infoModal" v-if="featureInfo.nome" v-bind:style="infoBoxStyle"><a @click="setProjectId(featureInfo.ID)" href="#">{{ featureInfo.nome }}</a></div>
 	</div>
 	`
 }
