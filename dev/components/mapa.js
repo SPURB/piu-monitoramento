@@ -13,7 +13,10 @@ let mapa = {
 	name:'mapa',
 	data (){
 		return {
-			featureInfo: '',
+			featureInfo: {
+				"nome": "",
+				"ID": ""
+			},
 			infoBoxStyle: {
 				"background-color": "#EEF",
 			    "max-width": "200px",
@@ -23,7 +26,7 @@ let mapa = {
 			    "text-align": "center",
 			    "left": "0",
 			    "top": "0",
-			    "position": "fixed"
+			    "position": "absolute"
 			},
 			data: monitoramento,
 			projeto: undefined,
@@ -124,7 +127,7 @@ let mapa = {
 		    }
 		});
 
-		function getFeatureLayerInfo(pixel) {
+		function getFeatureLayerInfo(pixel, event) {
 			let cLayer;
 
 			// Layer atual (Current Layer - cLayer)			
@@ -140,7 +143,7 @@ let mapa = {
 			if (highlight !== undefined) {
 				featureOverlay.getSource().removeFeature(highlight);
 				// Altera info e posicao da caixa
-				app.featureInfo = null;
+				app.featureInfo.nome = null;
 				
 				if (feature !== highlight) {
 					highlight = undefined;
@@ -151,15 +154,16 @@ let mapa = {
 					highlight = undefined;
 					return
 				}
-				app.infoBoxStyle.left = pixel[0]+"px";
-				app.infoBoxStyle.top = pixel[1]+"px";
-				app.featureInfo = feature.get('name');
+				// Posiciona a caixa no cursor do mouse
+				app.infoBoxStyle.left = event.clientX+"px";
+				app.infoBoxStyle.top = event.clientY+"px";
+				app.featureInfo.nome = feature.get('name');
 				featureOverlay.getSource().addFeature(feature);
 				highlight = feature;
 			}
 		};
 		map.on('click', function(evt){
-			getFeatureLayerInfo(evt.pixel);
+			getFeatureLayerInfo(evt.pixel, event);
 		});
 		// TODO Fim modularizacao
 	},
@@ -250,6 +254,10 @@ let mapa = {
 			});
 			return style
 		},
+		// setProjectId(id){
+		// 	console.log();
+		// 	this.$root.$children[1].setProjectId(id);
+		// },
 		resetApp(){
 			const app = this
 			this.kmlLayers.map(function(value, index) {
@@ -275,7 +283,7 @@ let mapa = {
 			</ul>
 		</div>
 		<div id="map" class="map"></div>
-		<div id="infoModal" v-if="featureInfo" v-bind:style="infoBoxStyle">{{ featureInfo }}</div>
+		<div id="infoModal" v-if="featureInfo.nome" v-bind:style="infoBoxStyle"><a @click="$root.$children[1].setProjectId(featureInfo.ID)" href="#">{{ featureInfo.nome }}</a></div>
 	</div>
 	`
 }
