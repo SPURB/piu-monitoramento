@@ -20,6 +20,7 @@ let mapa = {
 				"nome": "",
 				"ID": ""
 			},
+			isFocused: false,
 			infoBoxStyle: {
 				"background-color": "#EEF",
 			    "max-width": "200px",
@@ -41,6 +42,21 @@ let mapa = {
 	},
 	props: ['clicked-id'],
 	computed:{
+		myMap(){
+			return new ol.Map({
+				target: 'map',
+				layers: this.kmlLayers,
+				loadTilesWhileAnimating: true,
+				view: view,
+				controls: ol.control.defaults({
+					attributionOptions: {
+						collapsible: false
+					}
+					}).extend([
+						new ol.control.ScaleLine()
+					])
+			});
+		},
 		kmls(){
 			let parseKml = [];
 			kmls.map(function(str) { // dev/data/kmls.js
@@ -86,88 +102,13 @@ let mapa = {
 		}
 	},
 	mounted(){
-		let map = new ol.Map({
-			target: 'map',
-			layers: this.kmlLayers,
-			loadTilesWhileAnimating: true,
-			view: view,
-			controls: ol.control.defaults({
-				attributionOptions: {
-					collapsible: false
-				}
-				}).extend([
-					new ol.control.ScaleLine()
-				])
-		});
-		this.layers = map.getLayers();
-		
-		// TODO Modularizar a partir daqui
-
-		/**
-		*   ILUMINA FEATURE AO PASSAR O MOUSE POR ELA 
-		*	E EXIBE INFORMAÇÕES NO POPUP
-		*/
+		this.layers = this.myMap.getLayers();
+		this.highlightSettings();
 		let app = this;
-		let highlightStyleCache = {};
-		featureOverlay = new ol.layer.Vector({
-		    source: new ol.source.Vector(),
-		    map: map,
-		    style: function(feature, resolution) {
-		        let text = resolution < 5000 ? feature.get('NOME') : feature.get('NOME');          
-		        if (!highlightStyleCache[text]) {
-		        highlightStyleCache[text] = new ol.style.Style({
-		          stroke: new ol.style.Stroke({
-		            color: 'rgba(31, 60, 147, 0.4)',
-		            width: 2
-		          }),
-		          fill: new ol.style.Fill({
-		            color: 'rgba(31, 60, 147, 0.2)'
-		          })
-		        });
-		        }
-		        return highlightStyleCache[text];
-		    }
-		});
-		
-		function getFeatureLayerInfo(pixel, event) {
-			// let cLayer;
-
-			// // Layer atual (Current Layer - cLayer)			
-			// cLayer = map.forEachLayerAtPixel(pixel, function (layer) {
-			// 	return layer;
-			// });
-
-			// Região selecionada - feature
-			let feature = map.forEachFeatureAtPixel(pixel, function(feature){				
-				return feature;				
-			});
-			// Se houver feature no ponto clicado, mostra suas propriedades
-			if (highlight !== undefined) {
-				featureOverlay.getSource().removeFeature(highlight); // Remove o highlight
-				app.featureInfo.nome = null; // Altera info e posicao da caixa
-				
-				if (feature !== highlight) {
-					highlight = undefined;
-				}				
-			}
-			if (feature && feature.get('name') !== "São Paulo") {
-				if (feature === highlight) {
-					highlight = undefined;
-					return
-				}
-				// Posiciona a caixa no cursor do mouse
-				app.infoBoxStyle.left = event.clientX+"px";
-				app.infoBoxStyle.top = event.clientY+"px";
-				app.featureInfo.nome = feature.get('name');
-				app.featureInfo.ID = feature.get('ID');
-				featureOverlay.getSource().addFeature(feature);
-				highlight = feature;
-			}
-		};
-		map.on('click', function(evt){
-			getFeatureLayerInfo(evt.pixel, event);
-		});
-		// TODO Fim modularizacao
+		console.log(this);
+		this.myMap.on('click', function(evt){
+			app.getFeatureLayerInfo(evt.pixel, event);
+		});		
 	},
 	watch:{
 		clickedId(newprop, oldprop){
@@ -182,6 +123,33 @@ let mapa = {
 		}
 	},
 	methods:{
+		/**
+		*   ILUMINA FEATURE AO PASSAR O MOUSE POR ELA 
+		*	E EXIBE INFORMAÇÕES NO POPUP
+		*/
+		
+		highlightSettings(){
+			let highlightStyleCache = {};
+			featureOverlay = new ol.layer.Vector({
+			    source: new ol.source.Vector(),
+			    map: this.myMap,
+			    style: function(feature, resolution) {
+			        let text = resolution < 5000 ? feature.get('NOME') : feature.get('NOME');          
+			        if (!highlightStyleCache[text]) {
+			        highlightStyleCache[text] = new ol.style.Style({
+			          stroke: new ol.style.Stroke({
+			            color: 'rgba(31, 60, 147, 0.4)',
+			            width: 2
+			          }),
+			          fill: new ol.style.Fill({
+			            color: 'rgba(31, 60, 147, 0.2)'
+			          })
+			        });
+			        }
+			        return highlightStyleCache[text];
+			    }
+			});
+		},
 		fitToLayer(id_projeto){
 			view.cancelAnimations()
 			let app = this
@@ -204,9 +172,44 @@ let mapa = {
 				console.log('id_projeto inválido')
 			}
 		},
-		removeHighlight(){
+		getFeatureLayerInfo(pixel = 0, event=0) {
+			// Região selecionada - feature
+			let feature = this.myMap.forEachFeatureAtPixel(pixel, function(feature){				
+				return feature;				
+			});
+			if (highlight !== undefined) {
+				featureOverlay.getSource().removeFeature(highlight); // Remove o highlight
+				this.featureInfo.nome = null; // Altera info e posicao da caixa
+				highlight = undefined;
+			}
+			// Se houver feature no ponto clicado, mostra suas propriedades
+			if (feature && feature.get('name') !== "São Paulo" && !this.isFocused) {
+				// Posiciona a caixa no cursor do mouse
+				this.infoBoxStyle.left = event.clientX+"px";
+				this.infoBoxStyle.top = event.clientY+"px";
+				this.featureInfo.nome = feature.get('name');
+				console.log(feature);
+				this.featureInfo.ID = feature.get('ID');
+				featureOverlay.getSource().addFeature(feature);
+				highlight = feature;
+			}
+			else if(this.isFocused) {
+				this.resetApp();
+			}
+		},
+		removeHighlight(){			
+			this.isFocused = true;
+			this.featureInfo.nome = null;
+			featureOverlay.getSource().removeFeature(highlight); // Remove o highlight
+			this.featureInfo.nome = null; // Altera info e posicao da caixa
+			highlight = undefined;
+			// if (highlight !== undefined) {
+			// 	this.getFeatureLayerInfo(undefined, undefined);
+			// }			
+
 			// featureOverlay.getSource().removeFeature(highlight); // Remove o highlight
 			// mapa.featureInfo.nome = null; // Altera info e posicao da caixa
+			// console.log(this);
 			// this.mapa.getFeatureLayerInfo(0, 0);
 		},
 		defineStyle(id){
@@ -262,9 +265,11 @@ let mapa = {
 			return style
 		},
 		setProjectId(id){
-			this.$emit('clicked', id)
+			this.removeHighlight();
+			this.$emit('clicked', id);			
 		},
 		resetApp(){
+			this.isFocused = false;
 			const app = this
 			this.kmlLayers.map(function(value, index) {
 				app.layers.item(index).setOpacity(1)
@@ -279,7 +284,7 @@ let mapa = {
 		},
 	},
 	template: `
-	<div id="mapa" @click="removeHighlight()">
+	<div id="mapa">
 		<div class="title">
 			<h3>Projetos de Intervenção Urbana</h3>
 			<ul v-if="breadcrumb" class="mapa_breadcrumb">
