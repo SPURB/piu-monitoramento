@@ -3,6 +3,52 @@
 		min-height: 500px;
 		margin-top: 1em
 	}
+	div.infoModal {
+		background: rgba(255,255,255,.75);
+		box-shadow: 0 2px 2px rgba(0,0,0,.24);
+		border-radius: 2px;
+		padding: 8px;
+		border: 1px solid #EEE;
+		a {
+			display: block;
+			text-decoration: none;
+		}
+		a.infoModalNome {
+			color: #333;
+			font-size: larger;
+		}
+		a.infoModalNome.consultaAberta::after {
+			content: 'Em consulta';
+			visibility: visible;
+			font-size: 10px;
+			text-transform: uppercase;
+			color: #FFFFFF;
+			background-color: $verde;
+			padding: 4px 5px;
+			border-radius: 2px;
+			margin-left: 8px;
+			vertical-align: middle;
+		}
+		&:hover {
+			cursor: pointer;
+			box-shadow: 0 4px 4px rgba(0,0,0,.24);
+		}
+		a.infoModalEtapa {
+			display: block;
+			text-align: center;
+			text-transform: uppercase;
+			font-size: x-small;
+			padding: 4px 8px;
+			border-radius: 2px;
+			color: #FFF;
+			margin: 8px 0 0 0;
+		}
+		.proposicao { background-color: $proposicao; };
+		.andamento { background-color: $andamento; }
+		.implantacao { background-color: $implantacao; }
+		.suspenso { background-color: $suspenso; }
+		.arquivado { color: $arquivado !important; border: 1px solid $arquivado; }
+	}
 	div.title{
 		display: flex;
 		align-items: baseline;

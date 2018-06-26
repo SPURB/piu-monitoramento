@@ -22,15 +22,9 @@ let mapa = {
 				"ID": ""
 			},
 			infoBoxStyle: {
-				"background-color": "#EEF",
-			    "max-width": "200px",
-			    "max-height": "60px",
-			    "border-radius": "10px",
-			    "padding": "10px",
-			    "text-align": "center",
-			    "left": "0",
-			    "top": "0",
-			    "position": "absolute"
+				"left": "0",
+				"top": "0",
+				"position": "absolute"
 			},
 			data: monitoramento,
 			projeto: undefined,
@@ -126,23 +120,23 @@ let mapa = {
 		highlightSettings(){
 			let highlightStyleCache = {};
 			featureOverlay = new ol.layer.Vector({
-			    source: new ol.source.Vector(),
-			    map: this.myMap,
-			    style: function(feature, resolution) {
-			        let text = resolution < 5000 ? feature.get('NOME') : feature.get('NOME');          
-			        if (!highlightStyleCache[text]) {
-			        highlightStyleCache[text] = new ol.style.Style({
-			          stroke: new ol.style.Stroke({
-			            color: 'rgba(31, 60, 147, 0.4)',
-			            width: 2
-			          }),
-			          fill: new ol.style.Fill({
-			            color: 'rgba(31, 60, 147, 0.2)'
-			          })
-			        });
-			        }
-			        return highlightStyleCache[text];
-			    }
+				source: new ol.source.Vector(),
+				map: this.myMap,
+				style: function(feature, resolution) {
+					let text = resolution < 5000 ? feature.get('NOME') : feature.get('NOME');          
+					if (!highlightStyleCache[text]) {
+					highlightStyleCache[text] = new ol.style.Style({
+					  stroke: new ol.style.Stroke({
+						color: 'rgba(31, 60, 147, 0.4)',
+						width: 2
+					  }),
+					  fill: new ol.style.Fill({
+						color: 'rgba(31, 60, 147, 0.2)'
+					  })
+					});
+					}
+					return highlightStyleCache[text];
+				}
 			});
 		},
 
@@ -169,6 +163,30 @@ let mapa = {
 				console.log('id_projeto inválido')
 			}
 		},
+		fConsultaAberta(idKml) {
+			let output;
+			this.data.map(function(index){
+				if (index.ID_rev == idKml) {
+					if (index.b_status == 'aberta' || index.e_status_consulta_internet_minuta == 'aberta') {
+						output = 'consultaAberta';
+					} else { output = ''; };
+				};
+			});
+			return output;
+		},
+		atribuiEtapaClass(idKml) {
+			let output;
+			this.data.map(function(index){
+				if (index.ID_rev == idKml) {
+					if (index.etapas_NUM <= 3) { output = 'proposicao' };
+					if (index.etapas_NUM > 3 && index.etapas_NUM <= 7) { output = 'andamento'};
+					if (index.etapas_NUM == 8) { output = 'implantacao' };
+					if (index.etapas_NUM == 9) { output = 'suspenso' };
+					if (index.etapas_NUM == 10) { output = 'arquivado' };
+				};
+			});
+			return output;
+		},
 		// Ilumina a feature selecionada e exibe suas informacoes no balao
 		getFeatureLayerInfo(pixel, evt) {
 			// Região selecionada - feature
@@ -190,8 +208,8 @@ let mapa = {
 				this.data.forEach(function(projData){ // Percorre os projetos do 'data' para encontrar o projeto da feature
 					if(feature.get('ID') === projData.ID_rev){
 						app.featureInfo.nome = projData.id_nome;
-						app.featureInfo.etapa = "Etapa "+projData.etapas_NUM+": "+projData.a_etapa_comunicacao;
-					}					
+						app.featureInfo.etapa = projData.a_etapa_comunicacao;
+					}
 				});
 				this.featureInfo.ID = feature.get('ID');
 				featureOverlay.getSource().addFeature(feature);
@@ -291,7 +309,10 @@ let mapa = {
 			</ul>
 		</div>
 		<div id="map" class="map"></div>
-		<div id="infoModal" v-if="featureInfo.nome" v-bind:style="infoBoxStyle"><a @click="setProjectId(featureInfo.ID)" href="#">{{ featureInfo.nome }}<br />{{ featureInfo.etapa }}</a></div>
+		<div id="infoModal" class="infoModal" v-if="featureInfo.nome" v-bind:style="infoBoxStyle" @click="setProjectId(featureInfo.ID)">
+			<a href="#" class="infoModalNome" v-bind:class="fConsultaAberta(featureInfo.ID)">{{ featureInfo.nome }}</a>
+			<a href="#" class="infoModalEtapa" v-bind:class="atribuiEtapaClass(featureInfo.ID)">{{ featureInfo.etapa }}</a>
+		</div>
 	</div>
 	`
 }
