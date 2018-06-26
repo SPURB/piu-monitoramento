@@ -106,7 +106,7 @@ let mapa = {
 		this.highlightSettings();
 		let app = this;
 		this.myMap.on('click', function(evt){
-			app.getFeatureLayerInfo(evt.pixel, event);
+			app.getFeatureLayerInfo(evt.pixel, evt);
 		});		
 	},
 	watch:{
@@ -170,7 +170,7 @@ let mapa = {
 			}
 		},
 		// Ilumina a feature selecionada e exibe suas informacoes no balao
-		getFeatureLayerInfo(pixel, event) {
+		getFeatureLayerInfo(pixel, evt) {
 			// Região selecionada - feature
 			let feature = this.myMap.forEachFeatureAtPixel(pixel, function(feature){				
 				return feature;				
@@ -183,8 +183,8 @@ let mapa = {
 			// Se houver feature no ponto clicado, mostra suas propriedades
 			if (feature && feature.get('name') !== "São Paulo" && !this.$root.isFocused) {
 				// Posiciona a caixa no cursor do mouse
-				this.infoBoxStyle.left = event.clientX+"px";
-				this.infoBoxStyle.top = event.clientY+"px";
+				this.infoBoxStyle.left = evt.originalEvent.clientX+"px";
+				this.infoBoxStyle.top = evt.originalEvent.clientY+"px";
 				let app = this;
 				// Atribui o valor da caixa de texto (balao)
 				this.data.forEach(function(projData){ // Percorre os projetos do 'data' para encontrar o projeto da feature

@@ -155,7 +155,7 @@
 			p { font-size: 1em; line-height: 1.75em; };
 			div {
 				border-top: 1px solid #BCBCBC;
-				padding: 1em 0.25em;
+				padding: 1em 0;
 				margin: 0;
 				line-height: 1.6em;
 				h6 { 
@@ -180,7 +180,7 @@
 				padding: 0 .1em;
 				transition: background-color .2s ease-out;
 				span { font-weight: 700; text-transform: uppercase; };
-				&:hover { background-color: #F8F8F8; cursor: pointer; };
+				&:hover { background-color: #F8F8F8; };
 				div.periodoEtapaTramit {
 					padding: 0 !important;
 					margin-bottom: -1.6em;
@@ -211,8 +211,7 @@
 							background: green;
 							color: white;
 							padding: 8px 4px;
-							font-family: initial;
-							font-size: .75em;
+							font-family: inherit;
 							margin: 12px 0;
 							border-radius: 2px;
 							border-width: 0;

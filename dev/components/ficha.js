@@ -32,6 +32,9 @@ let ficha = {
 				case '6': return 'Consolidação';
 				case '7': return 'Enc. jurídico';
 				case '8': return 'Implantação';
+				case '9': return 'Suspenso';
+				case '10': return 'Suspenso';
+				case '11': return 'Não iniciado';
 				case 1: return 'Proposição';
 				case 2: return 'Consulta púb. inicial';
 				case 3: return 'Avaliação SMUL';
@@ -40,6 +43,9 @@ let ficha = {
 				case 6: return 'Consolidação';
 				case 7: return 'Enc. jurídico';
 				case 8: return 'Implantação';
+				case 9: return 'Suspenso';
+				case 10: return 'Suspenso';
+				case 11: return 'Não iniciado';
 			};
 		},
 
@@ -277,17 +283,13 @@ let ficha = {
 					<transition name="tramitTransit" class="tramitTransit">
 						<div v-if="E02">
 							<template v-if="testeVazio(projeto.b_status) != false">
-<<<<<<< HEAD
 								<p v-if="projeto.b_status == 'aberta'">
 									Consulta <span>aberta</span> ({{ dataExcelJS(projeto.b_data_inicio) }}—{{ dataExcelJS(projeto.b_data_final) }})<br>
 									<button class="linkConsulta" href="#" title="Participe da consulta pública">Participe da consulta pública</button>
 								</p>
 								<p v-else>
 									Consulta <span>encerrada</span> ({{ dataExcelJS(projeto.b_data_inicio) }}—{{ dataExcelJS(projeto.b_data_final) }})
-=======
 								<p>
-									Consulta <span>{{ projeto.b_status }}</span> ({{ dataExcelJS(projeto.b_data_inicio) }}—{{ dataExcelJS(projeto.b_data_final) }})
->>>>>>> f329f10a42251d9cdf0d7798142c0a53c52fb09f
 								</p>
 							</template>
 							<div class="arquivos" :nome="arquivosDiscussao(2,1)">
@@ -418,17 +420,12 @@ let ficha = {
 					<transition name="tramitTransit" class="tramitTransit">
 						<div v-if="E05">
 							<template v-if="testeVazio(projeto.e_status_consulta_internet_minuta) != false && projeto.e_status_consulta_internet_minuta != 'NA'">
-<<<<<<< HEAD
 								<p v-if="projeto.e_status_consulta_internet_minuta == 'aberta'">
 									Consulta online <span>aberta</span> ({{ dataExcelJS(projeto.e_data_inicio_consulta_minuta) }}—{{ dataExcelJS(projeto.e_data_final_consulta_minuta) }})<br>
 									<button class="linkConsulta" href="#" title="Participe da consulta pública">Participe da consulta pública</button>
 								</p>
 								<p v-else>
-									Consulta online <span>encerrada</span> ({{ dataExcelJS(projeto.e_data_inicio_consulta_minuta) }}—{{ dataExcelJS(projeto.e_data_final_consulta_minuta) }})<br>
-=======
-								<p>
-									Consulta online <span>{{ projeto.e_status_consulta_internet_minuta }}</span> ({{ dataExcelJS(projeto.e_data_inicio_consulta_minuta) }}—{{ dataExcelJS(projeto.e_data_final_consulta_minuta) }})
->>>>>>> f329f10a42251d9cdf0d7798142c0a53c52fb09f
+									Consulta online <span>encerrada</span> ({{ dataExcelJS(projeto.e_data_inicio_consulta_minuta) }}—{{ dataExcelJS(projeto.e_data_final_consulta_minuta) }})
 								</p>
 							</template>
 							<template v-if="testeVazio(projeto.e_data_audiencia_publica) != false">
