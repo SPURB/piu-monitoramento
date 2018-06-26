@@ -18,6 +18,7 @@ let mapa = {
 		return {
 			featureInfo: {
 				"nome": "",
+				"etapa": "",
 				"ID": ""
 			},
 			infoBoxStyle: {
@@ -184,7 +185,14 @@ let mapa = {
 				// Posiciona a caixa no cursor do mouse
 				this.infoBoxStyle.left = event.clientX+"px";
 				this.infoBoxStyle.top = event.clientY+"px";
-				this.featureInfo.nome = feature.get('name');
+				let app = this;
+				// Atribui o valor da caixa de texto (balao)
+				this.data.forEach(function(projData){ // Percorre os projetos do 'data' para encontrar o projeto da feature
+					if(feature.get('ID') === projData.ID_rev){
+						app.featureInfo.nome = projData.id_nome;
+						app.featureInfo.etapa = "Etapa "+projData.etapas_NUM+": "+projData.a_etapa_comunicacao;
+					}					
+				});
 				this.featureInfo.ID = feature.get('ID');
 				featureOverlay.getSource().addFeature(feature);
 				highlight = feature;
@@ -283,7 +291,7 @@ let mapa = {
 			</ul>
 		</div>
 		<div id="map" class="map"></div>
-		<div id="infoModal" v-if="featureInfo.nome" v-bind:style="infoBoxStyle"><a @click="setProjectId(featureInfo.ID)" href="#">{{ featureInfo.nome }}</a></div>
+		<div id="infoModal" v-if="featureInfo.nome" v-bind:style="infoBoxStyle"><a @click="setProjectId(featureInfo.ID)" href="#">{{ featureInfo.nome }}<br />{{ featureInfo.etapa }}</a></div>
 	</div>
 	`
 }
