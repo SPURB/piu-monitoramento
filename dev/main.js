@@ -1,7 +1,8 @@
 let vm = new Vue({
 	el: '#app',
 	data:{
-		projectId: undefined, 
+		projectId: undefined,
+		isFocused: false,
 		display:{
 			mapa: true,
 			sumario: true,
@@ -17,12 +18,14 @@ let vm = new Vue({
 		projectId(newprop, oldprop){
 			if(this.projectId != undefined) {
 				this.display.sumario = false
-				this.display.ficha = true  
+				this.display.ficha = true
+				this.isFocused = true
 			}
 			else{
 				this.display.mapa = true
 				this.display.sumario = true
 				this.display.ficha = false
+				this.isFocused = false
 			}
 		}
 	},
@@ -32,6 +35,7 @@ let vm = new Vue({
 			if (id == undefined){
 				this.display.sumario = true
 				this.display.ficha = false
+				this.isFocused = false
 			} 
 		}
 	}
