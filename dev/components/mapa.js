@@ -201,8 +201,10 @@ let mapa = {
 			// Se houver feature no ponto clicado, mostra suas propriedades
 			if (feature && feature.get('name') !== "São Paulo" && !this.$root.isFocused) {
 				// Posiciona a caixa no cursor do mouse
-				this.infoBoxStyle.left = evt.originalEvent.clientX+"px";
-				this.infoBoxStyle.top = evt.originalEvent.clientY+"px";
+				let afastX = evt.originalEvent.clientX - document.getElementById("app").offsetParent.offsetLeft;
+				let afastY = evt.originalEvent.clientY - document.getElementById("app").offsetParent.offsetTop;
+				this.infoBoxStyle.left = afastX+"px";
+				this.infoBoxStyle.top = afastY+"px";
 				let app = this;
 				// Atribui o valor da caixa de texto (balao)
 				this.data.forEach(function(projData){ // Percorre os projetos do 'data' para encontrar o projeto da feature
