@@ -201,8 +201,8 @@ let mapa = {
 			// Se houver feature no ponto clicado, mostra suas propriedades
 			if (feature && feature.get('name') !== "São Paulo" && !this.$root.isFocused) {
 				// Posiciona a caixa no cursor do mouse
-				let afastX = evt.originalEvent.clientX - document.getElementById("app").offsetParent.offsetLeft;
-				let afastY = evt.originalEvent.clientY - document.getElementById("app").offsetParent.offsetTop;
+				let afastX = evt.originalEvent.clientX - document.getElementById("app").offsetParent.offsetLeft + 8;
+				let afastY = evt.originalEvent.clientY - document.getElementById("app").offsetParent.offsetTop + 8;
 				this.infoBoxStyle.left = afastX+"px";
 				this.infoBoxStyle.top = afastY+"px";
 				let app = this;

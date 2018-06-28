@@ -144,6 +144,12 @@ let ficha = {
 			};
 		},
 
+		numberToReal(numero) {
+		    var numero = numero.toFixed(2).split('.');
+		    numero[0] = "R$ " + numero[0].split(/(?=(?:...)*$)/).join('.');
+		    return numero.join(',');
+		},
+
 	},
 
 	watch:{
@@ -235,8 +241,14 @@ let ficha = {
 				</template>
 				<template v-if="testeVazio(projeto.urb_contrapartida_prevista) != false">
 					<div>
-						<h6>Contrapartidas previstas</h6>
+						<h6>Contrapartida prevista</h6>
 						{{ projeto.urb_contrapartida_prevista }}
+					</div>
+				</template>
+				<template v-if="testeVazio(projeto.urb_valor_contrapartida_prevista) != false && projeto.urb_valor_contrapartida_prevista != 'ND'">
+					<div>
+						<h6>Valor da contrapartida prevista</h6>
+						{{ numberToReal(parseInt(projeto.urb_valor_contrapartida_prevista)) }}
 					</div>
 				</template>
 				<template v-if="testeVazio(projeto.urb_justificativa_interesse_publico) != false">
@@ -285,10 +297,14 @@ let ficha = {
 							<template v-if="testeVazio(projeto.b_status) != false">
 								<p v-if="projeto.b_status == 'aberta'">
 									Consulta <span>aberta</span> ({{ dataExcelJS(projeto.b_data_inicio) }}—{{ dataExcelJS(projeto.b_data_final) }})<br>
+									<!-- definir condicional: template v-for hiperlinks id==clickedId etapa==2 idp==[no. link consulta] -->
 									<button class="linkConsulta" href="#" title="Participe da consulta pública">Participe da consulta pública</button>
 								</p>
 								<p v-else>
 									Consulta <span>encerrada</span> ({{ dataExcelJS(projeto.b_data_inicio) }}—{{ dataExcelJS(projeto.b_data_final) }})
+									<template v-if="testeVazio(projeto.b_numero_de_contribuicoes) != false">
+										<br>({{ projeto.b_numero_de_contribuicoes }} contribuições)
+									</template>
 								<p>
 								</p>
 							</template>
@@ -371,6 +387,12 @@ let ficha = {
 									Não se aplica
 								</p>
 							</template>
+							<template v-if="testeVazio(projeto.c_data_cmpu) != false && projeto.c_data_cmpu != 'NA'">
+								<p>
+									<span>CMPU</span><br>
+									{{ dataExcelJS(projeto.c_data_cmpu) }}
+								</p>
+							</template>
 							<template v-for="hiperlink in hiperlinks">
 								<p class="tramit_link" v-if="hiperlink.ID_Projeto == clickedId && hiperlink.ID_etapa == 3 && testeLink(hiperlink.arquivo)">
 									<a class="tramit_link" :href="hiperlink.arquivo" :type="ext(hiperlink.arquivo)" :title="hiperlink.nome_publico_do_arquivo" target="_blank">{{ hiperlink.nome_publico_do_arquivo }}</a>
@@ -389,6 +411,12 @@ let ficha = {
 					</div>
 					<transition name="tramitTransit" class="tramitTransit">
 						<div v-if="E04">
+							<template v-if="testeVazio(projeto.d_responsavel) != false && projeto.d_responsavel != 'NA'">
+								<p>
+									Responsável<br>
+									<span>{{ projeto.d_responsavel }}</span>
+								</p>
+							</template>
 							<template v-if="testeVazio(projeto.d_secretarias_envolvidas) != false && projeto.d_secretarias_envolvidas != 'NA'">
 								<p>
 									Secretarias envolvidas<br>
@@ -426,6 +454,12 @@ let ficha = {
 								</p>
 								<p v-else>
 									Consulta online <span>encerrada</span> ({{ dataExcelJS(projeto.e_data_inicio_consulta_minuta) }}—{{ dataExcelJS(projeto.e_data_final_consulta_minuta) }})
+								</p>
+							</template>
+							<template v-if="testeVazio(projeto.e_instancias_consultadas) != false && projeto.e_instancias_consultadas != 'NA'">
+								<p>
+									Instâncias consultadas<br>
+									<span>{{ projeto.e_instancias_consultadas }}</span>
 								</p>
 							</template>
 							<template v-if="testeVazio(projeto.e_data_audiencia_publica) != false">
@@ -568,6 +602,18 @@ let ficha = {
 					</div>
 					<transition name="tramitTransit" class="tramitTransit">
 						<div v-if="E08">
+							<template v-if="testeVazio(projeto.h_registro_administrativo) != false">
+								<p>
+									Número do Processo Administrativo
+									<span>{{ projeto.h_registro_administrativo }}</span>
+								</p>
+							</template>
+							<template v-if="testeVazio(projeto.h_interessado) != false">
+								<p>
+									Interessado
+									<span>{{ projeto.h_interessado }}</span>
+								</p>
+							</template>
 							<template v-if="testeVazio(projeto.h_status_implantacao) != false">
 								<p>
 									<span>{{ projeto.h_status_implantacao }}</span>
@@ -577,12 +623,6 @@ let ficha = {
 								<p>
 									Órgão em análise<br>
 									<span>{{ projeto.h_orgao_em_analise }}</span>
-								</p>
-							</template>
-							<template v-if="testeVazio(projeto.h_registro_administrativo) != false">
-								<p>
-									Número do Processo Administrativo
-									<span>{{ projeto.h_registro_administrativo }}</span>
 								</p>
 							</template>
 							<template v-for="hiperlink in hiperlinks">
