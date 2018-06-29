@@ -2,6 +2,40 @@
 	.map {
 		min-height: 500px;
 		margin-top: 1em;
+		position: relative;
+		div.downloadBase {
+			display: flex;
+			flex-direction: column;
+			position: absolute;
+			z-index: 1;
+			right: 0;
+			background: hsla(0,0%,100%,.75);
+			border-bottom-left-radius: 4px;
+			font-size: .7rem;
+			padding: 4px 4px 0 4px;
+			a {
+				display: flex;
+				align-items: center;
+				text-decoration: none;
+				color: #EB5757;
+				padding: 4px;
+				border-radius: 2px;
+				margin-bottom: 4px;
+				box-sizing: border-box;
+				&:hover {
+					background: rgba(0,0,0,.12);
+					i { color: #FFF };
+				};
+				i {
+					font-size: 14px;
+					color: #333;
+					margin-right: 4px;
+				};
+			}
+		}
+		canvas {
+			border-radius: 2px;
+		};
 	}
 	div.infoModal {
 		background: rgba(255,255,255,.84);
@@ -56,19 +90,18 @@
 			list-style: none;
 			a{
 				color: #999;
-				padding-left: .5em;
-				padding-right: 1em
 			}
 			li:after {
 				content:"»";
-				padding: 0 .5em;
+				margin: 0 1em;
 				text-decoration: none;
 			}
 			li:last-child{ font-weight: 700}
 			li:last-child:after{ content:"" }
 		}
 		ul{
-			display: flex
+			display: flex;
+			margin-left: 1em;
 		} 
 	}
 }

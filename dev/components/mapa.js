@@ -310,7 +310,16 @@ let mapa = {
 				<li>{{ projeto.id_nome }}</li>
 			</ul>
 		</div>
-		<div id="map" class="map"></div>
+		<div id="map" class="map">
+			<div class="downloadBase">
+				<a href="#" download>
+					<i class="material-icons">get_app</i> KML
+				</a>
+				<a href="#" download>
+					<i class="material-icons">get_app</i> Shapefile
+				</a>
+			</div>
+		</div>
 		<div id="infoModal" class="infoModal" v-if="featureInfo.nome" v-bind:style="infoBoxStyle" @click="setProjectId(featureInfo.ID)">
 			<a href="#" class="infoModalNome" v-bind:class="fConsultaAberta(featureInfo.ID)">{{ featureInfo.nome }}</a>
 			<a href="#" class="infoModalEtapa" v-bind:class="atribuiEtapaClass(featureInfo.ID)">{{ featureInfo.etapa }}</a>

@@ -50,12 +50,15 @@ let ficha = {
 		},
 
 		dataExcelJS(data) {
-			let d = new Date((Math.floor(data - 25568))*86400000);
-
 			if (data != null && data != '-' && data != 'NA') {
-				let string = ('0' + d.getDate()).slice(-2)+'/'+('0' + (d.getMonth()+1)).slice(-2)+'/'+d.getFullYear();
-				return string;
-			} else { return ''; };
+				if (data.length == 5) {
+					let d = new Date((Math.floor(data - 25568))*86400000);
+					let string = ('0' + d.getDate()).slice(-2)+'/'+('0' + (d.getMonth()+1)).slice(-2)+'/'+d.getFullYear();
+					return string;
+				} else if (data.replace('/','').length > 5 && data.replace('/','').length <= 8) {
+					return data;
+				} else { return '' };
+			}
 		},
 
 		encontraProjeto(newClickedId) {
@@ -150,6 +153,10 @@ let ficha = {
 		    return numero.join(',');
 		},
 
+		filtroMenu(proj) {
+			return (proj.etapas_NUM > 0 && proj.etapas_NUM <= 10);
+		}
+
 	},
 
 	watch:{
@@ -175,10 +182,10 @@ let ficha = {
 			</div>
 			<transition name="menuSlide">
 				<ul class="menu" v-if="menu">
-					<li v-for="projeto in data.slice().sort(function(a,b){return a.etapas_NUM - b.etapas_NUM})" 
+					<li v-for="projeto in data.filter(filtroMenu).sort(function(a,b){return a.etapas_NUM - b.etapas_NUM})" 
 					v-bind:class="atribuiEtapaClass(projeto.etapas_NUM)" 
 					:key="projeto.ID_rev">
-						<a v-bind:class="fConsultaAberta(projeto)" @click="gravaId(projeto.ID_rev)" v-if="projeto.etapas_NUM <= 10">{{ projeto.id_nome }}</a>
+						<a v-bind:class="fConsultaAberta(projeto)" @click="gravaId(projeto.ID_rev)">{{ projeto.id_nome }}</a>
 					</li>
 				</ul>
 			</transition>
@@ -245,12 +252,12 @@ let ficha = {
 						{{ projeto.urb_contrapartida_prevista }}
 					</div>
 				</template>
-				<template v-if="testeVazio(projeto.urb_valor_contrapartida_prevista) != false && projeto.urb_valor_contrapartida_prevista != 'ND'">
+				<!-- <template v-if="testeVazio(projeto.urb_valor_contrapartida_prevista) != false && projeto.urb_valor_contrapartida_prevista != 'ND'">
 					<div>
 						<h6>Valor da contrapartida prevista</h6>
 						{{ numberToReal(parseInt(projeto.urb_valor_contrapartida_prevista)) }}
 					</div>
-				</template>
+				</template> -->
 				<template v-if="testeVazio(projeto.urb_justificativa_interesse_publico) != false">
 					<div>
 						<h6>Interesse privado</h6>
@@ -278,7 +285,7 @@ let ficha = {
 							</template>
 							<template v-for="hiperlink in hiperlinks">
 								<p v-if="hiperlink.ID_Projeto == clickedId && hiperlink.ID_etapa == 1 && testeVazio(hiperlink.arquivo) != false && testeLink(hiperlink.arquivo) != false" class="tramit_link">
-									<a class="tramit_link" :href="hiperlink.arquivo" :type="ext(hiperlink.nome_publico_do_arquivo)" :title="hiperlink.nome_publico_do_arquivo" target="_blank">{{ hiperlink.nome_publico_do_arquivo }}</a>
+									<a class="tramit_link" :href="hiperlink.arquivo" :type="ext(hiperlink.arquivo)" :title="hiperlink.nome_publico_do_arquivo" target="_blank">{{ hiperlink.nome_publico_do_arquivo }}</a>
 								</p>
 							</template>
 						</div>
@@ -604,13 +611,13 @@ let ficha = {
 						<div v-if="E08">
 							<template v-if="testeVazio(projeto.h_registro_administrativo) != false">
 								<p>
-									Número do Processo Administrativo
+									Número do Processo Administrativo<br>
 									<span>{{ projeto.h_registro_administrativo }}</span>
 								</p>
 							</template>
 							<template v-if="testeVazio(projeto.h_interessado) != false">
 								<p>
-									Interessado
+									Interessado<br>
 									<span>{{ projeto.h_interessado }}</span>
 								</p>
 							</template>
