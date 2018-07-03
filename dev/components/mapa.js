@@ -296,8 +296,35 @@ let mapa = {
 				zoom: this.zoom,
 				duration: 1500
 			});
-			this.$emit('clicked', undefined)
-			this.breadcrumb = false
+			this.$emit('clicked', undefined);
+			this.breadcrumb = false;
+			app.projeto = undefined;
+		},
+		dlKml(id) {
+			if (id != undefined) {
+				for (let i = 0; i <= this.kmls.length; i++) {
+					if (this.kmls[i].id == id) {
+						let url = dist_folder+'kml/'+this.kmls[i].fileName;
+						return url;
+					}
+				}
+			} else if (id == undefined) {
+				let url = dist_folder+'kml/'+'BASE_Limite_MSP.kml';
+				return url;
+			} else { return '' }
+		},
+		dlShp(id) {
+			if (id != undefined) {
+				for (let i = 0; i <= this.kmls.length; i++) {
+					if (this.kmls[i].id == id) {
+						let url = dist_folder+'shp/'+this.kmls[i].fileName.slice(0,this.kmls[i].fileName.lastIndexOf('.'))+'.shp';
+						return url;
+					}
+				}
+			} else if (id == undefined) {
+				let url = dist_folder+'shp/'+'BASE_PIUs_v9_(P).shp';
+				return url;
+			} else { return '' }
 		},
 	},
 	template: `
@@ -312,10 +339,10 @@ let mapa = {
 		</div>
 		<div id="map" class="map">
 			<div class="downloadBase">
-				<a href="#" download>
+				<a :href="dlKml(clickedId)" id="dlKml">
 					<i class="material-icons">get_app</i> KML
 				</a>
-				<a href="#" download>
+				<a :href="dlShp(clickedId)" id="dlShp">
 					<i class="material-icons">get_app</i> Shapefile
 				</a>
 			</div>
