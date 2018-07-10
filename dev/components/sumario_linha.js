@@ -95,15 +95,18 @@ let sumario_linha = {
 
 		let preencheGroups = function() {
 			for (var i = 0; i < app.data.length; i++) {
-				groups.push({
-					id: app.data[i].ID_rev,
-					content: app.data[i].id_nome,
-					title: app.data[i].id_nome
-				});
+				if (app.data[i].etapas_NUM != null && app.data[i].etapas_NUM != '-' && app.data[i].etapas_NUM != '') {
+					groups.push({
+						id: app.data[i].ID_rev,
+						content: app.data[i].id_nome,
+						title: app.data[i].id_nome
+					});
+				};
 			};
 		}();
 
 		let hoje = new Date();
+		let anterior = new Date((hoje.getFullYear()-1), hoje.getMonth(), hoje.getDate());
 		let maximo = new Date(hoje.getFullYear(), (hoje.getMonth()+2), hoje.getDate());
 
 		let options = {
@@ -118,6 +121,7 @@ let sumario_linha = {
 			end: maximo,
 			stack: false,
 			stackSubgroups: false,
+			start: anterior,
 			timeAxis: {
 				scale: 'month',
 				step: 1,

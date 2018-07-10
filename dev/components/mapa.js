@@ -56,14 +56,15 @@ let mapa = {
 			kmls.map(function(str) { // dev/data/kmls.js
 				let outputid
 				let baseNumber = str.substring(0,2) // primeiros dois strings -> 1_ ou 10
-				let numericStr = parseInt(baseNumber,10) // converte strings para número ou retorna NaN
+				let numericStr = parseInt(baseNumber,10); // converte strings para número ou retorna NaN
 				Number.isNaN(numericStr) ? // se string não é numérica  
 					outputid = str.substring(0, 4) : // retorna 4 caracteres -> 'BASE'
 					outputid = numericStr.toString() // Converte valor numérico em string 
-				parseKml.push({
-					id:	outputid,
-					fileName: str
-				})
+					outputid != '0' ?
+						parseKml.push({
+							id:	outputid,
+							fileName: str
+						}) : '';
 			})
 			let baseFeature = parseKml.pop();
 			parseKml.reverse().push(baseFeature);
@@ -309,7 +310,7 @@ let mapa = {
 					}
 				}
 			} else if (id == undefined) {
-				let url = dist_folder+'kml/'+'BASE_Limite_MSP.kml';
+				let url = dist_folder+'kml/'+'0_PIUs.kml';
 				return url;
 			} else { return '' }
 		},

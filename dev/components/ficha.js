@@ -33,8 +33,8 @@ let ficha = {
 				case '7': return 'Enc. jurídico';
 				case '8': return 'Implantação';
 				case '9': return 'Suspenso';
-				case '10': return 'Suspenso';
-				case '11': return 'Não iniciado';
+				case '10': return 'Arquivado';
+				case '11': return 'Em prospecção';
 				case 1: return 'Proposição';
 				case 2: return 'Consulta púb. inicial';
 				case 3: return 'Avaliação SMUL';
@@ -44,8 +44,8 @@ let ficha = {
 				case 7: return 'Enc. jurídico';
 				case 8: return 'Implantação';
 				case 9: return 'Suspenso';
-				case 10: return 'Suspenso';
-				case 11: return 'Não iniciado';
+				case 10: return 'Arquivado';
+				case 11: return 'Em prospecção';
 			};
 		},
 
@@ -304,8 +304,9 @@ let ficha = {
 							<template v-if="testeVazio(projeto.b_status) != false">
 								<p v-if="projeto.b_status == 'aberta'">
 									Consulta <span>aberta</span> ({{ dataExcelJS(projeto.b_data_inicio) }}—{{ dataExcelJS(projeto.b_data_final) }})<br>
-									<!-- definir condicional: template v-for hiperlinks id==clickedId etapa==2 idp==[no. link consulta] -->
-									<button class="linkConsulta" href="#" title="Participe da consulta pública">Participe da consulta pública</button>
+									<template v-for="hiperlink in hiperlinks" v-if="hiperlink.ID_Projeto == clickedId && hiperlink.ID_etapa == 2 && hiperlink.Idp == 50">
+										<a class="linkConsulta" :href="hiperlink.arquivo" title="Participe da consulta pública" target="_blank">Participe da consulta pública</a>
+									</template>
 								</p>
 								<p v-else>
 									Consulta <span>encerrada</span> ({{ dataExcelJS(projeto.b_data_inicio) }}—{{ dataExcelJS(projeto.b_data_final) }})
