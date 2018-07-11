@@ -95,7 +95,7 @@ let sumario_linha = {
 
 		let preencheGroups = function() {
 			for (var i = 0; i < app.data.length; i++) {
-				if (app.data[i].etapas_NUM != null && app.data[i].etapas_NUM != '-' && app.data[i].etapas_NUM != '') {
+				if (app.data[i].etapas_NUM != null && app.data[i].etapas_NUM != '-' && app.data[i].etapas_NUM != '' && app.data[i].etapas_NUM >= 1 && app.data[i].etapas_NUM <= 8) {
 					groups.push({
 						id: app.data[i].ID_rev,
 						content: app.data[i].id_nome,

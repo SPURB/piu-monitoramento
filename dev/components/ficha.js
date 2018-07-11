@@ -68,7 +68,7 @@ let ficha = {
 				};
 			});
 			this.hiperlinks.map(function(index) {
-				if (index.ID_Projeto == newClickedId) {
+				if (index.ID == newClickedId) {
 					this.proj == index;
 				};
 			});
@@ -117,7 +117,7 @@ let ficha = {
 		arquivosDiscussao(etapa, arquivoCat) {
 			var output = '';
 			for (var i = 0; i < hiperlinks.length; i++) {
-				if (hiperlinks[i].ID_Projeto == this.projeto.ID_rev && hiperlinks[i].ID_etapa == etapa && hiperlinks[i].Idp == arquivoCat) {
+				if (hiperlinks[i].ID == this.projeto.ID_rev && hiperlinks[i].ID_etapa == etapa && hiperlinks[i].Idp == arquivoCat) {
 					switch (arquivoCat) {
 						case 1: output = 'Consulta Instâncias'; break;
 						case 2: output = 'Consulta Caderno'; break;
@@ -134,7 +134,7 @@ let ficha = {
 		},
 
 		testeVazio(file) {
-			if (file != undefined && file != null && file != '-' && file != '') {
+			if (file != undefined && file != null && file != '-' && file != '' && file != 'NA') {
 				return true;
 			} else { return false };
 		},
@@ -213,7 +213,7 @@ let ficha = {
 					</template>
 				</div>
 				<template v-for="hiperlink in hiperlinks">
-					<a v-if="hiperlink.ID_Projeto == clickedId && hiperlink.ID_etapa == 100 && testeVazio(hiperlink.arquivo) != false" class="link_pag_completa" :href="hiperlink.arquivo" :title="'Acesse a página completa de '+hiperlink.PIU" target="_blank">Página completa do projeto</a>
+					<a v-if="hiperlink.ID == clickedId && hiperlink.ID_etapa == 100 && testeVazio(hiperlink.arquivo) != false" class="link_pag_completa" :href="hiperlink.arquivo" :title="'Acesse a página completa de '+hiperlink.PIU" target="_blank">Página completa</a>
 				</template>
 			</div>
 
@@ -269,11 +269,11 @@ let ficha = {
 			<div class="tramitacao">
 				<h4>Tramitação</h4>
 						
-				<div>
+				<div class="etapa">
 					<div v-show="testeVazio(projeto.a_data_protocolo)" class="periodoEtapaTramit">
 						{{ dataExcelJS(projeto.a_data_protocolo) }}—{{ dataExcelJS(projeto.a_data_envio_comunicacao) }}
 					</div>
-					<div @click="E01=!E01" v-bind:class="atribuiEstado(1,projeto.etapas_NUM)">
+					<div @click="E01=!E01" v-bind:class="atribuiEstado(1,projeto.etapas_NUM)" class="label">
 							01 <span>Proposição dos elementos prévios</span>
 					</div>
 					<transition name="tramitTransit" class="tramitTransit">
@@ -284,7 +284,7 @@ let ficha = {
 								</p>
 							</template>
 							<template v-for="hiperlink in hiperlinks">
-								<p v-if="hiperlink.ID_Projeto == clickedId && hiperlink.ID_etapa == 1 && testeVazio(hiperlink.arquivo) != false && testeLink(hiperlink.arquivo) != false" class="tramit_link">
+								<p v-if="hiperlink.ID == clickedId && hiperlink.ID_etapa == 1 && testeVazio(hiperlink.arquivo) != false && testeLink(hiperlink.arquivo) != false" class="tramit_link">
 									<a class="tramit_link" :href="hiperlink.arquivo" :type="ext(hiperlink.arquivo)" :title="hiperlink.nome_publico_do_arquivo" target="_blank">{{ hiperlink.nome_publico_do_arquivo }}</a>
 								</p>
 							</template>
@@ -292,11 +292,11 @@ let ficha = {
 					</transition>
 				</div>
 			
-				<div>
+				<div class="etapa">
 					<div v-show="testeVazio(projeto.b_data_inicio)" class="periodoEtapaTramit">
 						{{ dataExcelJS(projeto.b_data_inicio) }}–{{ dataExcelJS(projeto.Data_fim_2) }}
 					</div>
-					<div @click="E02=!E02" v-bind:class="atribuiEstado(2,projeto.etapas_NUM)">
+					<div @click="E02=!E02" v-bind:class="atribuiEstado(2,projeto.etapas_NUM)" class="label">
 						02 <span>Consulta pública inicial</span>
 					</div>
 					<transition name="tramitTransit" class="tramitTransit">
@@ -304,7 +304,7 @@ let ficha = {
 							<template v-if="testeVazio(projeto.b_status) != false">
 								<p v-if="projeto.b_status == 'aberta'">
 									Consulta <span>aberta</span> ({{ dataExcelJS(projeto.b_data_inicio) }}—{{ dataExcelJS(projeto.b_data_final) }})<br>
-									<template v-for="hiperlink in hiperlinks" v-if="hiperlink.ID_Projeto == clickedId && hiperlink.ID_etapa == 2 && hiperlink.Idp == 50">
+									<template v-for="hiperlink in hiperlinks" v-if="hiperlink.ID == clickedId && hiperlink.ID_etapa == 2 && hiperlink.Idp == 50">
 										<a class="linkConsulta" :href="hiperlink.arquivo" title="Participe da consulta pública" target="_blank">Participe da consulta pública</a>
 									</template>
 								</p>
@@ -318,7 +318,7 @@ let ficha = {
 							</template>
 							<div class="arquivos" :nome="arquivosDiscussao(2,1)">
 								<template v-for="hiperlink in hiperlinks">
-									<p class="tramit_link" v-if="hiperlink.ID_Projeto == clickedId && testeLink(hiperlink.arquivo) != false && 
+									<p class="tramit_link" v-if="hiperlink.ID == clickedId && testeLink(hiperlink.arquivo) != false && 
 									hiperlink.ID_etapa == 2 && hiperlink.Idp == 1">
 										<a class="tramit_link" :href="hiperlink.arquivo" :type="ext(hiperlink.arquivo)" :title="hiperlink.nome_publico_do_arquivo" target="_blank">{{ hiperlink.nome_publico_do_arquivo }}</a>
 									</p>
@@ -326,7 +326,7 @@ let ficha = {
 							</div>
 							<div class="arquivos" :nome="arquivosDiscussao(2,2)">
 								<template v-for="hiperlink in hiperlinks">
-									<p class="tramit_link" v-if="hiperlink.ID_Projeto == clickedId && testeLink(hiperlink.arquivo) != false && 
+									<p class="tramit_link" v-if="hiperlink.ID == clickedId && testeLink(hiperlink.arquivo) != false && 
 									hiperlink.ID_etapa == 2 && hiperlink.Idp == 2">
 										<a class="tramit_link" :href="hiperlink.arquivo" :type="ext(hiperlink.arquivo)" :title="hiperlink.nome_publico_do_arquivo" target="_blank">{{ hiperlink.nome_publico_do_arquivo }}</a>
 									</p>
@@ -334,7 +334,7 @@ let ficha = {
 							</div>
 							<div class="arquivos" :nome="arquivosDiscussao(2,3)">
 								<template v-for="hiperlink in hiperlinks">
-									<p class="tramit_link" v-if="hiperlink.ID_Projeto == clickedId && testeLink(hiperlink.arquivo) != false && 
+									<p class="tramit_link" v-if="hiperlink.ID == clickedId && testeLink(hiperlink.arquivo) != false && 
 									hiperlink.ID_etapa == 2 && hiperlink.Idp == 3">
 										<a class="tramit_link" :href="hiperlink.arquivo" :type="ext(hiperlink.arquivo)" :title="hiperlink.nome_publico_do_arquivo" target="_blank">{{ hiperlink.nome_publico_do_arquivo }}</a>
 									</p>
@@ -342,7 +342,7 @@ let ficha = {
 							</div>
 							<div class="arquivos" :nome="arquivosDiscussao(2,4)">
 								<template v-for="hiperlink in hiperlinks">
-									<p class="tramit_link" v-if="hiperlink.ID_Projeto == clickedId && testeLink(hiperlink.arquivo) != false && 
+									<p class="tramit_link" v-if="hiperlink.ID == clickedId && testeLink(hiperlink.arquivo) != false && 
 									hiperlink.ID_etapa == 2 && hiperlink.Idp == 4">
 										<a class="tramit_link" :href="hiperlink.arquivo" :type="ext(hiperlink.arquivo)" :title="hiperlink.nome_publico_do_arquivo" target="_blank">{{ hiperlink.nome_publico_do_arquivo }}</a>
 									</p>
@@ -350,7 +350,7 @@ let ficha = {
 							</div>
 							<div class="arquivos" :nome="arquivosDiscussao(2,5)">
 								<template v-for="hiperlink in hiperlinks">
-									<p class="tramit_link" v-if="hiperlink.ID_Projeto == clickedId && testeLink(hiperlink.arquivo) != false && 
+									<p class="tramit_link" v-if="hiperlink.ID == clickedId && testeLink(hiperlink.arquivo) != false && 
 									hiperlink.ID_etapa == 2 && hiperlink.Idp == 5">
 										<a class="tramit_link" :href="hiperlink.arquivo" :type="ext(hiperlink.arquivo)" :title="hiperlink.nome_publico_do_arquivo" target="_blank">{{ hiperlink.nome_publico_do_arquivo }}</a>
 									</p>
@@ -358,7 +358,7 @@ let ficha = {
 							</div>
 							<div class="arquivos" :nome="arquivosDiscussao(2,6)">
 								<template v-for="hiperlink in hiperlinks">
-									<p class="tramit_link" v-if="hiperlink.ID_Projeto == clickedId && testeLink(hiperlink.arquivo) != false && 
+									<p class="tramit_link" v-if="hiperlink.ID == clickedId && testeLink(hiperlink.arquivo) != false && 
 									hiperlink.ID_etapa == 2 && hiperlink.Idp == 6">
 										<a class="tramit_link" :href="hiperlink.arquivo" :type="ext(hiperlink.arquivo)" :title="hiperlink.nome_publico_do_arquivo" target="_blank">{{ hiperlink.nome_publico_do_arquivo }}</a>
 									</p>
@@ -366,7 +366,7 @@ let ficha = {
 							</div>
 							<div class="arquivos" :nome="arquivosDiscussao(2,7)">
 								<template v-for="hiperlink in hiperlinks">
-									<p class="tramit_link" v-if="hiperlink.ID_Projeto == clickedId && testeLink(hiperlink.arquivo) != false && 
+									<p class="tramit_link" v-if="hiperlink.ID == clickedId && testeLink(hiperlink.arquivo) != false && 
 									hiperlink.ID_etapa == 2 && hiperlink.Idp == 7">
 										<a class="tramit_link" :href="hiperlink.arquivo" :type="ext(hiperlink.arquivo)" :title="hiperlink.nome_publico_do_arquivo" target="_blank">{{ hiperlink.nome_publico_do_arquivo }}</a>
 									</p>
@@ -376,11 +376,11 @@ let ficha = {
 					</transition>
 				</div>
 			
-				<div>
+				<div class="etapa">
 					<div v-show="testeVazio(projeto.c_data_envio)" class="periodoEtapaTramit">
 						{{ dataExcelJS(projeto.c_data_envio) }}—{{ dataExcelJS(projeto.c_data_devolucao_spurb) }}
 					</div>
-					<div @click="E03=!E03" v-bind:class="atribuiEstado(3,projeto.etapas_NUM)">
+					<div @click="E03=!E03" v-bind:class="atribuiEstado(3,projeto.etapas_NUM)" class="label">
 						03 <span>Avaliação SMUL</span>
 					</div>
 					<transition name="tramitTransit" class="tramitTransit">
@@ -402,7 +402,7 @@ let ficha = {
 								</p>
 							</template>
 							<template v-for="hiperlink in hiperlinks">
-								<p class="tramit_link" v-if="hiperlink.ID_Projeto == clickedId && hiperlink.ID_etapa == 3 && testeLink(hiperlink.arquivo)">
+								<p class="tramit_link" v-if="hiperlink.ID == clickedId && hiperlink.ID_etapa == 3 && testeLink(hiperlink.arquivo)">
 									<a class="tramit_link" :href="hiperlink.arquivo" :type="ext(hiperlink.arquivo)" :title="hiperlink.nome_publico_do_arquivo" target="_blank">{{ hiperlink.nome_publico_do_arquivo }}</a>
 								</p>
 							</template>
@@ -410,11 +410,11 @@ let ficha = {
 					</transition>
 				</div>
 			
-				<div>
+				<div class="etapa">
 					<div v-show="testeVazio(projeto.Data_inicio_4)" class="periodoEtapaTramit">
 						{{ dataExcelJS(projeto.Data_inicio_4) }}–{{ dataExcelJS(projeto.Data_fim_4) }}
 					</div>
-					<div @click="E04=!E04" v-bind:class="atribuiEstado(4,projeto.etapas_NUM)">
+					<div @click="E04=!E04" v-bind:class="atribuiEstado(4,projeto.etapas_NUM)" class="label">
 						04 <span>Elaboração</span>
 					</div>
 					<transition name="tramitTransit" class="tramitTransit">
@@ -438,7 +438,7 @@ let ficha = {
 								</p>
 							</template>
 							<template v-for="hiperlink in hiperlinks">
-								<p class="tramit_link" v-if="hiperlink.ID_Projeto == clickedId && hiperlink.ID_etapa == 4 && testeLink(hiperlink.arquivo)">
+								<p class="tramit_link" v-if="hiperlink.ID == clickedId && hiperlink.ID_etapa == 4 && testeLink(hiperlink.arquivo)">
 									<a class="tramit_link" :href="hiperlink.arquivo" :type="ext(hiperlink.arquivo)" :title="hiperlink.nome_publico_do_arquivo" target="_blank">{{ hiperlink.nome_publico_do_arquivo }}</a>
 								</p>
 							</template>
@@ -446,11 +446,11 @@ let ficha = {
 					</transition>
 				</div>
 			
-				<div>
+				<div class="etapa">
 					<div v-show="testeVazio(projeto.Data_inicio_5)" class="periodoEtapaTramit">
 						{{ dataExcelJS(projeto.Data_inicio_5) }}–{{ dataExcelJS(projeto.Data_fim_5) }}
 					</div>
-					<div @click="E05=!E05" v-bind:class="atribuiEstado(5,projeto.etapas_NUM)">
+					<div @click="E05=!E05" v-bind:class="atribuiEstado(5,projeto.etapas_NUM)" class="label">
 						05 <span>Discussão pública</span>
 					</div>
 					<transition name="tramitTransit" class="tramitTransit">
@@ -483,7 +483,7 @@ let ficha = {
 							</template>
 							<div class="arquivos" :nome="arquivosDiscussao(5,1)">
 								<template v-for="hiperlink in hiperlinks">
-									<p class="tramit_link" v-if="hiperlink.ID_Projeto == clickedId && testeLink(hiperlink.arquivo) != false && 
+									<p class="tramit_link" v-if="hiperlink.ID == clickedId && testeLink(hiperlink.arquivo) != false && 
 									hiperlink.ID_etapa == 5 && hiperlink.Idp == 1">
 										<a class="tramit_link" :href="hiperlink.arquivo" :type="ext(hiperlink.arquivo)" :title="hiperlink.nome_publico_do_arquivo" target="_blank">{{ hiperlink.nome_publico_do_arquivo }}</a>
 									</p>
@@ -491,7 +491,7 @@ let ficha = {
 							</div>
 							<div class="arquivos" :nome="arquivosDiscussao(5,2)">
 								<template v-for="hiperlink in hiperlinks">
-									<p class="tramit_link" v-if="hiperlink.ID_Projeto == clickedId && testeLink(hiperlink.arquivo) != false && 
+									<p class="tramit_link" v-if="hiperlink.ID == clickedId && testeLink(hiperlink.arquivo) != false && 
 									hiperlink.ID_etapa == 5 && hiperlink.Idp == 2">
 										<a class="tramit_link" :href="hiperlink.arquivo" :type="ext(hiperlink.arquivo)" :title="hiperlink.nome_publico_do_arquivo" target="_blank">{{ hiperlink.nome_publico_do_arquivo }}</a>
 									</p>
@@ -499,7 +499,7 @@ let ficha = {
 							</div>
 							<div class="arquivos" :nome="arquivosDiscussao(5,3)">
 								<template v-for="hiperlink in hiperlinks">
-									<p class="tramit_link" v-if="hiperlink.ID_Projeto == clickedId && testeLink(hiperlink.arquivo) != false && 
+									<p class="tramit_link" v-if="hiperlink.ID == clickedId && testeLink(hiperlink.arquivo) != false && 
 									hiperlink.ID_etapa == 5 && hiperlink.Idp == 3">
 										<a class="tramit_link" :href="hiperlink.arquivo" :type="ext(hiperlink.arquivo)" :title="hiperlink.nome_publico_do_arquivo" target="_blank">{{ hiperlink.nome_publico_do_arquivo }}</a>
 									</p>
@@ -507,7 +507,7 @@ let ficha = {
 							</div>
 							<div class="arquivos" :nome="arquivosDiscussao(5,4)">
 								<template v-for="hiperlink in hiperlinks">
-									<p class="tramit_link" v-if="hiperlink.ID_Projeto == clickedId && testeLink(hiperlink.arquivo) != false && 
+									<p class="tramit_link" v-if="hiperlink.ID == clickedId && testeLink(hiperlink.arquivo) != false && 
 									hiperlink.ID_etapa == 5 && hiperlink.Idp == 4">
 										<a class="tramit_link" :href="hiperlink.arquivo" :type="ext(hiperlink.arquivo)" :title="hiperlink.nome_publico_do_arquivo" target="_blank">{{ hiperlink.nome_publico_do_arquivo }}</a>
 									</p>
@@ -515,7 +515,7 @@ let ficha = {
 							</div>
 							<div class="arquivos" :nome="arquivosDiscussao(5,5)">
 								<template v-for="hiperlink in hiperlinks">
-									<p class="tramit_link" v-if="hiperlink.ID_Projeto == clickedId && testeLink(hiperlink.arquivo) != false && 
+									<p class="tramit_link" v-if="hiperlink.ID == clickedId && testeLink(hiperlink.arquivo) != false && 
 									hiperlink.ID_etapa == 5 && hiperlink.Idp == 5">
 										<a class="tramit_link" :href="hiperlink.arquivo" :type="ext(hiperlink.arquivo)" :title="hiperlink.nome_publico_do_arquivo" target="_blank">{{ hiperlink.nome_publico_do_arquivo }}</a>
 									</p>
@@ -523,7 +523,7 @@ let ficha = {
 							</div>
 							<div class="arquivos" :nome="arquivosDiscussao(5,6)">
 								<template v-for="hiperlink in hiperlinks">
-									<p class="tramit_link" v-if="hiperlink.ID_Projeto == clickedId && testeLink(hiperlink.arquivo) != false && 
+									<p class="tramit_link" v-if="hiperlink.ID == clickedId && testeLink(hiperlink.arquivo) != false && 
 									hiperlink.ID_etapa == 5 && hiperlink.Idp == 6">
 										<a class="tramit_link" :href="hiperlink.arquivo" :type="ext(hiperlink.arquivo)" :title="hiperlink.nome_publico_do_arquivo" target="_blank">{{ hiperlink.nome_publico_do_arquivo }}</a>
 									</p>
@@ -531,7 +531,7 @@ let ficha = {
 							</div>
 							<div class="arquivos" :nome="arquivosDiscussao(5,7)">
 								<template v-for="hiperlink in hiperlinks">
-									<p class="tramit_link" v-if="hiperlink.ID_Projeto == clickedId && testeLink(hiperlink.arquivo) != false && 
+									<p class="tramit_link" v-if="hiperlink.ID == clickedId && testeLink(hiperlink.arquivo) != false && 
 									hiperlink.ID_etapa == 5 && hiperlink.Idp == 7">
 										<a class="tramit_link" :href="hiperlink.arquivo" :type="ext(hiperlink.arquivo)" :title="hiperlink.nome_publico_do_arquivo" target="_blank">{{ hiperlink.nome_publico_do_arquivo }}</a>
 									</p>
@@ -541,11 +541,11 @@ let ficha = {
 					</transition>
 				</div>
 			
-				<div>
+				<div class="etapa">
 					<div v-show="testeVazio(projeto.Data_inicio_6)" class="periodoEtapaTramit">
 						{{ dataExcelJS(projeto.Data_inicio_6) }}–{{ dataExcelJS(projeto.Data_fim_6) }}
 					</div>
-					<div @click="E06=!E06" v-bind:class="atribuiEstado(6,projeto.etapas_NUM)">
+					<div @click="E06=!E06" v-bind:class="atribuiEstado(6,projeto.etapas_NUM)" class="label">
 						06 <span>Consolidação</span>
 					</div>
 					<transition name="tramitTransit" class="tramitTransit">
@@ -569,7 +569,7 @@ let ficha = {
 								</p>
 							</template>
 							<template v-for="hiperlink in hiperlinks">
-								<p class="tramit_link" v-if="hiperlink.ID_Projeto == clickedId && hiperlink.ID_etapa == 6 && testeLink(hiperlink.arquivo)">
+								<p class="tramit_link" v-if="hiperlink.ID == clickedId && hiperlink.ID_etapa == 6 && testeLink(hiperlink.arquivo)">
 									<a class="tramit_link" :href="hiperlink.arquivo" :type="ext(hiperlink.arquivo)" :title="hiperlink.nome_publico_do_arquivo" target="_blank">{{ hiperlink.nome_publico_do_arquivo }}</a>
 								</p>
 							</template>
@@ -577,11 +577,11 @@ let ficha = {
 					</transition>
 				</div>
 			
-				<div>
+				<div class="etapa">
 					<div v-show="testeVazio(projeto.g_data_envio_aprovacao)" class="periodoEtapaTramit">
 						{{ dataExcelJS(projeto.g_data_envio_aprovacao) }}–{{ dataExcelJS(projeto.Data_fim_7) }}
 					</div>
-					<div @click="E07=!E07" v-bind:class="atribuiEstado(7,projeto.etapas_NUM)">
+					<div @click="E07=!E07" v-bind:class="atribuiEstado(7,projeto.etapas_NUM)" class="label">
 						07 <span>Encaminhamento jurídico</span>
 					</div>
 					<transition name="tramitTransit" class="tramitTransit">
@@ -593,7 +593,7 @@ let ficha = {
 								</p>
 							</template>
 							<template v-for="hiperlink in hiperlinks">
-								<p class="tramit_link" v-if="hiperlink.ID_Projeto == clickedId && hiperlink.ID_etapa == 7 && testeLink(hiperlink.arquivo)">
+								<p class="tramit_link" v-if="hiperlink.ID == clickedId && hiperlink.ID_etapa == 7 && testeLink(hiperlink.arquivo)">
 									<a class="tramit_link" :href="hiperlink.arquivo" :type="ext(hiperlink.arquivo)" :title="hiperlink.nome_publico_do_arquivo" target="_blank">{{ hiperlink.nome_publico_do_arquivo }}</a>
 								</p>
 							</template>
@@ -601,11 +601,11 @@ let ficha = {
 					</transition>
 				</div>
 			
-				<div>
+				<div class="etapa">
 					<div v-show="testeVazio(projeto.h_data_inicio)" class="periodoEtapaTramit">
 						{{ dataExcelJS(projeto.h_data_inicio) }}–{{ dataExcelJS(projeto.Data_fim_8) }}
 					</div>
-					<div @click="E08=!E08" v-bind:class="atribuiEstado(8,projeto.etapas_NUM)">
+					<div @click="E08=!E08" v-bind:class="atribuiEstado(8,projeto.etapas_NUM)" class="label">
 						08 <span>Implantação</span>
 					</div>
 					<transition name="tramitTransit" class="tramitTransit">
@@ -634,7 +634,7 @@ let ficha = {
 								</p>
 							</template>
 							<template v-for="hiperlink in hiperlinks">
-								<p class="tramit_link" v-if="hiperlink.ID_Projeto == clickedId && hiperlink.ID_etapa == 8 && testeLink(hiperlink.arquivo)">
+								<p class="tramit_link" v-if="hiperlink.ID == clickedId && hiperlink.ID_etapa == 8 && testeLink(hiperlink.arquivo)">
 									<a class="tramit_link" :href="hiperlink.arquivo" :type="ext(hiperlink.arquivo)" :title="hiperlink.nome_publico_do_arquivo" target="_blank">{{ hiperlink.nome_publico_do_arquivo }}</a>
 								</p>
 							</template>

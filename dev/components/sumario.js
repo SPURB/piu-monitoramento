@@ -177,13 +177,13 @@ let sumario = {
 				<div><div class="marcadorEtapa">08</div> <span>Implantação</span></div>
 				<div class="publicos">
 					<template v-for="projeto in data">
-						<a href="#" @click="setProjectId(projeto.ID_rev)" v-if="projeto.etapas_NUM == 8 && projeto.id_iniciativa_da_proposta=='Pública'" v-bind:class="fConsultaAberta(projeto)">
+						<a href="#" @click="setProjectId(projeto.ID_rev)" v-if="projeto.etapas_NUM === '8' && projeto.id_iniciativa_da_proposta=='Pública'" v-bind:class="fConsultaAberta(projeto)">
 							{{ projeto.id_nome }}
 						</a>
 					</template>
 				</div><div class="privados">
 					<template v-for="projeto in data">
-						<a href="#" @click="setProjectId(projeto.ID_rev)" v-if="projeto.etapas_NUM == 8 && projeto.id_iniciativa_da_proposta=='Privado'" v-bind:class="fConsultaAberta(projeto)">
+						<a href="#" @click="setProjectId(projeto.ID_rev)" v-if="projeto.etapas_NUM === '8' && projeto.id_iniciativa_da_proposta=='Privado'" v-bind:class="fConsultaAberta(projeto)">
 							{{ projeto.id_nome }}
 						</a>
 					</template>
