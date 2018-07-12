@@ -12,6 +12,10 @@ let view = new ol.View({
 let featureOverlay;
 let highlight;
 
+window.onload = function() {	
+	document.getElementsByClassName('ol-unselectable')[0].getContext('2d').globalCompositeOperation = 'multiply';
+};
+
 let mapa = {
 	name:'mapa',
 	data (){
@@ -73,8 +77,15 @@ let mapa = {
 		kmlLayers(){
 			let app = this
 			let output = [
-				new ol.layer.Tile({ 
-					source: new ol.source.OSM()
+				// new ol.layer.Tile({ 
+				// 	source: new ol.source.OSM()
+				// })
+				new ol.layer.Tile({
+					source: new ol.source.BingMaps({
+						imagerySet: 'CanvasGray',
+						culture: 'pt-BR',
+						key: 'efIeX8pQ5PTC2IcEjuVT~s7zLBU5z6I20qWhPhkAy3w~AlgB9eABTaOsOC8LVDJEQhyb4ik0B0mWBpIfDgrVwNYVqgfnxOsXFN3_8XKZlP1d'
+					})
 				})
 			]
 			this.kmls.map(function(object) {
@@ -102,7 +113,7 @@ let mapa = {
 		let app = this;
 		this.myMap.on('click', function(evt){
 			app.getFeatureLayerInfo(evt.pixel, evt);
-		});		
+		});
 	},
 	watch:{
 		clickedId(newprop, oldprop){
@@ -124,7 +135,7 @@ let mapa = {
 				source: new ol.source.Vector(),
 				map: this.myMap,
 				style: function(feature, resolution) {
-					let text = resolution < 5000 ? feature.get('NOME') : feature.get('NOME');          
+					let text = resolution < 5000 ? feature.get('NOME') : feature.get('NOME');
 					if (!highlightStyleCache[text]) {
 					highlightStyleCache[text] = new ol.style.Style({
 					  stroke: new ol.style.Stroke({
@@ -247,34 +258,34 @@ let mapa = {
 
 			let etapaNumber = parseInt(etapa, 10)
 			if (id == 'BASE'){
-				outputColor.stroke = 'rgba(50,50,50, 0)'
-				outputColor.fill = 'rgba(255,255,255, 0.75)'
+				outputColor.stroke = 'black'
+				outputColor.fill = 'rgba(255, 255, 255, 0)'
 			}
 			else if(etapaNumber <= 3){ 
-				outputColor.stroke = 'rgba(255, 204, 179, 1)'
-				outputColor.fill = 'rgba(255, 204, 179, .60)'
+				outputColor.stroke = 'rgba(50, 50, 50, 0)'
+				outputColor.fill = 'rgba(255, 204, 179, 1)'
 			}
 			else if(3 < etapaNumber && etapaNumber <= 7){ 
-				outputColor.stroke = 'rgba(255, 85, 0, 1)'
-				outputColor.fill = 'rgba(255, 85, 0, .60)'
+				outputColor.stroke = 'rgba(50, 50, 50, 0)'
+				outputColor.fill = 'rgba(255, 85, 0, 1)'
 			}
 			else if(7 < etapaNumber && etapaNumber <= 8){ 
-				outputColor.stroke = 'rgba(128, 43, 0, 1)'
-				outputColor.fill = 'rgba(128, 43, 0, .60)'
+				outputColor.stroke = 'rgba(50, 50, 50, 0)'
+				outputColor.fill = 'rgba(128, 43, 0, 1)'
 			}
 			else if(8 < etapaNumber){
-				outputColor.stroke = 'rgba(189, 189, 189, 1)'
-				outputColor.fill = 'rgba(189, 189, 189, .20)'
+				outputColor.stroke = 'rgba(50, 50, 50, 0)'
+				outputColor.fill = 'rgba(220, 220, 220, 1)'
 			}
 			else{
-				outputColor.stroke = 'rgba()'
-				outputColor.fill = 'rgba(200,200,200, 0.5)'
+				outputColor.stroke = 'rgba(50, 50, 50, 0)'
+				outputColor.fill = 'rgba(200,200,200, 1)'
 			}
 
 			let style = new ol.style.Style({
 				stroke: new ol.style.Stroke({
 					color: outputColor.stroke,
-					width: 1
+					width: .75,
 				}),
 				fill: new ol.style.Fill({
 					color: outputColor.fill
@@ -346,6 +357,13 @@ let mapa = {
 				<a :href="dlShp(clickedId)" id="dlShp">
 					<i class="material-icons">get_app</i> Shapefile
 				</a>
+			</div>
+			<div class="legenda" v-if="clickedId == undefined">
+				<span>Legenda</span>
+				<div class="proposicao">Em proposição</div>
+				<div class="andamento">Em andamento</div>
+				<div class="implantacao">Implantação</div>
+				<div class="suspenso">Suspenso/arquivado</div>
 			</div>
 		</div>
 		<div id="infoModal" class="infoModal" v-if="featureInfo.nome" v-bind:style="infoBoxStyle" @click="setProjectId(featureInfo.ID)">

@@ -139,15 +139,11 @@
 				border: 1px solid $vermelho-gestao;
 				transition: all 200ms;
 				max-height: 40px;
+				i { font-size: 16px; margin-left: 4px; };
 				&:hover {
 					background-color: transparent;
 					color: $vermelho-gestao;
 				};
-				&:after {
-					font-family: 'Material Icons';
-					content: 'launch';
-					margin-left: 4px;
-				}
 			};
 		};
 
@@ -165,7 +161,10 @@
 			-webkit-hyphens: auto;
 			-moz-hyphens: auto;
 			hyphens: auto;
-			p { font-size: 1em; line-height: 1.75em; };
+			p {
+				font-size: 1em;
+				line-height: 2em;
+			}
 			div {
 				border-top: 1px solid #BCBCBC;
 				padding: 1em 0;
@@ -247,6 +246,9 @@
 				};
 				div:nth-of-type(3) {
 					padding: 0;
+					div.arquivos {
+						margin: 0 0 20px 0;
+					}
 					div.arquivos::before {
 						content: attr(nome);
 						display: block;
@@ -261,19 +263,22 @@
 							font-weight: 700;
 						};
 						.linkConsulta {
-							display: block;
+							display: flex;
 							width: 100%;
-							background: $verde;
-							color: #FFF;
-							padding: 8px 4px;
+							background: #008015;
+							color: #fff;
+							padding: 4px 8px;
 							font-family: inherit;
-							text-align: center;
 							margin: 12px 0;
 							border-radius: 2px;
 							border-width: 0;
 							text-transform: uppercase;
 							text-decoration: none;
-							transition: color .2s;					
+							transition: color .2s;
+							box-sizing: border-box;
+							justify-content: center;
+							align-items: center;
+							i { font-size: 16px; margin-left: 4px; };
 						};
 						.linkConsulta:hover {
 							color: rgba(255,255,255,.25);
@@ -352,7 +357,7 @@
 }
 
 @media (min-width: 721px) and (max-width: 959px) {
-padding: 0 16px !important;
+padding: 0 6% !important;
 }
 
 }

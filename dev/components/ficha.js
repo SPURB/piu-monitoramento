@@ -155,8 +155,7 @@ let ficha = {
 
 		filtroMenu(proj) {
 			return (proj.etapas_NUM > 0 && proj.etapas_NUM <= 10);
-		}
-
+		},
 	},
 
 	watch:{
@@ -213,7 +212,9 @@ let ficha = {
 					</template>
 				</div>
 				<template v-for="hiperlink in hiperlinks">
-					<a v-if="hiperlink.ID == clickedId && hiperlink.ID_etapa == 100 && testeVazio(hiperlink.arquivo) != false" class="link_pag_completa" :href="hiperlink.arquivo" :title="'Acesse a página completa de '+hiperlink.PIU" target="_blank">Página completa</a>
+					<a v-if="hiperlink.ID == clickedId && hiperlink.ID_etapa == 100 && testeVazio(hiperlink.arquivo) != false" class="link_pag_completa" :href="hiperlink.arquivo" :title="'Acesse a página completa de '+hiperlink.PIU" target="_blank">
+						Página completa <i class="material-icons">launch</i>
+					</a>
 				</template>
 			</div>
 
@@ -305,7 +306,7 @@ let ficha = {
 								<p v-if="projeto.b_status == 'aberta'">
 									Consulta <span>aberta</span> ({{ dataExcelJS(projeto.b_data_inicio) }}—{{ dataExcelJS(projeto.b_data_final) }})<br>
 									<template v-for="hiperlink in hiperlinks" v-if="hiperlink.ID == clickedId && hiperlink.ID_etapa == 2 && hiperlink.Idp == 50">
-										<a class="linkConsulta" :href="hiperlink.arquivo" title="Participe da consulta pública" target="_blank">Participe da consulta pública</a>
+										<a class="linkConsulta" :href="hiperlink.arquivo" title="Participe da consulta pública" target="_blank">Participe da consulta pública <i class="material-icons">launch</i></a>
 									</template>
 								</p>
 								<p v-else>

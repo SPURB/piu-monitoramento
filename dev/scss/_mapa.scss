@@ -33,6 +33,32 @@
 				};
 			}
 		}
+		div.legenda {
+			position: absolute;
+			z-index: 1;
+			background: rgba(255,255,255,.75);
+			padding: 8px 12px;
+			border-radius: 2px 0 0 2px;
+			font-size: .7rem;
+			line-height: 2;
+			text-transform: uppercase;
+			right: 0;
+			bottom: 33px;
+			& > span { font-weight: 700; };
+			div { display: flex; align-items: center; };
+			div::before {
+				content: '';
+				display: block;
+				width: 12px;
+				height: 12px;
+				margin-right: 8px;
+				border-radius: 2px;
+			};
+			.proposicao::before { background: $proposicao };
+			.andamento::before { background: $andamento };
+			.implantacao::before { background: $implantacao };
+			.suspenso::before { background: $suspenso };
+		}
 		canvas {
 			border-radius: 2px;
 		};

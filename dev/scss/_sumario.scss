@@ -141,7 +141,7 @@
 		div span:last-child::after { content: ''; };
 	}
 
-@media (max-width: 560px) {
+@media (max-width: 720px) {
 	.bloco {
 		border-radius: 2px !important;
 		.thead { display: none; };
