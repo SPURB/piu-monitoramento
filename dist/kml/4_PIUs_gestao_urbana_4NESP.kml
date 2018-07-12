@@ -1,71 +1,73 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <kml xmlns="http://www.opengis.net/kml/2.2" xmlns:gx="http://www.google.com/kml/ext/2.2" xmlns:kml="http://www.opengis.net/kml/2.2" xmlns:atom="http://www.w3.org/2005/Atom">
 <Document>
-	<name>PIUs_v9_(P)-4NESP.shp</name>
-	<Schema name="PIUs_v9_(P)-4NESP" id="S_PIUs_v9__P__4NESP_SIDS">
+	<name>PIUs_gestao_urbana_4NESP.shp</name>
+	<Schema name="PIUs_gestao_urbana_4NESP" id="S_PIUs_gestao_urbana_4NESP_SISSSSSSSSSD">
 		<SimpleField type="string" name="Layer"><displayName>&lt;b&gt;Layer&lt;/b&gt;</displayName>
 </SimpleField>
 		<SimpleField type="int" name="ID"><displayName>&lt;b&gt;ID&lt;/b&gt;</displayName>
 </SimpleField>
-		<SimpleField type="double" name="Area__mÂ²_"><displayName>&lt;b&gt;Area (mÂ²)&lt;/b&gt;</displayName>
-</SimpleField>
 		<SimpleField type="string" name="Data"><displayName>&lt;b&gt;Data&lt;/b&gt;</displayName>
 </SimpleField>
+		<SimpleField type="string" name="Origem"><displayName>&lt;b&gt;Origem&lt;/b&gt;</displayName>
+</SimpleField>
+		<SimpleField type="string" name="Iniciativa"><displayName>&lt;b&gt;Iniciativa&lt;/b&gt;</displayName>
+</SimpleField>
+		<SimpleField type="string" name="Proponente"><displayName>&lt;b&gt;Proponente&lt;/b&gt;</displayName>
+</SimpleField>
+		<SimpleField type="string" name="Natureza_J"><displayName>&lt;b&gt;Natureza J&lt;/b&gt;</displayName>
+</SimpleField>
+		<SimpleField type="string" name="Ano_de_ini"><displayName>&lt;b&gt;Ano de ini&lt;/b&gt;</displayName>
+</SimpleField>
+		<SimpleField type="string" name="Rede_de_Es"><displayName>&lt;b&gt;Rede de Es&lt;/b&gt;</displayName>
+</SimpleField>
+		<SimpleField type="string" name="Intrumento"><displayName>&lt;b&gt;Intrumento&lt;/b&gt;</displayName>
+</SimpleField>
+		<SimpleField type="string" name="Etapa"><displayName>&lt;b&gt;Etapa&lt;/b&gt;</displayName>
+</SimpleField>
+		<SimpleField type="double" name="Area__ha_"><displayName>&lt;b&gt;Area (ha)&lt;/b&gt;</displayName>
+</SimpleField>
 	</Schema>
-	<StyleMap id="falseColor">
-		<Pair>
-			<key>normal</key>
-			<styleUrl>#falseColor0</styleUrl>
-		</Pair>
-		<Pair>
-			<key>highlight</key>
-			<styleUrl>#falseColor1</styleUrl>
-		</Pair>
-	</StyleMap>
-	<Style id="falseColor0">
+	<Style id="falseColor">
 		<BalloonStyle>
 			<text><![CDATA[<table border="0">
-  <tr><td><b>Layer</b></td><td>$[PIUs_v9_(P)-4NESP/Layer]</td></tr>
-  <tr><td><b>ID</b></td><td>$[PIUs_v9_(P)-4NESP/ID]</td></tr>
-  <tr><td><b>Area (mÂ²)</b></td><td>$[PIUs_v9_(P)-4NESP/Area__mÂ²_]</td></tr>
-  <tr><td><b>Data</b></td><td>$[PIUs_v9_(P)-4NESP/Data]</td></tr>
+  <tr><td><b>Layer</b></td><td>$[PIUs_gestao_urbana_4NESP/Layer]</td></tr>
+  <tr><td><b>ID</b></td><td>$[PIUs_gestao_urbana_4NESP/ID]</td></tr>
+  <tr><td><b>Data</b></td><td>$[PIUs_gestao_urbana_4NESP/Data]</td></tr>
+  <tr><td><b>Origem</b></td><td>$[PIUs_gestao_urbana_4NESP/Origem]</td></tr>
+  <tr><td><b>Iniciativa</b></td><td>$[PIUs_gestao_urbana_4NESP/Iniciativa]</td></tr>
+  <tr><td><b>Proponente</b></td><td>$[PIUs_gestao_urbana_4NESP/Proponente]</td></tr>
+  <tr><td><b>Natureza J</b></td><td>$[PIUs_gestao_urbana_4NESP/Natureza_J]</td></tr>
+  <tr><td><b>Ano de ini</b></td><td>$[PIUs_gestao_urbana_4NESP/Ano_de_ini]</td></tr>
+  <tr><td><b>Rede de Es</b></td><td>$[PIUs_gestao_urbana_4NESP/Rede_de_Es]</td></tr>
+  <tr><td><b>Intrumento</b></td><td>$[PIUs_gestao_urbana_4NESP/Intrumento]</td></tr>
+  <tr><td><b>Etapa</b></td><td>$[PIUs_gestao_urbana_4NESP/Etapa]</td></tr>
+  <tr><td><b>Area (ha)</b></td><td>$[PIUs_gestao_urbana_4NESP/Area__ha_]</td></tr>
 </table>
 ]]></text>
 		</BalloonStyle>
-		<LineStyle>
-			<width>2</width>
-		</LineStyle>
 		<PolyStyle>
-			<color>7fffd9ce</color>
-		</PolyStyle>
-	</Style>
-	<Style id="falseColor1">
-		<BalloonStyle>
-			<text><![CDATA[<table border="0">
-  <tr><td><b>Layer</b></td><td>$[PIUs_v9_(P)-4NESP/Layer]</td></tr>
-  <tr><td><b>ID</b></td><td>$[PIUs_v9_(P)-4NESP/ID]</td></tr>
-  <tr><td><b>Area (mÂ²)</b></td><td>$[PIUs_v9_(P)-4NESP/Area__mÂ²_]</td></tr>
-  <tr><td><b>Data</b></td><td>$[PIUs_v9_(P)-4NESP/Data]</td></tr>
-</table>
-]]></text>
-		</BalloonStyle>
-		<LineStyle>
-			<width>2</width>
-		</LineStyle>
-		<PolyStyle>
-			<color>7fffd9ce</color>
+			<colorMode>random</colorMode>
 		</PolyStyle>
 	</Style>
 	<Folder id="layer 0">
-		<name>PIUs_v9_(P)-4NESP</name>
+		<name>PIUs_gestao_urbana_4NESP</name>
 		<Placemark>
 			<styleUrl>#falseColor</styleUrl>
 			<ExtendedData>
-				<SchemaData schemaUrl="#S_PIUs_v9__P__4NESP_SIDS">
+				<SchemaData schemaUrl="#S_PIUs_gestao_urbana_4NESP_SISSSSSSSSSD">
 					<SimpleData name="Layer">PIU NESP</SimpleData>
 					<SimpleData name="ID">4</SimpleData>
-					<SimpleData name="Area__mÂ²_">600923</SimpleData>
-					<SimpleData name="Data">29/06/2018</SimpleData>
+					<SimpleData name="Data">11/07/2018</SimpleData>
+					<SimpleData name="Origem">ZOE - Novo entreposto SP</SimpleData>
+					<SimpleData name="Iniciativa">Privado</SimpleData>
+					<SimpleData name="Proponente">VS Bandeirante Empreendimentos Imobiliarios LTDA e VS Bangueira Empreendimentos Imobiliarios LTDA; PADESP/NESP; Carlos Leite I�Stuchi�&amp;�Leite�Projetos (Coordena��o)</SimpleData>
+					<SimpleData name="Natureza_J">Decreto</SimpleData>
+					<SimpleData name="Ano_de_ini">2016</SimpleData>
+					<SimpleData name="Rede_de_Es">MEM - Arco Pinheiros</SimpleData>
+					<SimpleData name="Intrumento">nao necessario</SimpleData>
+					<SimpleData name="Etapa">Implantação</SimpleData>
+					<SimpleData name="Area__ha_">371.37</SimpleData>
 				</SchemaData>
 			</ExtendedData>
 			<MultiGeometry>
@@ -73,7 +75,7 @@
 					<outerBoundaryIs>
 						<LinearRing>
 							<coordinates>
-								-46.80313407513557,-23.41710513321914,0 -46.80357147335528,-23.41814535542124,0 -46.80364208381428,-23.41841639026633,0 -46.80341150148237,-23.41873420419494,0 -46.80330845133329,-23.41911392564069,0 -46.80318835114186,-23.41968347574261,0 -46.80330939334449,-23.42006300707891,0 -46.80374068771798,-23.42041064258461,0 -46.8047064552909,-23.42085273326265,0 -46.80987897954717,-23.4178441776711,0 -46.81089713466526,-23.42119520833064,0 -46.81125977151154,-23.42297427199109,0 -46.81155325115764,-23.42330506014572,0 -46.81204925694724,-23.42324254908659,0 -46.81200370151827,-23.42280808921533,0 -46.81250016587862,-23.42318007656977,0 -46.8126811923822,-23.42377994037586,0 -46.81265823624435,-23.42508822500611,0 -46.81365086814143,-23.42636639092705,0 -46.81464296026442,-23.42710450596382,0 -46.81674722486457,-23.42494233980677,0 -46.81808329820409,-23.42571895640132,0 -46.81890548151992,-23.42577021675012,0 -46.81921772699742,-23.42613409999103,0 -46.81921818861628,-23.4265502992445,0 -46.81978590395286,-23.42720008167908,0 -46.81873711229796,-23.42733112157358,0 -46.81831267398766,-23.42805986526185,0 -46.81859772902192,-23.42946428438769,0 -46.81763431475127,-23.42990739042367,0 -46.8170958339681,-23.43006396215929,0 -46.81650102023479,-23.43055875242752,0 -46.81587861034634,-23.43175592621211,0 -46.81523839920759,-23.43335725321045,0 -46.81465090550893,-23.43438106027278,0 -46.81341209147821,-23.43475165993885,0 -46.81251469055324,-23.43569046276364,0 -46.81183235398803,-23.43498042339036,0 -46.80997138589888,-23.43290704937712,0 -46.80922668525469,-23.43174231856818,0 -46.80845220612236,-23.43171456180511,0 -46.80444631986276,-23.42902370215509,0 -46.80327642640387,-23.42991910037977,0 -46.80217625335519,-23.42992002013982,0 -46.80081711119991,-23.42983207867056,0 -46.80023399879033,-23.42914969451343,0 -46.79955392142266,-23.42858614376545,0 -46.79932675467753,-23.42790346204679,0 -46.79890514728049,-23.42692403507251,0 -46.79872530813558,-23.42632149786259,0 -46.79832100087899,-23.4261364213301,0 -46.79748820620591,-23.42593325116527,0 -46.79785232534186,-23.4244716955254,0 -46.79868502220345,-23.42164430155025,0 -46.79889300729528,-23.4207577735279,0 -46.79789504488491,-23.41982873003884,0 -46.79782999804963,-23.41950216444457,0 -46.79905658157149,-23.41919464334946,0 -46.80015327131213,-23.41850958051105,0 -46.80155883424589,-23.41723042637943,0 -46.80299291783746,-23.41637723396705,0 -46.80338667571591,-23.41623490566852,0 -46.80313407513557,-23.41710513321914,0 
+								-46.80299291783746,-23.41637723396705,0 -46.80309831709405,-23.41633913632217,0 -46.80338667571591,-23.41623490566852,0 -46.80338667571591,-23.41623490566852,0 -46.80299291783746,-23.41637723396705,0 
 							</coordinates>
 						</LinearRing>
 					</outerBoundaryIs>

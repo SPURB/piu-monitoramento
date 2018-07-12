@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kml xmlns="http://www.opengis.net/kml/2.2" xmlns:gx="http://www.google.com/kml/ext/2.2" xmlns:kml="http://www.opengis.net/kml/2.2" xmlns:atom="http://www.w3.org/2005/Atom">
+<Document>
+	<name>PIUs_gestao_urbana_9VO.shp</name>
+	<Schema name="PIUs_gestao_urbana_9VO" id="S_PIUs_gestao_urbana_9VO_SISSSSSSSSSD">
+		<SimpleField type="string" name="Layer"><displayName>&lt;b&gt;Layer&lt;/b&gt;</displayName>
+</SimpleField>
+		<SimpleField type="int" name="ID"><displayName>&lt;b&gt;ID&lt;/b&gt;</displayName>
+</SimpleField>
+		<SimpleField type="string" name="Data"><displayName>&lt;b&gt;Data&lt;/b&gt;</displayName>
+</SimpleField>
+		<SimpleField type="string" name="Origem"><displayName>&lt;b&gt;Origem&lt;/b&gt;</displayName>
+</SimpleField>
+		<SimpleField type="string" name="Iniciativa"><displayName>&lt;b&gt;Iniciativa&lt;/b&gt;</displayName>
+</SimpleField>
+		<SimpleField type="string" name="Proponente"><displayName>&lt;b&gt;Proponente&lt;/b&gt;</displayName>
+</SimpleField>
+		<SimpleField type="string" name="Natureza_J"><displayName>&lt;b&gt;Natureza J&lt;/b&gt;</displayName>
+</SimpleField>
+		<SimpleField type="string" name="Ano_de_ini"><displayName>&lt;b&gt;Ano de ini&lt;/b&gt;</displayName>
+</SimpleField>
+		<SimpleField type="string" name="Rede_de_Es"><displayName>&lt;b&gt;Rede de Es&lt;/b&gt;</displayName>
+</SimpleField>
+		<SimpleField type="string" name="Intrumento"><displayName>&lt;b&gt;Intrumento&lt;/b&gt;</displayName>
+</SimpleField>
+		<SimpleField type="string" name="Etapa"><displayName>&lt;b&gt;Etapa&lt;/b&gt;</displayName>
+</SimpleField>
+		<SimpleField type="double" name="Area__ha_"><displayName>&lt;b&gt;Area (ha)&lt;/b&gt;</displayName>
+</SimpleField>
+	</Schema>
+	<Style id="falseColor">
+		<BalloonStyle>
+			<text><![CDATA[<table border="0">
+  <tr><td><b>Layer</b></td><td>$[PIUs_gestao_urbana_9VO/Layer]</td></tr>
+  <tr><td><b>ID</b></td><td>$[PIUs_gestao_urbana_9VO/ID]</td></tr>
+  <tr><td><b>Data</b></td><td>$[PIUs_gestao_urbana_9VO/Data]</td></tr>
+  <tr><td><b>Origem</b></td><td>$[PIUs_gestao_urbana_9VO/Origem]</td></tr>
+  <tr><td><b>Iniciativa</b></td><td>$[PIUs_gestao_urbana_9VO/Iniciativa]</td></tr>
+  <tr><td><b>Proponente</b></td><td>$[PIUs_gestao_urbana_9VO/Proponente]</td></tr>
+  <tr><td><b>Natureza J</b></td><td>$[PIUs_gestao_urbana_9VO/Natureza_J]</td></tr>
+  <tr><td><b>Ano de ini</b></td><td>$[PIUs_gestao_urbana_9VO/Ano_de_ini]</td></tr>
+  <tr><td><b>Rede de Es</b></td><td>$[PIUs_gestao_urbana_9VO/Rede_de_Es]</td></tr>
+  <tr><td><b>Intrumento</b></td><td>$[PIUs_gestao_urbana_9VO/Intrumento]</td></tr>
+  <tr><td><b>Etapa</b></td><td>$[PIUs_gestao_urbana_9VO/Etapa]</td></tr>
+  <tr><td><b>Area (ha)</b></td><td>$[PIUs_gestao_urbana_9VO/Area__ha_]</td></tr>
+</table>
+]]></text>
+		</BalloonStyle>
+		<PolyStyle>
+			<colorMode>random</colorMode>
+		</PolyStyle>
+	</Style>
+	<Folder id="layer 0">
+		<name>PIUs_gestao_urbana_9VO</name>
+		<Placemark>
+			<styleUrl>#falseColor</styleUrl>
+			<ExtendedData>
+				<SchemaData schemaUrl="#S_PIUs_gestao_urbana_9VO_SISSSSSSSSSD">
+					<SimpleData name="Layer">PIU Vila Olimpia</SimpleData>
+					<SimpleData name="ID">9</SimpleData>
+					<SimpleData name="Data">11/07/2018</SimpleData>
+					<SimpleData name="Origem">MEM - Area de influencia OUCFL</SimpleData>
+					<SimpleData name="Iniciativa">Privado</SimpleData>
+					<SimpleData name="Proponente">SPE Horizonte Branco</SimpleData>
+					<SimpleData name="Natureza_J">Lei</SimpleData>
+					<SimpleData name="Ano_de_ini">2017</SimpleData>
+					<SimpleData name="Rede_de_Es">MEM</SimpleData>
+					<SimpleData name="Intrumento">nd</SimpleData>
+					<SimpleData name="Etapa">Consulta Pública Inicial</SimpleData>
+					<SimpleData name="Area__ha_">26.19</SimpleData>
+				</SchemaData>
+			</ExtendedData>
+			<Polygon>
+				<outerBoundaryIs>
+					<LinearRing>
+						<coordinates>
+							-46.67873335383886,-23.5958734295485,0 -46.67931817459482,-23.59401613205642,0 -46.67723520835165,-23.59348550906436,0 -46.67811233025296,-23.59068187852569,0 -46.68419325222163,-23.59224497664321,0 -46.68332585761948,-23.59509593659451,0 -46.68293854755592,-23.59523052146547,0 -46.68224153402315,-23.59508067704187,0 -46.67990515070601,-23.59616831062309,0 -46.67873335383886,-23.5958734295485,0 
+						</coordinates>
+					</LinearRing>
+				</outerBoundaryIs>
+			</Polygon>
+		</Placemark>
+	</Folder>
+</Document>
+</kml>

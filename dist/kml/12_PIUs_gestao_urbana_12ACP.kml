@@ -1,71 +1,73 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <kml xmlns="http://www.opengis.net/kml/2.2" xmlns:gx="http://www.google.com/kml/ext/2.2" xmlns:kml="http://www.opengis.net/kml/2.2" xmlns:atom="http://www.w3.org/2005/Atom">
 <Document>
-	<name>PIUs_v9_(P)-12AP.shp</name>
-	<Schema name="PIUs_v9_(P)-12AP" id="S_PIUs_v9__P__12AP_SIDS">
+	<name>PIUs_gestao_urbana_12ACP.shp</name>
+	<Schema name="PIUs_gestao_urbana_12ACP" id="S_PIUs_gestao_urbana_12ACP_SISSSSSSSSSD">
 		<SimpleField type="string" name="Layer"><displayName>&lt;b&gt;Layer&lt;/b&gt;</displayName>
 </SimpleField>
 		<SimpleField type="int" name="ID"><displayName>&lt;b&gt;ID&lt;/b&gt;</displayName>
 </SimpleField>
-		<SimpleField type="double" name="Area__mÂ²_"><displayName>&lt;b&gt;Area (mÂ²)&lt;/b&gt;</displayName>
-</SimpleField>
 		<SimpleField type="string" name="Data"><displayName>&lt;b&gt;Data&lt;/b&gt;</displayName>
+</SimpleField>
+		<SimpleField type="string" name="Origem"><displayName>&lt;b&gt;Origem&lt;/b&gt;</displayName>
+</SimpleField>
+		<SimpleField type="string" name="Iniciativa"><displayName>&lt;b&gt;Iniciativa&lt;/b&gt;</displayName>
+</SimpleField>
+		<SimpleField type="string" name="Proponente"><displayName>&lt;b&gt;Proponente&lt;/b&gt;</displayName>
+</SimpleField>
+		<SimpleField type="string" name="Natureza_J"><displayName>&lt;b&gt;Natureza J&lt;/b&gt;</displayName>
+</SimpleField>
+		<SimpleField type="string" name="Ano_de_ini"><displayName>&lt;b&gt;Ano de ini&lt;/b&gt;</displayName>
+</SimpleField>
+		<SimpleField type="string" name="Rede_de_Es"><displayName>&lt;b&gt;Rede de Es&lt;/b&gt;</displayName>
+</SimpleField>
+		<SimpleField type="string" name="Intrumento"><displayName>&lt;b&gt;Intrumento&lt;/b&gt;</displayName>
+</SimpleField>
+		<SimpleField type="string" name="Etapa"><displayName>&lt;b&gt;Etapa&lt;/b&gt;</displayName>
+</SimpleField>
+		<SimpleField type="double" name="Area__ha_"><displayName>&lt;b&gt;Area (ha)&lt;/b&gt;</displayName>
 </SimpleField>
 	</Schema>
 	<Style id="falseColor">
 		<BalloonStyle>
 			<text><![CDATA[<table border="0">
-  <tr><td><b>Layer</b></td><td>$[PIUs_v9_(P)-12AP/Layer]</td></tr>
-  <tr><td><b>ID</b></td><td>$[PIUs_v9_(P)-12AP/ID]</td></tr>
-  <tr><td><b>Area (mÂ²)</b></td><td>$[PIUs_v9_(P)-12AP/Area__mÂ²_]</td></tr>
-  <tr><td><b>Data</b></td><td>$[PIUs_v9_(P)-12AP/Data]</td></tr>
+  <tr><td><b>Layer</b></td><td>$[PIUs_gestao_urbana_12ACP/Layer]</td></tr>
+  <tr><td><b>ID</b></td><td>$[PIUs_gestao_urbana_12ACP/ID]</td></tr>
+  <tr><td><b>Data</b></td><td>$[PIUs_gestao_urbana_12ACP/Data]</td></tr>
+  <tr><td><b>Origem</b></td><td>$[PIUs_gestao_urbana_12ACP/Origem]</td></tr>
+  <tr><td><b>Iniciativa</b></td><td>$[PIUs_gestao_urbana_12ACP/Iniciativa]</td></tr>
+  <tr><td><b>Proponente</b></td><td>$[PIUs_gestao_urbana_12ACP/Proponente]</td></tr>
+  <tr><td><b>Natureza J</b></td><td>$[PIUs_gestao_urbana_12ACP/Natureza_J]</td></tr>
+  <tr><td><b>Ano de ini</b></td><td>$[PIUs_gestao_urbana_12ACP/Ano_de_ini]</td></tr>
+  <tr><td><b>Rede de Es</b></td><td>$[PIUs_gestao_urbana_12ACP/Rede_de_Es]</td></tr>
+  <tr><td><b>Intrumento</b></td><td>$[PIUs_gestao_urbana_12ACP/Intrumento]</td></tr>
+  <tr><td><b>Etapa</b></td><td>$[PIUs_gestao_urbana_12ACP/Etapa]</td></tr>
+  <tr><td><b>Area (ha)</b></td><td>$[PIUs_gestao_urbana_12ACP/Area__ha_]</td></tr>
 </table>
 ]]></text>
 		</BalloonStyle>
-		<LineStyle>
-			<width>2</width>
-		</LineStyle>
 		<PolyStyle>
-			<color>7fffd9ce</color>
+			<colorMode>random</colorMode>
 		</PolyStyle>
 	</Style>
-	<Style id="falseColor0">
-		<BalloonStyle>
-			<text><![CDATA[<table border="0">
-  <tr><td><b>Layer</b></td><td>$[PIUs_v9_(P)-12AP/Layer]</td></tr>
-  <tr><td><b>ID</b></td><td>$[PIUs_v9_(P)-12AP/ID]</td></tr>
-  <tr><td><b>Area (mÂ²)</b></td><td>$[PIUs_v9_(P)-12AP/Area__mÂ²_]</td></tr>
-  <tr><td><b>Data</b></td><td>$[PIUs_v9_(P)-12AP/Data]</td></tr>
-</table>
-]]></text>
-		</BalloonStyle>
-		<LineStyle>
-			<width>2</width>
-		</LineStyle>
-		<PolyStyle>
-			<color>7fffd9ce</color>
-		</PolyStyle>
-	</Style>
-	<StyleMap id="falseColor1">
-		<Pair>
-			<key>normal</key>
-			<styleUrl>#falseColor</styleUrl>
-		</Pair>
-		<Pair>
-			<key>highlight</key>
-			<styleUrl>#falseColor0</styleUrl>
-		</Pair>
-	</StyleMap>
 	<Folder id="layer 0">
-		<name>PIUs_v9_(P)-12AP</name>
+		<name>PIUs_gestao_urbana_12ACP</name>
 		<Placemark>
-			<styleUrl>#falseColor1</styleUrl>
+			<styleUrl>#falseColor</styleUrl>
 			<ExtendedData>
-				<SchemaData schemaUrl="#S_PIUs_v9__P__12AP_SIDS">
+				<SchemaData schemaUrl="#S_PIUs_gestao_urbana_12ACP_SISSSSSSSSSD">
 					<SimpleData name="Layer">PIU Arco Pinheiros</SimpleData>
 					<SimpleData name="ID">12</SimpleData>
-					<SimpleData name="Area__mÂ²_">146735</SimpleData>
-					<SimpleData name="Data">29/06/2018</SimpleData>
+					<SimpleData name="Data">11/07/2018</SimpleData>
+					<SimpleData name="Origem">PDE - Artigo 76</SimpleData>
+					<SimpleData name="Iniciativa">Publico</SimpleData>
+					<SimpleData name="Proponente">PMSP - SMUL</SimpleData>
+					<SimpleData name="Natureza_J">Ainda nao definido</SimpleData>
+					<SimpleData name="Ano_de_ini">2018</SimpleData>
+					<SimpleData name="Rede_de_Es">MEM - Arco Pinheiros</SimpleData>
+					<SimpleData name="Intrumento">nd</SimpleData>
+					<SimpleData name="Etapa">Em proposição</SimpleData>
+					<SimpleData name="Area__ha_">1467.36</SimpleData>
 				</SchemaData>
 			</ExtendedData>
 			<Polygon>

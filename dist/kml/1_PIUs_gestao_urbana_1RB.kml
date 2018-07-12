@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kml xmlns="http://www.opengis.net/kml/2.2" xmlns:gx="http://www.google.com/kml/ext/2.2" xmlns:kml="http://www.opengis.net/kml/2.2" xmlns:atom="http://www.w3.org/2005/Atom">
+<Document>
+	<name>PIUs_gestao_urbana_1RB.shp</name>
+	<Schema name="PIUs_gestao_urbana_1RB" id="S_PIUs_gestao_urbana_1RB_SISSSSSSSSSD">
+		<SimpleField type="string" name="Layer"><displayName>&lt;b&gt;Layer&lt;/b&gt;</displayName>
+</SimpleField>
+		<SimpleField type="int" name="ID"><displayName>&lt;b&gt;ID&lt;/b&gt;</displayName>
+</SimpleField>
+		<SimpleField type="string" name="Data"><displayName>&lt;b&gt;Data&lt;/b&gt;</displayName>
+</SimpleField>
+		<SimpleField type="string" name="Origem"><displayName>&lt;b&gt;Origem&lt;/b&gt;</displayName>
+</SimpleField>
+		<SimpleField type="string" name="Iniciativa"><displayName>&lt;b&gt;Iniciativa&lt;/b&gt;</displayName>
+</SimpleField>
+		<SimpleField type="string" name="Proponente"><displayName>&lt;b&gt;Proponente&lt;/b&gt;</displayName>
+</SimpleField>
+		<SimpleField type="string" name="Natureza_J"><displayName>&lt;b&gt;Natureza J&lt;/b&gt;</displayName>
+</SimpleField>
+		<SimpleField type="string" name="Ano_de_ini"><displayName>&lt;b&gt;Ano de ini&lt;/b&gt;</displayName>
+</SimpleField>
+		<SimpleField type="string" name="Rede_de_Es"><displayName>&lt;b&gt;Rede de Es&lt;/b&gt;</displayName>
+</SimpleField>
+		<SimpleField type="string" name="Intrumento"><displayName>&lt;b&gt;Intrumento&lt;/b&gt;</displayName>
+</SimpleField>
+		<SimpleField type="string" name="Etapa"><displayName>&lt;b&gt;Etapa&lt;/b&gt;</displayName>
+</SimpleField>
+		<SimpleField type="double" name="Area__ha_"><displayName>&lt;b&gt;Area (ha)&lt;/b&gt;</displayName>
+</SimpleField>
+	</Schema>
+	<Style id="falseColor">
+		<BalloonStyle>
+			<text><![CDATA[<table border="0">
+  <tr><td><b>Layer</b></td><td>$[PIUs_gestao_urbana_1RB/Layer]</td></tr>
+  <tr><td><b>ID</b></td><td>$[PIUs_gestao_urbana_1RB/ID]</td></tr>
+  <tr><td><b>Data</b></td><td>$[PIUs_gestao_urbana_1RB/Data]</td></tr>
+  <tr><td><b>Origem</b></td><td>$[PIUs_gestao_urbana_1RB/Origem]</td></tr>
+  <tr><td><b>Iniciativa</b></td><td>$[PIUs_gestao_urbana_1RB/Iniciativa]</td></tr>
+  <tr><td><b>Proponente</b></td><td>$[PIUs_gestao_urbana_1RB/Proponente]</td></tr>
+  <tr><td><b>Natureza J</b></td><td>$[PIUs_gestao_urbana_1RB/Natureza_J]</td></tr>
+  <tr><td><b>Ano de ini</b></td><td>$[PIUs_gestao_urbana_1RB/Ano_de_ini]</td></tr>
+  <tr><td><b>Rede de Es</b></td><td>$[PIUs_gestao_urbana_1RB/Rede_de_Es]</td></tr>
+  <tr><td><b>Intrumento</b></td><td>$[PIUs_gestao_urbana_1RB/Intrumento]</td></tr>
+  <tr><td><b>Etapa</b></td><td>$[PIUs_gestao_urbana_1RB/Etapa]</td></tr>
+  <tr><td><b>Area (ha)</b></td><td>$[PIUs_gestao_urbana_1RB/Area__ha_]</td></tr>
+</table>
+]]></text>
+		</BalloonStyle>
+		<PolyStyle>
+			<colorMode>random</colorMode>
+		</PolyStyle>
+	</Style>
+	<Folder id="layer 0">
+		<name>PIUs_gestao_urbana_1RB</name>
+		<Placemark>
+			<styleUrl>#falseColor</styleUrl>
+			<ExtendedData>
+				<SchemaData schemaUrl="#S_PIUs_gestao_urbana_1RB_SISSSSSSSSSD">
+					<SimpleData name="Layer">PIU Rio Branco</SimpleData>
+					<SimpleData name="ID">1</SimpleData>
+					<SimpleData name="Data">11/07/2018</SimpleData>
+					<SimpleData name="Origem">MEM - Setor Central</SimpleData>
+					<SimpleData name="Iniciativa">Publico</SimpleData>
+					<SimpleData name="Proponente">PMSP - SMUL</SimpleData>
+					<SimpleData name="Natureza_J">Decreto</SimpleData>
+					<SimpleData name="Ano_de_ini">2016</SimpleData>
+					<SimpleData name="Rede_de_Es">MEM - Setor Central</SimpleData>
+					<SimpleData name="Intrumento">na</SimpleData>
+					<SimpleData name="Etapa">Não autorizado</SimpleData>
+					<SimpleData name="Area__ha_">26.35</SimpleData>
+				</SchemaData>
+			</ExtendedData>
+			<gx:balloonVisibility>1</gx:balloonVisibility>
+			<Polygon>
+				<outerBoundaryIs>
+					<LinearRing>
+						<coordinates>
+							-46.64017577862449,-23.54114756685952,0 -46.64090171782794,-23.54170256628907,0 -46.64112588071287,-23.54186862173626,0 -46.64040561845414,-23.54231392742894,0 -46.6402537358245,-23.54239258646693,0 -46.63892202982037,-23.54308530276807,0 -46.63642258002616,-23.5444428324169,0 -46.63616981851712,-23.5440823578831,0 -46.63643502475514,-23.54300492215526,0 -46.63643297529091,-23.54274564722334,0 -46.63656091546204,-23.54206063831141,0 -46.63665048122811,-23.54186100899894,0 -46.63767733678336,-23.54050950205419,0 -46.6404707343608,-23.5366685804129,0 -46.64117673695359,-23.53567757010291,0 -46.64234574474444,-23.53649558457155,0 -46.64322078413131,-23.53711156756245,0 -46.64229215182666,-23.53835211591925,0 -46.64017577862449,-23.54114756685952,0 
+						</coordinates>
+					</LinearRing>
+				</outerBoundaryIs>
+			</Polygon>
+		</Placemark>
+	</Folder>
+</Document>
+</kml>

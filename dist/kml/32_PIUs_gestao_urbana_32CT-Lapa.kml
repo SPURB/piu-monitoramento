@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kml xmlns="http://www.opengis.net/kml/2.2" xmlns:gx="http://www.google.com/kml/ext/2.2" xmlns:kml="http://www.opengis.net/kml/2.2" xmlns:atom="http://www.w3.org/2005/Atom">
+<Document>
+	<name>PIUs_gestao_urbana_32CT-Lapa.shp</name>
+	<Schema name="PIUs_gestao_urbana_32CT-Lapa" id="S_PIUs_gestao_urbana_32CT_Lapa_SISSSSSSSSSD">
+		<SimpleField type="string" name="Layer"><displayName>&lt;b&gt;Layer&lt;/b&gt;</displayName>
+</SimpleField>
+		<SimpleField type="int" name="ID"><displayName>&lt;b&gt;ID&lt;/b&gt;</displayName>
+</SimpleField>
+		<SimpleField type="string" name="Data"><displayName>&lt;b&gt;Data&lt;/b&gt;</displayName>
+</SimpleField>
+		<SimpleField type="string" name="Origem"><displayName>&lt;b&gt;Origem&lt;/b&gt;</displayName>
+</SimpleField>
+		<SimpleField type="string" name="Iniciativa"><displayName>&lt;b&gt;Iniciativa&lt;/b&gt;</displayName>
+</SimpleField>
+		<SimpleField type="string" name="Proponente"><displayName>&lt;b&gt;Proponente&lt;/b&gt;</displayName>
+</SimpleField>
+		<SimpleField type="string" name="Natureza_J"><displayName>&lt;b&gt;Natureza J&lt;/b&gt;</displayName>
+</SimpleField>
+		<SimpleField type="string" name="Ano_de_ini"><displayName>&lt;b&gt;Ano de ini&lt;/b&gt;</displayName>
+</SimpleField>
+		<SimpleField type="string" name="Rede_de_Es"><displayName>&lt;b&gt;Rede de Es&lt;/b&gt;</displayName>
+</SimpleField>
+		<SimpleField type="string" name="Intrumento"><displayName>&lt;b&gt;Intrumento&lt;/b&gt;</displayName>
+</SimpleField>
+		<SimpleField type="string" name="Etapa"><displayName>&lt;b&gt;Etapa&lt;/b&gt;</displayName>
+</SimpleField>
+		<SimpleField type="double" name="Area__ha_"><displayName>&lt;b&gt;Area (ha)&lt;/b&gt;</displayName>
+</SimpleField>
+	</Schema>
+	<Style id="falseColor">
+		<BalloonStyle>
+			<text><![CDATA[<table border="0">
+  <tr><td><b>Layer</b></td><td>$[PIUs_gestao_urbana_32CT-Lapa/Layer]</td></tr>
+  <tr><td><b>ID</b></td><td>$[PIUs_gestao_urbana_32CT-Lapa/ID]</td></tr>
+  <tr><td><b>Data</b></td><td>$[PIUs_gestao_urbana_32CT-Lapa/Data]</td></tr>
+  <tr><td><b>Origem</b></td><td>$[PIUs_gestao_urbana_32CT-Lapa/Origem]</td></tr>
+  <tr><td><b>Iniciativa</b></td><td>$[PIUs_gestao_urbana_32CT-Lapa/Iniciativa]</td></tr>
+  <tr><td><b>Proponente</b></td><td>$[PIUs_gestao_urbana_32CT-Lapa/Proponente]</td></tr>
+  <tr><td><b>Natureza J</b></td><td>$[PIUs_gestao_urbana_32CT-Lapa/Natureza_J]</td></tr>
+  <tr><td><b>Ano de ini</b></td><td>$[PIUs_gestao_urbana_32CT-Lapa/Ano_de_ini]</td></tr>
+  <tr><td><b>Rede de Es</b></td><td>$[PIUs_gestao_urbana_32CT-Lapa/Rede_de_Es]</td></tr>
+  <tr><td><b>Intrumento</b></td><td>$[PIUs_gestao_urbana_32CT-Lapa/Intrumento]</td></tr>
+  <tr><td><b>Etapa</b></td><td>$[PIUs_gestao_urbana_32CT-Lapa/Etapa]</td></tr>
+  <tr><td><b>Area (ha)</b></td><td>$[PIUs_gestao_urbana_32CT-Lapa/Area__ha_]</td></tr>
+</table>
+]]></text>
+		</BalloonStyle>
+		<PolyStyle>
+			<colorMode>random</colorMode>
+		</PolyStyle>
+	</Style>
+	<Folder id="layer 0">
+		<name>PIUs_gestao_urbana_32CT-Lapa</name>
+		<Placemark>
+			<styleUrl>#falseColor</styleUrl>
+			<ExtendedData>
+				<SchemaData schemaUrl="#S_PIUs_gestao_urbana_32CT_Lapa_SISSSSSSSSSD">
+					<SimpleData name="Layer">Concessao dos Terminais - Terminal Lapa</SimpleData>
+					<SimpleData name="ID">32</SimpleData>
+					<SimpleData name="Data">11/07/2018</SimpleData>
+					<SimpleData name="Origem">Lei 16.211/2015 e 16.703/2017 (Concessão terminais)</SimpleData>
+					<SimpleData name="Iniciativa"></SimpleData>
+					<SimpleData name="Proponente"></SimpleData>
+					<SimpleData name="Natureza_J"></SimpleData>
+					<SimpleData name="Ano_de_ini"></SimpleData>
+					<SimpleData name="Rede_de_Es">EETU</SimpleData>
+					<SimpleData name="Intrumento"></SimpleData>
+					<SimpleData name="Etapa">Em prospecção</SimpleData>
+					<SimpleData name="Area__ha_">96.07</SimpleData>
+				</SchemaData>
+			</ExtendedData>
+			<Polygon>
+				<outerBoundaryIs>
+					<LinearRing>
+						<coordinates>
+							-46.69512620398518,-23.5200328159879,0 -46.69541650443537,-23.51863995967899,0 -46.69558566835809,-23.5178138767746,0 -46.69566180433339,-23.51744179997298,0 -46.69603758458265,-23.51556896208418,0 -46.69604243980299,-23.5151786725095,0 -46.69640528189109,-23.51519397018677,0 -46.69651447174019,-23.51519348469568,0 -46.69678019856237,-23.51511461811275,0 -46.69739690204671,-23.51499183094688,0 -46.69896221220509,-23.51468916028259,0 -46.69923439091098,-23.51463557584359,0 -46.6996846618693,-23.51455128572086,0 -46.70021478110487,-23.51444881155297,0 -46.7007177781585,-23.51436415939688,0 -46.70084798754069,-23.51434278935449,0 -46.70115667722998,-23.51427447191109,0 -46.70130618416078,-23.51423380995527,0 -46.70139326503159,-23.51455970402907,0 -46.70170477755949,-23.51519245413268,0 -46.70205846037888,-23.5159341604633,0 -46.7021172798104,-23.51604045216436,0 -46.7022277149882,-23.51625900641028,0 -46.70240234845897,-23.51660379503457,0 -46.70260101067327,-23.51700048313418,0 -46.70266041381589,-23.51710792404577,0 -46.70270101691659,-23.51718885041617,0 -46.70274103796291,-23.51726715537267,0 -46.70277336841509,-23.51735737390428,0 -46.7028682896472,-23.51755691275358,0 -46.7029379864878,-23.51770021694667,0 -46.70332958865691,-23.5183983407014,0 -46.70380365974338,-23.5193277159547,0 -46.7038976559487,-23.51952437899127,0 -46.70437272775541,-23.52045359040636,0 -46.70448963547572,-23.52068559144686,0 -46.70483337705891,-23.52135817807378,0 -46.7049367430302,-23.52156659872317,0 -46.7052566578848,-23.52218367966066,0 -46.7053459513277,-23.52236767416817,0 -46.70586991853039,-23.52337680843058,0 -46.7059568690978,-23.52354908905577,0 -46.70631444608751,-23.52424875914568,0 -46.7064913996154,-23.52454503828977,0 -46.70632083478301,-23.52453459585528,0 -46.70622528463789,-23.52453244223647,0 -46.70587735217339,-23.52456727468706,0 -46.7052850262323,-23.52463287703465,0 -46.70466031814819,-23.52469883187638,0 -46.7039327694371,-23.52477301691467,0 -46.70321347934117,-23.52484903161976,0 -46.70292791303161,-23.52487437064028,0 -46.70257330925429,-23.5248856098628,0 -46.70224078988261,-23.52489615522426,0 -46.7019740233117,-23.52490680971187,0 -46.70106215783499,-23.52493105761358,0 -46.70074670902989,-23.52494095267068,0 -46.70043081672117,-23.52495444592557,0 -46.69972173006048,-23.52498036040018,0 -46.69934196971159,-23.52499108140008,0 -46.69910043738259,-23.52499203438487,0 -46.69789391981809,-23.52500661501627,0 -46.69771027469079,-23.52501157499478,0 -46.69769842619478,-23.524852309615,0 -46.69767807014636,-23.52398318247398,0 -46.69766176979039,-23.52396450535277,0 -46.696722850942,-23.52399263279727,0 -46.69638816373777,-23.52399097592599,0 -46.69561031773596,-23.52399318983217,0 -46.69543032575196,-23.523991543092,0 -46.69542156866359,-23.52372317979208,0 -46.69540190848667,-23.52281630407288,0 -46.69539870498698,-23.52266600512377,0 -46.69536803030107,-23.52264437794311,0 -46.69472149103149,-23.52276808860258,0 -46.69462833298027,-23.52277905414889,0 -46.694621488316,-23.52259785750249,0 -46.69464574986886,-23.52257447616918,0 -46.69478772534978,-23.52222889523597,0 -46.69492970014128,-23.5218833142015,0 -46.69510029215149,-23.52173560151599,0 -46.6952626899622,-23.52121885261678,0 -46.69521132010917,-23.52104713496059,0 -46.69510032530488,-23.52055841312167,0 -46.69505716757627,-23.52036721822048,0 -46.69512620398518,-23.5200328159879,0 
+						</coordinates>
+					</LinearRing>
+				</outerBoundaryIs>
+			</Polygon>
+		</Placemark>
+	</Folder>
+</Document>
+</kml>
