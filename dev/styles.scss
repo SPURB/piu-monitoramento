@@ -15,5 +15,10 @@ $verde: #008015;
 #app {
 	max-width: 960px;
 	margin: auto;
-	padding: 0 3%;
+}
+
+@media (max-width: 960px) {
+	#app {
+		margin: 0 3%;
+	}
 }

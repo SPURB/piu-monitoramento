@@ -12,10 +12,6 @@ let view = new ol.View({
 let featureOverlay;
 let highlight;
 
-window.onload = function() {	
-	document.getElementsByClassName('ol-unselectable')[0].getContext('2d').globalCompositeOperation = 'multiply';
-};
-
 let mapa = {
 	name:'mapa',
 	data (){
@@ -64,11 +60,11 @@ let mapa = {
 				Number.isNaN(numericStr) ? // se string não é numérica  
 					outputid = str.substring(0, 4) : // retorna 4 caracteres -> 'BASE'
 					outputid = numericStr.toString() // Converte valor numérico em string 
-					outputid != '0' ?
-						parseKml.push({
+					outputid != '0' ? // se id não é 0 (kml com todos os pius)
+						parseKml.push({ // insere na array > transforma em uma layer
 							id:	outputid,
 							fileName: str
-						}) : '';
+						}) : false;
 			})
 			let baseFeature = parseKml.pop();
 			parseKml.reverse().push(baseFeature);
@@ -195,6 +191,7 @@ let mapa = {
 					if (index.etapas_NUM == 8) { output = 'implantacao' };
 					if (index.etapas_NUM == 9) { output = 'suspenso' };
 					if (index.etapas_NUM == 10) { output = 'arquivado' };
+					if (index.etapas_NUM == 11) { output = 'prospeccao' };
 				};
 			});
 			return output;
@@ -273,13 +270,13 @@ let mapa = {
 				outputColor.stroke = 'rgba(50, 50, 50, 0)'
 				outputColor.fill = 'rgba(128, 43, 0, 1)'
 			}
-			else if(8 < etapaNumber){
+			else if(8 < etapaNumber && etapaNumber <= 10){
 				outputColor.stroke = 'rgba(50, 50, 50, 0)'
 				outputColor.fill = 'rgba(220, 220, 220, 1)'
 			}
 			else{
-				outputColor.stroke = 'rgba(50, 50, 50, 0)'
-				outputColor.fill = 'rgba(200,200,200, 1)'
+				outputColor.stroke = 'rgba(255, 85, 0, .5)'
+				outputColor.fill = 'rgba(200,200,200, 0)'
 			}
 
 			let style = new ol.style.Style({
@@ -321,7 +318,7 @@ let mapa = {
 					}
 				}
 			} else if (id == undefined) {
-				let url = dist_folder+'kml/'+'0_PIUs.kml';
+				let url = dist_folder+'kml/'+'0_PIUs_gestao_urbana.kml';
 				return url;
 			} else { return '' }
 		},
@@ -330,11 +327,12 @@ let mapa = {
 				for (let i = 0; i <= this.kmls.length; i++) {
 					if (this.kmls[i].id == id) {
 						let url = dist_folder+'shp/'+this.kmls[i].fileName.slice(0,this.kmls[i].fileName.lastIndexOf('.'))+'.shp';
+						console.log(url);
 						return url;
 					}
 				}
 			} else if (id == undefined) {
-				let url = dist_folder+'shp/'+'BASE_PIUs_v9_(P).shp';
+				let url = dist_folder+'shp/'+'PIUs_gestao_urbana.shp';
 				return url;
 			} else { return '' }
 		},
@@ -364,6 +362,7 @@ let mapa = {
 				<div class="andamento">Em andamento</div>
 				<div class="implantacao">Implantação</div>
 				<div class="suspenso">Suspenso/arquivado</div>
+				<div class="prospeccao">Em prospecção</div>
 			</div>
 		</div>
 		<div id="infoModal" class="infoModal" v-if="featureInfo.nome" v-bind:style="infoBoxStyle" @click="setProjectId(featureInfo.ID)">

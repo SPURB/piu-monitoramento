@@ -128,6 +128,7 @@
 	div.prospeccao {
 		border-left-color: $prospeccao;
 		margin: -1em 0 2em 0;
+		div:nth-child(2) { display: block; };
 		div.etapa {
 			background-color: transparent;
 			border-radius: 0;
@@ -135,10 +136,22 @@
 			padding: 0;
 			margin-top: 2em;
 		};
-		div:hover, div span:hover { background-color: transparent; };
+		div:hover, div span:hover, a:hover { background-color: transparent; };
 		div span.titulo { color: #BDBDBD; margin-right: 8px; &:after { content: ''; }; };
-		div span:not(.titulo):after { content: ', '; };
-		div span:last-child::after { content: ''; };
+		div span:not(.titulo) {
+			display: inline-flex;
+			align-items: center;
+			white-space: nowrap;
+			margin-right: 20px;
+		};
+		div span:not(.titulo):after {
+			content: 'launch';
+			font-family: 'Material Icons';
+			font-size: 16px;
+			color: #444444;
+			margin-left: 4px;
+		};
+		div span a { color: #444444; };
 	}
 
 @media (max-width: 720px) {

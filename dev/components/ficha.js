@@ -192,7 +192,7 @@ let ficha = {
 
 		<div class="container">
 			<div class="colId">
-				<div class="indicador" v-bind:class="atribuiEtapaClass(projeto.etapas_NUM)">{{ atribuiEtapaTag(projeto.etapas_NUM) }}</div>
+				<div class="indicador" v-bind:class="atribuiEtapaClass(projeto.etapas_NUM)" title="Etapa atual da tramitação do PIU">{{ atribuiEtapaTag(projeto.etapas_NUM) }}</div>
 				<div class="id">
 					<template v-if="testeVazio(projeto.id_iniciativa_da_proposta) != false">
 						Natureza da proposta
@@ -211,8 +211,8 @@ let ficha = {
 						<div>{{projeto.id_registro_administrativo}}</div>
 					</template>
 				</div>
-				<template v-for="hiperlink in hiperlinks">
-					<a v-if="hiperlink.ID == clickedId && hiperlink.ID_etapa == 100 && testeVazio(hiperlink.arquivo) != false" class="link_pag_completa" :href="hiperlink.arquivo" :title="'Acesse a página completa de '+hiperlink.PIU" target="_blank">
+				<template v-for="hiperlink in hiperlinks" v-if="hiperlink.ID == clickedId && hiperlink.ID_etapa == 100 && testeVazio(hiperlink.arquivo) != false">
+					<a class="link_pag_completa" :href="hiperlink.arquivo" :title="'Acesse a página completa de '+hiperlink.PIU" target="_blank">
 						Página completa <i class="material-icons">launch</i>
 					</a>
 				</template>

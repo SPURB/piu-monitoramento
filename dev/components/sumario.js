@@ -3,6 +3,7 @@ let sumario = {
 	data (){
 		return {
 			data: monitoramento,
+			hiperlinks: hiperlinks,
 			clickedId: undefined
 		}
 	},
@@ -237,15 +238,12 @@ let sumario = {
 			<div class="etapa">Em prospecção</div>
 
 			<div>
-				<span class="titulo">PIUs de iniciativa pública</span>
 				<template v-for="projeto in data" v-if="hasMembers(11,11, projeto.etapas_NUM)">
-					<span v-if="projeto.id_iniciativa_da_proposta!='Pública'">{{ projeto.id_nome }}</span>
-				</template>
-			</div>
-			<div>
-				<span class="titulo">PIUs de iniciativa privada</span>
-				<template v-for="projeto in data" v-if="hasMembers(11,11, projeto.etapas_NUM)">
-					<span v-if="projeto.id_iniciativa_da_proposta=='Privado'">{{ projeto.id_nome }}</span>
+					<template v-for="hiperlink in hiperlinks" v-if="hiperlink.ID_etapa == 11">
+						<span v-if="projeto.ID_rev == hiperlink.ID">
+							<a :href="hiperlink.arquivo" target="_blank">{{ projeto.id_nome }}</a>
+						</span>
+					</template>
 				</template>
 			</div>
 
