@@ -28,6 +28,16 @@ gulp.task('scss', function() {
     }))
 });
 
+gulp.task('css-loader', function() {
+    gulp.src([
+      './dev/scss/loader.scss' 
+    ])
+    .pipe(concat('loader.css'))
+    .pipe(scss())
+    .pipe(cssnano())
+    .pipe(gulp.dest('./dist'))
+});
+
 gulp.task('scripts-production', function() {
     gulp.src([
       './dev/data/monitoramento.js',
@@ -106,6 +116,7 @@ gulp.task('kmls', function(){
 gulp.task('default', [
   'browserSync', 
   'scss',
+  'css-loader',
   'create-json',
   'kmls',
   'scripts-production'
@@ -118,6 +129,7 @@ gulp.task('default', [
 
 gulp.task('build', [
   'scss',
+  'css-loader',
   'create-json',
   'kmls',
   'scripts-production'
