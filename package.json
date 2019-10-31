@@ -4,7 +4,8 @@
   "description": "Sistema de monitoramento dos Projetos de Intervenção Urbana (Decreto nº 56.901, de 30 de março de 2016)",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "gulp",
+    "build": "gulp build"
   },
   "author": "yubathom@gmail.com",
   "license": "ISC",
@@ -12,13 +13,13 @@
     "babel-core": "^6.26.0",
     "babel-preset-env": "^1.6.1",
     "babelify": "^8.0.0",
-    "browser-sync": "^2.23.6",
+    "browser-sync": "^2.26.3",
     "gulp": "^3.9.1",
     "gulp-babel": "^7.0.1",
     "gulp-browserify": "^0.5.1",
     "gulp-concat": "^2.6.1",
     "gulp-cssnano": "^2.1.3",
-    "gulp-order": "^1.1.1",
+    "gulp-order": "^1.2.0",
     "gulp-sass": "^4.0.0",
     "gulp-uglify": "^3.0.0",
     "vinyl-source-stream": "^2.0.0",
@@ -26,6 +27,7 @@
     "xlsx": "^0.12.8"
   },
   "dependencies": {
-    "hoek": "^5.0.3"
+    "hoek": "^5.0.3",
+    "natives": "^1.1.6"
   }
 }

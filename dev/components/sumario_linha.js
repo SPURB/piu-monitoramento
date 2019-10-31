@@ -2,18 +2,16 @@ let sumario_linha = {
 	name: 'sumario_linha',
 	data() {
 		return {
-			data: monitoramento,
+			// data: monitoramento,
 			clickedId: undefined,
 		}
 	},
-	methods: {
-	},
-	mounted() {
+	props: ['data'],
+	updated() {
+
 		let app = this;
 		let container = document.getElementById('linha_do_tempo');
-
 		let itemsTemp = [];
-
 		// colunas com datas/periodos:
 		// PROPOSICAO: a_data_protocolo , a_data_protocolo - a_data_envio_comunicacao
 		// * CONS PUB INICIAL: b_data_inicio - b_data_final

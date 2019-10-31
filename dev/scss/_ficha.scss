@@ -10,6 +10,7 @@
 			border-bottom-width: 3px;
 			border-bottom-style: solid;
 			background-color: transparent;
+			padding: .2em 0 0 0;
 			i { font-size: 36px; color: #000000; vertical-align: -0.25em; };
 			&:hover { cursor: pointer; };
 		};
@@ -111,18 +112,21 @@
 				div:last-child { margin-bottom: 0; };
 				a {
 					font-weight: 700;
-					text-transform: uppercase;
-				};
-				a::before { 
-					display: inline-block;
-					font-family: 'Material Icons';
-					font-weight: normal;
-					font-size: 16px;
-					float: left;
-					margin-right: 4px;
-					text-transform: none;
-					content: 'launch';
-					color: #000000;
+					display: block;
+
+					i {
+						font-size: 16px;
+						line-height: 13px;
+						vertical-align: -3px;
+					};
+
+					&:not([href]) {
+						color: initial;
+
+						&:hover { text-decoration: none; cursor: default;};
+
+						i { display: none; };
+					};
 				};
 			};
 			a.link_pag_completa {
@@ -145,12 +149,53 @@
 					color: $vermelho-gestao;
 				};
 			};
+			div.agenda {
+				h4 {
+					margin: 16px 0 4px 0;
+				};
+				ul {
+					padding: 0;
+					margin: 0;
+					list-style-type: none;
+					li {
+						padding: 16px 0;
+						margin: 0;
+						border-top: 1px solid #BDBDBD;
+						h5 {
+							font-size: inherit;
+							margin: 0;
+							font-weight: 700;
+						};
+						i {
+							font-size: 16px;
+							line-height: 100%;
+							vertical-align: -3px;
+							color: #BDBDBD;
+						};
+					};
+				};
+			};
 		};
 
 		h4 {
 			line-height: 32px;
 			margin: 0 0 12px 0;
 			padding: 0;
+
+			span {
+				font-size: xx-small;
+				text-transform: uppercase;
+				color: #BCBCBC;
+				font-weight: normal;
+				float: right;
+
+				strong {
+					font-size: small;
+					font-weight: bold;
+					text-transform: none;
+					vertical-align: -1px;
+				}
+			}
 		}
 
 		div.aspectos {
@@ -207,6 +252,10 @@
 					flex-direction: row;
 					position: relative;
 					line-height: 4.5em;
+					-webkit-user-select: none;
+					-moz-user-select: none;
+					-ms-user-select: none;
+					user-select: none;
 					&:active {
 						background: #ECECEC;
 					};
@@ -286,8 +335,6 @@
 					p.tramit_link {
 						margin: 0;
 						padding: 0;
-						display: flex;
-						align-items: center;
 						height: 24px;
 					};
 					p.tramit_link:last-child { margin-bottom: 24px !important; };
@@ -295,6 +342,7 @@
 						white-space: nowrap;
 						overflow: hidden;
 						text-overflow: ellipsis;
+						display: block;
 					};
 					a.tramit_link::before {
 						content: attr(type);
@@ -310,6 +358,7 @@
 						margin: 0 4px 0 0;
 						display: inline-block;
 						box-sizing: border-box;
+						vertical-align: text-top;
 					};
 					a.tramit_link:hover::before {
 						background-color: $vermelho-gestao;

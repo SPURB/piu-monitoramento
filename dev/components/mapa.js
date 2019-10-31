@@ -26,7 +26,7 @@ let mapa = {
 				"top": "0",
 				"position": "absolute"
 			},
-			data: monitoramento,
+			// data: monitoramento,
 			projeto: undefined,
 			layers: undefined,
 			breadcrumb: false,
@@ -34,7 +34,7 @@ let mapa = {
 			zoom: view.getZoom() 			//
 		}
 	},
-	props: ['clicked-id'],
+	props: ['clicked-id', 'data'],
 	computed:{
 		myMap(){
 			return new ol.Map({
@@ -94,7 +94,7 @@ let mapa = {
 						})
 					}),
 					updateWhileAnimating: false,
-					renderBuffer:100,
+					renderBuffer: 100,
 					renderMode: 'image',
 				});
 				layer.set('id_projeto', object.id)
@@ -102,14 +102,6 @@ let mapa = {
 			})
 			return output
 		}
-	},
-	mounted(){
-		this.layers = this.myMap.getLayers();
-		this.highlightSettings();
-		let app = this;
-		this.myMap.on('click', function(evt){
-			app.getFeatureLayerInfo(evt.pixel, evt);
-		});
 	},
 	watch:{
 		clickedId(newprop, oldprop){
@@ -120,6 +112,14 @@ let mapa = {
 					app.fitToLayer(newprop)
 					app.breadcrumb = true
 				};
+			});
+		},
+		data(){
+			this.layers = this.myMap.getLayers();
+			this.highlightSettings();
+			let app = this;
+			this.myMap.on('click', function(evt){
+				app.getFeatureLayerInfo(evt.pixel, evt);
 			});
 		}
 	},
@@ -246,7 +246,7 @@ let mapa = {
 				fill: undefined
 			}
 
-			monitoramento.map(function(index) {
+			this.data.map(function(index) {
 				if(index.ID_rev == id) {
 					id_projeto = id;
 					etapa = index.etapas_NUM
@@ -326,13 +326,12 @@ let mapa = {
 			if (id != undefined) {
 				for (let i = 0; i <= this.kmls.length; i++) {
 					if (this.kmls[i].id == id) {
-						let url = dist_folder+'shp/'+this.kmls[i].fileName.slice(0,this.kmls[i].fileName.lastIndexOf('.'))+'.shp';
-						console.log(url);
+						let url = dist_folder+'shp/'+this.kmls[i].fileName.slice(0,this.kmls[i].fileName.lastIndexOf('.'))+'.rar';
 						return url;
 					}
 				}
 			} else if (id == undefined) {
-				let url = dist_folder+'shp/'+'0_PIUs_gestao_urbana.shp';
+				let url = dist_folder+'shp/'+'0_PIUs_gestao_urbana.rar';
 				return url;
 			} else { return '' }
 		},

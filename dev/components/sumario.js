@@ -2,12 +2,10 @@ let sumario = {
 	name:'sumario',
 	data (){
 		return {
-			data: monitoramento,
-			hiperlinks: hiperlinks,
 			clickedId: undefined
 		}
 	},
-
+	props: ['data', 'hiperlinks'],
 	components: { sumario_linha },
 
 	methods: {
@@ -22,7 +20,7 @@ let sumario = {
 			this.$emit('clicked', id)
 		},
 		fConsultaAberta(par) {
-			if (par.b_status == 'aberta' || par.e_status_consulta_internet_minuta == 'aberta') { 
+			if (par.b_status == 'aberta' || par.e_status_consulta_internet_minuta == 'aberta' || par.e_status_consulta_internet_caderno == 'aberta') { 
 				return 'consultaAberta'
 			};
 		},
@@ -249,7 +247,7 @@ let sumario = {
 
 		</div>
 
-		<sumario_linha></sumario_linha>
+		<sumario_linha :data='data'></sumario_linha>
 
 	</div>
 	`

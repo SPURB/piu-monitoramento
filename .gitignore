@@ -3,7 +3,6 @@ node_modules/
 vendor/vue.min.js
 dist/**/*.js
 dist/**/*.css
-dev/data/**/*.js
 .idea
 *.suo
 *.ntvs*

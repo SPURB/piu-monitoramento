@@ -2,16 +2,24 @@ let ficha = {
 	name:'ficha',
 	data (){
 		return {
-			data: monitoramento,
-			hiperlinks: hiperlinks,
 			projeto: '',
 			menuClickedId: '',
 			menu: false,
 			E01: false, E02: false, E03: false, E04: false,
 			E05: false, E06: false, E07: false, E08: false,
+			agenda: [
+				{ titulo: 'Audiência Pública', data: '12.08.2018', horario: '19h', local: 'Estádio do Morumbi', endereco: 'Praça Roberto Gomes Pedrosa, 1' },
+				{ titulo: 'Renião temática - SABESP', data: '22.08.2018', horario: '15h', local: 'Sede SABESP', endereco: 'Rua Costa Carvalho, 300' },
+				{ titulo: 'Reunião CMPU', data: '30.08.2018', horario: '09h', local: 'Auditório – Ed. Martinelli', endereco: 'Rua São Bento, 405' },
+				{ titulo: 'Workshop temático', data: '06.09.2018', horario: '09h', local: 'Parque da Aclimação', endereco: 'Rua Muniz de Sousa, 1119' }
+			],
 		}
 	},
-	props: ['clicked-id'],
+	props: [
+		'clicked-id', 
+		'data', 
+		'hiperlinks'
+	],
 	methods: {
 		atribuiEtapaClass(etp) {
 			if (etp <= 3) { return 'proposicao' };
@@ -23,18 +31,8 @@ let ficha = {
 		},
 
 		atribuiEtapaTag(etp) {
-			switch (etp) {
-				case '1': return 'Proposição';
-				case '2': return 'Consulta púb. inicial';
-				case '3': return 'Avaliação SMUL';
-				case '4': return 'Elaboração';
-				case '5': return 'Discussão pública';
-				case '6': return 'Consolidação';
-				case '7': return 'Enc. jurídico';
-				case '8': return 'Implantação';
-				case '9': return 'Suspenso';
-				case '10': return 'Arquivado';
-				case '11': return 'Em prospecção';
+			const etapa = parseInt(etp)
+			switch (etapa) {
 				case 1: return 'Proposição';
 				case 2: return 'Consulta púb. inicial';
 				case 3: return 'Avaliação SMUL';
@@ -51,14 +49,14 @@ let ficha = {
 
 		dataExcelJS(data) {
 			if (data != null && data != '-' && data != 'NA') {
-				if (data.length == 5) {
+				if (data.toString().length == 5) {
 					let d = new Date((Math.floor(data - 25568))*86400000);
 					let string = ('0' + d.getDate()).slice(-2)+'/'+('0' + (d.getMonth()+1)).slice(-2)+'/'+d.getFullYear();
 					return string;
 				} else if (data.replace('/','').length > 5 && data.replace('/','').length <= 8) {
 					return data;
-				} else { return '' };
-			}
+				} else { return data };
+			} else { return '' }
 		},
 
 		encontraProjeto(newClickedId) {
@@ -109,15 +107,17 @@ let ficha = {
 		},
 
 		fConsultaAberta(par) {
-			if (par.b_status == 'aberta' || par.e_status_consulta_internet_minuta == 'aberta') { 
+			if (par.b_status == 'aberta' || par.e_status_consulta_internet_minuta == 'aberta' || par.e_status_consulta_internet_caderno == 'aberta') { 
 				return 'consultaAberta'
 			};
 		},
 
 		arquivosDiscussao(etapa, arquivoCat) {
 			var output = '';
-			for (var i = 0; i < hiperlinks.length; i++) {
-				if (hiperlinks[i].ID == this.projeto.ID_rev && hiperlinks[i].ID_etapa == etapa && hiperlinks[i].Idp == arquivoCat) {
+			for (var i = 0; i < this.hiperlinks.length; i++) {
+				if (this.hiperlinks[i].ID == this.projeto.ID_rev && 
+					this.hiperlinks[i].ID_etapa == etapa && 
+					this.hiperlinks[i].Idp == arquivoCat) {
 					switch (arquivoCat) {
 						case 1: output = 'Consulta Instâncias'; break;
 						case 2: output = 'Consulta Caderno'; break;
@@ -148,9 +148,9 @@ let ficha = {
 		},
 
 		numberToReal(numero) {
-		    var numero = numero.toFixed(2).split('.');
-		    numero[0] = "R$ " + numero[0].split(/(?=(?:...)*$)/).join('.');
-		    return numero.join(',');
+			var numero = numero.toFixed(2).split('.');
+			numero[0] = "R$ " + numero[0].split(/(?=(?:...)*$)/).join('.');
+			return numero.join(',');
 		},
 
 		filtroMenu(proj) {
@@ -167,13 +167,13 @@ let ficha = {
 					app.abreTramitacao(index);
 				};
 			});
-		}
+		},
 	},
 
 	template: `
 	<div id="ficha" lang="pt-br">
 
-		<div @click="menu=!menu" class="menu-titulo">
+		<div @click="menu=!menu" class="menu-titulo" id="menuTitulo">
 			<div class="titulo" v-bind:class="atribuiEtapaClass(projeto.etapas_NUM)">
 				<span v-bind:class="fConsultaAberta(this.projeto)">{{ projeto.id_nome }}</span>
 				<i class="material-icons" v-if="!menu">expand_more</i>
@@ -208,7 +208,11 @@ let ficha = {
 					</template>
 					<template v-if="testeVazio(projeto.id_registro_administrativo) != false">
 						Registro administrativo
-						<div>{{projeto.id_registro_administrativo}}</div>
+							<div>
+								<template v-for="hiperlink in hiperlinks" v-if="hiperlink.ID == clickedId">
+									<a v-if="hiperlink.ID_etapa == 200 || hiperlink.ID_etapa == 250" :href="hiperlink.arquivo" :title="hiperlink.nome_publico_do_arquivo" target="_blank">{{ hiperlink.nome_publico_do_arquivo }} <i class="material-icons">launch</i></a>
+								</template>
+							</div>
 					</template>
 				</div>
 				<template v-for="hiperlink in hiperlinks" v-if="hiperlink.ID == clickedId && hiperlink.ID_etapa == 100 && testeVazio(hiperlink.arquivo) != false">
@@ -216,6 +220,16 @@ let ficha = {
 						Página completa <i class="material-icons">launch</i>
 					</a>
 				</template>
+				<!-- <div class="agenda">
+					<h4>Agenda</h4>
+					<ul>
+						<li v-for="evento in agenda">
+							<h5>{{ evento.titulo }}</h5>
+							<div><i class="material-icons">event</i> {{ evento.data }} – {{ evento.horario }}</div>
+							<div><i class="material-icons">place</i> {{ evento.local }} ({{ evento.endereco }})</div>
+						</li>
+					</ul>
+				</div> -->
 			</div>
 
 			<div class="aspectos">
@@ -268,7 +282,7 @@ let ficha = {
 			</div>
 
 			<div class="tramitacao">
-				<h4>Tramitação</h4>
+				<h4>Tramitação <span>Última atualização <strong>{{ dataExcelJS(projeto.ultima_atualizacao) }}</strong></span></h4>
 						
 				<div class="etapa">
 					<div v-show="testeVazio(projeto.a_data_protocolo)" class="periodoEtapaTramit">
@@ -459,10 +473,23 @@ let ficha = {
 							<template v-if="testeVazio(projeto.e_status_consulta_internet_minuta) != false && projeto.e_status_consulta_internet_minuta != 'NA'">
 								<p v-if="projeto.e_status_consulta_internet_minuta == 'aberta'">
 									Consulta online <span>aberta</span> ({{ dataExcelJS(projeto.e_data_inicio_consulta_minuta) }}—{{ dataExcelJS(projeto.e_data_final_consulta_minuta) }})<br>
-									<button class="linkConsulta" href="#" title="Participe da consulta pública">Participe da consulta pública</button>
+									<template v-for="hiperlink in hiperlinks" v-if="hiperlink.ID == clickedId && hiperlink.ID_etapa == 5 && hiperlink.Idp == 50">
+										<a class="linkConsulta" :href="hiperlink.arquivo" title="Participe da consulta pública" target="_blank">Participe da consulta pública <i class="material-icons">launch</i></a>
+									</template>
 								</p>
 								<p v-else>
 									Consulta online <span>encerrada</span> ({{ dataExcelJS(projeto.e_data_inicio_consulta_minuta) }}—{{ dataExcelJS(projeto.e_data_final_consulta_minuta) }})
+								</p>
+							</template>
+							<template v-if="testeVazio(projeto.e_status_consulta_internet_caderno) != false && projeto.e_status_consulta_internet_caderno != 'NA'">
+								<p v-if="projeto.e_status_consulta_internet_caderno == 'aberta'">
+									Consulta online <span>aberta</span> ({{ dataExcelJS(projeto.e_data_inicio_consulta_caderno) }}—{{ dataExcelJS(projeto.e_data_final_consulta_caderno) }})<br>
+									<template v-for="hiperlink in hiperlinks" v-if="hiperlink.ID == clickedId && hiperlink.ID_etapa == 5 && hiperlink.Idp == 55">
+										<a class="linkConsulta" :href="hiperlink.arquivo" title="Participe da consulta pública" target="_blank">Participe da consulta pública <i class="material-icons">launch</i></a>
+									</template>
+								</p>
+								<p v-else>
+									Consulta online <span>encerrada</span> ({{ dataExcelJS(projeto.e_data_inicio_consulta_caderno) }}—{{ dataExcelJS(projeto.e_data_final_consulta_caderno) }})
 								</p>
 							</template>
 							<template v-if="testeVazio(projeto.e_instancias_consultadas) != false && projeto.e_instancias_consultadas != 'NA'">

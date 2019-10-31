@@ -3,27 +3,36 @@
 Sistema de acompanhamento dos PIUs (Decreto nº 56.901, de 30 de março de 2016).
 
 ### Pré-requisitos
-* Nodejs 
-* Gulp
-* Excel
-
-### Instalação
+* Nodejs
+* git-fls
+ 
+### Instalação e desenvolvimento local
 ``` bash
 
-# Clonar repositório
-git clone https://github.com/spurb/piu-monitoramento
-
 # 'cd' para pasta do projeto. Instale as dependências especificadas em package.json
-npm install
+cd piu-monitoramento
+npm i
 
-# Serve com 'hot reload' em localhost:3000
-gulp
-
-# constrói para produção e minificação 
-gulp build
+# Para desenvolver
+npm run dev
 
 ```
+> Caso tenha erros com [atualização do node](https://github.com/nodejs/node/issues/25132) rode localmente o comando `npm install natives@1.1.6` e refaça a instalação (`npm i`).
 
-> Nota1 : O arquivo ``data_src/monitoramento.xlsx``  e ``data/src/hiperlinks`` simula a futura base de dados. Neste projeto os dados estão sendo compilados em `dist/main.min.js`.
-> Nota2: Os kmls a serem colocados em `dist/kml` devem ter a nomenclatura numérica da coluna `rev_id` do `monitoramento.xlsx`. 
+### Para publicar
+1. Rode o comando para compilar os arquivos
 
+```bash
+npm run build
+```
+
+2. Inclua todos os assets criados no diretório `dist/` no seguinte caminho do tema do portal gestão urbana:
+````
+\wp-content\themes\gestaourbana-versao-do-tema\SPA\piu-monitoramento\dist
+````
+
+## Backend
+Esta aplicação consome os dados da api do monitoramento disponível em [api.gestaourbana.prefeitura.sp.gov.br/piu-monitoramento](api.gestaourbana.prefeitura.sp.gov.br/piu-monitoramento).
+
+Veja a [documentação](https://documenter.getpostman.com/view/4136141/S1ZxbpLD?version=latest#1cd76587-99aa-450b-8590-1eb6882dafff)
+e o [repositório](https://github.com/SPURB/piu-monitoramento-backend).
