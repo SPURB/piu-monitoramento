@@ -231,24 +231,7 @@ let sumario = {
 				</div>
 			</div>
 		</div>
-
-		<div class="bloco prospeccao">
-			<div class="etapa">Em prospecção</div>
-
-			<div>
-				<template v-for="projeto in data" v-if="hasMembers(11,11, projeto.etapas_NUM)">
-					<template v-for="hiperlink in hiperlinks" v-if="hiperlink.ID_etapa == 11">
-						<span v-if="projeto.ID_rev == hiperlink.ID">
-							<a :href="hiperlink.arquivo" target="_blank">{{ projeto.id_nome }}</a>
-						</span>
-					</template>
-				</template>
-			</div>
-
-		</div>
-
 		<sumario_linha :data='data'></sumario_linha>
-
 	</div>
 	`
 }
