@@ -8,22 +8,16 @@ let vm = new Vue({
 			sumario: true,
 			ficha: false,
 		},
+		api: {
+			fetching: false,
+			message: '',
+			error: false
+		},
 		monitoramento: undefined,
 		hiperlinks: undefined
 	}, 
 	computed:{
-		apiPath() {
-			if( 
-				location.port == '3000'	||
-				location.port == '8080' ||
-				location.port == '8082' ||
-				location.port == '7080'){
-				return 'http://spurbsp163:7080/piu-monitoramento-backend/'
-			}
-			else{
-				return 'https://api.gestaourbana.prefeitura.sp.gov.br/piu-monitoramento/'
-			}
-		}
+		apiPath() { return 'https://spurb.github.io/piu-monitoramento-backend/'}
 	},
 	components: {
 		mapa,
@@ -31,7 +25,8 @@ let vm = new Vue({
 		ficha
 	},
 	created(){
-		this.fetchAPI(this.apiPath)
+		this.fetchFile(this.apiPath, 'monitoramento')
+		this.fetchFile(this.apiPath, 'hiperlinks')
 	},
 	watch:{
 		projectId(newprop, oldprop){
@@ -49,18 +44,26 @@ let vm = new Vue({
 		}
 	},
 	methods:{
-		fetchAPI(path){
-			let app = this;
-			var ajax = new XMLHttpRequest();
-			ajax.open("GET", path, true);
-			ajax.send();
-			ajax.onreadystatechange = function() {
-				if (ajax.readyState == 4 && ajax.status == 200) {
-					var data = JSON.parse(ajax.responseText);
-					app.monitoramento = data.monitoramento
-					app.hiperlinks = data.hiperlinks
-				}
-			}
+		fetchFile(url, file){
+			this.api.fetching = true
+			this.api.message = 'Enviando solicitação...'
+			const oReq = new XMLHttpRequest()
+			oReq.addEventListener("load", evt => {
+				this[file] = JSON.parse(evt.target.response)
+				this.api.fetching = false
+				this.api.message = `Requisição para ${file} realizada com sucesso`
+			})
+			oReq.addEventListener("error", evt => {
+				this[file] = JSON.parse(evt.target.response)
+				this.api.fetching = false
+				this.api.message = 'Erro! A requisição falhou'
+			})
+			oReq.addEventListener("abort", evt => {
+				this.api.fetching = false
+				this.api.message = 'Erro! A requisição foi cancelada'
+			})
+			oReq.open('GET', `${url}${file}.json`, true)
+			oReq.send()
 		},
 		receiveId(id){
 			this.projectId = id
