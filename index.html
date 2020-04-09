@@ -3,39 +3,13 @@
 <head>
 	<meta charset="utf-8">
 	<title>PIU Monitoramento</title>
-	<link rel="stylesheet" type="text/css" href="dist/styles.min.css">
 	<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/openlayers/4.2.0/ol.css">
 	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
 	<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 	<script defer src="https://cdn.rawgit.com/openlayers/openlayers.github.io/master/en/v5.0.3/build/ol.js"></script>
-	<script defer src="dist/main.min.js" defer></script>
-	<script defer type="text/javascript">
-	function loadCanvas(){
-		if(document.getElementsByTagName('canvas')[0] == undefined){
-			setTimeout(function(){ 
-				document.getElementsByTagName('canvas')[0].getContext('2d').globalCompositeOperation = 'multiply';
-			}, 3000);
-		}
-		else {
-			document.getElementsByTagName('canvas')[0].getContext('2d').globalCompositeOperation = 'multiply';
-		}
-	}
-
-	function ready(fn) {
-		if (document.attachEvent ? document.readyState === "complete" : document.readyState !== "loading"){
-			fn();
-		}
-		else {
-			document.addEventListener('DOMContentLoaded', fn);
-		}
-	}
-	ready(loadCanvas)
-	</script>
-
 </head>
 <body>
-
 	<div id="app">
 		<mapa 	 	v-show="display.mapa"		@clicked="receiveId"	:clicked-id="projectId" 	:data='monitoramento'></mapa>
 		<sumario 	v-show="display.sumario"	@clicked="receiveId" 								:data='monitoramento' 	:hiperlinks='hiperlinks'></sumario>
@@ -47,5 +21,4 @@
 <script type="text/javascript">
 	var dist_folder = "./dist/"
 </script>
-
 </html>

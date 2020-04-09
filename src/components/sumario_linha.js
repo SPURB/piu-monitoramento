@@ -1,4 +1,4 @@
-let sumario_linha = {
+export default {
 	name: 'sumario_linha',
 	data() {
 		return {

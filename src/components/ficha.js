@@ -1,4 +1,4 @@
-let ficha = {
+export default {
 	name:'ficha',
 	data (){
 		return {

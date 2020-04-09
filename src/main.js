@@ -1,4 +1,30 @@
-let vm = new Vue({
+import './styles.scss'
+import mapa from './components/mapa'
+import sumario from './components/sumario'
+import ficha from './components/ficha'
+
+function loadCanvas(){
+	if(document.getElementsByTagName('canvas')[0] == undefined){
+		setTimeout(function(){ 
+			document.getElementsByTagName('canvas')[0].getContext('2d').globalCompositeOperation = 'multiply';
+		}, 3000);
+	}
+	else {
+		document.getElementsByTagName('canvas')[0].getContext('2d').globalCompositeOperation = 'multiply';
+	}
+}
+
+function ready(fn) {
+	if (document.attachEvent ? document.readyState === "complete" : document.readyState !== "loading"){
+		fn();
+	}
+	else {
+		document.addEventListener('DOMContentLoaded', fn);
+	}
+}
+ready(loadCanvas)
+
+new Vue({
 	el: '#app',
 	data:{
 		projectId: undefined,

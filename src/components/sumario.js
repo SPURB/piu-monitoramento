@@ -1,4 +1,4 @@
-let sumario = {
+export default {
 	name:'sumario',
 	data (){
 		return {
@@ -6,7 +6,6 @@ let sumario = {
 		}
 	},
 	props: ['data', 'hiperlinks'],
-	components: { sumario_linha },
 
 	methods: {
 		hasMembers(first, last, etapa){
@@ -231,7 +230,6 @@ let sumario = {
 				</div>
 			</div>
 		</div>
-		<sumario_linha :data='data'></sumario_linha>
 	</div>
 	`
 }

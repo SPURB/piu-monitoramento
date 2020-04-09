@@ -22,7 +22,7 @@ git clone https://github.com/SPURB/piu-monitoramento.git
 cd piu-monitoramento
 npm i
 
-# Inicie a aplicação em localhost3000
+# Inicie a aplicação em localhost:3000
 npm run dev
 ```
 > Caso tenha erros com [atualização do node](https://github.com/nodejs/node/issues/25132) rode localmente o comando `npm install natives@1.1.6` e refaça a instalação (`npm i`).

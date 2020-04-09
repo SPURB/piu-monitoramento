@@ -1,6 +1,7 @@
+os: linux
 language: node_js
 node_js:
-  - 9
+  - lts/*
 
 cache:
  npm: true
@@ -20,7 +21,8 @@ script:
 
 before_deploy:
  - mkdir -p public
- - mv index.html public
+ - mv dist/index.html public
+ - mv dist/main.min.js public
  - mv dist public
 
 deploy:

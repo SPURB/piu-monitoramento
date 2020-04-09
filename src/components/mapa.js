@@ -1,3 +1,4 @@
+import kmls from '../data/kmls'
 /* Open Layers -> declara view
 Dado que a view será alterada de dentro da instância da classe Vue declaramos ela fora do seu escopo
 */
@@ -12,7 +13,7 @@ let view = new ol.View({
 let featureOverlay;
 let highlight;
 
-let mapa = {
+export default {
 	name:'mapa',
 	data (){
 		return {
