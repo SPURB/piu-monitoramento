@@ -1,33 +1,17 @@
 import './styles.scss'
 import mapa from './components/mapa'
 import sumario from './components/sumario'
-import ficha from './components/ficha'
-
-function loadCanvas(){
-	if(document.getElementsByTagName('canvas')[0] == undefined){
-		setTimeout(function(){ 
-			document.getElementsByTagName('canvas')[0].getContext('2d').globalCompositeOperation = 'multiply';
-		}, 3000);
-	}
-	else {
-		document.getElementsByTagName('canvas')[0].getContext('2d').globalCompositeOperation = 'multiply';
-	}
-}
-
-function ready(fn) {
-	if (document.attachEvent ? document.readyState === "complete" : document.readyState !== "loading"){
-		fn();
-	}
-	else {
-		document.addEventListener('DOMContentLoaded', fn);
-	}
-}
-ready(loadCanvas)
+import Ficha from './components/Ficha.vue'
 
 new Vue({
 	el: '#app',
+	components: {
+		mapa,
+		sumario,
+		Ficha
+	},
 	data:{
-		projectId: undefined,
+		projectId: 0,
 		isFocused: false,
 		display:{
 			mapa: true,
@@ -39,24 +23,19 @@ new Vue({
 			message: '',
 			error: false
 		},
-		monitoramento: undefined,
-		hiperlinks: undefined
+		monitoramento: [],
+		hiperlinks: []
 	}, 
 	computed:{
 		apiPath() { return 'https://spurb.github.io/piu-monitoramento-backend/'}
-	},
-	components: {
-		mapa,
-		sumario,
-		ficha
 	},
 	created(){
 		this.fetchFile(this.apiPath, 'monitoramento')
 		this.fetchFile(this.apiPath, 'hiperlinks')
 	},
 	watch:{
-		projectId(newprop, oldprop){
-			if(this.projectId != undefined) {
+		projectId () {
+			if(this.projectId !== 0) {
 				this.display.sumario = false
 				this.display.ficha = true
 				this.isFocused = true
@@ -93,7 +72,7 @@ new Vue({
 		},
 		receiveId(id){
 			this.projectId = id
-			if (id == undefined){
+			if (id === 0){
 				this.display.sumario = true
 				this.display.ficha = false
 				this.isFocused = false

@@ -1,178 +1,5 @@
-export default {
-	name:'ficha',
-	data (){
-		return {
-			projeto: '',
-			menuClickedId: '',
-			menu: false,
-			E01: false, E02: false, E03: false, E04: false,
-			E05: false, E06: false, E07: false, E08: false,
-			agenda: [
-				{ titulo: 'Audiência Pública', data: '12.08.2018', horario: '19h', local: 'Estádio do Morumbi', endereco: 'Praça Roberto Gomes Pedrosa, 1' },
-				{ titulo: 'Renião temática - SABESP', data: '22.08.2018', horario: '15h', local: 'Sede SABESP', endereco: 'Rua Costa Carvalho, 300' },
-				{ titulo: 'Reunião CMPU', data: '30.08.2018', horario: '09h', local: 'Auditório – Ed. Martinelli', endereco: 'Rua São Bento, 405' },
-				{ titulo: 'Workshop temático', data: '06.09.2018', horario: '09h', local: 'Parque da Aclimação', endereco: 'Rua Muniz de Sousa, 1119' }
-			],
-		}
-	},
-	props: [
-		'clicked-id', 
-		'data', 
-		'hiperlinks'
-	],
-	methods: {
-		atribuiEtapaClass(etp) {
-			if (etp <= 3) { return 'proposicao' };
-			if (etp > 3 && etp <= 7) { return 'andamento'};
-			if (etp == 8) { return 'implantacao' };
-			if (etp == 9) { return 'suspenso' };
-			if (etp == 10) { return 'arquivado' };
-			if (etp == 11) { return 'prospeccao' };
-		},
-
-		atribuiEtapaTag(etp) {
-			const etapa = parseInt(etp)
-			switch (etapa) {
-				case 1: return 'Proposição';
-				case 2: return 'Consulta púb. inicial';
-				case 3: return 'Avaliação SMUL';
-				case 4: return 'Elaboração';
-				case 5: return 'Discussão pública';
-				case 6: return 'Consolidação';
-				case 7: return 'Enc. jurídico';
-				case 8: return 'Implantação';
-				case 9: return 'Suspenso';
-				case 10: return 'Arquivado';
-				case 11: return 'Em prospecção';
-			};
-		},
-
-		dataExcelJS(data) {
-			if (data != null && data != '-' && data != 'NA') {
-				if (data.toString().length == 5) {
-					let d = new Date((Math.floor(data - 25568))*86400000);
-					let string = ('0' + d.getDate()).slice(-2)+'/'+('0' + (d.getMonth()+1)).slice(-2)+'/'+d.getFullYear();
-					return string;
-				} else if (data.replace('/','').length > 5 && data.replace('/','').length <= 8) {
-					return data;
-				} else { return data };
-			} else { return '' }
-		},
-
-		encontraProjeto(newClickedId) {
-			this.data.map(function(index) {
-				if (index.id == newClickedId) {
-					this.projeto = index;
-				};
-			});
-			this.hiperlinks.map(function(index) {
-				if (index.ID == newClickedId) {
-					this.proj == index;
-				};
-			});
-		},
-
-		enviaId(event) {
-			this.$emit('clicked', this.menuClickedId)
-		},
-
-		gravaId(id) {
-			this.menuClickedId = id;
-			this.enviaId();
-		},
-
-		atribuiEstado(etapa) {
-			let e = this.projeto.etapas_NUM;
-			if (e < etapa || e > 8) { return 'posterior' };
-			if (e == etapa) { return 'atual' };
-			if (e > etapa) { return 'anterior' };
-		},
-
-		ext(filename) {
-			let extensao = filename.substring(filename.lastIndexOf('.')+1, filename.length).replace('/','');
-			if (extensao.length > 4 || extensao.length <= 2) { return 'url' };
-			if (extensao.length > 2 || extensao.length <= 4) { return extensao };
-		},
-
-		abreTramitacao(par) {
-			let etapa = par.etapas_NUM;
-			if (etapa == 1) { this.E01 = true; this.E02 = false; this.E03 = false; this.E04 = false; this.E05 = false; this.E06 = false; this.E07 = false; this.E08 = false; };
-			if (etapa == 2) { this.E02 = true; this.E01 = false; this.E03 = false; this.E04 = false; this.E05 = false; this.E06 = false; this.E07 = false; this.E08 = false; };
-			if (etapa == 3) { this.E03 = true; this.E01 = false; this.E02 = false; this.E04 = false; this.E05 = false; this.E06 = false; this.E07 = false; this.E08 = false; };
-			if (etapa == 4) { this.E04 = true; this.E01 = false; this.E02 = false; this.E03 = false; this.E05 = false; this.E06 = false; this.E07 = false; this.E08 = false; };
-			if (etapa == 5) { this.E05 = true; this.E01 = false; this.E02 = false; this.E03 = false; this.E04 = false; this.E06 = false; this.E07 = false; this.E08 = false; };
-			if (etapa == 6) { this.E06 = true; this.E01 = false; this.E02 = false; this.E03 = false; this.E04 = false; this.E05 = false; this.E07 = false; this.E08 = false; };
-			if (etapa == 7) { this.E07 = true; this.E01 = false; this.E02 = false; this.E03 = false; this.E04 = false; this.E05 = false; this.E06 = false; this.E08 = false; };
-			if (etapa == 8) { this.E08 = true; this.E01 = false; this.E02 = false; this.E03 = false; this.E04 = false; this.E05 = false; this.E06 = false; this.E07 = false; };
-		},
-
-		fConsultaAberta(par) {
-			if (par.b_status == 'aberta' || par.e_status_consulta_internet_minuta == 'aberta' || par.e_status_consulta_internet_caderno == 'aberta') { 
-				return 'consultaAberta'
-			};
-		},
-
-		arquivosDiscussao(etapa, arquivoCat) {
-			var output = '';
-			for (var i = 0; i < this.hiperlinks.length; i++) {
-				if (this.hiperlinks[i].ID == this.projeto.ID_rev && 
-					this.hiperlinks[i].ID_etapa == etapa && 
-					this.hiperlinks[i].Idp == arquivoCat) {
-					switch (arquivoCat) {
-						case 1: output = 'Consulta Instâncias'; break;
-						case 2: output = 'Consulta Caderno'; break;
-						case 3: output = 'Consulta Minuta'; break;
-						case 4: output = 'Audiência Pública'; break;
-						case 5: output = 'Reuniões Bilaterais'; break;
-						case 6: output = 'Outras'; break;
-						case 7: output = 'Projeto Final'; break;
-						default: output = ''; break;
-					};
-				};
-			};
-			return output;
-		},
-
-		testeVazio(file) {
-			if (file != undefined && file != null && file != '-' && file != '' && file != 'NA') {
-				return true;
-			} else { return false };
-		},
-
-		testeLink(file) {
-			if (file != undefined && file != null && file != '-' && file != '' && file.indexOf('http') === 0) {
-				return true
-			} else {
-				return false
-			};
-		},
-
-		numberToReal(numero) {
-			var numero = numero.toFixed(2).split('.');
-			numero[0] = "R$ " + numero[0].split(/(?=(?:...)*$)/).join('.');
-			return numero.join(',');
-		},
-
-		filtroMenu(proj) {
-			return (proj.etapas_NUM > 0 && proj.etapas_NUM <= 10);
-		},
-	},
-
-	watch:{
-		clickedId(newprop,oldprop){
-			const app = this;
-			app.data.map(function(index) {
-				if (index.ID_rev == newprop) {
-					app.projeto = index;
-					app.abreTramitacao(index);
-				};
-			});
-		},
-	},
-
-	template: `
-	<div id="ficha" lang="pt-br">
-
+<template>
+	<div id="ficha">
 		<div @click="menu=!menu" class="menu-titulo" id="menuTitulo">
 			<div class="titulo" v-bind:class="atribuiEtapaClass(projeto.etapas_NUM)">
 				<span v-bind:class="fConsultaAberta(this.projeto)">{{ projeto.id_nome }}</span>
@@ -191,46 +18,12 @@ export default {
 		</div>
 
 		<div class="container">
-			<div class="colId">
-				<div class="indicador" v-bind:class="atribuiEtapaClass(projeto.etapas_NUM)" title="Etapa atual da tramitação do PIU">{{ atribuiEtapaTag(projeto.etapas_NUM) }}</div>
-				<div class="id">
-					<template v-if="testeVazio(projeto.id_iniciativa_da_proposta) != false">
-						Natureza da proposta
-						<div>{{projeto.id_iniciativa_da_proposta}}</div>
-					</template>
-					<template v-if="testeVazio(projeto.id_proponente) != false">
-						Proponente
-						<div>{{projeto.id_proponente}}</div>
-					</template>
-					<template v-if="testeVazio(projeto.id_origem) != false">
-						Origem
-						<div>{{projeto.id_origem}}</div>
-					</template>
-					<template v-if="testeVazio(projeto.id_registro_administrativo) != false">
-						Registro administrativo
-							<div>
-								<template v-for="hiperlink in hiperlinks" v-if="hiperlink.ID == clickedId">
-									<a v-if="hiperlink.ID_etapa == 200 || hiperlink.ID_etapa == 250" :href="hiperlink.arquivo" :title="hiperlink.nome_publico_do_arquivo" target="_blank">{{ hiperlink.nome_publico_do_arquivo }} <i class="material-icons">launch</i></a>
-								</template>
-							</div>
-					</template>
-				</div>
-				<template v-for="hiperlink in hiperlinks" v-if="hiperlink.ID == clickedId && hiperlink.ID_etapa == 100 && testeVazio(hiperlink.arquivo) != false">
-					<a class="link_pag_completa" :href="hiperlink.arquivo" :title="'Acesse a página completa de '+hiperlink.PIU" target="_blank">
-						Página completa <i class="material-icons">launch</i>
-					</a>
-				</template>
-				<!-- <div class="agenda">
-					<h4>Agenda</h4>
-					<ul>
-						<li v-for="evento in agenda">
-							<h5>{{ evento.titulo }}</h5>
-							<div><i class="material-icons">event</i> {{ evento.data }} – {{ evento.horario }}</div>
-							<div><i class="material-icons">place</i> {{ evento.local }} ({{ evento.endereco }})</div>
-						</li>
-					</ul>
-				</div> -->
-			</div>
+				<ficha-sumario
+					:projeto="projeto"
+					:hiperlinks="hiperlinks"
+					:etapaClass="atribuiEtapaClass(projeto.etapas_NUM)" 
+					:etapaTag="atribuiEtapaTag(projeto.etapas_NUM)" 
+					:clickedId="clickedId" />
 
 			<div class="aspectos">
 				<h4>Aspectos técnico-urbanísticos</h4>
@@ -672,5 +465,183 @@ export default {
 			</div>
 		</div>
 	</div>
-	`
+</template>
+<script>
+import FichaSumario from './FichaSumario.vue'
+
+export default {
+	name:'ficha',
+	data (){
+		return {
+			projeto: {},
+			menuClickedId: 0,
+			menu: false,
+			E01: false, E02: false, E03: false, E04: false,
+			E05: false, E06: false, E07: false, E08: false,
+			agenda: [
+				{ titulo: 'Audiência Pública', data: '12.08.2018', horario: '19h', local: 'Estádio do Morumbi', endereco: 'Praça Roberto Gomes Pedrosa, 1' },
+				{ titulo: 'Renião temática - SABESP', data: '22.08.2018', horario: '15h', local: 'Sede SABESP', endereco: 'Rua Costa Carvalho, 300' },
+				{ titulo: 'Reunião CMPU', data: '30.08.2018', horario: '09h', local: 'Auditório – Ed. Martinelli', endereco: 'Rua São Bento, 405' },
+				{ titulo: 'Workshop temático', data: '06.09.2018', horario: '09h', local: 'Parque da Aclimação', endereco: 'Rua Muniz de Sousa, 1119' }
+			],
+		}
+	},
+	props: [
+		'clicked-id', 
+		'data', 
+		'hiperlinks'
+	],
+	components:{
+		FichaSumario
+	},
+	methods: {
+		atribuiEtapaClass(etp) {
+			if (etp <= 3) { return 'proposicao' };
+			if (etp > 3 && etp <= 7) { return 'andamento'};
+			if (etp == 8) { return 'implantacao' };
+			if (etp == 9) { return 'suspenso' };
+			if (etp == 10) { return 'arquivado' };
+			if (etp == 11) { return 'prospeccao' };
+		},
+
+		atribuiEtapaTag(etp) {
+			const etapa = parseInt(etp)
+			switch (etapa) {
+				case 1: return 'Proposição';
+				case 2: return 'Consulta púb. inicial';
+				case 3: return 'Avaliação SMUL';
+				case 4: return 'Elaboração';
+				case 5: return 'Discussão pública';
+				case 6: return 'Consolidação';
+				case 7: return 'Enc. jurídico';
+				case 8: return 'Implantação';
+				case 9: return 'Suspenso';
+				case 10: return 'Arquivado';
+				case 11: return 'Em prospecção';
+			};
+		},
+
+		dataExcelJS(data) {
+			if (data != null && data != '-' && data != 'NA') {
+				if (data.toString().length == 5) {
+					let d = new Date((Math.floor(data - 25568))*86400000);
+					let string = ('0' + d.getDate()).slice(-2)+'/'+('0' + (d.getMonth()+1)).slice(-2)+'/'+d.getFullYear();
+					return string;
+				} else if (data.replace('/','').length > 5 && data.replace('/','').length <= 8) {
+					return data;
+				} else { return data };
+			} else { return '' }
+		},
+
+		encontraProjeto(newClickedId) {
+			this.data.map(function(index) {
+				if (index.id == newClickedId) {
+					this.projeto = index;
+				};
+			});
+			this.hiperlinks.map(function(index) {
+				if (index.ID == newClickedId) {
+					this.proj == index;
+				};
+			});
+		},
+
+		enviaId(event) {
+			this.$emit('clicked', this.menuClickedId)
+		},
+
+		gravaId(id) {
+			this.menuClickedId = id;
+			this.enviaId();
+		},
+
+		atribuiEstado(etapa) {
+			let e = this.projeto.etapas_NUM;
+			if (e < etapa || e > 8) { return 'posterior' };
+			if (e == etapa) { return 'atual' };
+			if (e > etapa) { return 'anterior' };
+		},
+
+		ext(filename) {
+			let extensao = filename.substring(filename.lastIndexOf('.')+1, filename.length).replace('/','');
+			if (extensao.length > 4 || extensao.length <= 2) { return 'url' };
+			if (extensao.length > 2 || extensao.length <= 4) { return extensao };
+		},
+
+		abreTramitacao(par) {
+			let etapa = par.etapas_NUM;
+			if (etapa == 1) { this.E01 = true; this.E02 = false; this.E03 = false; this.E04 = false; this.E05 = false; this.E06 = false; this.E07 = false; this.E08 = false; };
+			if (etapa == 2) { this.E02 = true; this.E01 = false; this.E03 = false; this.E04 = false; this.E05 = false; this.E06 = false; this.E07 = false; this.E08 = false; };
+			if (etapa == 3) { this.E03 = true; this.E01 = false; this.E02 = false; this.E04 = false; this.E05 = false; this.E06 = false; this.E07 = false; this.E08 = false; };
+			if (etapa == 4) { this.E04 = true; this.E01 = false; this.E02 = false; this.E03 = false; this.E05 = false; this.E06 = false; this.E07 = false; this.E08 = false; };
+			if (etapa == 5) { this.E05 = true; this.E01 = false; this.E02 = false; this.E03 = false; this.E04 = false; this.E06 = false; this.E07 = false; this.E08 = false; };
+			if (etapa == 6) { this.E06 = true; this.E01 = false; this.E02 = false; this.E03 = false; this.E04 = false; this.E05 = false; this.E07 = false; this.E08 = false; };
+			if (etapa == 7) { this.E07 = true; this.E01 = false; this.E02 = false; this.E03 = false; this.E04 = false; this.E05 = false; this.E06 = false; this.E08 = false; };
+			if (etapa == 8) { this.E08 = true; this.E01 = false; this.E02 = false; this.E03 = false; this.E04 = false; this.E05 = false; this.E06 = false; this.E07 = false; };
+		},
+
+		fConsultaAberta(par) {
+			if (par.b_status == 'aberta' || par.e_status_consulta_internet_minuta == 'aberta' || par.e_status_consulta_internet_caderno == 'aberta') { 
+				return 'consultaAberta'
+			};
+		},
+
+		arquivosDiscussao(etapa, arquivoCat) {
+			var output = '';
+			for (var i = 0; i < this.hiperlinks.length; i++) {
+				if (this.hiperlinks[i].ID == this.projeto.ID_rev && 
+					this.hiperlinks[i].ID_etapa == etapa && 
+					this.hiperlinks[i].Idp == arquivoCat) {
+					switch (arquivoCat) {
+						case 1: output = 'Consulta Instâncias'; break;
+						case 2: output = 'Consulta Caderno'; break;
+						case 3: output = 'Consulta Minuta'; break;
+						case 4: output = 'Audiência Pública'; break;
+						case 5: output = 'Reuniões Bilaterais'; break;
+						case 6: output = 'Outras'; break;
+						case 7: output = 'Projeto Final'; break;
+						default: output = ''; break;
+					};
+				};
+			};
+			return output;
+		},
+
+		testeVazio(file) {
+			if (file != undefined && file != null && file != '-' && file != '' && file != 'NA') {
+				return true;
+			} else { return false };
+		},
+
+		testeLink(file) {
+			if (file != undefined && file != null && file != '-' && file != '' && file.indexOf('http') === 0) {
+				return true
+			} else {
+				return false
+			};
+		},
+
+		numberToReal(numero) {
+			var numero = numero.toFixed(2).split('.');
+			numero[0] = "R$ " + numero[0].split(/(?=(?:...)*$)/).join('.');
+			return numero.join(',');
+		},
+
+		filtroMenu(proj) {
+			return (proj.etapas_NUM > 0 && proj.etapas_NUM <= 10);
+		},
+	},
+
+	watch:{
+		clickedId(newprop,oldprop){
+			const app = this;
+			app.data.map(function(index) {
+				if (index.ID_rev == newprop) {
+					app.projeto = index;
+					app.abreTramitacao(index);
+				};
+			});
+		},
+	}
 }
+</script>

@@ -1,6 +1,5 @@
 import kmls from '../data/kmls'
-/* Open Layers -> declara view
-Dado que a view será alterada de dentro da instância da classe Vue declaramos ela fora do seu escopo
+/* Open Layers
 */
 let view = new ol.View({
 	projection: ol.proj.get('EPSG:3857'),
@@ -12,6 +11,17 @@ let view = new ol.View({
 
 let featureOverlay;
 let highlight;
+
+const applyMultiplyOnCanvas = (counter = 0) => {
+	const el = tag => document.getElementsByTagName(tag)[0]
+
+	if (el('canvas') == undefined && counter < 15) {
+		setTimeout(() => applyMultiplyOnCanvas(counter + 1), 1000)
+	}
+	else {
+		el('canvas').getContext('2d').globalCompositeOperation = 'multiply'
+	}
+}
 
 export default {
 	name:'mapa',
@@ -54,7 +64,7 @@ export default {
 		},
 		kmls(){
 			let parseKml = [];
-			kmls.map(function(str) { // dev/data/kmls.js
+			kmls.forEach(function(str) { // dev/data/kmls.js
 				let outputid
 				let baseNumber = str.substring(0,2) // primeiros dois strings -> 1_ ou 10
 				let numericStr = parseInt(baseNumber,10); // converte strings para número ou retorna NaN
@@ -115,8 +125,8 @@ export default {
 				};
 			});
 		},
-		data(){
-			this.layers = this.myMap.getLayers();
+		data () {
+			this.layers = this.myMap.getLayers()
 			this.highlightSettings();
 			let app = this;
 			this.myMap.on('click', function(evt){
@@ -308,34 +318,37 @@ export default {
 			});
 			this.$emit('clicked', undefined);
 			this.breadcrumb = false;
-			app.projeto = undefined;
+			app.projeto = {}
 		},
 		dlKml(id) {
-			if (id != undefined) {
+			if (id) {
 				for (let i = 0; i <= this.kmls.length; i++) {
 					if (this.kmls[i].id == id) {
 						let url = dist_folder+'kml/'+this.kmls[i].fileName;
 						return url;
 					}
 				}
-			} else if (id == undefined) {
+			} else if (id) {
 				let url = dist_folder+'kml/'+'0_PIUs_gestao_urbana.kml';
 				return url;
 			} else { return '' }
 		},
 		dlShp(id) {
-			if (id != undefined) {
+			if (id) {
 				for (let i = 0; i <= this.kmls.length; i++) {
 					if (this.kmls[i].id == id) {
 						let url = dist_folder+'shp/'+this.kmls[i].fileName.slice(0,this.kmls[i].fileName.lastIndexOf('.'))+'.rar';
 						return url;
 					}
 				}
-			} else if (id == undefined) {
+			} else if (id) {
 				let url = dist_folder+'shp/'+'0_PIUs_gestao_urbana.rar';
 				return url;
 			} else { return '' }
 		},
+	},
+	mounted () {
+		applyMultiplyOnCanvas()
 	},
 	template: `
 	<div id="mapa">

@@ -28,7 +28,7 @@ export default {
 	template: `
 	<div id="sumario">
 
-		<div class="bloco">		
+		<div class="bloco">
 			<div class="thead">
 				<div>
 					Etapas
