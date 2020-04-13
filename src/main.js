@@ -1,6 +1,6 @@
 import './styles.scss'
-import mapa from './components/mapa'
-import sumario from './components/sumario'
+import mapa from './components/Mapa.vue'
+import sumario from './components/Sumario.vue'
 import Ficha from './components/Ficha.vue'
 
 new Vue({
