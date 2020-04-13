@@ -67,7 +67,6 @@ module.exports = ({ mode }) => {
 			contentBase: '.',
 			clientLogLevel: 'silent',
 			historyApiFallback: true,
-			noInfo: true,
 			overlay: true
 		}
 		config.devtool = 'source-map'

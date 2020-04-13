@@ -9,9 +9,9 @@ Os dados da do monitoramento estão disponíveis no seguinte repositório [spurb
 
 ### Instalação e desenvolvimento local
 #### Pré-requisitos para desenvolvimento
-* Nodejs
-* git
-* git-fls
+* [Nodejs](https://nodejs.org)
+* [git](https://git-scm.com/downloads)
+* [git-fls](https://git-lfs.github.com)
 
 #### Instruções para rodar localmente
 ``` bash
