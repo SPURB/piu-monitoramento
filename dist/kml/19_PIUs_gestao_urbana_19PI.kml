@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kml xmlns="http://www.opengis.net/kml/2.2" xmlns:gx="http://www.google.com/kml/ext/2.2" xmlns:kml="http://www.opengis.net/kml/2.2" xmlns:atom="http://www.w3.org/2005/Atom">
+<Document>
+	<name>PIUs_gestao_urbana_19PI.shp</name>
+	<Schema name="PIUs_gestao_urbana_19PI" id="S_PIUs_gestao_urbana_19PI_SISSSSSSSSSD">
+		<SimpleField type="string" name="Layer"><displayName>&lt;b&gt;Layer&lt;/b&gt;</displayName>
+</SimpleField>
+		<SimpleField type="int" name="ID"><displayName>&lt;b&gt;ID&lt;/b&gt;</displayName>
+</SimpleField>
+		<SimpleField type="string" name="Data"><displayName>&lt;b&gt;Data&lt;/b&gt;</displayName>
+</SimpleField>
+		<SimpleField type="string" name="Origem"><displayName>&lt;b&gt;Origem&lt;/b&gt;</displayName>
+</SimpleField>
+		<SimpleField type="string" name="Iniciativa"><displayName>&lt;b&gt;Iniciativa&lt;/b&gt;</displayName>
+</SimpleField>
+		<SimpleField type="string" name="Proponente"><displayName>&lt;b&gt;Proponente&lt;/b&gt;</displayName>
+</SimpleField>
+		<SimpleField type="string" name="Natureza_J"><displayName>&lt;b&gt;Natureza J&lt;/b&gt;</displayName>
+</SimpleField>
+		<SimpleField type="string" name="Ano_de_ini"><displayName>&lt;b&gt;Ano de ini&lt;/b&gt;</displayName>
+</SimpleField>
+		<SimpleField type="string" name="Rede_de_Es"><displayName>&lt;b&gt;Rede de Es&lt;/b&gt;</displayName>
+</SimpleField>
+		<SimpleField type="string" name="Intrumento"><displayName>&lt;b&gt;Intrumento&lt;/b&gt;</displayName>
+</SimpleField>
+		<SimpleField type="string" name="Etapa"><displayName>&lt;b&gt;Etapa&lt;/b&gt;</displayName>
+</SimpleField>
+		<SimpleField type="double" name="Area__ha_"><displayName>&lt;b&gt;Area (ha)&lt;/b&gt;</displayName>
+</SimpleField>
+	</Schema>
+	<Style id="falseColor">
+		<BalloonStyle>
+			<text><![CDATA[<table border="0">
+  <tr><td><b>Layer</b></td><td>$[PIUs_gestao_urbana_19PI/Layer]</td></tr>
+  <tr><td><b>ID</b></td><td>$[PIUs_gestao_urbana_19PI/ID]</td></tr>
+  <tr><td><b>Data</b></td><td>$[PIUs_gestao_urbana_19PI/Data]</td></tr>
+  <tr><td><b>Origem</b></td><td>$[PIUs_gestao_urbana_19PI/Origem]</td></tr>
+  <tr><td><b>Iniciativa</b></td><td>$[PIUs_gestao_urbana_19PI/Iniciativa]</td></tr>
+  <tr><td><b>Proponente</b></td><td>$[PIUs_gestao_urbana_19PI/Proponente]</td></tr>
+  <tr><td><b>Natureza J</b></td><td>$[PIUs_gestao_urbana_19PI/Natureza_J]</td></tr>
+  <tr><td><b>Ano de ini</b></td><td>$[PIUs_gestao_urbana_19PI/Ano_de_ini]</td></tr>
+  <tr><td><b>Rede de Es</b></td><td>$[PIUs_gestao_urbana_19PI/Rede_de_Es]</td></tr>
+  <tr><td><b>Intrumento</b></td><td>$[PIUs_gestao_urbana_19PI/Intrumento]</td></tr>
+  <tr><td><b>Etapa</b></td><td>$[PIUs_gestao_urbana_19PI/Etapa]</td></tr>
+  <tr><td><b>Area (ha)</b></td><td>$[PIUs_gestao_urbana_19PI/Area__ha_]</td></tr>
+</table>
+]]></text>
+		</BalloonStyle>
+		<PolyStyle>
+			<colorMode>random</colorMode>
+		</PolyStyle>
+	</Style>
+	<Folder id="layer 0">
+		<name>PIUs_gestao_urbana_19PI</name>
+		<Placemark>
+			<styleUrl>#falseColor</styleUrl>
+			<ExtendedData>
+				<SchemaData schemaUrl="#S_PIUs_gestao_urbana_19PI_SISSSSSSSSSD">
+					<SimpleData name="Layer">PIU Terminais Pilotos - Psa Isabel</SimpleData>
+					<SimpleData name="ID">19</SimpleData>
+					<SimpleData name="Data">11/07/2018</SimpleData>
+					<SimpleData name="Origem">Lei 16.211/2015 e 16.703/2017 (Concessão terminais)</SimpleData>
+					<SimpleData name="Iniciativa">Publico</SimpleData>
+					<SimpleData name="Proponente">PMSP - SMDP/SPP</SimpleData>
+					<SimpleData name="Natureza_J">Decreto</SimpleData>
+					<SimpleData name="Ano_de_ini">2017</SimpleData>
+					<SimpleData name="Rede_de_Es">EETU</SimpleData>
+					<SimpleData name="Intrumento">AELs</SimpleData>
+					<SimpleData name="Etapa">Discussão Pública</SimpleData>
+					<SimpleData name="Area__ha_">98.07</SimpleData>
+				</SchemaData>
+			</ExtendedData>
+			<Polygon>
+				<outerBoundaryIs>
+					<LinearRing>
+						<coordinates>
+							-46.64338053130442,-23.53967815270141,0 -46.64233204101097,-23.53897545782366,0 -46.64115415306933,-23.53820494152945,0 -46.64105296606002,-23.53815324038163,0 -46.63915592222552,-23.53690400579807,0 -46.63969905047923,-23.53621259135587,0 -46.63971378905848,-23.53609276651372,0 -46.63889118471866,-23.53552244988732,0 -46.63905175461886,-23.53531773801694,0 -46.63960166248728,-23.53486545273182,0 -46.64064068097918,-23.53364752448342,0 -46.64205010334262,-23.53185028518586,0 -46.64198902716549,-23.53180414139395,0 -46.64167886465415,-23.53160706965343,0 -46.6417183754912,-23.53155222392181,0 -46.64170190612844,-23.53154081708082,0 -46.6417684988657,-23.53144167928744,0 -46.64167730392347,-23.53138010619788,0 -46.64179560180592,-23.53114608780829,0 -46.64180038076324,-23.53112635034972,0 -46.64195723204912,-23.53091219112145,0 -46.64228818384535,-23.53045705479407,0 -46.64248826082448,-23.53018395680179,0 -46.64280055411049,-23.52984482251679,0 -46.64295688710012,-23.52969030798106,0 -46.6432253787716,-23.52946512531901,0 -46.6434470985945,-23.52931686819603,0 -46.64370135351714,-23.52915900263167,0 -46.64393606186152,-23.52904534946489,0 -46.64422816212635,-23.52890097999061,0 -46.64434108538012,-23.52887204147931,0 -46.64487437460098,-23.52870510165343,0 -46.64553672872677,-23.52861388984764,0 -46.64576155648236,-23.52860012613363,0 -46.64604740481417,-23.52863445533695,0 -46.64607195212003,-23.52864286396027,0 -46.64626112165299,-23.52866408697483,0 -46.64684865089453,-23.52904697814007,0 -46.64943691389367,-23.5307381227374,0 -46.65100175051644,-23.531735985133,0 -46.6501225162528,-23.53294042716425,0 -46.65094807948638,-23.53347364008962,0 -46.64984268392607,-23.53493671285644,0 -46.65092632358142,-23.5356046953214,0 -46.65009649072593,-23.53674376242666,0 -46.64993968790958,-23.53684137072904,0 -46.64993373632871,-23.53684943361082,0 -46.64606028210354,-23.53902630630745,0 -46.64547774839685,-23.53863631230136,0 -46.64469833955027,-23.53956611352597,0 -46.64392382715233,-23.53908116675569,0 -46.64338053130442,-23.53967815270141,0 
+						</coordinates>
+					</LinearRing>
+				</outerBoundaryIs>
+			</Polygon>
+		</Placemark>
+	</Folder>
+</Document>
+</kml>
