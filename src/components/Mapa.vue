@@ -1,67 +1,75 @@
+<template>
+	<div id="mapa">
+		<div class="title">
+			<h3>Projetos de Intervenção Urbana</h3>
+			<ul v-if="breadcrumb" class="mapa_breadcrumb">
+				<li><a href="#todos" @click="resetApp">PIUs</a></li>
+				<li>{{ projeto.a_etapa_comunicacao }}</li>
+				<li>{{ projeto.id_nome }}</li>
+			</ul>
+		</div>
+		<div id="map" class="map">
+			<div class="downloadBase">
+				<a :href="dlKml(clickedId)" id="dlKml">
+					<i class="material-icons">get_app</i> KML
+				</a>
+				<a :href="dlShp(clickedId)" id="dlShp">
+					<i class="material-icons">get_app</i> Shapefile
+				</a>
+			</div>
+			<div class="legenda" v-if="clickedId == undefined">
+				<span>Legenda</span>
+				<div class="proposicao">Em proposição</div>
+				<div class="andamento">Em andamento</div>
+				<div class="implantacao">Implantação</div>
+				<div class="suspenso">Suspenso/arquivado</div>
+				<div class="prospeccao">Em prospecção</div>
+			</div>
+		</div>
+		<div id="infoModal" class="infoModal" v-if="featureInfo.nome" v-bind:style="infoBoxStyle" @click="setProjectId(featureInfo.ID)">
+			<a href="#" class="infoModalNome" v-bind:class="fConsultaAberta(featureInfo.ID)">{{ featureInfo.nome }}</a>
+			<a href="#" class="infoModalEtapa" v-bind:class="atribuiEtapaClass(featureInfo.ID)">{{ featureInfo.etapa }}</a>
+		</div>
+	</div>
+</template>
+<script>
 import kmls from '../data/kmls'
-/* Open Layers
-*/
-let view = new ol.View({
-	projection: ol.proj.get('EPSG:3857'),
-	center: [ -5195135.816167192, -2698303.8770360295 ],
-	zoom: 10.9,
-	minZoom: 10.9,
-	maxZoom: 19
-});
-
-let featureOverlay;
-let highlight;
-
-const applyMultiplyOnCanvas = (counter = 0) => {
-	const el = tag => document.getElementsByTagName(tag)[0]
-
-	if (el('canvas') == undefined && counter < 15) {
-		setTimeout(() => applyMultiplyOnCanvas(counter + 1), 1000)
-	}
-	else {
-		el('canvas').getContext('2d').globalCompositeOperation = 'multiply'
-	}
-}
-
 export default {
 	name:'mapa',
 	data (){
 		return {
+			featureOverlay: null,
+			highlight: null,
 			featureInfo: {
-				"nome": "",
-				"etapa": "",
-				"ID": ""
+				nome: '',
+				etapa: '',
+				ID: ''
 			},
 			infoBoxStyle: {
-				"left": "0",
-				"top": "0",
-				"position": "absolute"
+				left: 0,
+				top: 0,
+				position: 'absolute'
 			},
 			// data: monitoramento,
 			projeto: undefined,
 			layers: undefined,
 			breadcrumb: false,
-			center: view.getCenter(),		// registro de primeira view
-			zoom: view.getZoom() 			//
+			center: null,// registro de primeira view
+			zoom: null
 		}
 	},
 	props: ['clicked-id', 'data'],
 	computed:{
-		myMap(){
-			return new ol.Map({
-				target: 'map',
-				layers: this.kmlLayers,
-				loadTilesWhileAnimating: true,
-				view: view,
-				controls: ol.control.defaults({
-					attributionOptions: {
-						collapsible: false
-					}
-					}).extend([
-						new ol.control.ScaleLine()
-					])
-			});
-		},
+		view () {
+			let view = new ol.View({
+				projection: ol.proj.get('EPSG:3857'),
+				center: [ -5195135.816167192, -2698303.8770360295 ],
+				zoom: 10.9,
+				minZoom: 10.9,
+				maxZoom: 19
+			})
+			return view
+		},		
 		kmls(){
 			let parseKml = [];
 			kmls.forEach(function(str) { // dev/data/kmls.js
@@ -112,6 +120,22 @@ export default {
 				output.splice(1,0,layer)
 			})
 			return output
+		},
+		myMap(){			
+			let myMap = new ol.Map({
+				target: 'map',
+				layers: this.kmlLayers,
+				loadTilesWhileAnimating: true,
+				view: this.view,
+				controls: ol.control.defaults({
+					attributionOptions: {
+						collapsible: false
+					}
+					}).extend([
+						new ol.control.ScaleLine()
+					])
+			})
+			return myMap
 		}
 	},
 	watch:{
@@ -133,12 +157,30 @@ export default {
 				app.getFeatureLayerInfo(evt.pixel, evt);
 			});
 		}
+	},	
+	mounted () {
+		this.applyMultiplyOnCanvas()
+		this.applyValuesInData()
 	},
 	methods:{
+		applyValuesInData () {
+			this.center = this.view.getCenter()
+			this.zoom = this.view.getZoom()
+		},
+		applyMultiplyOnCanvas (counter = 0) {
+			const el = tag => document.getElementsByTagName(tag)[0]
+
+			if (el('canvas') == undefined && counter < 15) {
+				setTimeout(() => this.applyMultiplyOnCanvas(counter + 1), 1000)
+			}
+			else {
+				el('canvas').getContext('2d').globalCompositeOperation = 'multiply'
+			}
+		},
 		// Define as configuracoes de estilo do highlight (feature ressaltada)
 		highlightSettings(){
 			let highlightStyleCache = {};
-			featureOverlay = new ol.layer.Vector({
+			this.featureOverlay = new ol.layer.Vector({
 				source: new ol.source.Vector(),
 				map: this.myMap,
 				style: function(feature, resolution) {
@@ -158,18 +200,17 @@ export default {
 				}
 			});
 		},
-
 		// Aplica zoom no mapa para focar na layer do projeto atual
 		fitToLayer(id_projeto){
-			view.cancelAnimations()
-			let app = this
+			this.view.cancelAnimations()
+			let app = this;
 
 			if(id_projeto != 'BASE'){
 				this.kmlLayers.map(function(value, index) {
 					app.layers.item(index).setOpacity(1)
 					let id_from_layer = app.layers.item(index).get('id_projeto')// 'id_projeto' atributo setado durante montagem do mapa
 					if(id_from_layer == id_projeto){
-						view.fit(app.layers.item(index).getSource().getExtent(),  { 
+						app.view.fit(app.layers.item(index).getSource().getExtent(),  { 
 							duration: 1500 
 						})
 					}
@@ -213,10 +254,10 @@ export default {
 			let feature = this.myMap.forEachFeatureAtPixel(pixel, function(feature){				
 				return feature;				
 			});
-			if (highlight !== undefined) {
-				featureOverlay.getSource().removeFeature(highlight); // Remove o highlight
+			if (this.highlight !== undefined) {
+				this.featureOverlay.getSource().removeFeature(this.highlight); // Remove o highlight
 				this.featureInfo.nome = null; // Altera info e posicao da caixa
-				highlight = undefined;
+				this.highlight = undefined;
 			}
 			// Se houver feature no ponto clicado, mostra suas propriedades
 			if (feature && feature.get('name') !== "São Paulo" && !this.$root.isFocused) {
@@ -234,8 +275,8 @@ export default {
 					}
 				});
 				this.featureInfo.ID = feature.get('ID');
-				featureOverlay.getSource().addFeature(feature);
-				highlight = feature;
+				this.featureOverlay.getSource().addFeature(feature);
+				this.highlight = feature;
 			}
 			else if(this.$root.isFocused) {
 				this.resetApp();
@@ -245,9 +286,9 @@ export default {
 		removeHighlight(){
 			this.$root.isFocused = true;
 			this.featureInfo.nome = null;
-			featureOverlay.getSource().removeFeature(highlight); // Remove o highlight
+			this.featureOverlay.getSource().removeFeature(this.highlight); // Remove o highlight
 			this.featureInfo.nome = null; // Altera info e posicao da caixa
-			highlight = undefined;
+			this.highlight = undefined;
 		},
 		defineStyle(id){
 			let id_projeto = undefined
@@ -311,12 +352,12 @@ export default {
 			this.kmlLayers.map(function(value, index) {
 				app.layers.item(index).setOpacity(1)
 			})
-			view.animate({
+			app.view.animate({
 				center: this.center,
 				zoom: this.zoom,
 				duration: 1500
 			});
-			this.$emit('clicked', undefined);
+			this.$emit('clicked', 0);
 			this.breadcrumb = false;
 			app.projeto = {}
 		},
@@ -346,42 +387,9 @@ export default {
 				return url;
 			} else { return '' }
 		},
-	},
-	mounted () {
-		applyMultiplyOnCanvas()
-	},
-	template: `
-	<div id="mapa">
-		<div class="title">
-			<h3>Projetos de Intervenção Urbana</h3>
-			<ul v-if="breadcrumb" class="mapa_breadcrumb">
-				<li><a href="#todos" @click="resetApp">PIUs</a></li>
-				<li>{{ projeto.a_etapa_comunicacao }}</li>
-				<li>{{ projeto.id_nome }}</li>
-			</ul>
-		</div>
-		<div id="map" class="map">
-			<div class="downloadBase">
-				<a :href="dlKml(clickedId)" id="dlKml">
-					<i class="material-icons">get_app</i> KML
-				</a>
-				<a :href="dlShp(clickedId)" id="dlShp">
-					<i class="material-icons">get_app</i> Shapefile
-				</a>
-			</div>
-			<div class="legenda" v-if="clickedId == undefined">
-				<span>Legenda</span>
-				<div class="proposicao">Em proposição</div>
-				<div class="andamento">Em andamento</div>
-				<div class="implantacao">Implantação</div>
-				<div class="suspenso">Suspenso/arquivado</div>
-				<div class="prospeccao">Em prospecção</div>
-			</div>
-		</div>
-		<div id="infoModal" class="infoModal" v-if="featureInfo.nome" v-bind:style="infoBoxStyle" @click="setProjectId(featureInfo.ID)">
-			<a href="#" class="infoModalNome" v-bind:class="fConsultaAberta(featureInfo.ID)">{{ featureInfo.nome }}</a>
-			<a href="#" class="infoModalEtapa" v-bind:class="atribuiEtapaClass(featureInfo.ID)">{{ featureInfo.etapa }}</a>
-		</div>
-	</div>
-	`
+	}
 }
+</script>
+
+<style lang="scss" scoped>
+</style>

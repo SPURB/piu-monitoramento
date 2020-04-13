@@ -112,7 +112,8 @@
 							<template v-if="testeVazio(projeto.b_status) != false">
 								<p v-if="projeto.b_status == 'aberta'">
 									Consulta <span>aberta</span> ({{ dataExcelJS(projeto.b_data_inicio) }}—{{ dataExcelJS(projeto.b_data_final) }})<br>
-									<template v-for="hiperlink in hiperlinks" v-if="hiperlink.ID == clickedId && hiperlink.ID_etapa == 2 && hiperlink.Idp == 50">
+									<template v-for="hiperlink in hiperlinks" 
+									v-if="hiperlink.ID == clickedId && hiperlink.ID_etapa == 2 && hiperlink.Idp == 50">
 										<a class="linkConsulta" :href="hiperlink.arquivo" title="Participe da consulta pública" target="_blank">Participe da consulta pública <i class="material-icons">launch</i></a>
 									</template>
 								</p>
@@ -126,8 +127,8 @@
 							</template>
 							<div class="arquivos" :nome="arquivosDiscussao(2,1)">
 								<template v-for="hiperlink in hiperlinks">
-									<p class="tramit_link" v-if="hiperlink.ID == clickedId && testeLink(hiperlink.arquivo) != false && 
-									hiperlink.ID_etapa == 2 && hiperlink.Idp == 1">
+									<p class="tramit_link" 
+									v-if="hiperlink.ID == clickedId && testeLink(hiperlink.arquivo) != false && hiperlink.ID_etapa == 2 && hiperlink.Idp == 1">
 										<a class="tramit_link" :href="hiperlink.arquivo" :type="ext(hiperlink.arquivo)" :title="hiperlink.nome_publico_do_arquivo" target="_blank">{{ hiperlink.nome_publico_do_arquivo }}</a>
 									</p>
 								</template>
@@ -389,11 +390,11 @@
 									<span>{{ projeto.f_instancias_consultadas }}</span>
 								</p>
 							</template>
-							<template v-for="hiperlink in hiperlinks">
+							<section :key="`etapaSeis-${index}`" v-for="(hiperlink, index) in hiperlinks">
 								<p class="tramit_link" v-if="hiperlink.ID == clickedId && hiperlink.ID_etapa == 6 && testeLink(hiperlink.arquivo)">
 									<a class="tramit_link" :href="hiperlink.arquivo" :type="ext(hiperlink.arquivo)" :title="hiperlink.nome_publico_do_arquivo" target="_blank">{{ hiperlink.nome_publico_do_arquivo }}</a>
 								</p>
-							</template>
+							</section>
 						</div>
 					</transition>
 				</div>
@@ -413,11 +414,11 @@
 									<span>{{ projeto.g_status_aprovacao }}</span>
 								</p>
 							</template>
-							<template v-for="hiperlink in hiperlinks">
+							<section :key="`etapaSete-${index}`" v-for="(hiperlink, index) in hiperlinks">
 								<p class="tramit_link" v-if="hiperlink.ID == clickedId && hiperlink.ID_etapa == 7 && testeLink(hiperlink.arquivo)">
 									<a class="tramit_link" :href="hiperlink.arquivo" :type="ext(hiperlink.arquivo)" :title="hiperlink.nome_publico_do_arquivo" target="_blank">{{ hiperlink.nome_publico_do_arquivo }}</a>
 								</p>
-							</template>
+							</section>
 						</div>
 					</transition>
 				</div>
@@ -630,6 +631,15 @@ export default {
 		filtroMenu(proj) {
 			return (proj.etapas_NUM > 0 && proj.etapas_NUM <= 10);
 		},
+		etapaSete () {
+			let data = []
+			this.hiperlinks.forEach(hiperlink => {
+				if (hiperlink.ID === clickedId && hiperlink.ID_etapa === 7 && testeLink(hiperlink.arquivo)) {
+					data.push(hiperlink)
+				}
+			})
+			return data
+		}
 	},
 
 	watch:{
