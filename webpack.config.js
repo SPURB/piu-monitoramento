@@ -5,6 +5,7 @@ const VueLoaderPlugin = require('vue-loader/lib/plugin')
 module.exports = ({ mode }) => {
 
 	const config = {
+		mode,
 		entry: './src/main.js',
 		output: {
 			filename: 'main.min.js',
@@ -70,6 +71,7 @@ module.exports = ({ mode }) => {
 			overlay: true
 		}
 		config.devtool = 'source-map'
+		config.mode = mode
 	}
 
 	return config
