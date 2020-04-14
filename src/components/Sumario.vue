@@ -1,193 +1,29 @@
 <template>
 	<div id="sumario">
 
-		<div class="bloco">
-			<div class="thead">
-				<div>
-					Etapas
-				</div>
-				<div>
-					PIUs de iniciativa pública
-				</div>
-				<div>
-					PIUs de iniciativa privada
-				</div>
-			</div>
-		</div>		
+		<Etapa-head />
 
-		<Etapa :etapas="testeEtapa" />
+		<Etapa :etapas="etapaPreposicao" @clicked="getClickedId"/>
+		<Etapa :etapas="etapaAndamento" @clicked="getClickedId"/>
+		<Etapa :etapas="etapaImplantacao" @clicked="getClickedId"/>
+		<Etapa :etapas="etapaSuspenso" @clicked="getClickedId"/>
+		<Etapa :etapas="etapaArquivado" @clicked="getClickedId"/>
 
-		<div class="bloco andamento">
-			<div class="etapa">Em andamento</div>
-
-			<div>
-				<div>
-					<div class="marcadorEtapa">04</div>
-					<span>Elaboração</span>
-				</div>
-				<div class="publicos">
-					<section :key="`elaboracao-publico-${index}`" v-for="(projeto, index) in elaboracao.publico">
-						<a href="#" @click="setProjectId(projeto.ID_rev)" :class="fConsultaAberta(projeto)">
-							{{ projeto.id_nome }}
-						</a>
-					</section>
-				</div>
-				<div class="privados">
-					<section :key="`elaboracao-privado-${index}`" v-for="(projeto, index) in elaboracao.privado">
-						<a href="#" @click="setProjectId(projeto.ID_rev)" :class="fConsultaAberta(projeto)">
-							{{ projeto.id_nome }}
-						</a>
-					</section>
-				</div>
-			</div>
-
-			<div>
-				<div>
-					<div class="marcadorEtapa">05</div>
-					<span>Discussão pública</span>
-				</div>
-				<div class="publicos">
-					<section :key="`discussao-privado-${index}`" v-for="(projeto, index) in discussao.publico">
-						<a href="#" @click="setProjectId(projeto.ID_rev)" :class="fConsultaAberta(projeto)">
-							{{ projeto.id_nome }}
-						</a>
-					</section>
-				</div>
-				<div class="privados">
-					<section :key="`discussao-privado-${index}`" v-for="(projeto, index) in discussao.privado">
-						<a href="#" @click="setProjectId(projeto.ID_rev)" :class="fConsultaAberta(projeto)">
-							{{ projeto.id_nome }}
-						</a>
-					</section>
-				</div>
-			</div>
-
-			<div>
-				<div>
-					<div class="marcadorEtapa">06</div>
-					<span>Consolidação</span>
-				</div>
-				<div class="publicos">
-					<section :key="`consolidacao-privado-${index}`" v-for="(projeto, index) in consolidacao.publico">
-						<a href="#" @click="setProjectId(projeto.ID_rev)" :class="fConsultaAberta(projeto)">
-							{{ projeto.id_nome }}
-						</a>
-					</section>
-				</div>
-				<div class="privados">
-					<section :key="`consolidacao-privado-${index}`" v-for="(projeto, index) in consolidacao.privado">
-						<a href="#" @click="setProjectId(projeto.ID_rev)" :class="fConsultaAberta(projeto)">
-							{{ projeto.id_nome }}
-						</a>
-					</section>
-				</div>
-			</div>
-
-			<div>
-				<div>
-					<div class="marcadorEtapa">07</div>
-					<span>Encaminhamento Jurídico</span>
-				</div>
-				<div class="publicos">
-					<section :key="`encaminhamentos-privado-${index}`" v-for="(projeto, index) in encaminhamento.publico">
-						<a href="#" @click="setProjectId(projeto.ID_rev)" :class="fConsultaAberta(projeto)">
-							{{ projeto.id_nome }}
-						</a>
-					</section>
-				</div>
-				<div class="privados">
-					<section :key="`encaminhamentos-privado-${index}`" v-for="(projeto, index) in encaminhamento.privado">
-						<a href="#" @click="setProjectId(projeto.ID_rev)" :class="fConsultaAberta(projeto)">
-							{{ projeto.id_nome }}
-						</a>
-					</section>
-				</div>
-			</div>
-		</div>
-
-		<div class="bloco implantacao">
-			<div class="etapa">Implantação</div>
-
-			<div>
-				<div>
-					<div class="marcadorEtapa">08</div>
-					<span>Implantação</span>
-				</div>
-				<div class="publicos">
-					<section :key="`implantacaos-publico-${index}`" v-for="(projeto, index) in implantacao.publico">
-						<a href="#" @click="setProjectId(projeto.ID_rev)" :class="fConsultaAberta(projeto)">
-							{{ projeto.id_nome }}
-						</a>
-					</section>
-				</div>
-				<div class="privados">
-					<section :key="`implantacaos-privado-${index}`" v-for="(projeto, index) in implantacao.privado">
-						<a href="#" @click="setProjectId(projeto.ID_rev)" :class="fConsultaAberta(projeto)">
-							{{ projeto.id_nome }}
-						</a>
-					</section>
-				</div>
-			</div>
-		</div>
-
-		<div class="bloco suspenso">
-			<div class="etapa">Suspenso</div>
-
-			<div>
-				<div>
-					<span></span>
-				</div>
-				<div class="publicos">
-					<section :key="`suspenso-privado-${index}`" v-for="(projeto, index) in suspenso.publico">
-						<a href="#" @click="setProjectId(projeto.ID_rev)" :class="fConsultaAberta(projeto)">
-							{{ projeto.id_nome }}
-						</a>
-					</section>
-				</div>
-				<div class="privados">
-					<section :key="`suspenso-privado-${index}`" v-for="(projeto, index) in suspenso.privado">
-						<a href="#" @click="setProjectId(projeto.ID_rev)" :class="fConsultaAberta(projeto)">
-							{{ projeto.id_nome }}
-						</a>
-					</section>
-				</div>
-			</div>
-		</div>
-
-		<div class="bloco arquivado">
-			<div class="etapa">Arquivado</div>
-
-			<div>
-				<div><span></span></div>
-				<div class="publicos">
-					<section :key="`arquivado-publico-${index}`" v-for="(projeto, index) in arquivado.publico">
-						<a href="#" @click="setProjectId(projeto.ID_rev)" :class="fConsultaAberta(projeto)">
-							{{ projeto.id_nome }}
-						</a>
-					</section>
-				</div>
-				<div class="privados">
-					<section :key="`arquivado-privado-${index}`" v-for="(projeto, index) in arquivado.privado">
-						<a href="#" @click="setProjectId(projeto.ID_rev)" :class="fConsultaAberta(projeto)">
-							{{ projeto.id_nome }}
-						</a>
-					</section>
-				</div>
-			</div>
-		</div>
 	</div>
 </template>
 
 <script>
+import EtapaHead from './EtapaHead.vue'
 import Etapa from './Etapa.vue'
 export default {
 	name:'sumario',
-	data (){
+	data () {
 		return {
 			clickedId: undefined
 		}
 	},
 	components: {
+		EtapaHead,
 		Etapa
 	},
 	props: ['data', 'hiperlinks'],
@@ -242,6 +78,8 @@ export default {
 		},
 		elaboracao () {
 			let elaboracao = {
+				marcadorNumber: '04',
+				marcadorTitle: 'ELABORAÇÃO',
 				publico: [],
 				privado: []
 			}
@@ -256,6 +94,8 @@ export default {
 		},
 		discussao () {
 			let discussao = {
+				marcadorNumber: '05',
+				marcadorTitle: 'DISCUSSÃO PÚBLICA',
 				publico: [],
 				privado: []
 			}
@@ -270,6 +110,8 @@ export default {
 		},
 		consolidacao () {
 			let consolidacaos = {
+				marcadorNumber: '06',
+				marcadorTitle: 'CONSOLIDAÇÃO',
 				publico: [],
 				privado: []
 			}
@@ -284,6 +126,8 @@ export default {
 		},
 		encaminhamento () {
 			let encaminhamentos = {
+				marcadorNumber: '07',
+				marcadorTitle: 'ENCAMINHAMENTO JURÍDICO',
 				publico: [],
 				privado: []
 			}
@@ -298,6 +142,8 @@ export default {
 		},
 		implantacao () {
 			let implantacaos = {
+				marcadorNumber: '08',
+				marcadorTitle: 'IMPLANTAÇÃO',
 				publico: [],
 				privado: []
 			}
@@ -313,6 +159,8 @@ export default {
 		},
 		suspenso () {
 			let suspensos = {
+				marcadorNumber: 0,
+				marcadorTitle: 'Suspenso',
 				publico: [],
 				privado: []
 			}
@@ -327,6 +175,8 @@ export default {
 		},
 		arquivado () {
 			let arquivados = {
+				marcadorNumber: 0,
+				marcadorTitle: 'Arquivado',
 				publico: [],
 				privado: []
 			}
@@ -339,7 +189,7 @@ export default {
 			})
 			return arquivados
 		},
-		testeEtapa () {
+		etapaPreposicao () {
 			let data = {
 				title: 'Em proposição',
 				etapa: []
@@ -348,6 +198,47 @@ export default {
 			data.etapa.push(this.consultaPI)
 			data.etapa.push(this.avaliacao)
 			return data
+		},
+		etapaAndamento () {
+			let data = {
+				title: 'Em andamento',
+				etapa: []
+			}
+			data.etapa.push(this.elaboracao)
+			data.etapa.push(this.discussao)
+			data.etapa.push(this.consolidacao)
+			data.etapa.push(this.implantacao)
+			return data
+		},
+		etapaImplantacao () {
+			let data = {
+				title: 'Em implantação',
+				etapa: []
+			}
+			data.etapa.push(this.implantacao)
+			return data
+		},
+		etapaSuspenso () {
+			let data = {
+				title: 'Suspenso',
+				etapa: []
+			}
+			data.etapa.push(this.suspenso)
+			return data
+		},
+		etapaArquivado () {
+			let data = {
+				title: 'Arquivado',
+				etapa: []
+			}
+			data.etapa.push(this.arquivado)
+			return data
+		}
+	},
+	watch: {
+		clickedId(newprop, oldprop){
+			console.log(newprop)
+			this.$emit('clicked', newprop)
 		}
 	},
 	methods: {
@@ -357,15 +248,13 @@ export default {
 				return true
 			}
 		},
-		setProjectId(id){ 
-			this.clickedId = id;
-			this.$emit('clicked', id)
-		},
-		fConsultaAberta(par) {
-			if (par.b_status == 'aberta' || par.e_status_consulta_internet_minuta == 'aberta' || par.e_status_consulta_internet_caderno == 'aberta') { 
-				return 'consultaAberta'
-			};
+		getClickedId (value) {
+			this.clickedId = value
 		}
 	}
 }
 </script>
+
+<style lang="scss" scoped>
+
+</style>
