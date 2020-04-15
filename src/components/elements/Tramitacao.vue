@@ -8,11 +8,6 @@
             <span>{{ etapa.title }}</span>
         </div>
         <div class="content" :class="showTramitacao ? 'open' : 'close'">
-            <div class="subtitle">
-                <p>
-                    {{ etapa.subtitle }}
-                </p>
-            </div>
             <slot name="content"></slot>
         </div>
     </div>
@@ -112,34 +107,6 @@ export default {
         position: absolute;
         right: 0;
     }    
-
-    .tramitTransit-enter,
-    .tramitTransit-leave-to {
-        max-height: 0;
-        opacity: 0;
-        transition: all 0.2s ease-in;
-        margin: 0;
-        padding: 0;
-    }
-    .tramitTransit-enter-to,
-    .tramitTransit-leave {
-        max-height: 150em;
-        transition: all 0.2s ease-in;
-    }
-    .tramitTransit-enter-active,
-    .tramitTransit-leave-active {
-        transition: all 0.2s ease-in;
-    }
-
-    .subtitle {
-        p {
-            margin: 0 0 24px 0;
-            font-size: 13px;
-            line-height: 1.6;
-            font-weight: 1000;
-            color: #333333;
-        }
-    }
 }
 .open {
     display: block;

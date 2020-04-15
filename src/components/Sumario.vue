@@ -1,7 +1,7 @@
 <template>
 	<div id="sumario">
 
-		<Etapa-head />
+		<etapa-header />
 
 		<Etapa :etapas="etapaPreposicao" @clicked="getClickedId"/>
 		<Etapa :etapas="etapaAndamento" @clicked="getClickedId"/>
@@ -13,8 +13,8 @@
 </template>
 
 <script>
-import EtapaHead from './EtapaHead.vue'
-import Etapa from './Etapa.vue'
+import EtapaHeader from './elements/EtapaHeader.vue'
+import Etapa from './elements/Etapa.vue'
 export default {
 	name:'sumario',
 	data () {
@@ -23,7 +23,7 @@ export default {
 		}
 	},
 	components: {
-		EtapaHead,
+		EtapaHeader,
 		Etapa
 	},
 	props: ['data', 'hiperlinks'],

@@ -18,93 +18,53 @@
 		</div>
 
 		<div class="container">
-				<ficha-sumario
-					:projeto="projeto"
-					:hiperlinks="hiperlinks"
-					:etapaClass="atribuiEtapaClass(projeto.etapas_NUM)" 
-					:etapaTag="atribuiEtapaTag(projeto.etapas_NUM)" 
-					:clickedId="clickedId" />
+			<ficha-sumario
+				:projeto="projeto"
+				:hiperlinks="hiperlinks"
+				:etapaClass="atribuiEtapaClass(projeto.etapas_NUM)" 
+				:etapaTag="atribuiEtapaTag(projeto.etapas_NUM)" 
+				:clickedId="clickedId" />
 
-			<div class="aspectos">
-				<h4>Aspectos técnico-urbanísticos</h4>
-
-				<p>{{ projeto.urb_descricao_basica }}</p>
-
-				<template v-if="testeVazio(projeto.urb_elemento_da_rede_de_estruturacao_urbana) != false">
-					<div>
-						<h6>Elemento da rede de estruturação urbana</h6>
-						{{ projeto.urb_elemento_da_rede_de_estruturacao_urbana }}
-					</div>
-				</template>
-				<template v-if="testeVazio(projeto.urb_area_total) != false">
-					<div>
-						<h6>Área total</h6>
-						{{ projeto.urb_area_total }} ha
-					</div>
-				</template>
-				<template v-if="testeVazio(projeto.urb_zonas_especiais) != false">
-					<div>
-						<h6>Zonas especiais</h6>
-						{{ projeto.urb_zonas_especiais }}
-					</div>
-				</template>
-				<template v-if="testeVazio(projeto.urb_justificativa_interesse_publico) != false">
-					<div>
-						<h6>Interesse público</h6>
-						{{ projeto.urb_justificativa_interesse_publico }}
-					</div>
-				</template>
-				<template v-if="testeVazio(projeto.urb_contrapartida_prevista) != false">
-					<div>
-						<h6>Contrapartida prevista</h6>
-						{{ projeto.urb_contrapartida_prevista }}
-					</div>
-				</template>
-				<template v-if="testeVazio(projeto.urb_justificativa_interesse_publico) != false">
-					<div>
-						<h6>Interesse privado</h6>
-						{{ projeto.urb_justificativa_interesse_publico }}
-					</div>
-				</template>
-			</div>
+            <aspectos
+                :descricao="projeto.urb_descricao_basica"
+                :elemento="projeto.urb_elemento_da_rede_de_estruturacao_urbana"
+                :areaTotal="projeto.urb_area_total"
+                :zonaEspeciais="projeto.urb_zonas_especiais"
+                :interessePublico="projeto.urb_justificativa_interesse_publico"
+                :interessePrivado="projeto.urb_justificativa_interesse_publico"
+            />
 
 			<div class="tramitacao">
 				<h4>Tramitação <span>Última atualização <strong>{{ dataExcelJS(projeto.ultima_atualizacao) }}</strong></span></h4>
 						
-				<Tramitacao
+				<tramitacao
 					:etapa="{
 						title: 'Proposição dos elementos prévios',
-						subtitle: 'Protocolado em 11/12/2017',
 						number: '01',
 						periodo: '29/07/2016 — 28/09/2016'
 					}"
 				>
 					<template slot="content">
-						<Hiperlinks />
+                        <topicos :subtitle="`Protocolado em 11/12/2017`" />
+                        <hiperlinks
+                            :nomeSecao="`Consulta Inicial`"
+                            :arquivos="[
+                                { nome: 'PDF de Estrutura', url: 'estrutura.pdf' },
+                                { nome: 'Image da Estrutura', url: 'imagem_estrutura.jpeg' }
+                            ]"
+                        />
 					</template>
-				</Tramitacao>
-
-				<Tramitacao
-					:etapa="{
-						title: 'Consulta pública inicial',
-						subtitle: 'Consulta encerrada (29/09/2016—14/10/2016)(60 contribuições)',
-						number: '02',
-						periodo: '29/07/2016 — 28/09/2016'
-					}"
-				>
-					<template slot="content">
-						<Hiperlinks />
-					</template>
-				</Tramitacao>
-
+				</tramitacao>
 			</div>
 		</div>
 	</div>
 </template>
 <script>
-import FichaSumario from './FichaSumario.vue'
-import Tramitacao from './Tramitacao.vue'
-import Hiperlinks from './Hiperlinks.vue'
+import FichaSumario from './elements/FichaSumario.vue'
+import Aspectos  from './elements/Aspectos.vue'
+import Tramitacao from './elements/Tramitacao.vue'
+import Topicos from './elements/Topicos.vue'
+import Hiperlinks from './elements/Hiperlinks.vue'
 
 export default {
 	name:'ficha',
@@ -121,8 +81,10 @@ export default {
 		'hiperlinks'
 	],
 	components:{
-		FichaSumario,
-		Tramitacao,
+        FichaSumario,
+        Aspectos,
+        Tramitacao,
+        Topicos,
 		Hiperlinks
 	},
 	methods: {
@@ -202,13 +164,7 @@ export default {
 			if (par.b_status == 'aberta' || par.e_status_consulta_internet_minuta == 'aberta' || par.e_status_consulta_internet_caderno == 'aberta') { 
 				return 'consultaAberta'
 			};
-		},
-
-		testeVazio(file) {
-			if (file != undefined && file != null && file != '-' && file != '' && file != 'NA') {
-				return true;
-			} else { return false };
-		},
+		},		
 
 		numberToReal(numero) {
 			var numero = numero.toFixed(2).split('.');
