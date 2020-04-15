@@ -1,14 +1,18 @@
 <template>
-	<div class="arquivos" :nome="`Consulta Inicial`">
+	<div class="arquivos" :nome="nomeSecao">
 		<section>
-			<p class="tramit_link">
+			<p 
+                :key="index"
+                v-for="(arquivo, index) in arquivos"
+                class="tramit_link"
+            >
 				<a 
 					class="tramit_link"
 					:href="`#`"
-					:type="`JPG`"
-					:title="`Nome publico do arquivo`"
+					:type="ext(arquivo.url)"
+					:title="arquivo.nome"
 					target="_blank">
-					Nome publico do arquivo
+					{{ arquivo.nome }}
 				</a>
 			</p>
 		</section>
@@ -17,7 +21,11 @@
 
 <script>
 export default {
-	name: 'Hiperlinks',
+    name: 'Hiperlinks',
+    props: {
+        nomeSecao: { type: String, required: true },
+        arquivos: { type: Array, required: true }
+    },
 	methods: {
 		ext(filename) {
 			let extensao = filename.substring(filename.lastIndexOf('.')+1, filename.length).replace('/','');
@@ -29,7 +37,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '../scss/variables';
+@import '../../scss/variables';
 
 .arquivos {
 
@@ -70,7 +78,7 @@ export default {
 	}
 
 	p {
-		margin: 0 0 24px 0;
+		margin: 0;
 		font-size: 13px;
 		line-height: 1.6;
 		color: #333333;
@@ -111,11 +119,7 @@ export default {
 	p .tramit_link {
 		margin: 0;
 		padding: 0;
-		height: 24px;
-
-		&:last-child { 
-			margin-bottom: 24px !important; 
-		}		
+		height: 24px;	
 	}	
 }
 </style>

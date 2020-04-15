@@ -1,25 +1,28 @@
 <template>
-  <div class="bloco proposicao">
+  <div class="bloco" :class="attrClass(etapas.title)">
     <div class="etapa">{{ etapas.title }}</div>
     <div :key="`etapas-${index}`" v-for="(etapa, index) in etapas.etapa">
-      <div>
-        <div class="marcadorEtapa">{{ etapa.marcadorNumber }}</div>
-        <span>{{ etapa.marcadorTitle }}</span>
-      </div>
-      <div class="publicos">
-        <section
-          :key="`item-${etapa.marcadorTitle}-${index}`"
-          v-for="(item, index) in etapa.publico"
-        >
-        	<a
-				href="#"
-				@click="setProjectId(item.ID_rev)"
-				:class="fConsultaAberta(etapa.publico)"
-			>
-				{{ item.id_nome }}
-			</a>
-        </section>
-      </div>
+
+        <div v-if="etapa.marcadorNumber !== 0">
+            <div class="marcadorEtapa">{{ etapa.marcadorNumber }}</div>
+            <span>{{ etapa.marcadorTitle }}</span>
+        </div>
+        <div v-else><span>&nbsp;</span></div>
+        
+        <div class="publicos">
+            <section
+            :key="`item-${etapa.marcadorTitle}-${index}`"
+            v-for="(item, index) in etapa.publico"
+            >
+                <a
+                    href="#"
+                    @click="setProjectId(item.ID_rev)"
+                    :class="fConsultaAberta(etapa.publico)"
+                >
+                    {{ item.id_nome }}
+                </a>
+            </section>
+        </div>
 
       <div class="privados">
         <section
@@ -35,6 +38,7 @@
 			</a>
         </section>
       </div>
+      
     </div>
   </div>
 </template>
@@ -66,13 +70,34 @@ export default {
 				}
 			})
 			return res		
-		}
+        },
+        attrClass (value) {
+            switch (value) {
+                case 'Em proposição':
+                    return 'proposicao'
+                    break;
+                case 'Em andamento':
+                    return 'andamento'
+                    break
+                case 'Em implantação':
+                    return 'implantacao'
+                    break
+                case 'Suspenso':
+                    return 'suspenso'
+                    break
+                case 'Arquivado':
+                    return 'arquivado'
+                    break
+                default:
+                    break;
+            }
+        }
   	},
 }
 </script>
 
 <style lang="scss" scoped>
-@import '../scss/variables';
+@import '../../scss/variables';
 .bloco {
   border-radius: 2px;
   transition: background-color 0.1s ease-out;
