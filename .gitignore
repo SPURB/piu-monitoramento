@@ -9,3 +9,5 @@ dist/**/*.html
 *.ntvs*
 *.njsproj
 *.sln
+# Local Netlify folder
+.netlify
