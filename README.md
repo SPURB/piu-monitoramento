@@ -1,4 +1,4 @@
-# Projetos de Intervenção Urbana [![Build Status](https://travis-ci.org/SPURB/piu-monitoramento.svg?branch=master)](https://travis-ci.org/SPURB/piu-monitoramento)
+# Projetos de Intervenção Urbana [![Build Status](https://travis-ci.org/SPURB/piu-monitoramento.svg?branch=master)](https://travis-ci.org/SPURB/piu-monitoramento) [![Netlify Status](https://api.netlify.com/api/v1/badges/e05983fa-28ac-4962-a17f-80b8921faead/deploy-status)](https://app.netlify.com/sites/piu-monitoramento/deploys)
 
 [Sistema de acompanhamento dos PIUs](https://gestaourbana.prefeitura.sp.gov.br/piu-monitoramento) - decreto nº 56.901, de 30 de março de 2016
 
