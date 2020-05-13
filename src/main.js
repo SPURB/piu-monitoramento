@@ -2,9 +2,11 @@ import './styles.scss'
 import mapa from './components/Mapa.vue'
 import sumario from './components/Sumario.vue'
 import Ficha from './components/Ficha.vue'
+// import { http } from './mixins'
 
 new Vue({
 	el: '#app',
+	// mixins: [ http ],
 	components: {
 		mapa,
 		sumario,
@@ -24,7 +26,7 @@ new Vue({
 			error: false
 		},
 		monitoramento: [],
-		hiperlinks: []
+		hiperlinks: [],
 	}, 
 	computed:{
 		apiPath() { return 'https://spurb.github.io/piu-monitoramento-backend/'}
@@ -32,6 +34,14 @@ new Vue({
 	created(){
 		this.fetchFile(this.apiPath, 'monitoramento')
 		this.fetchFile(this.apiPath, 'hiperlinks')
+
+		// this.fetchJson('http://localhost:8080/v1/', 'projetos')
+		// 	.then(res=> this.monitoramento = res)
+		// 	.catch(err => {
+		// 		this.error.status = true
+		// 		this.error.message = err
+		// 	})
+
 	},
 	watch:{
 		projectId () {
@@ -48,7 +58,7 @@ new Vue({
 			}
 		}
 	},
-	methods:{
+	methods: {
 		fetchFile(url, file){
 			this.api.fetching = true
 			this.api.message = 'Enviando solicitação...'

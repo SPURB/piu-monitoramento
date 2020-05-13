@@ -2,12 +2,10 @@
 	<div id="sumario">
 
 		<etapa-header />
-
-		<Etapa :etapas="etapaPreposicao" @clicked="getClickedId"/>
-		<Etapa :etapas="etapaAndamento" @clicked="getClickedId"/>
-		<Etapa :etapas="etapaImplantacao" @clicked="getClickedId"/>
-		<Etapa :etapas="etapaSuspenso" @clicked="getClickedId"/>
-		<Etapa :etapas="etapaArquivado" @clicked="getClickedId"/>
+		<etapa title='Em proposição' :etapas="etapasProposicao" @clicked="getClickedId" />
+		<etapa title='Em andamento' :etapas="etapasAndamento" @clicked="getClickedId" />
+		<etapa title='Em implantação' :etapas="etapasImplantacao" @clicked="getClickedId" />
+		<etapa title='Suspenso' :etapas="etapasSuspenso" @clicked="getClickedId" />
 
 	</div>
 </template>
@@ -15,246 +13,142 @@
 <script>
 import EtapaHeader from './elements/EtapaHeader.vue'
 import Etapa from './elements/Etapa.vue'
+import { http } from '../mixins'
+
 export default {
 	name:'sumario',
+	mixins: [ http ],
 	data () {
 		return {
-			clickedId: undefined
+			clickedId: undefined,
+			projetos: [],
+			error: {
+				status: false,
+				message: ''
+			}
 		}
 	},
 	components: {
 		EtapaHeader,
 		Etapa
 	},
-	props: ['data', 'hiperlinks'],
+	props: {
+		data: {
+			type: Array,
+			required: true
+		}
+	},
+	created () {
+		this.fetchJson('http://localhost:8080/v1/', 'projetos')
+			.then(res=> this.projetos = res)
+			.catch(err => {
+				this.error.status = true
+				this.error.message = err
+			})
+	},
 	computed: {
-		preposicao () {
-			let preposicao = {
-				marcadorNumber: '01',
-				marcadorTitle: 'EM PROPOSIÇÃO DOS ELEMENTOS PRÉVIOS',
-				publico: [],
-				privado: []
-			}
-			this.data.forEach(projeto => {
-				if (projeto.etapas_NUM === 2 && projeto.id_iniciativa_da_proposta === 'Pública') {
-					preposicao.publico.push(projeto)
-				} else if (projeto.etapas_NUM === 2 && projeto.id_iniciativa_da_proposta === 'Privado') {
-					preposicao.privado.push(projeto)
-				}
-			})
-			return preposicao
-		},
-		consultaPI () {
-			let consulta = {
-				marcadorNumber: '02',
-				marcadorTitle: 'CONSULTA PÚBLICA INICIAL',
-				publico: [],
-				privado: []
-			}
-			this.data.forEach(projeto => {
-				if (projeto.etapas_NUM === 2 && projeto.id_iniciativa_da_proposta === 'Pública') {
-					consulta.publico.push(projeto)
-				} else if (projeto.etapas_NUM === 2 && projeto.id_iniciativa_da_proposta === 'Privado') {
-					consulta.privado.push(projeto)
-				}
-			})
-			return consulta
-		},
-		avaliacao () {
-			let avaliacao = {
-				marcadorNumber: '03',
-				marcadorTitle: 'AVALIAÇÃO SMUL',
-				publico: [],
-				privado: []
-			}
-			this.data.forEach(projeto => {
-				if (projeto.etapas_NUM === 3 && projeto.id_iniciativa_da_proposta === 'Pública') {
-					avaliacao.publico.push(projeto)
-				} else if (projeto.etapas_NUM === 3 && projeto.id_iniciativa_da_proposta === 'Privado') {
-					avaliacao.privado.push(projeto)
-				}
-			})
-			return avaliacao
-		},
-		elaboracao () {
-			let elaboracao = {
-				marcadorNumber: '04',
-				marcadorTitle: 'ELABORAÇÃO',
-				publico: [],
-				privado: []
-			}
-			this.data.forEach(projeto => {
-				if (projeto.etapas_NUM === 4 && projeto.id_iniciativa_da_proposta === 'Pública') {
-					elaboracao.publico.push(projeto)
-				} else if (projeto.etapas_NUM === 4 && projeto.id_iniciativa_da_proposta === 'Privado') {
-					elaboracao.privado.push(projeto)
-				}
-			})
-			return elaboracao
-		},
-		discussao () {
-			let discussao = {
-				marcadorNumber: '05',
-				marcadorTitle: 'DISCUSSÃO PÚBLICA',
-				publico: [],
-				privado: []
-			}
-			this.data.forEach(projeto => {
-				if (projeto.etapas_NUM === 5 && projeto.id_iniciativa_da_proposta === 'Pública') {
-					discussao.publico.push(projeto)
-				} else if (projeto.etapas_NUM === 5 && projeto.id_iniciativa_da_proposta === 'Privado') {
-					discussao.privado.push(projeto)
-				}
-			})
-			return discussao
-		},
-		consolidacao () {
-			let consolidacaos = {
-				marcadorNumber: '06',
-				marcadorTitle: 'CONSOLIDAÇÃO',
-				publico: [],
-				privado: []
-			}
-			this.data.forEach(projeto => {
-				if (projeto.etapas_NUM === 6 && projeto.id_iniciativa_da_proposta === 'Pública') {
-					consolidacaos.publico.push(projeto)
-				} else if (projeto.etapas_NUM === 6 && projeto.id_iniciativa_da_proposta === 'Privado') {
-					consolidacaos.privado.push(projeto)
-				}
-			})
-			return consolidacaos
-		},
-		encaminhamento () {
-			let encaminhamentos = {
-				marcadorNumber: '07',
-				marcadorTitle: 'ENCAMINHAMENTO JURÍDICO',
-				publico: [],
-				privado: []
-			}
-			this.data.forEach(projeto => {
-				if (projeto.etapas_NUM === 7 && projeto.id_iniciativa_da_proposta === 'Pública') {
-					encaminhamentos.publico.push(projeto)
-				} else if (projeto.etapas_NUM === 7 && projeto.id_iniciativa_da_proposta === 'Privado') {
-					encaminhamentos.privado.push(projeto)
-				}
-			})
-			return encaminhamentos
-		},
-		implantacao () {
-			let implantacaos = {
-				marcadorNumber: '08',
-				marcadorTitle: 'IMPLANTAÇÃO',
-				publico: [],
-				privado: []
-			}
+		etapasProposicao () {
+			if (!this.projetos.length) { return [] }
 
-			this.data.forEach(projeto => {
-				if (projeto.etapas_NUM === 8 && projeto.id_iniciativa_da_proposta === 'Pública') {
-					implantacaos.publico.push(projeto)
-				} else if (projeto.etapas_NUM === 8 && projeto.id_iniciativa_da_proposta === 'Privado') {
-					implantacaos.privado.push(projeto)
+			const elemPrevios = this.projetos.filter(projeto => projeto.id_tramitacao === 1)
+			const consultaPublicaInical = this.projetos.filter(projeto => projeto.id_tramitacao === 2)
+			const avalSmul = this.projetos.filter(projeto => projeto.id_tramitacao === 3)
+
+			return [
+				{
+					marcadorNumber: '01',
+					marcadorTitle: 'EM PROPOSIÇÃO DOS ELEMENTOS PRÉVIOS',
+					publico: elemPrevios.filter(projetos => !projetos.id_proponentePrivado),
+					privado: elemPrevios.filter(projetos => projetos.id_proponentePrivado)
+				},
+				{
+					marcadorNumber: '02',
+					marcadorTitle: 'CONSULTA PÚBLICA INICIAL',
+					publico: consultaPublicaInical.filter(projetos => !projetos.id_proponentePrivado),
+					privado: consultaPublicaInical.filter(projetos => projetos.id_proponentePrivado)
+				},
+				{
+					marcadorNumber: '03',
+					marcadorTitle: 'AVALIAÇÃO SMUL',
+					publico: avalSmul.filter(projetos => !projetos.id_proponentePrivado),
+					privado: avalSmul.filter(projetos => projetos.id_proponentePrivado)
 				}
-			})
-			return implantacaos
+			]
 		},
-		suspenso () {
-			let suspensos = {
-				marcadorNumber: 0,
-				marcadorTitle: 'Suspenso',
-				publico: [],
-				privado: []
-			}
-			this.data.forEach(projeto => {
-				if (projeto.etapas_NUM === 9 && projeto.id_iniciativa_da_proposta === 'Pública') {
-					suspensos.publico.push(projeto)
-				} else if (projeto.etapas_NUM === 9 && projeto.id_iniciativa_da_proposta === 'Privado') {
-					suspensos.privado.push(projeto)
+		etapasAndamento () {
+			if (!this.projetos.length) { return [] }
+
+			const elaboracao = this.projetos.filter(projeto => projeto.id_tramitacao === 4)
+			const discPub = this.projetos.filter(projeto => projeto.id_tramitacao === 5)
+			const consolidacao = this.projetos.filter(projeto => projeto.id_tramitacao === 6)
+			const juridico = this.projetos.filter(projeto => projeto.id_tramitacao === 7)
+
+			return [
+				{
+					marcadorNumber: '04',
+					marcadorTitle: 'ELABORAÇÃO',
+					publico: elaboracao.filter(projetos => !projetos.id_proponentePrivado),
+					privado: elaboracao.filter(projetos => projetos.id_proponentePrivado)
+				},
+				{
+					marcadorNumber: '05',
+					marcadorTitle: 'DISCUSSÂO PÚBLICA',
+					publico: discPub.filter(projetos => !projetos.id_proponentePrivado),
+					privado: discPub.filter(projetos => projetos.id_proponentePrivado)
+				},
+				{
+					marcadorNumber: '06',
+					marcadorTitle: 'CONSOLIDAÇÃO',
+					publico: consolidacao.filter(projetos => !projetos.id_proponentePrivado),
+					privado: consolidacao.filter(projetos => projetos.id_proponentePrivado)
+				},
+				{
+					marcadorNumber: '07',
+					marcadorTitle: 'ENCAMINHAMENTO JURÍDICO',
+					publico: juridico.filter(projetos => !projetos.id_proponentePrivado),
+					privado: juridico.filter(projetos => projetos.id_proponentePrivado)
 				}
-			})
-			return suspensos
+			]
 		},
-		arquivado () {
-			let arquivados = {
-				marcadorNumber: 0,
-				marcadorTitle: 'Arquivado',
-				publico: [],
-				privado: []
-			}
-			this.data.forEach(projeto => {
-				if (projeto.etapas_NUM === 10 && projeto.id_iniciativa_da_proposta === 'Pública') {
-					arquivados.publico.push(projeto)
-				} else if (projeto.etapas_NUM === 10 && projeto.id_iniciativa_da_proposta === 'Privado') {
-					arquivados.privado.push(projeto)
+
+		etapasImplantacao () {
+			if (!this.projetos.length) { return [] }
+
+			const implantacao = this.projetos.filter(projeto => projeto.id_tramitacao === 8)
+
+			return [
+				{
+					marcadorNumber: '08',
+					marcadorTitle: 'IMPLANTAÇÂO',
+					publico: implantacao.filter(projetos => !projetos.id_proponentePrivado),
+					privado: implantacao.filter(projetos => projetos.id_proponentePrivado)
 				}
-			})
-			return arquivados
+			]
 		},
-		etapaPreposicao () {
-			let data = {
-				title: 'Em proposição',
-				etapa: []
-			}
-			data.etapa.push(this.preposicao)
-			data.etapa.push(this.consultaPI)
-			data.etapa.push(this.avaliacao)
-			return data
-		},
-		etapaAndamento () {
-			let data = {
-				title: 'Em andamento',
-				etapa: []
-			}
-			data.etapa.push(this.elaboracao)
-			data.etapa.push(this.discussao)
-			data.etapa.push(this.consolidacao)
-			data.etapa.push(this.implantacao)
-			return data
-		},
-		etapaImplantacao () {
-			let data = {
-				title: 'Em implantação',
-				etapa: []
-			}
-			data.etapa.push(this.implantacao)
-			return data
-		},
-		etapaSuspenso () {
-			let data = {
-				title: 'Suspenso',
-				etapa: []
-			}
-			data.etapa.push(this.suspenso)
-			return data
-		},
-		etapaArquivado () {
-			let data = {
-				title: 'Arquivado',
-				etapa: []
-			}
-			data.etapa.push(this.arquivado)
-			return data
+
+		etapasSuspenso () {
+			if (!this.projetos.length) { return [] }
+
+			const suspensos = this.projetos.filter(projeto => projeto.id_tramitacao === 9)
+			return [
+				{
+					marcadorNumber: '09',
+					marcadorTitle: 'SUSPENSO',
+					publico: suspensos.filter(projetos => !projetos.id_proponentePrivado),
+					privado: suspensos.filter(projetos => projetos.id_proponentePrivado)
+				}
+			]
 		}
 	},
 	watch: {
 		clickedId(newprop, oldprop){
-			console.log(newprop)
 			this.$emit('clicked', newprop)
 		}
 	},
 	methods: {
-		hasMembers(first, last, etapa){
-			let position = etapa;
-			if (first <= position && position <= last) {
-				return true
-			}
-		},
 		getClickedId (value) {
 			this.clickedId = value
 		}
 	}
 }
 </script>
-
-<style lang="scss" scoped>
-
-</style>

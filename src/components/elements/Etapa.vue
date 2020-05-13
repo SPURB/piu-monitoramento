@@ -1,40 +1,40 @@
 <template>
-  <div class="bloco" :class="attrClass(etapas.title)">
-    <div class="etapa">{{ etapas.title }}</div>
-    <div :key="`etapas-${index}`" v-for="(etapa, index) in etapas.etapa">
+  <div class="bloco" :class="attrClass(title)">
+    <div class="etapa">{{ title }}</div>
+    <div :key="`etapas-${index}`" v-for="(etapa, index) in etapas">
 
-        <div v-if="etapa.marcadorNumber !== 0">
-            <div class="marcadorEtapa">{{ etapa.marcadorNumber }}</div>
-            <span>{{ etapa.marcadorTitle }}</span>
-        </div>
-        <div v-else><span>&nbsp;</span></div>
-        
-        <div class="publicos">
-            <section
-            :key="`item-${etapa.marcadorTitle}-${index}`"
-            v-for="(item, index) in etapa.publico"
-            >
-                <a
-                    href="#"
-                    @click="setProjectId(item.ID_rev)"
-                    :class="fConsultaAberta(etapa.publico)"
-                >
-                    {{ item.id_nome }}
-                </a>
-            </section>
-        </div>
+			<div v-if="etapa.marcadorTitle !== 'SUSPENSO'">
+					<div class="marcadorEtapa">{{ etapa.marcadorNumber }}</div>
+					<span>{{ etapa.marcadorTitle }}</span>
+			</div>
+			<div v-else><span>&nbsp;</span></div>
+			
+			<div class="publicos">
+					<section
+					:key="`item-${etapa.marcadorTitle}-${index}`"
+					v-for="(item, index) in etapa.publico"
+					>
+							<a
+									href="#"
+									@click="setProjectId(item.id)"
+									:class="consultaAbertaClass(item.id_statusConsulta)"
+							>
+									{{ item.nome }}
+							</a>
+					</section>
+			</div>
 
       <div class="privados">
         <section
-          :key="`item-${etapa.marcadorTitle}-${index}`"		  
+          :key="`item-${etapa.marcadorTitle}-${index}`"
           v-for="(item, index) in etapa.privado"
         >
         	<a 
 				href="#"
-				@click="setProjectId(item.ID_rev)"
-				:class="fConsultaAberta(etapa.privado)"
+				@click="setProjectId(item.id)"
+				:class="consultaAbertaClass(etapa.id_statusConsulta)"
 			>
-				{{ item.id_nome }}
+				{{ item.nome }}
 			</a>
         </section>
       </div>
@@ -52,46 +52,44 @@ export default {
 		}
 	},
   	props: {
+			title: {
+				type: String,
+				required: true
+			},
     	etapas: {
-      		type: Object,
+      		type: Array,
       		required: true
-   		}
+			}
     },
   	methods: {
 		setProjectId(id){ 
 			this.clickedId = id;
 			this.$emit('clicked', id)
 		},
-		fConsultaAberta(par) {
-			let res = ''
-			par.forEach(p => {
-				if (p.b_status == 'aberta' || p.e_status_consulta_internet_minuta == 'aberta' || p.e_status_consulta_internet_caderno == 'aberta') { 
-					res = 'consultaAberta'
+		consultaAbertaClass(status) {
+			return status ? 'consultaAberta' : ''
+		},
+		attrClass (value) {
+				switch (value) {
+						case 'Em proposição':
+								return 'proposicao'
+								break;
+						case 'Em andamento':
+								return 'andamento'
+								break
+						case 'Em implantação':
+								return 'implantacao'
+								break
+						case 'Suspenso':
+								return 'suspenso'
+								break
+						case 'Arquivado':
+								return 'arquivado'
+								break
+						default:
+								break;
 				}
-			})
-			return res		
-        },
-        attrClass (value) {
-            switch (value) {
-                case 'Em proposição':
-                    return 'proposicao'
-                    break;
-                case 'Em andamento':
-                    return 'andamento'
-                    break
-                case 'Em implantação':
-                    return 'implantacao'
-                    break
-                case 'Suspenso':
-                    return 'suspenso'
-                    break
-                case 'Arquivado':
-                    return 'arquivado'
-                    break
-                default:
-                    break;
-            }
-        }
+		}
   	},
 }
 </script>
