@@ -1,18 +1,19 @@
 <template>
-	<div class="arquivos" :nome="nomeSecao">
-		<section>
+	<div class="arquivos">
+		<p>{{ title }}</p>
+		<section class="arquivos__group">
 			<p 
-                :key="index"
-                v-for="(arquivo, index) in arquivos"
-                class="tramit_link"
+				:key="index"
+				v-for="(arquivo, index) in arquivos"
+				class="tramit_link"
             >
 				<a 
 					class="tramit_link"
-					:href="`#`"
-					:type="ext(arquivo.url)"
-					:title="arquivo.nome"
+					:href="arquivo.arquivo_url"
+					:type="ext(arquivo.arquivo_url)"
+					:title="arquivo.nome_arquivo"
 					target="_blank">
-					{{ arquivo.nome }}
+					{{ arquivo.nome_arquivo }}
 				</a>
 			</p>
 		</section>
@@ -21,10 +22,16 @@
 
 <script>
 export default {
-    name: 'Hiperlinks',
+    name: 'FichaTramitacaoArquivos',
     props: {
-        nomeSecao: { type: String, required: true },
-        arquivos: { type: Array, required: true }
+			title: {
+				type: String,
+				required: true
+			},
+			arquivos: {
+				type: Array,
+				required: true
+			}	
     },
 	methods: {
 		ext(filename) {
@@ -40,7 +47,9 @@ export default {
 @import '../../scss/variables';
 
 .arquivos {
-
+	&__group {
+		margin-bottom: 1rem;
+	};
 	&::before {
 		content: attr(nome);
 		display: block;

@@ -1,8 +1,8 @@
 <template>
 	<div id="ficha">
 		<div @click="menu=!menu" class="menu-titulo" id="menuTitulo">
-			<div class="titulo" :class="atribuiEtapaClass(refProjeto.id_tramitacao)">
-				<span :class="consultaAbertaClass(refProjeto.id_statusConsulta)">{{ refProjeto.nome }}</span>
+			<div class="titulo" :class="atribuiEtapaClass(projeto.id_tramitacao)">
+				<span :class="consultaAbertaClass(projeto.id_statusConsulta)">{{ projeto.nome }}</span>
 				<i class="material-icons" v-if="!menu">expand_more</i>
 				<i class="material-icons" v-if="menu">expand_less</i>
 			</div>
@@ -19,52 +19,144 @@
 
 		<div class="container">
 			<ficha-sumario
-				:projeto="refProjeto"
+				:projeto="projeto"
 				:proponentes="proponentes"
 				:origens="origens"
 				:arquivosTramitacao="arquivos_tramitacao"
-				:etapaClass="atribuiEtapaClass(refProjeto.id_tramitacao)" 
-				:etapaTag="atribuiEtapaTag(refProjeto.id_tramitacao)" 
+				:etapaClass="atribuiEtapaClass(projeto.id_tramitacao)" 
+				:etapaTag="atribuiEtapaTag(projeto.id_tramitacao)" 
 				:clickedId="clickedId" />
-			<aspectos
+			<ficha-aspectos
 				v-if="clickedId"
 				:idProjeto="clickedId"
-				:descricao="refProjeto.descricao"
-				:elemento="refProjeto.elementoMEM"
-				:areaTotal="refProjeto.areaTotal"
+				:descricao="projeto.descricao"
+				:elemento="projeto.elementoMEM"
+				:areaTotal="projeto.areaTotal"
 				:meta="meta"
 			/>
-
 			<div class="tramitacao">
-				<h4>Tramitação <span>Última atualização <strong>{{ dataExcelJS(projeto.ultima_atualizacao) }}</strong></span></h4>
-				<tramitacao
-					:etapa=" {
-						title: 'Proposição dos elementos prévios',
-						number: '01',
-						periodo: '29/07/2016 — 28/09/2016'
-					}"
-				>
-					<template slot="content">
-						<topicos :subtitle="`Protocolado em 11/12/2017`" />
-						<hiperlinks
-								:nomeSecao="`Consulta Inicial`"
-								:arquivos="[
-									{ nome: 'PDF de Estrutura', url: 'estrutura.pdf' },
-									{ nome: 'Image da Estrutura', url: 'imagem_estrutura.jpeg' }
-								]"
-						/>
-					</template>
-				</tramitacao>
+				<h4>Tramitacao<span>Última atualização <strong>{{ getUltimaAtualizacao(projeto.id, arquivos_tramitacao) }}</strong></span></h4>
+				<ficha-tramitacao
+					:idTramitacao="1"
+					:title="'Proposição dos elementos prévios'"
+					:arquivos="getArquivosTramitacao(arquivos_tramitacao, {
+						idProjeto: projeto.id,
+						idTramitacao: 1
+					})"
+					:dataTramitacao="getDataTramitacao(data_tramitacao,{
+						idProjeto: projeto.id,
+						idTramitacao: 1	
+					})"
+					:grupos="grupos"
+					:projetoTramitacao="projeto.id_tramitacao"
+				/>
+				<ficha-tramitacao
+					:idTramitacao="2"
+					:title="'Consulta pública inicial'"
+					:arquivos="getArquivosTramitacao(arquivos_tramitacao, {
+						idProjeto: projeto.id,
+						idTramitacao: 2
+					})"
+					:dataTramitacao="getDataTramitacao(data_tramitacao,{
+						idProjeto: projeto.id,
+						idTramitacao: 2
+					})"
+					:grupos="grupos"
+					:projetoTramitacao="projeto.id_tramitacao"
+				/>
+				<ficha-tramitacao
+					:idTramitacao="3"
+					:title="'Avaliação SMUL'"
+					:arquivos="getArquivosTramitacao(arquivos_tramitacao, {
+						idProjeto: projeto.id,
+						idTramitacao: 3
+					})"
+					:dataTramitacao="getDataTramitacao(data_tramitacao,{
+						idProjeto: projeto.id,
+						idTramitacao: 3
+					})"
+					:grupos="grupos"
+					:projetoTramitacao="projeto.id_tramitacao"
+				/>
+				<ficha-tramitacao
+					:idTramitacao="4"
+					:title="'Elaboração'"
+					:arquivos="getArquivosTramitacao(arquivos_tramitacao, {
+						idProjeto: projeto.id,
+						idTramitacao: 4
+					})"
+					:dataTramitacao="getDataTramitacao(data_tramitacao,{
+						idProjeto: projeto.id,
+						idTramitacao: 4
+					})"
+					:grupos="grupos"
+					:projetoTramitacao="projeto.id_tramitacao"
+				/>
+				<ficha-tramitacao
+					:idTramitacao="5"
+					:title="'Discussão pública'"
+					:arquivos="getArquivosTramitacao(arquivos_tramitacao, {
+						idProjeto: projeto.id,
+						idTramitacao: 5
+					})"
+					:dataTramitacao="getDataTramitacao(data_tramitacao,{
+						idProjeto: projeto.id,
+						idTramitacao: 5
+					})"
+					:grupos="grupos"
+					:projetoTramitacao="projeto.id_tramitacao"
+				/>
+				<ficha-tramitacao
+					:idTramitacao="6"
+					:title="'Consolidação'"
+					:arquivos="getArquivosTramitacao(arquivos_tramitacao, {
+						idProjeto: projeto.id,
+						idTramitacao: 6
+					})"
+					:dataTramitacao="getDataTramitacao(data_tramitacao,{
+						idProjeto: projeto.id,
+						idTramitacao: 6
+					})"
+					:grupos="grupos"
+					:projetoTramitacao="projeto.id_tramitacao"
+				/>
+				<ficha-tramitacao
+					:idTramitacao="7"
+					:title="'Encaminhamento Jurídico'"
+					:arquivos="getArquivosTramitacao(arquivos_tramitacao, {
+						idProjeto: projeto.id,
+						idTramitacao: 7
+					})"
+					:dataTramitacao="getDataTramitacao(data_tramitacao,{
+						idProjeto: projeto.id,
+						idTramitacao: 7
+					})"
+					:grupos="grupos"
+					:projetoTramitacao="projeto.id_tramitacao"
+				/>
+				<ficha-tramitacao
+					:idTramitacao="8"
+					:title="'Implantação'"
+					:arquivos="getArquivosTramitacao(arquivos_tramitacao, {
+						idProjeto: projeto.id,
+						idTramitacao: 8
+					})"
+					:dataTramitacao="getDataTramitacao(data_tramitacao,{
+						idProjeto: projeto.id,
+						idTramitacao: 8
+					})"
+					:grupos="grupos"
+					:projetoTramitacao="projeto.id_tramitacao"
+				/>
 			</div>
 		</div>
 	</div>
 </template>
 <script>
 import FichaSumario from './elements/FichaSumario.vue'
-import Aspectos  from './elements/Aspectos.vue'
-import Tramitacao from './elements/Tramitacao.vue'
-import Topicos from './elements/Topicos.vue'
-import Hiperlinks from './elements/Hiperlinks.vue'
+import FichaAspectos  from './elements/FichaAspectos.vue'
+import FichaTramitacao from './elements/FichaTramitacao.vue'
+
 import { http } from '../api'
 
 export default {
@@ -72,27 +164,25 @@ export default {
 	mixins: [ http ],
 	data () {
 		return {
-			projeto: {},
 			menuClickedId: 0,
 			menu: false,
 			projetos: [],
 			arquivos_tramitacao: [],
 			proponentes: [],
 			origens: [],
-			meta: []
+			meta: [],
+			data_tramitacao: [],
+			grupos: [],
+			tramitacao: []
 		}
 	},
 	props: [
-		'clicked-id', 
-		'data', 
-		'hiperlinks'
+		'clicked-id'
 	],
 	components:{
 		FichaSumario,
-		Aspectos,
-		Tramitacao,
-		Topicos,
-		Hiperlinks
+		FichaAspectos,
+		FichaTramitacao
 	},
 	created () {
 		[
@@ -100,7 +190,10 @@ export default {
 			'arquivos_tramitacao',
 			'proponentes',
 			'origens',
-			'meta'
+			'meta',
+			'tramitacao',
+			'data_tramitacao',
+			'grupos'
 		].forEach(table => {
 			this.fetchJson(table)
 				.then(res => this[table] = res)
@@ -123,12 +216,38 @@ export default {
 				})
 				.sort((a, b) => a.id_tramitacao - b.id_tramitacao)
 		},
-		refProjeto () {
+		projeto () {
 			if (!this.projetos.length || !this.clickedId) { return {} }
 			return this.projetos.find(projeto => projeto.id === this.clickedId)
+		},
+		tramitacoesValidas () {
+			if (!this.tramitacao.length) { return [] }
+			return this.tramitacao.filter(item => item.id < 9)
 		}
 	},
 	methods: {
+		getArquivosTramitacao (arquivos, { idProjeto, idTramitacao }) {
+			if (!arquivos.length || !idProjeto || !idTramitacao) { return [] }
+			return arquivos.filter(arquivo => arquivo.id_projetos === idProjeto && arquivo.id_tramitacao === idTramitacao)
+		},
+		getDataTramitacao (datas, { idProjeto, idTramitacao }) {
+			if (!datas.length || !idProjeto || !idTramitacao) { return {} }
+			return datas.find(data => data.id_projetos === idProjeto && data.id_tramitacao === idTramitacao)
+		},
+		getUltimaAtualizacao (idProjeto, arquivos) {
+			if (!idProjeto || !arquivos.length) return '00-00-0000'
+			
+			const arquivosProjeto = arquivos
+				.filter(arquivo => arquivo.id_projetos === idProjeto && typeof(arquivo.data) === 'number')
+				.map(arquivo => arquivo.data)
+
+			const max = Math.max.apply(Math, arquivosProjeto)
+
+			return this.formatDataExcel(max)
+		},
+		getProjetoTramitacao (id) {
+			return id ? id : 0
+		},
 		atribuiEtapaClass(etp) {
 			if (etp <= 3) { return 'proposicao' };
 			if (etp > 3 && etp <= 7) { return 'andamento'};
@@ -139,8 +258,7 @@ export default {
 		},
 
 		atribuiEtapaTag(etp) {
-			const etapa = parseInt(etp)
-			switch (etapa) {
+			switch (etp) {
 				case 1: return 'Proposição';
 				case 2: return 'Consulta púb. inicial';
 				case 3: return 'Avaliação SMUL';
@@ -154,30 +272,10 @@ export default {
 				case 11: return 'Em prospecção';
 			};
 		},
-
-		dataExcelJS(data) {
-			if (data != null && data != '-' && data != 'NA') {
-				if (data.toString().length == 5) {
-					let d = new Date((Math.floor(data - 25568))*86400000);
-					let string = ('0' + d.getDate()).slice(-2)+'/'+('0' + (d.getMonth()+1)).slice(-2)+'/'+d.getFullYear();
-					return string;
-				} else if (data.replace('/','').length > 5 && data.replace('/','').length <= 8) {
-					return data;
-				} else { return data };
-			} else { return '' }
-		},
-
-		encontraProjeto(newClickedId) {
-			this.data.map(function(index) {
-				if (index.id == newClickedId) {
-					this.projeto = index;
-				};
-			});
-			this.hiperlinks.map(function(index) {
-				if (index.ID == newClickedId) {
-					this.proj == index;
-				};
-			});
+		formatDataExcel (data) {
+			let d = new Date((Math.floor(data - 25568))*86400000)
+			let string = ('0' + d.getDate()).slice(-2)+'/'+('0' + (d.getMonth()+1)).slice(-2)+'/'+d.getFullYear()
+			return string
 		},
 
 		enviaId(event) {
@@ -185,49 +283,9 @@ export default {
 		},
 
 		gravaId(id) {
-			this.menuClickedId = id;
-			this.enviaId();
-		},
-
-		abreTramitacao(par) {
-			let etapa = par.etapas_NUM;
-			if (etapa == 1) { this.E01 = true; this.E02 = false; this.E03 = false; this.E04 = false; this.E05 = false; this.E06 = false; this.E07 = false; this.E08 = false; };
-			if (etapa == 2) { this.E02 = true; this.E01 = false; this.E03 = false; this.E04 = false; this.E05 = false; this.E06 = false; this.E07 = false; this.E08 = false; };
-			if (etapa == 3) { this.E03 = true; this.E01 = false; this.E02 = false; this.E04 = false; this.E05 = false; this.E06 = false; this.E07 = false; this.E08 = false; };
-			if (etapa == 4) { this.E04 = true; this.E01 = false; this.E02 = false; this.E03 = false; this.E05 = false; this.E06 = false; this.E07 = false; this.E08 = false; };
-			if (etapa == 5) { this.E05 = true; this.E01 = false; this.E02 = false; this.E03 = false; this.E04 = false; this.E06 = false; this.E07 = false; this.E08 = false; };
-			if (etapa == 6) { this.E06 = true; this.E01 = false; this.E02 = false; this.E03 = false; this.E04 = false; this.E05 = false; this.E07 = false; this.E08 = false; };
-			if (etapa == 7) { this.E07 = true; this.E01 = false; this.E02 = false; this.E03 = false; this.E04 = false; this.E05 = false; this.E06 = false; this.E08 = false; };
-			if (etapa == 8) { this.E08 = true; this.E01 = false; this.E02 = false; this.E03 = false; this.E04 = false; this.E05 = false; this.E06 = false; this.E07 = false; };
-		},
-
-		fConsultaAberta(par) {
-			if (par.b_status == 'aberta' || par.e_status_consulta_internet_minuta == 'aberta' || par.e_status_consulta_internet_caderno == 'aberta') { 
-				return 'consultaAberta'
-			};
-		},		
-
-		numberToReal(numero) {
-			var numero = numero.toFixed(2).split('.');
-			numero[0] = "R$ " + numero[0].split(/(?=(?:...)*$)/).join('.');
-			return numero.join(',');
-		},
-
-		filtroMenu(proj) {
-			return (proj.etapas_NUM > 0 && proj.etapas_NUM <= 10);
+			this.menuClickedId = id
+			this.enviaId()
 		}
-	},
-
-	watch:{
-		clickedId(newprop,oldprop){
-			const app = this;
-			app.data.map(function(index) {
-				if (index.ID_rev == newprop) {
-					app.projeto = index;
-					app.abreTramitacao(index);
-				};
-			});
-		},
 	}
 }
 </script>

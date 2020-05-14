@@ -1,5 +1,5 @@
 <template>
-    <div class="aspectos">
+    <div class="ficha-aspectos">
 		<h4>Aspectos técnico-urbanísticos</h4>
 
 		<p>{{ descricao }}</p>
@@ -24,7 +24,7 @@
 
 <script>
 export default {
-	name: 'Aspectos',
+	name: 'FichaAspectos',
 	props: {
 		idProjeto: {
 			type: Number,
@@ -56,7 +56,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.aspectos {
+.ficha-aspectos {
 	width: 40%;
 	margin-left: 16px;
 	word-wrap: break-word;
