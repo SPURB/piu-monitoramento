@@ -1,6 +1,8 @@
 export const http = {
 	methods: {
-		fetchJson (url, file) {
+		fetchJson (file) {
+			const url = 'http://localhost:8080/v1/'
+
 			return new Promise(function(resolve, reject) {
 				const oReq = new XMLHttpRequest()
 				oReq.addEventListener("load", evt => resolve(JSON.parse(evt.target.response)))
@@ -9,6 +11,9 @@ export const http = {
 				oReq.open('GET', `${url}${file}.json`, true)
 				oReq.send()
 			})
+		},
+		consultaAbertaClass(status) {
+			return status ? 'consultaAberta' : ''
 		}
 	}
 }

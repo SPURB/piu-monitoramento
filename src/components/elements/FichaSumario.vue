@@ -1,49 +1,63 @@
 <template>
 	<div class="ficha-sumario">
 		<div class="indicador" :class="etapaClass" title="Etapa atual da tramitação do PIU">{{ etapaTag }}</div>
-			<div class="indicador__group">
-				<template v-if="isNotEmpty(this.projeto.id_iniciativa_da_proposta)">
+			<div class="indicador__group" v-if="clickedId">
+				<template>
 					Natureza da proposta
-					<div class="group__item">{{projeto.id_iniciativa_da_proposta}}</div>
+					<div class="group__item">{{ publicoPrivado }}</div>
 				</template>
-				<template v-if="isNotEmpty(projeto.id_proponente)">
+				<template>
 					Proponente
-					<div class="group__item">{{projeto.id_proponente}}</div>
+					<div class="group__item">{{ proponente.nome }}</div>
 				</template>
-				<template v-if="isNotEmpty(projeto.id_origem)">
+				<template>
 					Origem
-					<div class="group__item">{{projeto.id_origem}}</div>
+					<div class="group__item">{{ origem.nome }}</div>
 				</template>
-				<template v-if="isNotEmpty(projeto.id_registro_administrativo)">
+				<template v-if="registrosAdministrativos.length">
 					Registro administrativo
-					<div class="group__item" v-for="(link, index) in filteredLinks" :key="index">
-						<a :class="{'item__last': index === filteredLinks.length - 1}" :href="link.arquivo" :title="link.nome_publico_do_arquivo" target="_blank">
-							{{ link.nome_publico_do_arquivo }} <i class="material-icons">launch</i>
+					<div class="group__item" v-for="(link, index) in registrosAdministrativos" :key="index">
+						<a :class="{
+								'item__last': index === registrosAdministrativos.length - 1
+							}"
+							:href="link.arquivo_url"
+							:title="link.nome_arquivo" target="_blank">{{ link.nome_arquivo }} <i class="material-icons">launch</i>
 						</a>
 					</div>
 				</template>
 			</div>
-			<a v-if="linkPaginaCompleta" class="link_pag_completa" :href="linkPaginaCompleta.arquivo" :title="'Acesse a página completa de '+ linkPaginaCompleta.PIU" target="_blank">
+			<a v-if="linkPaginaCompleta" class="link_pag_completa" :href="linkPaginaCompleta.arquivo_url" :title="'Acesse a página completa de '+ linkPaginaCompleta.nome_arquivo" target="_blank">
 				Página completa <i class="material-icons">launch</i>
 			</a>
 	</div>
 </template>
 
 <script>
+import { http } from '../../api'
+
 export default {
 	name: 'FichaSumario',
+	mixins: [ http ],
 	props: {
 		projeto: {
 			type: Object,
 			required: true
 		},
-		hiperlinks: {
+		arquivosTramitacao: {
 			type: Array,
 			required: true
 		},
 		etapaClass: {
 			type: String,
 			default: ''
+		},
+		proponentes: {
+			type: Array,
+			required: true
+		},
+		origens: {
+			type: Array,
+			required: true
 		},
 		etapaTag: {
 			type: String,
@@ -55,25 +69,25 @@ export default {
 		}
 	},
 	computed: {
-		filteredLinks () {
-			return this.hiperlinks
-				.filter(link => link.ID_etapa === 200 || link.ID_etapa === 250)
-				.filter(link => link.ID === this.clickedId)
+		publicoPrivado () {
+			return this.projeto.id_proponentePrivado ? 'Privado' : 'Público'
+		},
+		proponente (){
+			if (this.proponentes.length) {
+				return this.proponentes.find(proponente => proponente.id === this.projeto.id_proponentes)
+			}
+			else { return '' }
+		},
+		origem (){
+			if (!this.origens.length) return ''
+			return this.origens.find(origem => origem.id === this.projeto.id_origens)
+		},
+		registrosAdministrativos () {
+			if (!this.arquivosTramitacao.length) return []
+			return this.arquivosTramitacao.filter(arquivo => arquivo.id_tramitacao === 200 && arquivo.id_projetos === this.projeto.id)
 		},
 		linkPaginaCompleta () {
-			return this.hiperlinks.find(link => link.ID_etapa == 100 && link.ID === this.clickedId)
-		}
-	},
-	methods: {
-		isNotEmpty(file) {
-
-			if (!file) return false
-
-			else if (file === '-' && file === '' && file === 'NA') {
-				return false
-			}
-			
-			return true
+			return this.arquivosTramitacao.find(link => link.id_tramitacao == 100 && link.id_projetos === this.projeto.id)
 		}
 	}
 }

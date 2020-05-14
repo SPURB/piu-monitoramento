@@ -2,11 +2,11 @@ import './styles.scss'
 import mapa from './components/Mapa.vue'
 import sumario from './components/Sumario.vue'
 import Ficha from './components/Ficha.vue'
-// import { http } from './mixins'
+import { http } from './api'
 
 new Vue({
 	el: '#app',
-	// mixins: [ http ],
+	mixins: [ http ],
 	components: {
 		mapa,
 		sumario,
@@ -16,6 +16,9 @@ new Vue({
 		projectId: 0,
 		isFocused: false,
 		display:{
+			// mapa: true,
+			// sumario: false,
+			// ficha: true,
 			mapa: true,
 			sumario: true,
 			ficha: false,
@@ -35,12 +38,12 @@ new Vue({
 		this.fetchFile(this.apiPath, 'monitoramento')
 		this.fetchFile(this.apiPath, 'hiperlinks')
 
-		// this.fetchJson('http://localhost:8080/v1/', 'projetos')
-		// 	.then(res=> this.monitoramento = res)
-		// 	.catch(err => {
-		// 		this.error.status = true
-		// 		this.error.message = err
-		// 	})
+		this.fetchJson('projetos')
+			.then(res=> this.monitoramento = res)
+			.catch(err => {
+				this.error.status = true
+				this.error.message = err
+			})
 
 	},
 	watch:{

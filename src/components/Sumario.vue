@@ -13,7 +13,7 @@
 <script>
 import EtapaHeader from './elements/EtapaHeader.vue'
 import Etapa from './elements/Etapa.vue'
-import { http } from '../mixins'
+import { http } from '../api'
 
 export default {
 	name:'sumario',
@@ -39,8 +39,8 @@ export default {
 		}
 	},
 	created () {
-		this.fetchJson('http://localhost:8080/v1/', 'projetos')
-			.then(res=> this.projetos = res)
+		this.fetchJson('projetos')
+			.then(res => this.projetos = res)
 			.catch(err => {
 				this.error.status = true
 				this.error.message = err

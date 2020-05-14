@@ -1,17 +1,17 @@
 <template>
 	<div id="ficha">
 		<div @click="menu=!menu" class="menu-titulo" id="menuTitulo">
-			<div class="titulo" v-bind:class="atribuiEtapaClass(projeto.etapas_NUM)">
-				<span v-bind:class="fConsultaAberta(this.projeto)">{{ projeto.id_nome }}</span>
+			<div class="titulo" :class="atribuiEtapaClass(refProjeto.id_tramitacao)">
+				<span :class="consultaAbertaClass(refProjeto.id_statusConsulta)">{{ refProjeto.nome }}</span>
 				<i class="material-icons" v-if="!menu">expand_more</i>
 				<i class="material-icons" v-if="menu">expand_less</i>
 			</div>
 			<transition name="menuSlide">
 				<ul class="menu" v-if="menu">
-					<li v-for="projeto in data.filter(filtroMenu).sort(function(a,b){return a.etapas_NUM - b.etapas_NUM})" 
-					v-bind:class="atribuiEtapaClass(projeto.etapas_NUM)" 
-					:key="projeto.ID_rev">
-						<a v-bind:class="fConsultaAberta(projeto)" @click="gravaId(projeto.ID_rev)">{{ projeto.id_nome }}</a>
+					<li v-for="projeto in menuItens" 
+					:class="atribuiEtapaClass(projeto.id_tramitacao)" 
+					:key="projeto.id">
+						<a :class="consultaAbertaClass(projeto.id_statusConsulta)" @click="gravaId(projeto.id)">{{ projeto.nome }}</a>
 					</li>
 				</ul>
 			</transition>
@@ -19,40 +19,40 @@
 
 		<div class="container">
 			<ficha-sumario
-				:projeto="projeto"
-				:hiperlinks="hiperlinks"
-				:etapaClass="atribuiEtapaClass(projeto.etapas_NUM)" 
-				:etapaTag="atribuiEtapaTag(projeto.etapas_NUM)" 
+				:projeto="refProjeto"
+				:proponentes="proponentes"
+				:origens="origens"
+				:arquivosTramitacao="arquivos_tramitacao"
+				:etapaClass="atribuiEtapaClass(refProjeto.id_tramitacao)" 
+				:etapaTag="atribuiEtapaTag(refProjeto.id_tramitacao)" 
 				:clickedId="clickedId" />
-
-            <aspectos
-                :descricao="projeto.urb_descricao_basica"
-                :elemento="projeto.urb_elemento_da_rede_de_estruturacao_urbana"
-                :areaTotal="projeto.urb_area_total"
-                :zonaEspeciais="projeto.urb_zonas_especiais"
-                :interessePublico="projeto.urb_justificativa_interesse_publico"
-                :interessePrivado="projeto.urb_justificativa_interesse_publico"
-            />
+			<aspectos
+				v-if="clickedId"
+				:idProjeto="clickedId"
+				:descricao="refProjeto.descricao"
+				:elemento="refProjeto.elementoMEM"
+				:areaTotal="refProjeto.areaTotal"
+				:meta="meta"
+			/>
 
 			<div class="tramitacao">
 				<h4>Tramitação <span>Última atualização <strong>{{ dataExcelJS(projeto.ultima_atualizacao) }}</strong></span></h4>
-						
 				<tramitacao
-					:etapa="{
+					:etapa=" {
 						title: 'Proposição dos elementos prévios',
 						number: '01',
 						periodo: '29/07/2016 — 28/09/2016'
 					}"
 				>
 					<template slot="content">
-                        <topicos :subtitle="`Protocolado em 11/12/2017`" />
-                        <hiperlinks
-                            :nomeSecao="`Consulta Inicial`"
-                            :arquivos="[
-                                { nome: 'PDF de Estrutura', url: 'estrutura.pdf' },
-                                { nome: 'Image da Estrutura', url: 'imagem_estrutura.jpeg' }
-                            ]"
-                        />
+						<topicos :subtitle="`Protocolado em 11/12/2017`" />
+						<hiperlinks
+								:nomeSecao="`Consulta Inicial`"
+								:arquivos="[
+									{ nome: 'PDF de Estrutura', url: 'estrutura.pdf' },
+									{ nome: 'Image da Estrutura', url: 'imagem_estrutura.jpeg' }
+								]"
+						/>
 					</template>
 				</tramitacao>
 			</div>
@@ -65,14 +65,21 @@ import Aspectos  from './elements/Aspectos.vue'
 import Tramitacao from './elements/Tramitacao.vue'
 import Topicos from './elements/Topicos.vue'
 import Hiperlinks from './elements/Hiperlinks.vue'
+import { http } from '../api'
 
 export default {
 	name:'ficha',
+	mixins: [ http ],
 	data () {
 		return {
 			projeto: {},
 			menuClickedId: 0,
-			menu: false
+			menu: false,
+			projetos: [],
+			arquivos_tramitacao: [],
+			proponentes: [],
+			origens: [],
+			meta: []
 		}
 	},
 	props: [
@@ -81,11 +88,45 @@ export default {
 		'hiperlinks'
 	],
 	components:{
-        FichaSumario,
-        Aspectos,
-        Tramitacao,
-        Topicos,
+		FichaSumario,
+		Aspectos,
+		Tramitacao,
+		Topicos,
 		Hiperlinks
+	},
+	created () {
+		[
+			'projetos',
+			'arquivos_tramitacao',
+			'proponentes',
+			'origens',
+			'meta'
+		].forEach(table => {
+			this.fetchJson(table)
+				.then(res => this[table] = res)
+				.catch(err => {
+					this.error.status = true
+					this.error.message = err
+				})
+		})
+	},
+	computed: {
+		menuItens () {
+			if (!this.projetos.length) { return [] }
+			return this.projetos
+				.sort((objA, objB) => {
+					const a = objA.nome.toUpperCase()
+					const b = objB.nome.toUpperCase()
+					if (a < b) { return -1 }
+					if (a > b) { return 1 }
+					return 0;
+				})
+				.sort((a, b) => a.id_tramitacao - b.id_tramitacao)
+		},
+		refProjeto () {
+			if (!this.projetos.length || !this.clickedId) { return {} }
+			return this.projetos.find(projeto => projeto.id === this.clickedId)
+		}
 	},
 	methods: {
 		atribuiEtapaClass(etp) {

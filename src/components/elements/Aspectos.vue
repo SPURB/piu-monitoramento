@@ -4,57 +4,54 @@
 
 		<p>{{ descricao }}</p>
 
-		<template v-if="testeVazio(elemento) != false">
 			<div>
 				<h6>Elemento da rede de estruturação urbana</h6>
-                {{ elemento }}
+				{{ elemento }}
 			</div>
-		</template>
-		<template v-if="testeVazio(areaTotal) != false">
 			<div>
 				<h6>Área total</h6>
 				{{ areaTotal }} ha
 			</div>
-		</template>
-		<template v-if="testeVazio(zonaEspeciais) != false">
-            <div>
-				<h6>Zonas especiais</h6>
-				{{ zonaEspeciais }}
-			</div>
-		</template>
-		<template v-if="testeVazio(interessePublico) != false">
-			<div>
-			    <h6>Interesse público</h6>
-				{{ interessePublico }}
-            </div>
-        </template>
-		<template v-if="testeVazio(interessePrivado) != false">
-			<div>
-			    <h6>Interesse privado</h6>
-				{{ interessePrivado }}
-			</div>
-        </template>
+
+			<template v-if="filteredMetas.length">
+				<div v-for="(meta, index) in filteredMetas" :key="index">
+					<h6>{{ meta.chave }}</h6>
+					{{ meta.valor }}
+				</div>
+			</template>
 	</div>
 </template>
 
 <script>
 export default {
-    name: 'Aspectos',
-    props: {
-        descricao: { type: String },
-        areaTotal: { type: String },
-        zonaEspeciais: { type: String },
-        interessePublico: { type: String },
-        contraPartida: { type: String },
-        interessePrivado: { type: String }
-    },
-    methods: {
-        testeVazio(file) {
-			if (file != undefined && file != null && file != '-' && file != '' && file != 'NA') {
-				return true;
-			} else { return false };
+	name: 'Aspectos',
+	props: {
+		idProjeto: {
+			type: Number,
+			required: true
 		},
-    },
+		elemento: {
+			type: String,
+			required: true
+		},
+		descricao: {
+			type: String,
+			required: true
+		},
+		areaTotal: {
+			type: Number,
+			required: true
+		},
+		meta: {
+			type: Array,
+			default: []
+		}
+	},
+	computed: {
+		filteredMetas () {
+			return this.meta.filter(item => item.id_projetos === this.idProjeto)
+		}
+	}
 }
 </script>
 

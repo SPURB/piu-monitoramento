@@ -4,8 +4,8 @@
     <div :key="`etapas-${index}`" v-for="(etapa, index) in etapas">
 
 			<div v-if="etapa.marcadorTitle !== 'SUSPENSO'">
-					<div class="marcadorEtapa">{{ etapa.marcadorNumber }}</div>
-					<span>{{ etapa.marcadorTitle }}</span>
+				<div class="marcadorEtapa">{{ etapa.marcadorNumber }}</div>
+				<span>{{ etapa.marcadorTitle }}</span>
 			</div>
 			<div v-else><span>&nbsp;</span></div>
 			
@@ -62,34 +62,34 @@ export default {
 			}
     },
   	methods: {
-		setProjectId(id){ 
-			this.clickedId = id;
-			this.$emit('clicked', id)
-		},
-		consultaAbertaClass(status) {
-			return status ? 'consultaAberta' : ''
-		},
-		attrClass (value) {
-				switch (value) {
-						case 'Em proposição':
-								return 'proposicao'
-								break;
-						case 'Em andamento':
-								return 'andamento'
-								break
-						case 'Em implantação':
-								return 'implantacao'
-								break
-						case 'Suspenso':
-								return 'suspenso'
-								break
-						case 'Arquivado':
-								return 'arquivado'
-								break
-						default:
-								break;
-				}
-		}
+			setProjectId(id){ 
+				this.clickedId = id;
+				this.$emit('clicked', id)
+			},
+			consultaAbertaClass(status) {
+				return status ? 'consultaAberta' : ''
+			},
+			attrClass (value) {
+					switch (value) {
+							case 'Em proposição':
+									return 'proposicao'
+									break;
+							case 'Em andamento':
+									return 'andamento'
+									break
+							case 'Em implantação':
+									return 'implantacao'
+									break
+							case 'Suspenso':
+									return 'suspenso'
+									break
+							case 'Arquivado':
+									return 'arquivado'
+									break
+							default:
+									break;
+					}
+			}
   	},
 }
 </script>
