@@ -11,9 +11,10 @@
 </head>
 <body>
 	<div id="app">
-		<mapa 	 	v-show="display.mapa"		@clicked="receiveId"	:clicked-id="projectId" 	:data='monitoramento'></mapa>
-		<sumario 	v-show="display.sumario"	@clicked="receiveId" 								:data='monitoramento'></sumario>
-		<ficha 		v-show="display.ficha" 		@clicked="receiveId"	:clicked-id="projectId" 	:data='monitoramento' 	:hiperlinks='hiperlinks'></ficha>
+		<!-- <mapa 	 	v-show="display.mapa"		@clicked="receiveId"	:clicked-id="projectId" 	:data='monitoramento'></mapa> -->
+		<sumario 	v-show="display.sumario"	@clicked="receiveId" 	:data='monitoramento'></sumario>
+		<ficha 		v-show="display.ficha" 		@clicked="receiveId"	:clicked-id="projectId" ></ficha>
+		<!-- <ficha 		v-show="display.ficha" 		@clicked="receiveId"	:clicked-id="projectId" 	:data='monitoramento' 	:hiperlinks='hiperlinks'></ficha> -->
 	</div>
 </body>
 <!-- desenvolvimento alterar page-piu-monitormaneto.php em produção-->
