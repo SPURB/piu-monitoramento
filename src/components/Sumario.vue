@@ -13,38 +13,27 @@
 <script>
 import EtapaHeader from './elements/EtapaHeader.vue'
 import Etapa from './elements/Etapa.vue'
-import { http } from '../api'
 
 export default {
 	name:'sumario',
-	mixins: [ http ],
 	data () {
 		return {
-			clickedId: undefined,
-			projetos: [],
+			clickedId: 0,
 			error: {
 				status: false,
 				message: ''
 			}
 		}
 	},
-	components: {
-		EtapaHeader,
-		Etapa
-	},
 	props: {
-		data: {
+		projetos: {
 			type: Array,
 			required: true
 		}
 	},
-	created () {
-		this.fetchJson('projetos')
-			.then(res => this.projetos = res)
-			.catch(err => {
-				this.error.status = true
-				this.error.message = err
-			})
+	components: {
+		EtapaHeader,
+		Etapa
 	},
 	computed: {
 		etapasProposicao () {

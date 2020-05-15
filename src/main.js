@@ -15,10 +15,7 @@ new Vue({
 	data:{
 		projectId: 0,
 		isFocused: false,
-		display:{
-			// mapa: true,
-			// sumario: false,
-			// ficha: true,
+		display: {
 			mapa: true,
 			sumario: true,
 			ficha: false,
@@ -28,23 +25,15 @@ new Vue({
 			message: '',
 			error: false
 		},
-		monitoramento: [],
-		hiperlinks: [],
-	}, 
-	computed:{
-		apiPath() { return 'https://spurb.github.io/piu-monitoramento-backend/'}
+		projetos: []
 	},
 	created(){
-		this.fetchFile(this.apiPath, 'monitoramento')
-		this.fetchFile(this.apiPath, 'hiperlinks')
-
 		this.fetchJson('projetos')
-			.then(res=> this.monitoramento = res)
+			.then(res=> this.projetos = res)
 			.catch(err => {
 				this.error.status = true
 				this.error.message = err
 			})
-
 	},
 	watch:{
 		projectId () {
@@ -62,27 +51,6 @@ new Vue({
 		}
 	},
 	methods: {
-		fetchFile(url, file){
-			this.api.fetching = true
-			this.api.message = 'Enviando solicitação...'
-			const oReq = new XMLHttpRequest()
-			oReq.addEventListener("load", evt => {
-				this[file] = JSON.parse(evt.target.response)
-				this.api.fetching = false
-				this.api.message = `Requisição para ${file} realizada com sucesso`
-			})
-			oReq.addEventListener("error", evt => {
-				this[file] = JSON.parse(evt.target.response)
-				this.api.fetching = false
-				this.api.message = 'Erro! A requisição falhou'
-			})
-			oReq.addEventListener("abort", evt => {
-				this.api.fetching = false
-				this.api.message = 'Erro! A requisição foi cancelada'
-			})
-			oReq.open('GET', `${url}${file}.json`, true)
-			oReq.send()
-		},
 		receiveId(id){
 			this.projectId = id
 			if (id === 0){
