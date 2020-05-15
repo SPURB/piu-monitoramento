@@ -166,19 +166,28 @@ export default {
 		return {
 			menuClickedId: 0,
 			menu: false,
-			projetos: [],
 			arquivos_tramitacao: [],
 			proponentes: [],
 			origens: [],
 			meta: [],
 			data_tramitacao: [],
 			grupos: [],
-			tramitacao: []
 		}
 	},
-	props: [
-		'clicked-id'
-	],
+	props: {
+		clickedId: {
+			type: Number,
+			required: true
+		},
+		projetos:{
+			type: Array,
+			required: true
+		},
+		tramitacao:{
+			type: Array,
+			required: true
+		}
+	},
 	components:{
 		FichaSumario,
 		FichaAspectos,
@@ -186,12 +195,10 @@ export default {
 	},
 	created () {
 		[
-			'projetos',
 			'arquivos_tramitacao',
 			'proponentes',
 			'origens',
 			'meta',
-			'tramitacao',
 			'data_tramitacao',
 			'grupos'
 		].forEach(table => {

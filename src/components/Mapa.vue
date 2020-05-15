@@ -28,6 +28,8 @@
 	</div>
 </template>
 <script>
+const dist_folder = "./dist/" //https://gestaourbana.prefeitura.sp.gov.br/wp-content/themes/gestaourbana-1.4/SPA/piu-monitoramento/dist/
+
 let esteMapa = (view, layers) => new ol.Map({
 	target: 'map',
 	layers,
@@ -38,16 +40,6 @@ let esteMapa = (view, layers) => new ol.Map({
 			collapsible: false
 		}
 	}).extend([new ol.control.ScaleLine()])
-})
-
-const highlightStyle = new ol.style.Style({
-  fill: new ol.style.Fill({
-    color: 'rgba(255,255,255,0.7)'
-  }),
-  stroke: new ol.style.Stroke({
-    color: '#3399CC',
-    width: 3
-  })
 })
 
 const base = [
