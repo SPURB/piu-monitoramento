@@ -25,15 +25,21 @@ new Vue({
 			message: '',
 			error: false
 		},
-		projetos: []
+		projetos: [],
+		tramitacao: []
 	},
 	created(){
-		this.fetchJson('projetos')
-			.then(res=> this.projetos = res)
-			.catch(err => {
-				this.error.status = true
-				this.error.message = err
-			})
+		[
+			'projetos',
+			'tramitacao',
+		].forEach(table => {
+			this.fetchJson(table)
+				.then(res => this[table] = res)
+				.catch(err => {
+					this.error.status = true
+					this.error.message = err
+				})
+		})
 	},
 	watch:{
 		projectId () {

@@ -1,122 +1,18 @@
 #mapa {
+	position: relative;
 	.map {
 		min-height: 500px;
 		margin-top: 1em;
 		position: relative;
-		div.downloadBase {
-			display: flex;
-			flex-direction: column;
-			position: absolute;
-			z-index: 1;
-			right: 0;
-			background: hsla(0,0%,100%,.75);
-			border-bottom-left-radius: 4px;
-			font-size: .7rem;
-			padding: 4px 4px 0 4px;
-			a {
-				display: flex;
-				align-items: center;
-				text-decoration: none;
-				color: #EB5757;
-				padding: 4px;
-				border-radius: 2px;
-				margin-bottom: 4px;
-				box-sizing: border-box;
-				&:hover {
-					background: rgba(0,0,0,.12);
-					i { color: #FFF };
-				};
-				i {
-					font-size: 14px;
-					color: #333;
-					margin-right: 4px;
-				};
-			}
-		}
-		div.legenda {
-			position: absolute;
-			z-index: 1;
-			background: rgba(255,255,255,.75);
-			padding: 8px 12px;
-			border-radius: 2px 0 0 2px;
-			font-size: .7rem;
-			line-height: 2;
-			right: 0;
-			bottom: 33px;
-			& > span { font-weight: 700; };
-			div { display: flex; align-items: center; };
-			div::before {
-				content: '';
-				display: block;
-				width: 12px;
-				height: 12px;
-				margin-right: 8px;
-				border-radius: 2px;
-				box-sizing: border-box;
-			};
-			.proposicao::before { background: $proposicao };
-			.andamento::before { background: $andamento };
-			.implantacao::before { background: $implantacao };
-			.suspenso::before { background: $suspenso };
-			.prospeccao::before { background: transparent; border: 1px solid rgba(255, 85, 0, .5); };
-		}
 		canvas {
 			border-radius: 2px;
 		};
-	}
-	div.infoModal {
-		background: rgba(255,255,255,.84);
-		box-shadow: 0 2px 2px rgba(0,0,0,.24);
-		border-radius: 2px;
-		padding: 8px;
-		border: 1px solid #EEE;
-		a {
-			display: block;
-			text-decoration: none;
-		}
-		a.infoModalNome {
-			color: #333;
-			font-size: larger;
-		}
-		a.infoModalNome.consultaAberta::after {
-			content: 'Em consulta';
-			visibility: visible;
-			font-size: 10px;
-			text-transform: uppercase;
-			color: #FFFFFF;
-			background-color: $verde;
-			padding: 4px 5px;
-			border-radius: 2px;
-			margin-left: 8px;
-			vertical-align: middle;
-		}
-		&:hover {
-			cursor: pointer;
-			box-shadow: 0 4px 4px rgba(0,0,0,.24);
-		}
-		a.infoModalEtapa {
-			display: block;
-			text-align: center;
-			text-transform: uppercase;
-			font-size: x-small;
-			padding: 4px 8px;
-			border-radius: 2px;
-			color: #FFF;
-			margin: 8px 0 0 0;
-			box-sizing: border-box;
-		}
-		.proposicao { background-color: $proposicao; };
-		.andamento { background-color: $andamento; }
-		.implantacao { background-color: $implantacao; }
-		.suspenso { background-color: $suspenso; }
-		.arquivado { color: $arquivado !important; border: 1px solid $arquivado; }
-		.prospeccao { color: $prospeccao !important; border: 1px solid $prospeccao; }
 	}
 	div.title{
 		display: flex;
 		align-items: baseline;
 		justify-content: space-between;
-		h3, ul, li, {
+		h3, ul, li {
 			list-style: none;
 			white-space: nowrap;
 			a{
@@ -146,3 +42,64 @@
 		};
 	}
 }
+
+#mapa .downloadBase {
+	display: flex;
+	flex-direction: column;
+	position: absolute;
+	z-index: 10;
+	right: 0;
+	top: 90px;
+	background: hsla(0,0%,100%,.75);
+	border-bottom-left-radius: 4px;
+	font-size: .7rem;
+	padding: 4px 4px 0 4px;
+	cursor: pointer;
+	a {
+		display: flex;
+		align-items: center;
+		text-decoration: none;
+		color: #EB5757;
+		padding: 4px;
+		border-radius: 2px;
+		margin-bottom: 4px;
+		box-sizing: border-box;
+		&:hover {
+			background: rgba(0,0,0,.12);
+			i { color: #FFF };
+		};
+		i {
+			font-size: 14px;
+			color: #333;
+			margin-right: 4px;
+		};
+	}
+}
+#mapa .legenda {
+	position: absolute;
+	z-index: 1;
+	background: rgba(255,255,255,.75);
+	padding: 8px 12px;
+	border-radius: 2px 0 0 2px;
+	font-size: .7rem;
+	line-height: 2;
+	right: 0;
+	bottom: 33px;
+	& > span { font-weight: 700; };
+	div { display: flex; align-items: center; };
+	div::before {
+		content: '';
+		display: block;
+		width: 12px;
+		height: 12px;
+		margin-right: 8px;
+		border-radius: 2px;
+		box-sizing: border-box;
+	};
+	.proposicao::before { background: $proposicao };
+	.andamento::before { background: $andamento };
+	.implantacao::before { background: $implantacao };
+	.suspenso::before { background: $suspenso };
+	.prospeccao::before { background: transparent; border: 1px solid rgba(255, 85, 0, .5); };
+}
+

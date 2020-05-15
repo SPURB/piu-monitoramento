@@ -11,7 +11,7 @@
 </head>
 <body>
 	<div id="app">
-		<mapa 	 	v-show="display.mapa"			@clicked="receiveId"	:clicked-id="projectId" :projetos="projetos"></mapa>
+		<mapa 	 	v-show="display.mapa"			@clicked="receiveId"	:clicked-id="projectId" :projetos="projetos" :tramitacao="tramitacao"></mapa>
 		<sumario 	v-show="display.sumario"	@clicked="receiveId" 	:clicked-id="projectId" :projetos="projetos"></sumario>
 		<ficha 		v-show="display.ficha" 		@clicked="receiveId"	:clicked-id="projectId"></ficha>
 		<!-- <ficha 		v-show="display.ficha" 		@clicked="receiveId"	:clicked-id="projectId" 	:data='monitoramento' 	:hiperlinks='hiperlinks'></ficha> -->
