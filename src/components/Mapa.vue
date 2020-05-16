@@ -28,7 +28,48 @@
 	</div>
 </template>
 <script>
-const dist_folder = "./dist/" //https://gestaourbana.prefeitura.sp.gov.br/wp-content/themes/gestaourbana-1.4/SPA/piu-monitoramento/dist/
+import BASE_Limite_MSP from '../assets/kml/BASE_Limite_MSP.kml'
+import RB1 from '../assets/kml/1_PIUs_gestao_urbana_1RB.kml'
+import VL2 from '../assets/kml/2_PIUs_gestao_urbana_2VL.kml'
+import ACT3 from '../assets/kml/3_PIUs_gestao_urbana_3ACT.kml'
+import NESP4 from '../assets/kml/4_PIUs_gestao_urbana_4NESP.kml'
+import ACJ5 from '../assets/kml/5_PIUs_gestao_urbana_5ACJ.kml'
+import ANH7 from '../assets/kml/7_PIUs_gestao_urbana_7ANH.kml'
+import PAC8 from '../assets/kml/8_PIUs_gestao_urbana_8PAC.kml'
+import VO9 from '../assets/kml/9_PIUs_gestao_urbana_9VO.kml'
+import NU10 from '../assets/kml/10_PIUs_gestao_urbana_10NU.kml'
+import AC11 from '../assets/kml/11_PIUs_gestao_urbana_11AC.kml'
+import ACP12 from '../assets/kml/12_PIUs_gestao_urbana_12ACP.kml'
+import BT16 from '../assets/kml/16_PIUs_gestao_urbana_16BT.kml'
+import CAP17 from '../assets/kml/17_PIUs_gestao_urbana_17CAP.kml'
+import CL18 from '../assets/kml/18_PIUs_gestao_urbana_18CL.kml'
+import PI19 from '../assets/kml/19_PIUs_gestao_urbana_19PI.kml'
+import Minhocao20 from '../assets/kml/20_PIU_Minhocao.kml'
+import PIU_Jockey_Club21 from '../assets/kml/21_PIU_Jockey_Club.kml'
+import Ginasio_do_Ibirapuera22 from '../assets/kml/22_Ginasio_do_Ibirapuera.kml'
+
+const kmls = {
+	1: RB1,
+	2: VL2,
+	3: ACT3,
+	4: NESP4,
+	5: ACJ5,
+	7: ANH7,
+	8: PAC8,
+	9: VO9,
+	10: NU10,
+	11: AC11,
+	12: ACP12,
+	16: BT16,
+	17: CAP17,
+	18: CL18,
+	19: PI19,
+	20: Minhocao20,
+	21: PIU_Jockey_Club21,
+	22: Ginasio_do_Ibirapuera22
+}
+
+const dist_folder = process.env.DIST_FOLDER
 
 let esteMapa = (view, layers) => new ol.Map({
 	target: 'map',
@@ -61,7 +102,7 @@ const base = [
 				})
 		}),
 		source: new ol.source.Vector({
-			url: `${dist_folder}kml/BASE_Limite_MSP.kml`,
+			url: BASE_Limite_MSP,
 			format: new ol.format.KML({ extractStyles: false })
 		})
 	})
@@ -118,19 +159,20 @@ export default {
 	watch: {
 		projetos (itens) {
 			if(itens.length) {
-				this.mapa.getLayers().extend(itens.map(item => {
-					return new ol.layer.Vector({
-						style: this.defineStyle(item.id_tramitacao),
-						source: new ol.source.Vector({
-							url: `${dist_folder}kml/${item.kml}`,
-							format: new ol.format.KML({ extractStyles: false })
-						}),
-						updateWhileAnimating: false,
-						renderBuffer: 100,
-						renderMode: 'image',
-						id_projeto: item.id
-					})
-				}))
+				this.mapa.getLayers()
+					.extend(itens.map(item => {
+						return new ol.layer.Vector({
+							style: this.defineStyle(item.id_tramitacao),
+							source: new ol.source.Vector({
+								url: `${dist_folder}${kmls[item.id]}`,
+								format: new ol.format.KML({ extractStyles: false })
+							}),
+							updateWhileAnimating: false,
+							renderBuffer: 100,
+							renderMode: 'image',
+							id_projeto: item.id
+						})
+					}))
 				this.activeLayers = this.mapa.getLayers().array_
 				this.applyMultiplyOnCanvas()
 				this.applyValuesInData()
@@ -150,8 +192,8 @@ export default {
 	},
 	methods: {
 		downloadSource (sourceType) {
-			if (!this.clickedId) {
 			const extension = sourceType === 'shp' ? 'rar' : 'kml'
+			if (!this.clickedId && sourceType === 'shp') {
 				return `${dist_folder}${sourceType}/0_PIUs_gestao_urbana.${extension}`
 			}
 			else {
@@ -179,7 +221,7 @@ export default {
 					layer.setOpacity(1)
 				}
 				else if (id !== idProjeto && id > 0) {
-					layer.setOpacity(0.3)
+					layer.setOpacity(0.05)
 				}
 			})
 		},
@@ -227,7 +269,7 @@ export default {
 		resetMapa () {
 			this.activeLayers.forEach(layer => {
 				const haveId = layer => layer.get('id_projeto')
-				if (haveId) { layer.setOpacity(1) }
+				if (haveId) { layer.setOpacity(0.8) }
 			})
 			this.view.animate({
 				center: [ -5195135.816167192, -2698303.8770360295 ],

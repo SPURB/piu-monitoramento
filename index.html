@@ -10,6 +10,7 @@
 	<script defer src="https://cdn.rawgit.com/openlayers/openlayers.github.io/master/en/v5.0.3/build/ol.js"></script>
 </head>
 <body>
+	<div id="loader">Carregando...</div>
 	<div id="app">
 		<mapa v-show="display.mapa" @clicked="receiveId" :clicked-id="projectId" :projetos="projetos" :tramitacao="tramitacao"></mapa>
 		<sumario v-show="display.sumario"	@clicked="receiveId" :clicked-id="projectId" :projetos="projetos"></sumario>

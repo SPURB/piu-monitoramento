@@ -10,7 +10,7 @@
 				<a 
 					class="tramit_link"
 					:href="arquivo.arquivo_url"
-					:type="ext(arquivo.arquivo_url)"
+					:type="getExtension(arquivo.arquivo_url)"
 					:title="arquivo.nome_arquivo"
 					target="_blank">
 					{{ arquivo.nome_arquivo }}
@@ -34,10 +34,11 @@ export default {
 			}	
     },
 	methods: {
-		ext(filename) {
-			let extensao = filename.substring(filename.lastIndexOf('.')+1, filename.length).replace('/','');
-			if (extensao.length > 4 || extensao.length <= 2) { return 'url' };
-			if (extensao.length > 2 || extensao.length <= 4) { return extensao };
+		getExtension(filename) {
+			if (!filename) return 'url'
+			let extensao = filename.substring(filename.lastIndexOf('.')+1, filename.length).replace('/','')
+			if (extensao.length > 4 || extensao.length <= 2) { return 'url' }
+			if (extensao.length > 2 || extensao.length <= 4) { return extensao }
 		},
 	},
 }

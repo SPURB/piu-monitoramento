@@ -32,11 +32,11 @@
 				:descricao="projeto.descricao"
 				:elemento="projeto.elementoMEM"
 				:areaTotal="projeto.areaTotal"
-				:meta="meta"
 			/>
 			<div class="tramitacao">
-				<h4>Tramitacao<span>Última atualização <strong>{{ getUltimaAtualizacao(projeto.id, arquivos_tramitacao) }}</strong></span></h4>
+				<h4>Tramitacao<span>Última atualização <strong>{{ formatDataExcel(projeto.ultimaAtualizacao) }}</strong></span></h4>
 				<ficha-tramitacao
+					:clickedId="clickedId"
 					:idTramitacao="1"
 					:title="'Proposição dos elementos prévios'"
 					:arquivos="getArquivosTramitacao(arquivos_tramitacao, {
@@ -51,6 +51,7 @@
 					:projetoTramitacao="projeto.id_tramitacao"
 				/>
 				<ficha-tramitacao
+					:clickedId="clickedId"
 					:idTramitacao="2"
 					:title="'Consulta pública inicial'"
 					:arquivos="getArquivosTramitacao(arquivos_tramitacao, {
@@ -65,6 +66,7 @@
 					:projetoTramitacao="projeto.id_tramitacao"
 				/>
 				<ficha-tramitacao
+					:clickedId="clickedId"
 					:idTramitacao="3"
 					:title="'Avaliação SMUL'"
 					:arquivos="getArquivosTramitacao(arquivos_tramitacao, {
@@ -79,6 +81,7 @@
 					:projetoTramitacao="projeto.id_tramitacao"
 				/>
 				<ficha-tramitacao
+					:clickedId="clickedId"
 					:idTramitacao="4"
 					:title="'Elaboração'"
 					:arquivos="getArquivosTramitacao(arquivos_tramitacao, {
@@ -93,6 +96,7 @@
 					:projetoTramitacao="projeto.id_tramitacao"
 				/>
 				<ficha-tramitacao
+					:clickedId="clickedId"
 					:idTramitacao="5"
 					:title="'Discussão pública'"
 					:arquivos="getArquivosTramitacao(arquivos_tramitacao, {
@@ -107,6 +111,7 @@
 					:projetoTramitacao="projeto.id_tramitacao"
 				/>
 				<ficha-tramitacao
+					:clickedId="clickedId"
 					:idTramitacao="6"
 					:title="'Consolidação'"
 					:arquivos="getArquivosTramitacao(arquivos_tramitacao, {
@@ -121,6 +126,7 @@
 					:projetoTramitacao="projeto.id_tramitacao"
 				/>
 				<ficha-tramitacao
+					:clickedId="clickedId"
 					:idTramitacao="7"
 					:title="'Encaminhamento Jurídico'"
 					:arquivos="getArquivosTramitacao(arquivos_tramitacao, {
@@ -135,6 +141,7 @@
 					:projetoTramitacao="projeto.id_tramitacao"
 				/>
 				<ficha-tramitacao
+					:clickedId="clickedId"
 					:idTramitacao="8"
 					:title="'Implantação'"
 					:arquivos="getArquivosTramitacao(arquivos_tramitacao, {
@@ -169,7 +176,6 @@ export default {
 			arquivos_tramitacao: [],
 			proponentes: [],
 			origens: [],
-			meta: [],
 			data_tramitacao: [],
 			grupos: [],
 		}
@@ -198,7 +204,6 @@ export default {
 			'arquivos_tramitacao',
 			'proponentes',
 			'origens',
-			'meta',
 			'data_tramitacao',
 			'grupos'
 		].forEach(table => {
@@ -209,6 +214,9 @@ export default {
 					this.error.message = err
 				})
 		})
+	},
+	mounted () {
+		console.log(this.arquivos_tramitacao.find(arquivo => arquivo.id_projetos === 11))
 	},
 	computed: {
 		menuItens () {
@@ -240,17 +248,6 @@ export default {
 		getDataTramitacao (datas, { idProjeto, idTramitacao }) {
 			if (!datas.length || !idProjeto || !idTramitacao) { return {} }
 			return datas.find(data => data.id_projetos === idProjeto && data.id_tramitacao === idTramitacao)
-		},
-		getUltimaAtualizacao (idProjeto, arquivos) {
-			if (!idProjeto || !arquivos.length) return '00-00-0000'
-			
-			const arquivosProjeto = arquivos
-				.filter(arquivo => arquivo.id_projetos === idProjeto && typeof(arquivo.data) === 'number')
-				.map(arquivo => arquivo.data)
-
-			const max = Math.max.apply(Math, arquivosProjeto)
-
-			return this.formatDataExcel(max)
 		},
 		getProjetoTramitacao (id) {
 			return id ? id : 0
@@ -293,6 +290,6 @@ export default {
 			this.menuClickedId = id
 			this.enviaId()
 		}
-	}
+	},
 }
 </script>

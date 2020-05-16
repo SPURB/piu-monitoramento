@@ -10,7 +10,6 @@
   publish = "dist/"
   command = "npm run build"
 
-
 [[redirects]]
   from = "/dist/kml/*"
   to = "/kml/:splat"

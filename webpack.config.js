@@ -1,6 +1,7 @@
-const path = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const VueLoaderPlugin = require('vue-loader/lib/plugin')
+const path = require('path')
+const Dotenv = require('dotenv-webpack')
 
 module.exports = ({ mode }) => {
 
@@ -17,7 +18,8 @@ module.exports = ({ mode }) => {
 				scriptLoading: 'defer',
 				template:'index.html'
 			}),
-			new VueLoaderPlugin()
+			new VueLoaderPlugin(),
+			new Dotenv()
 		],
 		module: {
 			rules: [
@@ -30,6 +32,12 @@ module.exports = ({ mode }) => {
 						'sass-loader',
 					],
 				},
+				{
+         test: /\.(png|svg|jpg|gif|kml|rar)$/,
+					use: [
+    	    	'file-loader'
+					]
+       },
 				{
 					test: /\.vue$/,
 					loader: 'vue-loader',

@@ -8,7 +8,7 @@
 					<span>{{ title }}</span>
         </div>
         <div class="content" :class="showTramitacao ? 'open' : 'close'">
-					<p style="white-space: pre;" v-if="dataTramitacao.status">{{ dataTramitacao.status }}</p>
+					<p class="content__status" v-if="dataTramitacao.status">{{ dataTramitacao.status }}</p>
 					<div v-for="(grupo, index) in arquivosPorGrupos" :key="index">
 						<ficha-tramitacao-arquivos 
 							:title="grupo.title"
@@ -32,6 +32,10 @@ export default {
 			}
     },
     props: {
+			clickedId:{
+				type: Number,
+				required: true
+			},
 			idTramitacao: {
 				type: Number,
 				required: true
@@ -72,10 +76,10 @@ export default {
 				return this.grupos.map(grupo => {
 					return {
 						title: grupo.nome,
-						arquivos: this.arquivos.filter(arquivo =>  arquivo.id_grupo === grupo.id)
+						arquivos: this.arquivos.filter(arquivo => arquivo.id_grupo === grupo.id)
 					}
 				})
-				.filter(grupo => grupo.arquivos.length)
+				.filter(grupo => grupo.arquivos.length)	
 			},
 			setLabelClass () {
 				const etapa = this.idTramitacao
@@ -86,17 +90,29 @@ export default {
 				else return ''
 			}
 		},
+		watch: {
+			clickedId (id) {
+				if (id) { this.showTramitacao = false }
+			}
+		},
     methods: {
 			formatDataExcel (data) {
 				let d = new Date((Math.floor(data - 25568))*86400000)
 				let string = ('0' + d.getDate()).slice(-2)+'/'+('0' + (d.getMonth()+1)).slice(-2)+'/'+d.getFullYear()
 				return string
 			},
-		},
+		}
 }
 </script>
 
 <style lang="scss" scoped>
+.content {
+	&__status {
+		white-space: pre-line;
+		margin-top: 0;
+	}
+}
+
 .ficha-tramitacao {
     border-top-width: 0.25em;
     border-top-style: solid;

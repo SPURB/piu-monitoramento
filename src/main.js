@@ -1,15 +1,15 @@
 import './styles.scss'
-import mapa from './components/Mapa.vue'
-import sumario from './components/Sumario.vue'
-import Ficha from './components/Ficha.vue'
+const Mapa = () => import('./components/Mapa.vue')
+const Sumario = () => import('./components/Sumario.vue')
+const Ficha = () => import('./components/Ficha.vue')
 import { http } from './api'
 
 new Vue({
 	el: '#app',
 	mixins: [ http ],
 	components: {
-		mapa,
-		sumario,
+		Mapa,
+		Sumario,
 		Ficha
 	},
 	data:{
@@ -40,6 +40,10 @@ new Vue({
 					this.error.message = err
 				})
 		})
+	},
+	mounted () {
+		const loader = document.getElementById('loader')
+		loader.style.visibility = 'hidden'
 	},
 	watch:{
 		projectId () {

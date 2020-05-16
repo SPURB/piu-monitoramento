@@ -12,13 +12,6 @@
 				<h6>Área total</h6>
 				{{ areaTotal }} ha
 			</div>
-
-			<template v-if="filteredMetas.length">
-				<div v-for="(meta, index) in filteredMetas" :key="index">
-					<h6>{{ meta.chave }}</h6>
-					{{ meta.valor }}
-				</div>
-			</template>
 	</div>
 </template>
 
@@ -41,15 +34,6 @@ export default {
 		areaTotal: {
 			type: Number,
 			required: true
-		},
-		meta: {
-			type: Array,
-			default: []
-		}
-	},
-	computed: {
-		filteredMetas () {
-			return this.meta.filter(item => item.id_projetos === this.idProjeto)
 		}
 	}
 }
