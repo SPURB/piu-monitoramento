@@ -5,19 +5,3 @@
 [context.production]
   publish = "dist/"
   command = "npm run build"
-
-[context.deploy-preview]
-  publish = "dist/"
-  command = "npm run build"
-
-[[redirects]]
-  from = "/dist/kml/*"
-  to = "/kml/:splat"
-  status = 200
-  force = true
-
-[[redirects]]
-  from = "/dist/shp/*"
-  to = "/shp/:splat"
-  status = 200
-  force = true
