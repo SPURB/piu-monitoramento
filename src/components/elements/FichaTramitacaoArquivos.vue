@@ -5,15 +5,14 @@
 			<p 
 				:key="index"
 				v-for="(arquivo, index) in arquivos"
-				class="tramit_link"
-            >
+				class="tramit_link">
 				<a 
 					class="tramit_link"
 					:href="arquivo.arquivo_url"
 					:type="getExtension(arquivo.arquivo_url)"
-					:title="arquivo.nome_arquivo"
+					:title="arquivo.documento"
 					target="_blank">
-					{{ arquivo.nome_arquivo }}
+					{{ setFilename(arquivo) }}
 				</a>
 			</p>
 		</section>
@@ -22,8 +21,8 @@
 
 <script>
 export default {
-    name: 'FichaTramitacaoArquivos',
-    props: {
+		name: 'FichaTramitacaoArquivos',
+		props: {
 			title: {
 				type: String,
 				required: true
@@ -32,7 +31,7 @@ export default {
 				type: Array,
 				required: true
 			}	
-    },
+		},
 	methods: {
 		getExtension(filename) {
 			if (!filename) return 'url'
@@ -40,6 +39,19 @@ export default {
 			if (extensao.length > 4 || extensao.length <= 2) { return 'url' }
 			if (extensao.length > 2 || extensao.length <= 4) { return extensao }
 		},
+		setFilename ({ data, documento, evento }) {
+			let display = ''
+
+			if (data && data !== '') {
+				display = `${data} - `
+			}
+
+			else if (evento && evento !== '') {
+				display = `${display} | `
+			}
+
+			return `${display}${documento}`
+		}
 	},
 }
 </script>

@@ -47,20 +47,20 @@ export default {
 				{
 					marcadorNumber: '01',
 					marcadorTitle: 'EM PROPOSIÇÃO DOS ELEMENTOS PRÉVIOS',
-					publico: elemPrevios.filter(projetos => !projetos.id_proponentePrivado),
-					privado: elemPrevios.filter(projetos => projetos.id_proponentePrivado)
+					publico: elemPrevios.filter(projetos => !projetos.proponentePrivado),
+					privado: elemPrevios.filter(projetos => projetos.proponentePrivado)
 				},
 				{
 					marcadorNumber: '02',
 					marcadorTitle: 'CONSULTA PÚBLICA INICIAL',
-					publico: consultaPublicaInical.filter(projetos => !projetos.id_proponentePrivado),
-					privado: consultaPublicaInical.filter(projetos => projetos.id_proponentePrivado)
+					publico: consultaPublicaInical.filter(projetos => !projetos.proponentePrivado),
+					privado: consultaPublicaInical.filter(projetos => projetos.proponentePrivado)
 				},
 				{
 					marcadorNumber: '03',
 					marcadorTitle: 'AVALIAÇÃO SMUL',
-					publico: avalSmul.filter(projetos => !projetos.id_proponentePrivado),
-					privado: avalSmul.filter(projetos => projetos.id_proponentePrivado)
+					publico: avalSmul.filter(projetos => !projetos.proponentePrivado),
+					privado: avalSmul.filter(projetos => projetos.proponentePrivado)
 				}
 			]
 		},
@@ -76,26 +76,26 @@ export default {
 				{
 					marcadorNumber: '04',
 					marcadorTitle: 'ELABORAÇÃO',
-					publico: elaboracao.filter(projetos => !projetos.id_proponentePrivado),
-					privado: elaboracao.filter(projetos => projetos.id_proponentePrivado)
+					publico: elaboracao.filter(projetos => !projetos.proponentePrivado),
+					privado: elaboracao.filter(projetos => projetos.proponentePrivado)
 				},
 				{
 					marcadorNumber: '05',
 					marcadorTitle: 'DISCUSSÂO PÚBLICA',
-					publico: discPub.filter(projetos => !projetos.id_proponentePrivado),
-					privado: discPub.filter(projetos => projetos.id_proponentePrivado)
+					publico: discPub.filter(projetos => !projetos.proponentePrivado),
+					privado: discPub.filter(projetos => projetos.proponentePrivado)
 				},
 				{
 					marcadorNumber: '06',
 					marcadorTitle: 'CONSOLIDAÇÃO',
-					publico: consolidacao.filter(projetos => !projetos.id_proponentePrivado),
-					privado: consolidacao.filter(projetos => projetos.id_proponentePrivado)
+					publico: consolidacao.filter(projetos => !projetos.proponentePrivado),
+					privado: consolidacao.filter(projetos => projetos.proponentePrivado)
 				},
 				{
 					marcadorNumber: '07',
 					marcadorTitle: 'ENCAMINHAMENTO JURÍDICO',
-					publico: juridico.filter(projetos => !projetos.id_proponentePrivado),
-					privado: juridico.filter(projetos => projetos.id_proponentePrivado)
+					publico: juridico.filter(projetos => !projetos.proponentePrivado),
+					privado: juridico.filter(projetos => projetos.proponentePrivado)
 				}
 			]
 		},
@@ -109,8 +109,8 @@ export default {
 				{
 					marcadorNumber: '08',
 					marcadorTitle: 'IMPLANTAÇÂO',
-					publico: implantacao.filter(projetos => !projetos.id_proponentePrivado),
-					privado: implantacao.filter(projetos => projetos.id_proponentePrivado)
+					publico: implantacao.filter(projetos => !projetos.proponentePrivado),
+					privado: implantacao.filter(projetos => projetos.proponentePrivado)
 				}
 			]
 		},
@@ -123,8 +123,8 @@ export default {
 				{
 					marcadorNumber: '09',
 					marcadorTitle: 'SUSPENSO',
-					publico: suspensos.filter(projetos => !projetos.id_proponentePrivado),
-					privado: suspensos.filter(projetos => projetos.id_proponentePrivado)
+					publico: suspensos.filter(projetos => !projetos.proponentePrivado),
+					privado: suspensos.filter(projetos => projetos.proponentePrivado)
 				}
 			]
 		}

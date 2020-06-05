@@ -2,7 +2,7 @@
 	<div id="ficha">
 		<div @click="menu=!menu" class="menu-titulo" id="menuTitulo">
 			<div class="titulo" :class="atribuiEtapaClass(projeto.id_tramitacao)">
-				<span :class="consultaAbertaClass(projeto.id_statusConsulta)">{{ projeto.nome }}</span>
+				<span :class="consultaAbertaClass(projeto.consultaAberta)">{{ projeto.nome }}</span>
 				<i class="material-icons" v-if="!menu">expand_more</i>
 				<i class="material-icons" v-if="menu">expand_less</i>
 			</div>
@@ -11,7 +11,7 @@
 					<li v-for="projeto in menuItens" 
 					:class="atribuiEtapaClass(projeto.id_tramitacao)" 
 					:key="projeto.id">
-						<a :class="consultaAbertaClass(projeto.id_statusConsulta)" @click="gravaId(projeto.id)">{{ projeto.nome }}</a>
+						<a :class="consultaAbertaClass(projeto.consultaAberta)" @click="gravaId(projeto.id)">{{ projeto.nome }}</a>
 					</li>
 				</ul>
 			</transition>
@@ -34,7 +34,7 @@
 				:areaTotal="projeto.areaTotal"
 			/>
 			<div class="tramitacao">
-				<h4>Tramitacao<span>Última atualização <strong>{{ formatDataExcel(projeto.ultimaAtualizacao) }}</strong></span></h4>
+				<h4>Tramitacao<span>Última atualização <strong>{{ projeto.ultimaAtualizacao }}</strong></span></h4>
 				<ficha-tramitacao
 					:clickedId="clickedId"
 					:idTramitacao="1"
@@ -275,11 +275,6 @@ export default {
 				case 10: return 'Arquivado';
 				case 11: return 'Em prospecção';
 			};
-		},
-		formatDataExcel (data) {
-			let d = new Date((Math.floor(data - 25568))*86400000)
-			let string = ('0' + d.getDate()).slice(-2)+'/'+('0' + (d.getMonth()+1)).slice(-2)+'/'+d.getFullYear()
-			return string
 		},
 
 		enviaId(event) {

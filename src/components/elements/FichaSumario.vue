@@ -21,7 +21,7 @@
 								'item__last': index === registrosAdministrativos.length - 1
 							}"
 							:href="link.arquivo_url"
-							:title="link.nome_arquivo" target="_blank">{{ link.nome_arquivo }} <i class="material-icons">launch</i>
+							:title="link.documento" target="_blank">{{ link.documento }} <i class="material-icons">launch</i>
 						</a>
 					</div>
 				</template>
@@ -70,7 +70,7 @@ export default {
 	},
 	computed: {
 		publicoPrivado () {
-			return this.projeto.id_proponentePrivado ? 'Privado' : 'Público'
+			return this.projeto.proponentePrivado ? 'Privado' : 'Público'
 		},
 		proponente (){
 			if (this.proponentes.length) {

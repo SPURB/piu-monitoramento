@@ -33,11 +33,11 @@ module.exports = ({ mode }) => {
 					],
 				},
 				{
-         test: /\.(png|svg|jpg|gif|kml|rar)$/,
+				 test: /\.(png|svg|jpg|gif|kml|rar)$/,
 					use: [
-    	    	'file-loader'
+						'file-loader'
 					]
-       },
+			 },
 				{
 					test: /\.vue$/,
 					loader: 'vue-loader',

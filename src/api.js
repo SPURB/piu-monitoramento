@@ -1,7 +1,7 @@
 export const http = {
 	methods: {
 		fetchJson (file) {
-			const url = 'https://spurb.github.io/piu-monitoramento-backend/v1/'//'http://localhost:8080/v1/'
+			const url = 'https://dev-spurbanismo.github.io/piu-monitoramento-backend/v2/'
 
 			return new Promise(function(resolve, reject) {
 				const oReq = new XMLHttpRequest()
