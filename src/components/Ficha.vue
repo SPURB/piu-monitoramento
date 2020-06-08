@@ -215,9 +215,6 @@ export default {
 				})
 		})
 	},
-	mounted () {
-		console.log(this.arquivos_tramitacao.find(arquivo => arquivo.id_projetos === 11))
-	},
 	computed: {
 		menuItens () {
 			if (!this.projetos.length) { return [] }

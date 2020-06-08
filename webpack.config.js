@@ -10,7 +10,7 @@ module.exports = ({ mode }) => {
 		entry: './src/main.js',
 		output: {
 			filename: 'main.min.js',
-			path: path.resolve(__dirname, 'dist'),
+			path: path.resolve(__dirname, 'dist')
 		},
 		plugins: [
 			new HtmlWebpackPlugin({
@@ -34,10 +34,11 @@ module.exports = ({ mode }) => {
 				},
 				{
 				 test: /\.(png|svg|jpg|gif|kml|rar)$/,
-					use: [
-						'file-loader'
-					]
-			 },
+				 loader: 'file-loader',
+					options: {
+						name: './[name].[ext]',
+					}
+				},
 				{
 					test: /\.vue$/,
 					loader: 'vue-loader',
