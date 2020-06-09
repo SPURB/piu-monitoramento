@@ -47,7 +47,7 @@
 						idProjeto: projeto.id,
 						idTramitacao: 1	
 					})"
-					:grupos="grupos"
+					:grupos="gruposOrdenado"
 					:projetoTramitacao="projeto.id_tramitacao"
 				/>
 				<ficha-tramitacao
@@ -62,7 +62,7 @@
 						idProjeto: projeto.id,
 						idTramitacao: 2
 					})"
-					:grupos="grupos"
+					:grupos="gruposOrdenado"
 					:projetoTramitacao="projeto.id_tramitacao"
 				/>
 				<ficha-tramitacao
@@ -77,7 +77,7 @@
 						idProjeto: projeto.id,
 						idTramitacao: 3
 					})"
-					:grupos="grupos"
+					:grupos="gruposOrdenado"
 					:projetoTramitacao="projeto.id_tramitacao"
 				/>
 				<ficha-tramitacao
@@ -92,7 +92,7 @@
 						idProjeto: projeto.id,
 						idTramitacao: 4
 					})"
-					:grupos="grupos"
+					:grupos="gruposOrdenado"
 					:projetoTramitacao="projeto.id_tramitacao"
 				/>
 				<ficha-tramitacao
@@ -107,7 +107,7 @@
 						idProjeto: projeto.id,
 						idTramitacao: 5
 					})"
-					:grupos="grupos"
+					:grupos="gruposOrdenado"
 					:projetoTramitacao="projeto.id_tramitacao"
 				/>
 				<ficha-tramitacao
@@ -122,7 +122,7 @@
 						idProjeto: projeto.id,
 						idTramitacao: 6
 					})"
-					:grupos="grupos"
+					:grupos="gruposOrdenado"
 					:projetoTramitacao="projeto.id_tramitacao"
 				/>
 				<ficha-tramitacao
@@ -137,7 +137,7 @@
 						idProjeto: projeto.id,
 						idTramitacao: 7
 					})"
-					:grupos="grupos"
+					:grupos="gruposOrdenado"
 					:projetoTramitacao="projeto.id_tramitacao"
 				/>
 				<ficha-tramitacao
@@ -152,7 +152,7 @@
 						idProjeto: projeto.id,
 						idTramitacao: 8
 					})"
-					:grupos="grupos"
+					:grupos="gruposOrdenado"
 					:projetoTramitacao="projeto.id_tramitacao"
 				/>
 			</div>
@@ -235,6 +235,18 @@ export default {
 		tramitacoesValidas () {
 			if (!this.tramitacao.length) { return [] }
 			return this.tramitacao.filter(item => item.id < 9)
+		},
+		gruposOrdenado () {
+			if (!this.grupos.length) { return [] }
+			return this.grupos
+				.sort((a, b) => +(a.id === 8))
+				.sort((a, b) => +(a.id === 2))
+				.sort((a, b) => +(a.id === 3))
+				.sort((a, b) => +(a.id === 1))
+				.sort((a, b) => +(a.id === 5))
+				.sort((a, b) => +(a.id === 6))
+				.sort((a, b) => +(a.id === 4))
+				.sort((a, b) => +(a.id === 7))
 		}
 	},
 	methods: {

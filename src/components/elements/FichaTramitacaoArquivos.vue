@@ -10,7 +10,7 @@
 					class="tramit_link"
 					:href="arquivo.arquivo_url"
 					:type="getExtension(arquivo.arquivo_url)"
-					:title="arquivo.documento"
+					:title="setFilename(arquivo)"
 					target="_blank">
 					{{ setFilename(arquivo) }}
 				</a>
@@ -40,17 +40,15 @@ export default {
 			if (extensao.length > 2 || extensao.length <= 4) { return extensao }
 		},
 		setFilename ({ data, documento, evento }) {
-			let display = ''
-
-			if (data && data !== '') {
-				display = `${data} - `
-			}
-
-			else if (evento && evento !== '') {
-				display = `${display} | `
-			}
-
-			return `${display}${documento}`
+			return `${
+				data && data !== ''
+					? data + ' - '
+					: ''
+				}${
+				evento && evento !== ''
+					? evento + ' | '
+					: ''
+				}${documento}`
 		}
 	},
 }

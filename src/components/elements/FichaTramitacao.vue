@@ -71,7 +71,7 @@ export default {
 					arquivos: this.arquivos.filter(arquivo => arquivo.id_grupo === grupo.id)
 				}
 			})
-			.filter(grupo => grupo.arquivos.length)	
+			.filter(grupo => grupo.arquivos.length)
 		},
 		setLabelClass () {
 			const etapa = this.idTramitacao
