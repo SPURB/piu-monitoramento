@@ -238,15 +238,17 @@ export default {
 		},
 		gruposOrdenado () {
 			if (!this.grupos.length) { return [] }
-			return this.grupos
-				.sort((a, b) => +(a.id === 8))
-				.sort((a, b) => +(a.id === 2))
-				.sort((a, b) => +(a.id === 3))
-				.sort((a, b) => +(a.id === 1))
-				.sort((a, b) => +(a.id === 5))
-				.sort((a, b) => +(a.id === 6))
-				.sort((a, b) => +(a.id === 4))
-				.sort((a, b) => +(a.id === 7))
+			const ordered = this.grupos
+				.sort((a, b) => a.id === 7 ? -1 : 1)
+				.sort((a, b) => a.id === 4 ? -1 : 1)
+				.sort((a, b) => a.id === 6 ? -1 : 1)
+				.sort((a, b) => a.id === 5 ? -1 : 1)
+				.sort((a, b) => a.id === 1 ? -1 : 1)
+				.sort((a, b) => a.id === 3 ? -1 : 1)
+				.sort((a, b) => a.id === 2 ? -1 : 1)
+				.sort((a, b) => a.id === 8 ? -1 : 1)
+
+			return ordered.concat({ id: 0, nome:'' })
 		}
 	},
 	methods: {
