@@ -4,15 +4,17 @@
 	"description": "Sistema de monitoramento dos Projetos de Intervenção Urbana (Decreto nº 56.901, de 30 de março de 2016)",
 	"private": true,
 	"scripts": {
-		"build": "webpack -p --config ./webpack.config --env.mode=production",
-		"dev": "webpack-dev-server --open -p --config ./webpack.config --env.mode=development"
+		"build:gu:prod": "webpack -p --config ./webpack.config --env.mode=production --env.publicPath=https://gestaourbana.prefeitura.sp.gov.br/wp-content/themes/gestaourbana-1.4/SPA/piu-monitoramento/",
+		"build:gu:homolog": "webpack -p --config ./webpack.config --env.mode=production --env.publicPath=http://comunicacao.smul.pmsp/wp-content/themes/gestaourbana-1.4/SPA/piu-monitoramento/",
+		"build:gu:local": "webpack -p --config ./webpack.config --env.mode=production --env.publicPath=http://localhost/gesteaourbanasp/wp-content/themes/gestaourbana-1.4/SPA/piu-monitoramento/",
+		"build": "webpack -p --config ./webpack.config --env.mode=production --env.publicPath=/",
+		"dev": "webpack-dev-server --open -p --config ./webpack.config --env.mode=development --env.publicPath=/"
 	},
 	"devDependencies": {
 		"@babel/core": "^7.9.0",
 		"@babel/preset-env": "^7.9.5",
 		"babel-loader": "^8.1.0",
 		"css-loader": "^3.5.1",
-		"dotenv-webpack": "^1.8.0",
 		"file-loader": "^6.0.0",
 		"html-webpack-plugin": "^4.0.4",
 		"node-sass": "^4.13.1",

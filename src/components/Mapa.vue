@@ -31,7 +31,8 @@
 	</div>
 </template>
 <script>
-const distFolder = process.env.DIST_FOLDER
+const publicPath = process.env.PUBLIC_PATH
+import('../assets/shp/0_PIUs_gestao_urbana.rar')
 
 let esteMapa = (view, layers) => new ol.Map({
 	target: 'map',
@@ -64,7 +65,7 @@ export default {
 		},
 		projetos: {
 			type: Array,
-			required: true
+			default: () => []
 		},
 		tramitacao: {
 			type: Array,
@@ -90,31 +91,27 @@ export default {
 	computed: {
 		projetoSelecionado () {
 			if (!this.projetos.length || !this.clickedId) {
-				return { id: 0, nome: 'Base' } 
+				return { id: 0, nome: 'Base' }
 			}
 			return this.projetos.find(projeto => projeto.id === this.clickedId)
 		},
 		tramitacaoProjetoSelecionado () {
 			if (!this.projetoSelecionado.id_tramitacao) {
-				return { id: 0, nome: 'Base' } 
+				return { id: 0, nome: 'Base' }
 			}
 			return this.tramitacao.find(item => item.id === this.projetoSelecionado.id_tramitacao)
 		},
 		kmlSrc () {
-			if (this.clickedId === 0) return `${distFolder}/0_PIUs_gestao_urbana.kml`
-			return `${distFolder}/${this.projetoSelecionado.kml}`
+			if (this.clickedId === 0) return `0_PIUs_gestao_urbana.kml`
+			return `${this.projetoSelecionado.kml}`
 		},
 		shpSrc () {
-			if (this.clickedId === 0) return `${distFolder}/0_PIUs_gestao_urbana.rar`
-			return `${distFolder}/${this.projetoSelecionado.shape}`
+			if (this.clickedId === 0) return `0_PIUs_gestao_urbana.rar`
+			return `${this.projetoSelecionado.shape}`
 		}
 	},
 	mounted () {
 		this.mapa = esteMapa(this.view, base)
-
-		if (this.projetos.length) {
-			this.initMapLayers(this.projetos)
-		}
 
 		import('../assets/kml/BASE_Limite_MSP.kml')
 			.then((file) => {
@@ -144,7 +141,11 @@ export default {
 	},
 	watch: {
 		projetos (itens) {
-			if (itens.length) { this.initMapLayers(itens) }
+			if (itens.length) {
+				itens.map(item => import(`../assets/kml/${item.kml}`))
+				itens.map(item => import(`../assets/shp/${item.shape}`))
+				this.initMapLayers(itens)
+			}
 		},
 		clickedId(newprop, oldprop){
 			if (!newprop) {
@@ -160,14 +161,12 @@ export default {
 	},
 	methods: {
 		initMapLayers (projetos) {
-			projetos.forEach(item => import(`../assets/kml/${item.kml}`))
-			
-			this.mapa.getLayers()
+			const layers = this.mapa.getLayers()
 				.extend(projetos.map(item => {
 					return new ol.layer.Vector({
 						style: this.defineStyle(item.id_tramitacao),
 						source: new ol.source.Vector({
-							url: `${item.kml}`,
+							url: `${publicPath}${item.kml}`,
 							format: new ol.format.KML({ extractStyles: false })
 						}),
 						updateWhileAnimating: false,
@@ -176,7 +175,7 @@ export default {
 						id_projeto: item.id
 					})
 				}))
-			this.activeLayers = this.mapa.getLayers().array_
+			this.activeLayers = layers.array_
 		},
 		applyValuesInData () {
 			this.center = this.view.getCenter()
@@ -196,7 +195,7 @@ export default {
 			this.activeLayers.forEach(layer => {
 				const id = layer.get('id_projeto')
 				if (id === idProjeto) {
-					layer.setOpacity(1)
+					layer.setOpacity(0.7)
 				}
 				else if (id !== idProjeto && id > 0) {
 					layer.setOpacity(0.05)

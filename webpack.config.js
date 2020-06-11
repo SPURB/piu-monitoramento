@@ -1,16 +1,17 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const VueLoaderPlugin = require('vue-loader/lib/plugin')
 const path = require('path')
-const Dotenv = require('dotenv-webpack')
+const { DefinePlugin } = require('webpack')
 
-module.exports = ({ mode }) => {
+module.exports = ({ mode, publicPath }) => {
 
 	const config = {
 		mode,
 		entry: './src/main.js',
 		output: {
 			filename: 'main.min.js',
-			path: path.resolve(__dirname, 'dist')
+			path: path.resolve(__dirname, 'dist'),
+			publicPath
 		},
 		plugins: [
 			new HtmlWebpackPlugin({
@@ -19,7 +20,9 @@ module.exports = ({ mode }) => {
 				template:'index.html'
 			}),
 			new VueLoaderPlugin(),
-			new Dotenv()
+			new DefinePlugin({
+				'process.env.PUBLIC_PATH': JSON.stringify(publicPath)
+			})
 		],
 		module: {
 			rules: [
