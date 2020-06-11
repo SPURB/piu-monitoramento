@@ -89,7 +89,7 @@ export default {
 	},
 	computed: {
 		projetoSelecionado () {
-			if (!this.projetos.length || !this.clickedId) { 
+			if (!this.projetos.length || !this.clickedId) {
 				return { id: 0, nome: 'Base' } 
 			}
 			return this.projetos.find(projeto => projeto.id === this.clickedId)

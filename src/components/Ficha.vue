@@ -200,20 +200,26 @@ export default {
 		FichaTramitacao
 	},
 	created () {
-		[
+		const dataTables = [
 			'arquivos_tramitacao',
 			'proponentes',
 			'origens',
 			'data_tramitacao',
 			'grupos'
-		].forEach(table => {
-			this.fetchJson(table)
-				.then(res => this[table] = res)
-				.catch(err => {
-					this.error.status = true
-					this.error.message = err
-				})
-		})
+		].map(table => this.fetchJson(table))
+
+		Promise.all(dataTables)
+			.then(res => {
+				this.arquivos_tramitacao = res[0]
+				this.proponentes = res[1]
+				this.origens = res[2]
+				this.data_tramitacao = res[3]
+				this.grupos = res[4]
+			})
+			.catch(err => {
+				this.error.status = true
+				this.error.message = err
+			})
 	},
 	computed: {
 		menuItens () {

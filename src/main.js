@@ -28,18 +28,18 @@ new Vue({
 		projetos: [],
 		tramitacao: []
 	},
-	created(){
-		[
-			'projetos',
-			'tramitacao',
-		].forEach(table => {
-			this.fetchJson(table)
-				.then(res => this[table] = res)
-				.catch(err => {
-					this.error.status = true
-					this.error.message = err
-				})
-		})
+	created () {
+		const dataTables = [ 'projetos', 'tramitacao' ].map(table => this.fetchJson(table))
+
+		Promise.all(dataTables)
+			.then(res => {
+				this.projetos = res[0]
+				this.tramitacao = res[1]
+			})
+			.catch(err => {
+				this.error.status = true
+				this.error.message = err
+			})
 	},
 	mounted () {
 		const loader = document.getElementById('loader')
