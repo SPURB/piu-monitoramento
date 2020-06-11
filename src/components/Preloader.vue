@@ -1,20 +1,26 @@
-#loader {
-	position: absolute;
-	z-index: 100;
+<template>
+	<div class="preloader">Carregando...</div>
+</template>
+<script>
+export default {
+	name: 'Preloader'
+}
+</script>
+<style lang='scss'>
+.preloader {
 	display: flex;
 	flex-direction: column;
-	justify-content: center;
 	align-items: center;
-	width: 100%;
-	height: calc(100vh - 150px);
-	min-height: 5em;
+	justify-content: center;
+	height: 5rem;
+	min-height: 15rem;
 	background: #FFF;
 	font-size: x-small;
 	text-transform: uppercase;
 	letter-spacing: .1em;
 	font-family: sans-serif;
 }
-#loader::before {
+.preloader::before {
 	content: '';
 	display: block;
 	width: 1.5em;
@@ -41,3 +47,4 @@
 		background-color: #802B00;
 	}
 }
+</style>

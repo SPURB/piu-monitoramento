@@ -1,4 +1,5 @@
 import './styles.scss'
+import Preloader from './components/Preloader.vue'
 const Mapa = () => import('./components/Mapa.vue')
 const Sumario = () => import('./components/Sumario.vue')
 const Ficha = () => import('./components/Ficha.vue')
@@ -8,11 +9,12 @@ new Vue({
 	el: '#app',
 	mixins: [ http ],
 	components: {
+		Preloader,
 		Mapa,
 		Sumario,
 		Ficha
 	},
-	data:{
+	data: {
 		projectId: 0,
 		isFocused: false,
 		display: {
@@ -28,6 +30,9 @@ new Vue({
 		projetos: [],
 		tramitacao: []
 	},
+	computed: {
+		appLoaded () { return this.projetos.length > 0 }
+	},
 	created () {
 		const dataTables = [ 'projetos', 'tramitacao' ].map(table => this.fetchJson(table))
 
@@ -40,10 +45,6 @@ new Vue({
 				this.error.status = true
 				this.error.message = err
 			})
-	},
-	mounted () {
-		const loader = document.getElementById('loader')
-		loader.style.visibility = 'hidden'
 	},
 	watch:{
 		projectId () {

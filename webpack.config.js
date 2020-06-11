@@ -80,7 +80,7 @@ module.exports = ({ mode, publicPath }) => {
 		)
 	}
 
-	else if (mode === 'development') {
+	if (mode === 'development') {
 		config.devServer = {
 			port: 3000,
 			contentBase: '.',

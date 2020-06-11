@@ -7,11 +7,11 @@ Template Name: piu-monitoramento
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/openlayers/openlayers.github.io@master/en/v5.3.0/css/ol.css">
 
-<div id="loader">Carregando...</div>
 <div id="default-inner">
 	<div class="wrapper">
 		<div class="inner">
 			<div id="app">
+				<preloader v-if="!appLoaded"></preloader>
 				<mapa v-show="display.mapa" @clicked="receiveId" :clicked-id="projectId" :projetos="projetos" :tramitacao="tramitacao"></mapa>
 				<sumario v-show="display.sumario"	@clicked="receiveId" :clicked-id="projectId" :projetos="projetos"></sumario>
 				<ficha v-show="display.ficha" @clicked="receiveId" :clicked-id="projectId" :projetos="projetos" :tramitacao="tramitacao"></ficha>
