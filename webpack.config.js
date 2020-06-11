@@ -2,6 +2,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 const VueLoaderPlugin = require('vue-loader/lib/plugin')
 const path = require('path')
 const { DefinePlugin } = require('webpack')
+const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 
 module.exports = ({ mode, publicPath }) => {
 
@@ -14,15 +15,11 @@ module.exports = ({ mode, publicPath }) => {
 			publicPath
 		},
 		plugins: [
-			new HtmlWebpackPlugin({
-				title: 'PIU Monitoramento',
-				scriptLoading: 'defer',
-				template:'index.html'
-			}),
 			new VueLoaderPlugin(),
 			new DefinePlugin({
 				'process.env.PUBLIC_PATH': JSON.stringify(publicPath)
-			})
+			}),
+			new CleanWebpackPlugin()
 		],
 		module: {
 			rules: [
@@ -74,7 +71,16 @@ module.exports = ({ mode, publicPath }) => {
 		}
 	}
 
-	if (mode === 'development') {
+	if (mode === 'development' || mode === 'homolog') {
+		config.plugins.push(new HtmlWebpackPlugin({
+				title: 'PIU Monitoramento',
+				scriptLoading: 'defer',
+				template:'index.html'
+			})
+		)
+	}
+
+	else if (mode === 'development') {
 		config.devServer = {
 			port: 3000,
 			contentBase: '.',
