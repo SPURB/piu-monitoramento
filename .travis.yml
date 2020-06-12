@@ -1,24 +1,24 @@
 language: node_js
 node_js:
- - lts/*
+  - lts/*
 
 cache:
- npm: true
- directories:
-  - node_modules
-  - ~/.cache
+  npm: true
+  directories:
+    - node_modules
+    - ~/.cache
 
 branches:
- only:
-  - master
+   only:
+    - master
 
 install:
- - npm install
+  - npm install
 
 script:
- - npm run build
+  - npm run build
 
-deploy:
+deploy: # spurb.github.io/piu-monitoramento
   provider: pages
   local_dir: dist
   skip_cleanup: true
