@@ -1,6 +1,6 @@
 <template>
 	<div class="ficha-tramitacao" @click="showTramitacao=!showTramitacao">
-			<div class="periodoEtapaTramit" v-if="setLabelClass!=='posterior'">
+			<div class="periodoEtapaTramit">
 				{{ periodo }}
 			</div>
 			<div class="label" :class="setLabelClass">
@@ -62,7 +62,27 @@ export default {
 	},
 	computed: {
 		periodo () {
-			return  `${this.dataTramitacao.registroSeiPrimeiro} — ${this.dataTramitacao.registroSeiUltimo}`
+			const isEmpty = str => {
+				if (!str) return true
+				return str === ''
+			}
+			const primeiro = this.dataTramitacao.registroSeiPrimeiro
+			const ultimo = this.dataTramitacao.registroSeiUltimo
+			
+			if (isEmpty(primeiro) && isEmpty(ultimo)) {
+				return ''
+			}
+
+			else if (isEmpty(primeiro) && !isEmpty(ultimo)) {
+				return primeiro
+			}
+
+			else if (!isEmpty(primeiro) && isEmpty(ultimo)) {
+				return ` - ${ultimo}`
+			}
+			else {
+				return  `${primeiro} — ${ultimo}`
+			}
 		},
 		arquivosPorGrupos () {
 			return this.grupos.map(grupo => {
