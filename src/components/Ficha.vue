@@ -251,6 +251,7 @@ export default {
 				.sort((a, b) => a.id === 5 ? -1 : 1)
 				.sort((a, b) => a.id === 1 ? -1 : 1)
 				.sort((a, b) => a.id === 3 ? -1 : 1)
+				.sort((a, b) => a.id === 9 ? -1 : 1)
 				.sort((a, b) => a.id === 2 ? -1 : 1)
 				.sort((a, b) => a.id === 8 ? -1 : 1)
 
