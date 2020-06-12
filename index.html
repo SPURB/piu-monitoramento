@@ -10,7 +10,7 @@
 	<script defer src="https://cdn.rawgit.com/openlayers/openlayers.github.io/master/en/v5.3.0/build/ol.js"></script>
 </head>
 <body>
-	<div id="app">
+	<div id="app" class="app" :class="{ 'app--loading': !appLoaded }">
 		<preloader v-if="!appLoaded"></preloader>
 		<mapa v-show="display.mapa" @clicked="receiveId" :clicked-id="projectId" :projetos="projetos" :tramitacao="tramitacao"></mapa>
 		<sumario v-show="display.sumario"	@clicked="receiveId" :clicked-id="projectId" :projetos="projetos"></sumario>

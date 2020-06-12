@@ -10,12 +10,11 @@ Template Name: piu-monitoramento
 <div id="default-inner">
 	<div class="wrapper">
 		<div class="inner">
-			<div id="app">
-				<preloader v-if="!appLoaded"></preloader>
-				<mapa v-show="display.mapa" @clicked="receiveId" :clicked-id="projectId" :projetos="projetos" :tramitacao="tramitacao"></mapa>
-				<sumario v-show="display.sumario"	@clicked="receiveId" :clicked-id="projectId" :projetos="projetos"></sumario>
-				<ficha v-show="display.ficha" @clicked="receiveId" :clicked-id="projectId" :projetos="projetos" :tramitacao="tramitacao"></ficha>
-			</div>
+		<div id="app" class="app" :class="{ 'app--loading': !appLoaded }">
+			<preloader v-if="!appLoaded"></preloader>
+			<mapa v-show="display.mapa" @clicked="receiveId" :clicked-id="projectId" :projetos="projetos" :tramitacao="tramitacao"></mapa>
+			<sumario v-show="display.sumario"	@clicked="receiveId" :clicked-id="projectId" :projetos="projetos"></sumario>
+			<ficha v-show="display.ficha" @clicked="receiveId" :clicked-id="projectId" :projetos="projetos" :tramitacao="tramitacao"></ficha>
 		</div>
 	</div>
 </div>

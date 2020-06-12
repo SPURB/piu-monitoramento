@@ -46,14 +46,14 @@ new Vue({
 				this.error.message = err
 			})
 	},
-	watch:{
-		projectId () {
-			if(this.projectId !== 0) {
+	watch: {
+		projectId (id) {
+			if (id !== 0) {
 				this.display.sumario = false
 				this.display.ficha = true
 				this.isFocused = true
 			}
-			else{
+			else {
 				this.display.mapa = true
 				this.display.sumario = true
 				this.display.ficha = false

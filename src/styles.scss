@@ -3,13 +3,23 @@
 @import "./scss/sumario";
 @import "./scss/ficha";
 
-#app {
+.app {
 	max-width: 960px;
 	margin: auto;
+	#mapa, #sumario {
+		opacity: 1;
+		transition: 1s ease-in opacity
+	}
+	&--loading {
+		#mapa, #sumario {
+			opacity: 0;
+		}
+	}
 }
 
+
 @media (max-width: 960px) {
-	#app {
+	.app {
 		margin: 0 3%;
 	}
 }
