@@ -112,7 +112,7 @@ export default {
 	},
 	mounted () {
 		this.mapa = esteMapa(this.view, base)
-
+		this.initMapLayers()
 		import('../assets/kml/BASE_Limite_MSP.kml')
 			.then((file) => {
 				const perimetroMunicipio = new ol.layer.Vector({
@@ -140,14 +140,7 @@ export default {
 			})
 	},
 	watch: {
-		projetos (itens) {
-			if (itens.length) {
-				itens.map(item => import(`../assets/kml/${item.kml}`))
-				itens.map(item => import(`../assets/shp/${item.shape}`))
-				this.initMapLayers(itens)
-			}
-		},
-		clickedId(newprop, oldprop){
+		clickedId (newprop, oldprop){
 			if (!newprop) {
 				this.resetMapa()
 			}
@@ -160,22 +153,30 @@ export default {
 		}
 	},
 	methods: {
-		initMapLayers (projetos) {
-			const layers = this.mapa.getLayers()
-				.extend(projetos.map(item => {
-					return new ol.layer.Vector({
-						style: this.defineStyle(item.id_tramitacao),
-						source: new ol.source.Vector({
-							url: `${publicPath}${item.kml}`,
-							format: new ol.format.KML({ extractStyles: false })
-						}),
-						updateWhileAnimating: false,
-						renderBuffer: 100,
-						renderMode: 'image',
-						id_projeto: item.id
-					})
-				}))
-			this.activeLayers = layers.array_
+		initMapLayers () {
+			if (!this.projetos.length) {
+				setTimeout(() => {
+					this.initMapLayers()
+				}, 1000)
+			} else {
+				this.projetos.map(item => import(`../assets/kml/${item.kml}`))
+				this.projetos.map(item => import(`../assets/shp/${item.shape}`))
+				const layers = this.mapa.getLayers()
+					.extend(this.projetos.map(item => {
+						return new ol.layer.Vector({
+							style: this.defineStyle(item.id_tramitacao),
+							source: new ol.source.Vector({
+								url: `${publicPath}${item.kml}`,
+								format: new ol.format.KML({ extractStyles: false })
+							}),
+							updateWhileAnimating: false,
+							renderBuffer: 100,
+							renderMode: 'image',
+							id_projeto: item.id
+						})
+					}))
+				this.activeLayers = layers.array_
+			}
 		},
 		applyValuesInData () {
 			this.center = this.view.getCenter()
