@@ -196,7 +196,7 @@ export default {
 			this.activeLayers.forEach(layer => {
 				const id = layer.get('id_projeto')
 				if (id === idProjeto) {
-					layer.setOpacity(0.7)
+					layer.setOpacity(0.85)
 				}
 				else if (id !== idProjeto && id > 0) {
 					layer.setOpacity(0.05)
@@ -247,7 +247,7 @@ export default {
 		resetMapa () {
 			this.activeLayers.forEach(layer => {
 				const haveId = layer => layer.get('id_projeto')
-				if (haveId) { layer.setOpacity(0.6) }
+				if (haveId) { layer.setOpacity(0.85) }
 			})
 			this.view.animate({
 				center: [ -5195135.816167192, -2698303.8770360295 ],
