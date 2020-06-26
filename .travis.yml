@@ -4,7 +4,7 @@ language: generic
 
 cache:
   directories:
-    - ./app/node_modules/
+    - ./admin/node_modules/
     - ~/.cache
 
 before_script:

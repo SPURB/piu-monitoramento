@@ -5,7 +5,7 @@
   "private": true,
   "scripts": {
     "dev": "nodemon --exec babel-node ./src/index.js",
-    "build": "npm run clean && npm run babel-build",
+    "build": "npm run db:reset && npm run clean && npm run babel-build",
     "start": "node ./dist/index.js",
     "babel-build": "babel --out-dir ./dist ./src --minified --compact --source-maps false",
     "clean": "babel-node ./cleanDist.js",
