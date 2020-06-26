@@ -1,19 +1,23 @@
 import './styles.scss'
-import mapa from './components/mapa'
-import sumario from './components/sumario'
-import Ficha from './components/Ficha.vue'
+import Preloader from './components/Preloader.vue'
+const Mapa = () => import('./components/Mapa.vue')
+const Sumario = () => import('./components/Sumario.vue')
+const Ficha = () => import('./components/Ficha.vue')
+import { http } from './api'
 
 new Vue({
 	el: '#app',
+	mixins: [ http ],
 	components: {
-		mapa,
-		sumario,
+		Preloader,
+		Mapa,
+		Sumario,
 		Ficha
 	},
-	data:{
+	data: {
 		projectId: 0,
 		isFocused: false,
-		display:{
+		display: {
 			mapa: true,
 			sumario: true,
 			ficha: false,
@@ -23,24 +27,33 @@ new Vue({
 			message: '',
 			error: false
 		},
-		monitoramento: [],
-		hiperlinks: []
-	}, 
-	computed:{
-		apiPath() { return 'https://spurb.github.io/piu-monitoramento-backend/'}
+		projetos: [],
+		tramitacao: []
 	},
-	created(){
-		this.fetchFile(this.apiPath, 'monitoramento')
-		this.fetchFile(this.apiPath, 'hiperlinks')
+	computed: {
+		appLoaded () { return this.projetos.length > 0 }
 	},
-	watch:{
-		projectId () {
-			if(this.projectId !== 0) {
+	created () {
+		const dataTables = [ 'projetos', 'tramitacao' ].map(table => this.fetchJson(table))
+
+		Promise.all(dataTables)
+			.then(res => {
+				this.projetos = res[0]
+				this.tramitacao = res[1]
+			})
+			.catch(err => {
+				this.error.status = true
+				this.error.message = err
+			})
+	},
+	watch: {
+		projectId (id) {
+			if (id !== 0) {
 				this.display.sumario = false
 				this.display.ficha = true
 				this.isFocused = true
 			}
-			else{
+			else {
 				this.display.mapa = true
 				this.display.sumario = true
 				this.display.ficha = false
@@ -48,28 +61,7 @@ new Vue({
 			}
 		}
 	},
-	methods:{
-		fetchFile(url, file){
-			this.api.fetching = true
-			this.api.message = 'Enviando solicitação...'
-			const oReq = new XMLHttpRequest()
-			oReq.addEventListener("load", evt => {
-				this[file] = JSON.parse(evt.target.response)
-				this.api.fetching = false
-				this.api.message = `Requisição para ${file} realizada com sucesso`
-			})
-			oReq.addEventListener("error", evt => {
-				this[file] = JSON.parse(evt.target.response)
-				this.api.fetching = false
-				this.api.message = 'Erro! A requisição falhou'
-			})
-			oReq.addEventListener("abort", evt => {
-				this.api.fetching = false
-				this.api.message = 'Erro! A requisição foi cancelada'
-			})
-			oReq.open('GET', `${url}${file}.json`, true)
-			oReq.send()
-		},
+	methods: {
 		receiveId(id){
 			this.projectId = id
 			if (id === 0){

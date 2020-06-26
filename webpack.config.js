@@ -1,8 +1,10 @@
-const path = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const VueLoaderPlugin = require('vue-loader/lib/plugin')
+const path = require('path')
+const { DefinePlugin } = require('webpack')
+const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 
-module.exports = ({ mode }) => {
+module.exports = ({ mode, publicPath }) => {
 
 	const config = {
 		mode,
@@ -10,14 +12,14 @@ module.exports = ({ mode }) => {
 		output: {
 			filename: 'main.min.js',
 			path: path.resolve(__dirname, 'dist'),
+			publicPath
 		},
 		plugins: [
-			new HtmlWebpackPlugin({
-				title: 'PIU Monitoramento',
-				scriptLoading: 'defer',
-				template:'index.html'
+			new VueLoaderPlugin(),
+			new DefinePlugin({
+				'process.env.PUBLIC_PATH': JSON.stringify(publicPath)
 			}),
-			new VueLoaderPlugin()
+			new CleanWebpackPlugin()
 		],
 		module: {
 			rules: [
@@ -29,6 +31,13 @@ module.exports = ({ mode }) => {
 						'css-loader',
 						'sass-loader',
 					],
+				},
+				{
+				 test: /\.(png|svg|jpg|gif|kml|rar)$/,
+				 loader: 'file-loader',
+					options: {
+						name: './[name].[ext]',
+					}
 				},
 				{
 					test: /\.vue$/,
@@ -60,6 +69,15 @@ module.exports = ({ mode }) => {
 				}
 			]
 		}
+	}
+
+	if (mode === 'development' || mode === 'homolog') {
+		config.plugins.push(new HtmlWebpackPlugin({
+				title: 'PIU Monitoramento',
+				scriptLoading: 'defer',
+				template:'index.html'
+			})
+		)
 	}
 
 	if (mode === 'development') {
