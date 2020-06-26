@@ -16,7 +16,7 @@
 				</template>
 				<template v-if="registrosAdministrativos.length">
 					Registro administrativo
-					<div class="group__item" v-for="(link, index) in registrosAdministrativos" :key="index">
+					<div class="group__item registros-administrativos" v-for="(link, index) in registrosAdministrativos" :key="index">
 						<a :class="{
 								'item__last': index === registrosAdministrativos.length - 1
 							}"
@@ -26,7 +26,7 @@
 					</div>
 				</template>
 			</div>
-			<a v-if="linkPaginaCompleta" class="link_pag_completa" :href="linkPaginaCompleta.arquivo_url" :title="'Acesse a página completa de '+ linkPaginaCompleta.nome_arquivo" target="_blank">
+			<a v-if="linkPaginaCompleta" class="link_pag_completa" :href="linkPaginaCompleta.arquivo_url" :title="'Acesse a página completa de '+ projeto.nome" target="_blank">
 				Página completa <i class="material-icons">launch</i>
 			</a>
 	</div>
@@ -70,7 +70,7 @@ export default {
 	},
 	computed: {
 		publicoPrivado () {
-			return this.projeto.proponentePrivado ? 'Privado' : 'Público'
+			return this.projeto.proponentePrivado ? 'Privada' : 'Pública'
 		},
 		proponente (){
 			if (this.proponentes.length) {
@@ -117,7 +117,7 @@ export default {
 
 .group__item { 
 	font-weight: 700;
-	margin-bottom: 0;
+	margin-bottom: 0.5rem;
 	a {
 		margin-bottom: 1rem;
 		font-weight: 700;
@@ -136,6 +136,12 @@ export default {
 		}
 		&.item__last {
 			margin-bottom: 0
+		}
+	}
+	&.registros-administrativos {
+		margin-bottom: 0.25;
+		a {
+			margin-bottom: 0;
 		}
 	}
 }

@@ -1,11 +1,12 @@
 <template>
-	<div class="ficha-tramitacao" @click="showTramitacao=!showTramitacao">
+	<div class="ficha-tramitacao" @click="showTramitacao=!showTramitacao" :class="setLabelClass">
 			<div class="periodoEtapaTramit">
-				{{ periodo }}
+				{{ dataTramitacao.registroSeiPrimeiro }} - {{ dataTramitacao.registroSeiUltimo }}
 			</div>
 			<div class="label" :class="setLabelClass">
 				{{ `0${idTramitacao}` }}
 				<span>{{ title }}</span>
+				<ficha-tramitacao-counter class="label__counter" :itens="arquivos.length" :estado="setLabelClass"/>
 			</div>
 			<div class="content" :class="showTramitacao ? 'open' : 'close'">
 				<p class="content__status" v-if="dataTramitacao.status">{{ dataTramitacao.status }}</p>
@@ -21,10 +22,12 @@
 
 <script>
 import FichaTramitacaoArquivos from './FichaTramitacaoArquivos.vue'
+import FichaTramitacaoCounter from './FichaTramitacaoCounter.vue'
 export default {
 	name: 'FichaTramitacao',
 	components: {
-		FichaTramitacaoArquivos
+		FichaTramitacaoArquivos,
+		FichaTramitacaoCounter
 	},
 	data () {
 		return {
@@ -54,35 +57,22 @@ export default {
 		},
 		dataTramitacao: {
 			type: Object,
-			required: true
+			default: () => {
+				return {
+					id_projetos: 0,
+					id_tramitacao: 0,
+					registroSeiPrimeiro: '',
+					registroSeiUltimo: ''
+				}
+			}
 		},
 		projetoTramitacao: {
 			default: 0
 		}
 	},
 	computed: {
-		periodo () {
-			const isEmpty = str => {
-				if (!str) return true
-				return str === ''
-			}
-			const primeiro = this.dataTramitacao.registroSeiPrimeiro
-			const ultimo = this.dataTramitacao.registroSeiUltimo
-			
-			if (isEmpty(primeiro) && isEmpty(ultimo)) {
-				return ''
-			}
-
-			else if (isEmpty(primeiro) && !isEmpty(ultimo)) {
-				return primeiro
-			}
-
-			else if (!isEmpty(primeiro) && isEmpty(ultimo)) {
-				return ` - ${ultimo}`
-			}
-			else {
-				return  `${primeiro} — ${ultimo}`
-			}
+		arquivosCount () {
+			return this.arquivos.length
 		},
 		arquivosPorGrupos () {
 			return this.grupos.map(grupo => {
@@ -96,7 +86,7 @@ export default {
 		setLabelClass () {
 			const etapa = this.idTramitacao
 			let e = this.projetoTramitacao
-			if (e < etapa || e > 8) { return 'posterior' }
+			if (e < etapa) { return 'posterior' }
 			if (e == etapa) { return 'atual' }
 			if (e > etapa) { return 'anterior' }
 			else return ''
@@ -133,7 +123,10 @@ export default {
 	flex-direction: column;
 
 	&:hover {
-			cursor: pointer;
+		cursor: pointer;
+	}
+	&.posterior:hover {
+		cursor: not-allowed
 	}
 
 	.periodoEtapaTramit {
@@ -157,7 +150,12 @@ export default {
 			-moz-user-select: none;
 			-ms-user-select: none;
 			user-select: none;
-
+			&__counter {
+				height: 68px;
+				padding-top: 4px;
+				margin-left: auto;
+				position: relative;
+			}
 			&:active {
 					background: #ececec;
 			}
@@ -172,30 +170,30 @@ export default {
 					max-width: calc(100% - 48px);
 			}
 	}
-	.anterior::after {
-			font-family: "Material Icons";
-			font-size: 24px;
-			content: "check_box";
-			position: absolute;
-			right: 0;
-	}
+	// .anterior::after {
+	// 		font-family: "Material Icons";
+	// 		font-size: 24px;
+	// 		content: "check_box";
+	// 		position: absolute;
+	// 		right: 0;
+	// }
 	.atual {
 			color: #333333;
 	}
-	.atual::after {
-			font-family: "Material Icons";
-			font-size: 24px;
-			content: "indeterminate_check_box";
-			position: absolute;
-			right: 0;
-	}
-	.posterior::after {
-			font-family: "Material Icons";
-			font-size: 24px;
-			content: "check_box_outline_blank";
-			position: absolute;
-			right: 0;
-	}    
+	// .atual::after {
+	// 		font-family: "Material Icons";
+	// 		font-size: 24px;
+	// 		content: "indeterminate_check_box";
+	// 		position: absolute;
+	// 		right: 0;
+	// }
+	// .posterior::after {
+	// 		font-family: "Material Icons";
+	// 		font-size: 24px;
+	// 		content: "check_box_outline_blank";
+	// 		position: absolute;
+	// 		right: 0;
+	// }    
 }
 .open {
 	display: block;

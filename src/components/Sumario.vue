@@ -58,7 +58,7 @@ export default {
 				},
 				{
 					marcadorNumber: '03',
-					marcadorTitle: 'AVALIAÇÃO SMUL',
+					marcadorTitle: 'AVALIAÇÃO SMDU',
 					publico: avalSmul.filter(projetos => !projetos.proponentePrivado),
 					privado: avalSmul.filter(projetos => projetos.proponentePrivado)
 				}

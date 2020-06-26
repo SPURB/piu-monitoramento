@@ -34,7 +34,7 @@
 				:areaTotal="projeto.areaTotal"
 			/>
 			<div class="tramitacao">
-				<h4>Tramitacao<span>Última atualização <strong>{{ projeto.ultimaAtualizacao }}</strong></span></h4>
+				<h4>Tramitacao<span>Última atualização: <strong v-if='projeto.ultimaAtualizacao === ""'>Sem histórico</strong><strong v-else>{{ projeto.ultimaAtualizacao }}</strong></span></h4>
 				<ficha-tramitacao
 					:clickedId="clickedId"
 					:idTramitacao="1"
@@ -68,7 +68,7 @@
 				<ficha-tramitacao
 					:clickedId="clickedId"
 					:idTramitacao="3"
-					:title="'Avaliação SMUL'"
+					:title="'Avaliação SMDU'"
 					:arquivos="getArquivosTramitacao(arquivos_tramitacao, {
 						idProjeto: projeto.id,
 						idTramitacao: 3
@@ -283,7 +283,7 @@ export default {
 			switch (etp) {
 				case 1: return 'Proposição';
 				case 2: return 'Consulta púb. inicial';
-				case 3: return 'Avaliação SMUL';
+				case 3: return 'Avaliação SMDU';
 				case 4: return 'Elaboração';
 				case 5: return 'Discussão pública';
 				case 6: return 'Consolidação';
