@@ -1,26 +1,27 @@
-language: node_js
-node_js:
-  - lts/*
+dist: xenial
+os: linux
+language: generic
 
 cache:
-  npm: true
   directories:
-    - node_modules
+    - ./app/node_modules/
     - ~/.cache
 
-branches:
-   only:
-    - master
-
-install:
-  - npm install
+before_script:
+  - curl https://cli-assets.heroku.com/install.sh | sh # this is for api deploy
 
 script:
-  - npm run build
+  - bash deploy.api.sh
+  - bash build.admin.sh
+
+branches:
+  only:
+    - master
+    - dev/api
 
 deploy: # spurb.github.io/piu-monitoramento
+  local_dir: admin/gh-pages
   provider: pages
-  local_dir: dist
   skip_cleanup: true
   github_token: $GITHUB_TOKEN
   on:

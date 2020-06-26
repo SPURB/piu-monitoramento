@@ -1,0 +1,5 @@
+dist
+node_modules
+preseeders/output/*.json
+preseeders/output/checagem/*.txt
+preseeders/output/checagem/*.png

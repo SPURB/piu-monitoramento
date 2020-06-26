@@ -1,0 +1,1 @@
+arquivos gerados pela função `checkLinks` em `preseeders/index.debug.js`
