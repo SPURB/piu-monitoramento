@@ -11,7 +11,7 @@ before_script:
   - curl https://cli-assets.heroku.com/install.sh | sh # this is for api deploy
 
 script:
-  # - bash deploy.api.sh
+  - bash deploy.api.sh
   - bash build.admin.sh
 
 branches:
