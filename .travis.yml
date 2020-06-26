@@ -1,6 +1,6 @@
-dist: xenial
-os: linux
-language: generic
+language: node_js
+node_js:
+  - lts/*
 
 cache:
   directories:
