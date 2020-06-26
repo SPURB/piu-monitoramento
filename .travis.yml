@@ -12,20 +12,8 @@ before_script:
 
 script:
   - bash deploy.api.sh
-  - bash build.admin.sh
 
 branches:
   only:
     - master
     - dev/api
-
-deploy: # spurb.github.io/piu-monitoramento
-  local_dir: admin/gh-pages
-  provider: pages
-  skip_cleanup: true
-  github_token: $GITHUB_TOKEN
-  on:
-    branch: master
-
-notifications:
-  webhooks: https://www.travisbuddy.com
