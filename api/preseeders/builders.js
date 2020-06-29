@@ -1,7 +1,12 @@
-import { utils, readFile, SSF } from 'xlsx'
-import fs from 'fs-extra'
-import path from 'path'
-import moment from 'moment'
+// import { utils, readFile, SSF } from 'xlsx'
+// import fs from 'fs-extra'
+// import path from 'path'
+// import moment from 'moment'
+
+const { utils, readFile, SSF } = require('xlsx')
+const path = require('path')
+const moment = require('moment')
+const fs = require('fs-extra')
 
 const self = module.exports = {
 	read: (inputExcel, tableName, method = 'sheet_to_json') => {

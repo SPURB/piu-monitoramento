@@ -32,7 +32,7 @@ db.projetos.belongsTo(db.origens, { foreignKey: 'id_origens' })
 db.projetos.belongsTo(db.proponentes, { foreignKey: 'id_proponentes' })
 
 // relacionamentos tabela `arquivos_tramitacoes`
-db.arquivos_tramitacao.belongsTo(db.tramitacao, { foreignKey: 'id_tramitacao' })
+// db.arquivos_tramitacao.belongsTo(db.tramitacao, { foreignKey: 'id_tramitacao' })
 db.arquivos_tramitacao.belongsTo(db.grupos, { foreignKey: 'id_grupo' })
 db.arquivos_tramitacao.belongsTo(db.fontes, { foreignKey: 'id_fonte' })
 db.arquivos_tramitacao.belongsTo(db.projetos, { foreignKey: 'id_projetos' })

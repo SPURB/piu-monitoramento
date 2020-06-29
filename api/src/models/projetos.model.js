@@ -40,6 +40,13 @@ module.exports = (sequelize, Sequelize, db) => {
       type: Sequelize.STRING,
       allowNull: false
     },
+    id_origens: {
+      type: Sequelize.INTEGER,
+      references: {
+        model: db.origens,
+        key: 'id'
+      }
+    },
     id_proponentes: {
       type: Sequelize.INTEGER,
       references: {

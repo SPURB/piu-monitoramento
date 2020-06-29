@@ -48,6 +48,14 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false
       },
+      id_origens: {
+        type: Sequelize.INTEGER,
+        references: {
+          model: 'origens',
+          key: 'id'
+        },        
+        allowNull: false
+      },
       id_proponentes: {
         type: Sequelize.INTEGER,
         references: {

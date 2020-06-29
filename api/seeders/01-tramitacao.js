@@ -1,14 +1,11 @@
 'use strict';
 
+const { setSeeder, getSeeder } = require('../preseeders/create-seeders')
+setSeeder(6)
+
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.bulkInsert('tramitacao', [
-      { nome: 'Em proposição' },
-      { nome: 'Em andamento' },
-      { nome: 'Implantação' },
-      { nome: 'Suspenso'  },
-      { nome: 'Arquivado' }
-   ], {})
+    return queryInterface.bulkInsert('tramitacao', getSeeder(), {})
 },
 
   down: (queryInterface, Sequelize) => {
