@@ -2,6 +2,7 @@ let seeder = {}
 const path = require('path')
 const { convertModel } = require('./builders')
 const models = require('./models')
+const { values, map } = require('./models')
 
 module.exports = {
 	setSeeder: (index) => {

@@ -1,24 +1,15 @@
 'use strict';
 
-const { setSeeder, getSeeder } = require('../preseeders/create-seeders')
+const { setSeeder, getSeeder, filtrarSeeder } = require('../preseeders/create-seeders')
 setSeeder(7)
 
+let seeders = getSeeder()
 
-console.log(getSeeder())
+seeders = seeders.filter(seeder => seeder.id_tramitacao != 0 && seeder.id_grupo != 0 && seeder.id_fonte != 0)
+
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.bulkInsert('arquivos_tramitacao', [
-      { 
-        data: '',
-        documento: 'documento 01',
-        arquivo_url: 'arquivo-01.pdf',
-        evento: '',
-        id_projetos: 1,
-        id_tramitacao: 1,
-        id_fonte: 1,
-        id_grupo: 1
-      }
-   ], {})
+    return queryInterface.bulkInsert('arquivos_tramitacao', seeders, {})
 },
 
   down: (queryInterface, Sequelize) => {
