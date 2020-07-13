@@ -1,6 +1,6 @@
 export const http = {
 	methods: {
-		fetchJson (file, url = 'https://dev-spurbanismo.github.io/piu-monitoramento-backend/v2/') {
+		fetchJson (file, url = 'https://spurb.github.io/piu-monitoramento-backend/v2/') {
 				return new Promise((resolve, reject) => {
 				const oReq = new XMLHttpRequest()
 				oReq.addEventListener("load", evt => resolve(JSON.parse(evt.target.response)))
