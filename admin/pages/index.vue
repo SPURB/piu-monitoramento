@@ -1,13 +1,18 @@
 <template>
   <div class="flex">
-    <div class="w-1/2 bg-gray-400 h-12"></div>
-    <div class="w-1/2 bg-gray-500 h-12"></div>
+    <div class="w-1/2 bg-gray-400 h-12">
+      teste1
+    </div>
+    <div class="w-1/2 bg-gray-500 h-12">
+      teste2
+    </div>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'index'
+  layout: 'DefaultLayout',
+  name: 'Index'
 }
 </script>
 

@@ -19,7 +19,7 @@ export default {
     ]
   },
   env: {
-    apiBase: apiBase[process.env.NODE_ENV],
+    apiBase: apiBase[process.env.NODE_ENV]
   },
   components: true,
   buildModules: [
