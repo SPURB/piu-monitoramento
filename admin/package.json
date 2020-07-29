@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "dev": "nuxt",
+    "dev": "cross-env NODE_ENV=homolog nuxt",
     "build": "nuxt build",
     "start": "nuxt start",
     "export": "nuxt export",
@@ -21,6 +21,7 @@
     "@nuxtjs/eslint-module": "^2.0.0",
     "@nuxtjs/tailwindcss": "^2.0.0",
     "babel-eslint": "^10.1.0",
+    "cross-env": "^7.0.2",
     "eslint": "^7.2.0",
     "eslint-plugin-nuxt": "^1.0.0",
     "node-sass": "^4.14.1",

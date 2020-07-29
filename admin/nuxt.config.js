@@ -1,14 +1,14 @@
 const apiBase = {
   prod: 'https://servicos.spurbanismo.sp.gov.br/piu-monitoramento/api/0.0.1',
   local: 'http://localhost:6000/piu-monitoramento/api/0.0.1',
-  homolog: 'https://spurb.github.io/piu-monitoramento-backend/v2/' // temporário
+  homolog: 'https://spurb.github.io/piu-monitoramento-backend/v2' // temporário
 }
 
 export default {
   mode: 'spa',
   target: 'static',
   head: {
-    title: process.env.npm_package_name || '',
+    title: 'SPUrbanismo | PIU Monitoramento',
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
@@ -19,7 +19,8 @@ export default {
     ]
   },
   env: {
-    apiBase: apiBase[process.env.NODE_ENV]
+    apiBase: apiBase[process.env.NODE_ENV],
+    teste: 'dantas'
   },
   components: true,
   buildModules: [
