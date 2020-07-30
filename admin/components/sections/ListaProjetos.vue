@@ -17,7 +17,7 @@
             </p>
           </transition>
         </div>
-        <template v-if="tramitacao.projetos.length > 0">
+        <template v-if="tramitacao.nome != 'Suspenso' && tramitacao.projetos.length > 0">
           <div class="w-full flex flex-col lg:w-3/5 xg:w-3/5 bg-white p-2">
             <div
               v-for="projeto in tramitacao.projetos"
@@ -27,12 +27,27 @@
             </div>
           </div>
         </template>
+        <template v-else-if="tramitacao.nome === 'Suspenso'">
+          <div class="w-full flex lg:w-3/5 xg:w-3/5 bg-white p-2">
+            <button
+              v-for="projeto in tramitacao.projetos"
+              :key="`projeto-${projeto.id}`"
+              type="button"
+              class="bg-transparent mr-2 hover:bg-gray-500 text-gray-700 font-semibold hover:text-white py-2 px-4 border border-gray-500 hover:border-transparent rounded"
+            >
+              {{ projeto.nome }}
+            </button>
+          </div>
+        </template>
         <template v-else>
-          <div class="w-full lg:w-/5 xg:w-3/5 bg-white p-2">
-            <div class="px-6 py-4">
-              <span class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2">
+          <div class="w-full lg:w-/5 xg:w-3/5  p-2">
+            <div class="bg-blue-100 p-2 border-t border-b border-blue-700 px-6 py-4">
+              <p class="px-3 py-1 text-sm font-semibold text-blue-700 mr-2">
                 Nenhum projeto
-              </span>
+              </p>
+              <p class="px-3 py-1 text-sm text-blue-700">
+                Nenhum projeto nesta etapa
+              </p>
             </div>
           </div>
         </template>

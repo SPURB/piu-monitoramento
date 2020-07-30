@@ -43,7 +43,8 @@ export const actions = {
           nome: tramitacao.nome,
           projetos
         }
-      })
+      }).filter(tramitacao => tramitacao.nome !== 'n/a' && tramitacao.nome !== 'Processo Administrativo' &&
+        tramitacao.nome !== 'Arquivo KML' && tramitacao.nome !== 'Arquivo SHP')
       commit('SET', { data, key: 'projetosTramitacao' })
     } catch (err) {
       commit('SET', { data: err, key: 'err' })

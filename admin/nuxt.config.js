@@ -19,9 +19,15 @@ export default {
     ]
   },
   env: {
-    apiBase: apiBase[process.env.NODE_ENV],
-    teste: 'dantas'
+    apiBase: apiBase[process.env.NODE_ENV]
   },
+  plugins: [
+    { src: '~plugins/nuxt-quill-plugin', ssr: false }
+  ],
+  css: [
+    // for snow theme
+    'quill/dist/quill.snow.css'
+  ],
   components: true,
   buildModules: [
     '@nuxtjs/eslint-module',

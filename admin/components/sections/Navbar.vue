@@ -1,9 +1,9 @@
 <template>
   <header class="bg-spurb lg:flex xg:flex items-center">
     <section class="flex justify-between py-4 px-3">
-      <div>
+      <nuxt-link to="/" tag="div" class="cursor-pointer">
         <img class="h-10" src="../../assets/img/spurbanismo_mono-negativo.svg" alt="Logo da São Paulo Urbanismo">
-      </div>
+      </nuxt-link>
       <div class="lg:hidden xg:hidden">
         <button
           type="button"
@@ -41,18 +41,12 @@
       text-white px-2 pt-3 pb-4"
     >
       <section class="h-full lg:self-center xg:self-center flex flex-col lg:flex-row xg:flex-row">
-        <a
-          href="#"
-          class="font-simibold lg:hover:bg-spurb-dark xg:hover:bg-spurb-dark hover:bg-spurb rounded px-2 py-2"
-        >
+        <nuxt-link to="/" tag="a" class="font-simibold lg:hover:bg-spurb-dark xg:hover:bg-spurb-dark hover:bg-spurb rounded px-2 py-2">
           Lista de projetos
-        </a>
-        <a
-          href="#"
-          class="font-simibold lg:hover:bg-spurb-dark xg:hover:bg-spurb-dark hover:bg-spurb rounded px-2 py-2"
-        >
+        </nuxt-link>
+        <nuxt-link to="/criar" tag="a" class="font-simibold lg:hover:bg-spurb-dark xg:hover:bg-spurb-dark hover:bg-spurb rounded px-2 py-2">
           Criar projeto
-        </a>
+        </nuxt-link>
       </section>
       <a
         href="#"
@@ -73,6 +67,19 @@ export default {
   data: () => {
     return {
       isOpen: true
+    }
+  },
+  created () {
+    this.widthScreen()
+  },
+  methods: {
+    widthScreen () {
+      const { width } = window.screen
+      if (width < 1024) {
+        this.isOpen = false
+      } else {
+        this.isOpen = true
+      }
     }
   }
 }
