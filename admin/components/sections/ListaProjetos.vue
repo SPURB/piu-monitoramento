@@ -11,10 +11,7 @@
             {{ tramitacao.nome }}
           </h3>
           <transition name="fade" mode="out-in">
-            <p v-if="isOpen" class="text-justify text-gray-700 mt-2">
-              I - diagnóstico da área objeto de intervenção, com caracterização dos seus aspectos socioterritoriais;<br>
-              II - programa de interesse público da futura intervenção, considerando a sua diretriz urbanística, viabilidade da transformação, impacto ambiental ou de vizinhança esperado, possibilidade de adensamento construtivo e populacional para a área e o modo de gestão democrática da intervenção proposta.
-            </p>
+            <p v-if="isOpen" class="text-justify text-gray-700 mt-2" v-html="tramitacao.descricao" />
           </transition>
         </div>
         <template v-if="tramitacao.nome != 'Suspenso' && tramitacao.projetos.length > 0">
@@ -40,7 +37,7 @@
           </div>
         </template>
         <template v-else>
-          <div class="w-full lg:w-/5 xg:w-3/5  p-2">
+          <div class="w-full lg:w-3/5 xg:w-3/5  p-2">
             <div class="bg-blue-100 p-2 border-t border-b border-blue-700 px-6 py-4">
               <p class="px-3 py-1 text-sm font-semibold text-blue-700 mr-2">
                 Nenhum projeto

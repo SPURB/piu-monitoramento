@@ -1,5 +1,6 @@
 import Projetos from '@/services/api-projetos'
 import Tramitacao from '@/services/api-tramitacao'
+import descricaoTramitacao from '@/assets/json/descricao_tramitacao.json'
 
 export const state = () => ({
   projetos: [],
@@ -41,10 +42,11 @@ export const actions = {
         return {
           id: tramitacao.id,
           nome: tramitacao.nome,
+          descricao: descricaoTramitacao[tramitacao.nome],
           projetos
         }
       }).filter(tramitacao => tramitacao.nome !== 'n/a' && tramitacao.nome !== 'Processo Administrativo' &&
-        tramitacao.nome !== 'Arquivo KML' && tramitacao.nome !== 'Arquivo SHP')
+        tramitacao.nome !== 'Arquivo KML' && tramitacao.nome !== 'Arquivo SHP' && tramitacao.nome !== 'Em prospecção')
       commit('SET', { data, key: 'projetosTramitacao' })
     } catch (err) {
       commit('SET', { data: err, key: 'err' })

@@ -1,16 +1,18 @@
 <template>
   <div class="relative">
     <select
+      v-model="value"
       class="cursor-pointer block appearance-none w-full border border-gray-200 text-gray-700 py-3
       px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+      @change="$emit('option', value)"
     >
-      <option value="">
-        {{ title }}
+      <option :value="0" disabled>
+        {{ titulo }}
       </option>
       <option
         v-for="(option, index) in options"
         :key="index"
-        :value="option.nome"
+        :value="option.id"
       >
         {{ option.nome }}
       </option>
@@ -27,13 +29,18 @@
 export default {
   name: 'Select',
   props: {
-    title: {
+    titulo: {
       type: String,
       required: true
     },
     options: {
       type: Array,
       required: true
+    }
+  },
+  data: () => {
+    return {
+      value: 0
     }
   }
 }
