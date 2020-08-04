@@ -34,7 +34,7 @@ export default {
     this.setupOn()
   },
   methods: {
-    ...mapActions('criar-editar-projeto', ['getOrigens', 'getProponentes']),
+    ...mapActions('crud-projeto', ['getOrigens', 'getProponentes']),
     ...mapActions('home', ['getTramitacao']),
     setupOn () {
       this.getTramitacao()

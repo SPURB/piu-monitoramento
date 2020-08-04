@@ -34,7 +34,7 @@
           <Select
             :titulo="`Selecione uma tramitação`"
             :options="tramitacoes"
-            @option="getTramitacao"
+            @option="setTramitacao"
           />
         </div>
 
@@ -45,7 +45,7 @@
           <Select
             :titulo="`Selecione uma proponente`"
             :options="proponentes"
-            @option="getProponente"
+            @option="setProponente"
           />
         </div>
 
@@ -79,7 +79,7 @@
           <Select
             :titulo="`Selecione uma origem`"
             :options="origens"
-            @option="getOrigem"
+            @option="setOrigem"
           />
         </div>
 
@@ -100,8 +100,11 @@
           <label class="block text-gray-700 mb-2">
             Sistema Eletrônico de Informações (SEI)
           </label>
+          <div class="w-full">
+            <Arquivo />
+            <Arquivo :in-arquivo="arquivo" />
+          </div>
           <div class="flex flex-col items-center pt-4 pb-4 border-t border-b border-gray-400">
-            <input id="file" type="file" class="inputfile cursor-pointer w-full h-full" multiple @change="getSEI">
             <label for="file" class="cursor-pointer text-gray-500 flex items-center">
               <svg
                 viewBox="0 0 16 16"
@@ -116,36 +119,6 @@
               </svg>
               Incluir arquivo
             </label>
-            <template v-if="novoProjeto.sei.length > 0">
-              <div
-                v-for="(arquivo, index) in novoProjeto.sei"
-                :key="index"
-                class="flex"
-              >
-                <label class="font-bold text-gray-500 flex items-center">
-                  <svg class="h-5 w-5 fill-current" viewBox="0 0 16 20" xmlns="http://www.w3.org/2000/svg">
-                    <path
-                      stroke-width="2"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      d="M3 19H13C13.5304 19 14.0391 18.7893 14.4142 18.4142C14.7893 18.0391 15 17.5304 15 17V7.414C14.9999 7.1488 14.8946 6.89449 14.707 6.707L9.293 1.293C9.10551 1.10545 8.8512 1.00006 8.586 1H3C2.46957 1 1.96086 1.21071 1.58579 1.58579C1.21071 1.96086 1 2.46957 1 3V17C1 17.5304 1.21071 18.0391 1.58579 18.4142C1.96086 18.7893 2.46957 19 3 19Z"
-                    />
-                  </svg>
-                  {{ arquivo.name }}
-                </label>
-                <button type="button" class="ml-2" @click="removerArquivo(index, 'sei')">
-                  <svg class="h-4 w-4" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path
-                      stroke="#EB5757"
-                      stroke-width="2"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      d="M8 12L10 10L8 12ZM10 10L12 8L10 10ZM10 10L8 8L10 10ZM10 10L12 12L10 10ZM19 10C19 11.1819 18.7672 12.3522 18.3149 13.4442C17.8626 14.5361 17.1997 15.5282 16.364 16.364C15.5282 17.1997 14.5361 17.8626 13.4442 18.3149C12.3522 18.7672 11.1819 19 10 19C8.8181 19 7.64778 18.7672 6.55585 18.3149C5.46392 17.8626 4.47177 17.1997 3.63604 16.364C2.80031 15.5282 2.13738 14.5361 1.68508 13.4442C1.23279 12.3522 1 11.1819 1 10C1 7.61305 1.94821 5.32387 3.63604 3.63604C5.32387 1.94821 7.61305 1 10 1C12.3869 1 14.6761 1.94821 16.364 3.63604C18.0518 5.32387 19 7.61305 19 10Z"
-                    />
-                  </svg>
-                </button>
-              </div>
-            </template>
           </div>
         </div>
       </div>
@@ -155,32 +128,15 @@
           <label class="block text-gray-700 mb-2">
             Perímetro
           </label>
-          <button
-            v-if="novoProjeto.kml.length > 0"
-            type="button"
-            class="flex items-center text-erro"
-            @click="removerArquivo(0, 'kml')"
-          >
-            Remover arquivo
-            <svg class="h-4 w-4 ml-1" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path
-                stroke="#EB5757"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                d="M8 12L10 10L8 12ZM10 10L12 8L10 10ZM10 10L8 8L10 10ZM10 10L12 12L10 10ZM19 10C19 11.1819 18.7672 12.3522 18.3149 13.4442C17.8626 14.5361 17.1997 15.5282 16.364 16.364C15.5282 17.1997 14.5361 17.8626 13.4442 18.3149C12.3522 18.7672 11.1819 19 10 19C8.8181 19 7.64778 18.7672 6.55585 18.3149C5.46392 17.8626 4.47177 17.1997 3.63604 16.364C2.80031 15.5282 2.13738 14.5361 1.68508 13.4442C1.23279 12.3522 1 11.1819 1 10C1 7.61305 1.94821 5.32387 3.63604 3.63604C5.32387 1.94821 7.61305 1 10 1C12.3869 1 14.6761 1.94821 16.364 3.63604C18.0518 5.32387 19 7.61305 19 10Z"
-              />
-            </svg>
-          </button>
           <div class="flex justify-center pt-4 pb-4 bg-gray-100">
             <input
               id="filePerimetro"
               type="file"
               name="file"
               class="inputfile inputfile--perimetro"
-              @change="getKML"
+              @change="setGeojson"
             >
-            <template v-if="novoProjeto.kml.length > 0">
+            <template v-if="novoProjeto.geojson.length > 0">
               <label for="filePerimetro">
                 MOSTRA O MAPA
               </label>
@@ -209,6 +165,7 @@
         </div>
       </div>
     </div>
+
     <div class="flex w-full bg-gray-100 justify-center p-5">
       <button class="font-simibold bg-spurb text-white rounded py-2 px-6 mr-2" type="button">
         Salvar
@@ -240,8 +197,7 @@ export default {
         id_proponentes: 0,
         id_tramitacao: 0,
         sei: [],
-        kml: '',
-        shape: '',
+        geojson: [],
         file: 'Incluir arquivo'
       },
       editorOption: {
@@ -253,11 +209,23 @@ export default {
             ['bold', 'italic', 'underline']
           ]
         }
+      },
+      arquivo: {
+        id: 1,
+        id_projetos: 4,
+        id_tramitacao: 0,
+        id_grupo: 0,
+        id_fonte: 1,
+        data: '16/12/2015',
+        documento: 'Relatório Final - Estudos Técnicos PIU NESP',
+        arquivo_url:
+          'http://gestaourbana.prefeitura.sp.gov.br/wp-content/uploads/2016/03/PIU-NESP-Relatório-Final_161215_reduzido.pdf',
+        evento: ''
       }
     }
   },
   computed: {
-    ...mapState('criar-editar-projeto', {
+    ...mapState('crud-projeto', {
       fetching: state => state.fetching,
       error: state => state.error,
       origens: state => state.origens,
@@ -268,23 +236,17 @@ export default {
     })
   },
   methods: {
-    getSEI (event) {
-      this.novoProjeto.sei = Array.from(event.target.files)
+    setGeojson (event) {
+      this.novoProjeto.geojson = Array.from(event.target.files)
     },
-    getKML (event) {
-      this.novoProjeto.kml = Array.from(event.target.files)
-    },
-    getTramitacao (tramitacao) {
+    setTramitacao (tramitacao) {
       this.novoProjeto.id_tramitacao = tramitacao
     },
-    getOrigem (origem) {
+    setOrigem (origem) {
       this.novoProjeto.id_origens = origem
     },
-    getProponente (proponente) {
+    setProponente (proponente) {
       this.novoProjeto.id_proponentes = proponente
-    },
-    removerArquivo (index, propriedade) {
-      this.novoProjeto[propriedade] = this.novoProjeto[propriedade].filter((item, i) => i !== index)
     }
   }
 }
