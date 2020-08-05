@@ -13,6 +13,7 @@
             type="text"
           />
         </div>
+
         <div class="w-full flex items-center justify-between text-gray-700 mr-4 mb-4">
           <div class="flex items-center">
             <input v-model="novoProjeto.consultaAberta" type="checkbox" class="cursor-pointer mr-2">
@@ -27,6 +28,7 @@
             </label>
           </div>
         </div>
+
         <div class="w-full mb-4">
           <label class="block text-gray-700 mb-2">
             Tramitação

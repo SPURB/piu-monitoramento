@@ -65,6 +65,12 @@ export default {
     inEdit (value) {
       if (!value) {
         this.isEdit = false
+        this.nome = this.option.nome
+      }
+    },
+    nome (nome) {
+      if (nome !== this.option.nome) {
+        this.$emit('update', { nome, id: this.option.id })
       }
     }
   },
@@ -72,11 +78,12 @@ export default {
     this.nome = this.option.nome
   },
   methods: {
-    cancelChange () {
-      this.nome = this.option.nome
-    },
     selected (option) {
       this.$emit('option', option)
+    },
+    cancelChange () {
+      this.nome = this.option.nome
+      this.$emit('remove', { id: this.option.id })
     }
   }
 }

@@ -49,6 +49,10 @@
           :options="grupos"
           :selected="arquivo.id_grupo"
           @options="setGrupo"
+          @create="createGrupo"
+          @update="updateGrupo"
+          @send="sendGrupo"
+          @clear="clearGrupo"
         />
       </div>
       <div class="mb-4">
@@ -60,6 +64,10 @@
           :options="fontes"
           :selected="arquivo.id_fonte"
           @option="setFonte"
+          @create="createFonte"
+          @update="updateFonte"
+          @send="sendFonte"
+          @clear="clearFonte"
         />
       </div>
 
@@ -93,7 +101,9 @@ export default {
   data: () => {
     return {
       isOpen: false,
-      arquivo: {}
+      arquivo: {},
+      upGrupo: [],
+      upFonte: []
     }
   },
   computed: {
@@ -129,12 +139,52 @@ export default {
       this.getFontes()
       this.getGrupos()
     },
-    setGrupo (grupo) {
+    setGrupo (grupo) { // recebe valor selecionado no dropbox
       this.arquivo.id_grupo = grupo
     },
-    setFonte (fonte) {
+    setFonte (fonte) { // recebe valor selecionado no dropbox
       this.arquivo.id_fonte = fonte
-    }
+    },
+    createGrupo (grupo) { // criar grupo :: valor vem de um emit do componente Select
+      return grupo
+    },
+    createFonte (fonte) { // criar fonte :: valor vem de um emit do componente Select
+      return fonte
+    },
+    updateGrupo (grupo) { // altera e remove fonte :: valor vem de um emit do componente Select
+      const inArray = this.upGrupo.filter(up => up.id !== grupo.id)
+      const { remove } = grupo
+
+      if (remove) {
+        this.upGrupo = inArray
+      } else {
+        inArray.push(grupo)
+        this.upGrupo = inArray
+      }
+    },
+    updateFonte (fonte) { // altera e remove fonte :: valor vem de um emit do componente Select
+      const inArray = this.upFonte.filter(up => up.id !== fonte.id)
+      const { remove } = fonte
+
+      if (remove) {
+        this.upFonte = inArray
+      } else {
+        inArray.push(fonte)
+        this.upFonte = inArray
+      }
+    },
+    sendGrupo () { // envia as alterações para o database
+      if (this.upGrupo.lenght > 0) {
+        console.log(this.upGrupo)
+      }
+    },
+    sendFonte () { // envia as alterações para o database
+      if (this.upFonte.lenght > 0) {
+        console.log(this.upFonte)
+      }
+    },
+    clearGrupo () { this.upGrupo = [] },
+    clearFonte () { this.upFonte = [] }
   }
 }
 </script>
