@@ -22,7 +22,8 @@ export default {
     apiBase: apiBase[process.env.NODE_ENV]
   },
   plugins: [
-    { src: '~plugins/nuxt-quill-plugin', ssr: false }
+    { src: '~plugins/nuxt-quill-plugin', ssr: false },
+    { src: '@/plugins/vuelayers.js', ssr: false }
   ],
   css: [
     // for snow theme

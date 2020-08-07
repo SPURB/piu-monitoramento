@@ -7,7 +7,7 @@
             Título
           </label>
           <textarea
-            v-model="novoProjeto.nome"
+            v-model="projeto.nome"
             style="resize: none;"
             class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             type="text"
@@ -16,13 +16,13 @@
 
         <div class="w-full flex items-center justify-between text-gray-700 mr-4 mb-4">
           <div class="flex items-center">
-            <input v-model="novoProjeto.consultaAberta" type="checkbox" class="cursor-pointer mr-2">
+            <input v-model="projeto.consultaAberta" type="checkbox" class="cursor-pointer mr-2">
             <label class="flex items-center">
               Consulta aberta
             </label>
           </div>
           <div class="flex items-center">
-            <input v-model="novoProjeto.proponentePrivado" type="checkbox" class="cursor-pointer mr-2">
+            <input v-model="projeto.proponentePrivado" type="checkbox" class="cursor-pointer mr-2">
             <label class="flex items-center">
               Proponente privado
             </label>
@@ -56,7 +56,7 @@
             Elemento MEM
           </label>
           <input
-            v-model="novoProjeto.elementoMEM"
+            v-model="projeto.elementoMEM"
             class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             type="text"
           >
@@ -67,7 +67,7 @@
             Área total (km²)
           </label>
           <input
-            v-model="novoProjeto.areaTotal"
+            v-model="projeto.areaTotal"
             class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             type="text"
             placeholder="0"
@@ -90,7 +90,7 @@
             Última atualização
           </label>
           <input
-            v-model="novoProjeto.ultimaAtualizacao"
+            v-model="projeto.ultimaAtualizacao"
             class="cursor-pointer appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             type="date"
           >
@@ -104,7 +104,6 @@
           </label>
           <div class="w-full">
             <Arquivo />
-            <Arquivo :in-arquivo="arquivo" />
           </div>
           <div class="flex flex-col items-center pt-4 pb-4 border-t border-b border-gray-400">
             <label for="file" class="cursor-pointer text-gray-500 flex items-center">
@@ -130,29 +129,13 @@
           <label class="block text-gray-700 mb-2">
             Perímetro
           </label>
-          <div class="flex justify-center pt-4 pb-4 bg-gray-100">
-            <input
-              id="filePerimetro"
-              type="file"
-              name="file"
-              class="inputfile inputfile--perimetro"
-              @change="setGeojson"
-            >
-            <template v-if="novoProjeto.geojson.length > 0">
-              <label for="filePerimetro">
-                MOSTRA O MAPA
-              </label>
-            </template>
-            <template v-else>
-              <label
-                for="filePerimetro"
-                class="bg-transparent mr-2 hover:bg-gray-500 text-gray-700 font-semibold hover:text-white
-                py-2 px-4 border border-gray-500 hover:border-transparent rounded cursor-pointer"
-              >
-                Incluir perímetro (geojson)
-              </label>
-            </template>
-          </div>
+
+          <template v-if="Object.keys(projeto.geojson).length > 0">
+            <mapa :data="projeto.geojson" />
+          </template>
+          <template v-else>
+            <file-kml @geojson="setGeojson" />
+          </template>
         </div>
         <div class="w-full mb-4">
           <label class="block text-gray-700 mb-2">
@@ -188,7 +171,7 @@ export default {
   name: 'Projeto',
   data: () => {
     return {
-      novoProjeto: {
+      projeto: {
         nome: '',
         consultaAberta: false,
         elementoMEM: '',
@@ -211,18 +194,6 @@ export default {
             ['bold', 'italic', 'underline']
           ]
         }
-      },
-      arquivo: {
-        id: 1,
-        id_projetos: 4,
-        id_tramitacao: 0,
-        id_grupo: 0,
-        id_fonte: 1,
-        data: '16/12/2015',
-        documento: 'Relatório Final - Estudos Técnicos PIU NESP',
-        arquivo_url:
-          'http://gestaourbana.prefeitura.sp.gov.br/wp-content/uploads/2016/03/PIU-NESP-Relatório-Final_161215_reduzido.pdf',
-        evento: ''
       }
     }
   },
@@ -238,17 +209,17 @@ export default {
     })
   },
   methods: {
-    setGeojson (event) {
-      this.novoProjeto.geojson = Array.from(event.target.files)
-    },
     setTramitacao (tramitacao) {
-      this.novoProjeto.id_tramitacao = tramitacao
+      this.projeto.id_tramitacao = tramitacao
     },
     setOrigem (origem) {
-      this.novoProjeto.id_origens = origem
+      this.projeto.id_origens = origem
     },
     setProponente (proponente) {
-      this.novoProjeto.id_proponentes = proponente
+      this.projeto.id_proponentes = proponente
+    },
+    setGeojson (geojson) {
+      this.projeto.geojson = [geojson]
     }
   }
 }
