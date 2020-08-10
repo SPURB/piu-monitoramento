@@ -47,13 +47,22 @@ export default {
       rotation: 0
     }
   },
+  watch: {
+    data () {
+      this.features = this.data
+      this.getCenter()
+    }
+  },
   created () {
     this.features = this.data
     this.getCenter()
   },
   methods: {
     getCenter () {
-      const coordinates = this.features[0].geometry.coordinates[0]
+      const coordinates =
+        this.features[0].geometry.geometries
+          ? this.features[0].geometry.geometries[0].coordinates[0]
+          : this.features[0].geometry.coordinates[0]
 
       const x = coordinates.map(x => x[0])
       const y = coordinates.map(x => x[1])

@@ -126,7 +126,6 @@
           </label>
         </div>
         <div
-          :class="!isEdit ? 'border-t border-gray-400' : ''"
           class="flex justify-center items-center mt-2 pt-2"
           @click.prevent="cancel"
         >

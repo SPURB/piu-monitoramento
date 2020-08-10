@@ -1,19 +1,38 @@
 <template>
-  <div class="flex justify-center pt-4 pb-4 bg-gray-100">
-    <input
-      id="filePerimetro"
-      type="file"
-      name="file"
-      class="inputfile inputfile--perimetro"
-      @change="setFile"
-    >
-    <label
-      for="filePerimetro"
-      class="bg-transparent mr-2 hover:bg-gray-500 text-gray-700 font-semibold hover:text-white
-      py-2 px-4 border border-gray-500 hover:border-transparent rounded cursor-pointer"
-    >
-      Incluir perímetro (geojson)
-    </label>
+  <div class="flex" :class="!isEdit ? 'justify-center pt-4 pb-4 bg-gray-100' : 'justify-end pt-2'">
+    <template v-if="!isEdit">
+      <input
+        id="filePerimetro"
+        type="file"
+        name="file"
+        class="inputfile inputfile--perimetro"
+        accept=".kml"
+        @change="setFile"
+      >
+      <label
+        for="filePerimetro"
+        class="bg-transparent mr-2 hover:bg-gray-500 text-gray-700 font-semibold hover:text-white
+        py-2 px-4 border border-gray-500 hover:border-transparent rounded cursor-pointer"
+      >
+        Incluir perímetro (geojson)
+      </label>
+    </template>
+    <template v-else>
+      <input
+        id="filePerimetro"
+        type="file"
+        name="file"
+        class="inputfile inputfile--perimetro"
+        accept=".kml"
+        @change="setFile"
+      >
+      <label
+        for="filePerimetro"
+        class="py-2 px-4 text-gray-700 font-bold border border-gray-400 bg-gray-400 rounded cursor-pointer"
+      >
+        Atualizar perímetro (geojson)
+      </label>
+    </template>
   </div>
 </template>
 
@@ -21,6 +40,12 @@
 import { kml } from '@/libs/toGeoJSON.js'
 export default {
   name: 'Filekml',
+  props: {
+    isEdit: {
+      type: Boolean,
+      required: false
+    }
+  },
   data: () => {
     return {
       geojson: {}

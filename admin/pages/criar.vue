@@ -13,7 +13,7 @@
       </div>
     </div>
     <hr class="mb-5">
-    <Projeto v-if="isReady" />
+    <Projeto v-if="isReady" :create="true" />
   </div>
 </template>
 

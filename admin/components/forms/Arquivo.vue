@@ -81,6 +81,22 @@
           type="url"
         >
       </div>
+      <div class="w-full flex justify-between mb-4">
+        <button
+          class="font-simibold bg-spurb text-white rounded py-2 px-6 mr-2"
+          type="button"
+          @click.prevent="salvar"
+        >
+          Salvar
+        </button>
+        <button
+          class="font-simibold border-gray-500 hover:bg-gray-500 border border-gray-500 rounded py-2 px-2 text-gray-700"
+          type="button"
+          @click.prevent="cancelar"
+        >
+          Cancelar
+        </button>
+      </div>
     </div>
   </div>
 </template>
@@ -101,6 +117,7 @@ export default {
   data: () => {
     return {
       isOpen: false,
+      isEdit: false,
       arquivo: {},
       upGrupo: [],
       upFonte: []
@@ -121,6 +138,7 @@ export default {
     this.setupOn()
     if (this.inArquivo) {
       this.arquivo = this.inArquivo
+      this.isEdit = true
     } else {
       this.arquivo = {
         documento: '',
@@ -175,16 +193,35 @@ export default {
     },
     sendGrupo () { // envia as alterações para o database
       if (this.upGrupo.lenght > 0) {
-        console.log(this.upGrupo)
+        return this.upGrupo
       }
     },
     sendFonte () { // envia as alterações para o database
       if (this.upFonte.lenght > 0) {
-        console.log(this.upFonte)
+        return this.upFonte
       }
     },
     clearGrupo () { this.upGrupo = [] },
-    clearFonte () { this.upFonte = [] }
+    clearFonte () { this.upFonte = [] },
+    salvar () {
+      this.isEdit
+        ? this.$emit('editar', this.arquivo) // PUT de dados do arquivo
+        : this.$emit('salvar', this.arquivo) // POST de dados de novo arquivo
+    },
+    cancelar () {
+      this.isEdit
+        ? this.arquivo = this.inArquivo
+        : this.arquivo = {
+          documento: '',
+          data: '',
+          arquivo_url: '',
+          evento: '',
+          id_grupo: 0,
+          id_fonte: 0,
+          id_projetos: 0
+        }
+      this.isOpen = false
+    }
   }
 }
 </script>
