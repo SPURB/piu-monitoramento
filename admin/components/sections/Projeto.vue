@@ -1,5 +1,11 @@
 <template>
   <div class="w-full flex flex-col">
+    <step-bar
+      v-if="create"
+      :steps="[{ nome: 'Registrar dados do projeto' }, { nome: 'Registrar SEI e Arquivo GEOJSON' }]"
+      :step="step"
+    />
+
     <div class="w-full flex flex-col lg:flex-row xg:flex-row">
       <div class="w-full flex flex-col lg:w-1/3 xg:w-1/3 bg-white p-3">
         <div class="mb-4">
@@ -9,8 +15,11 @@
           <textarea
             v-model="projeto.nome"
             style="resize: none;"
-            class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            class="appearance-none block w-full text-gray-700 rounded py-3
+            px-4 mb-3 leading-tight focus:outline-none focus:bg-white border"
+            :class="projeto.nome.length > 0 ? 'bg-white' : 'bg-gray-200'"
             type="text"
+            placeholder="PIU X"
           />
         </div>
 
@@ -65,8 +74,12 @@
           </label>
           <input
             v-model="projeto.elementoMEM"
-            class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            class="appearance-none border rounded w-full py-2 px-3 text-gray-700
+            leading-tight focus:bg-white focus:outline-none focus:shadow-outline"
+            :class="projeto.elementoMEM.length > 0 ? 'bg-white' : 'bg-gray-200'"
+            data-form
             type="text"
+            placeholder="MEM"
           >
         </div>
 
@@ -76,8 +89,10 @@
           </label>
           <input
             v-model="projeto.areaTotal"
-            class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-            type="text"
+            class="appearance-none border rounded w-full py-2 px-3 text-gray-700
+            leading-tight focus:bg-white focus:outline-none focus:shadow-outline"
+            :class="projeto.areaTotal.length > 0 ? 'bg-white' : 'bg-gray-200'"
+            type="number"
             placeholder="0"
           >
         </div>
@@ -103,8 +118,11 @@
           </label>
           <input
             v-model="projeto.ultimaAtualizacao"
-            class="cursor-pointer appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-            type="date"
+            class="appearance-none border rounded w-full py-2 px-3 text-gray-700
+            leading-tight focus:bg-white focus:outline-none focus:shadow-outline"
+            :class="projeto.ultimaAtualizacao.length > 0 ? 'bg-white' : 'bg-gray-200'"
+            type="text"
+            placeholder="2020-01-20"
           >
         </div>
 
@@ -116,9 +134,12 @@
               Sistema Eletrônico de Informações (SEI)
             </label>
             <div class="w-full">
-              <Arquivo />
+              <Arquivo v-for="index in countArquivos" :key="index" />
             </div>
-            <div class="flex flex-col items-center pt-4 pb-4 border-t border-b border-gray-400">
+            <div
+              class="flex flex-col items-center pt-4 pb-4 border-t border-b border-gray-400"
+              @click.prevent="countArquivos++"
+            >
               <label for="file" class="cursor-pointer text-gray-500 flex items-center">
                 <svg
                   viewBox="0 0 16 16"
@@ -146,11 +167,15 @@
             </label>
 
             <template v-if="geojson.length > 0">
-              <mapa :data="geojson" />
-              <file-kml :is-edit="true" @geojson="setGeojson" />
+              <transition-group name="fade" mode="out-in">
+                <mapa key="t-1" :data="geojson" />
+                <file-kml key="t-2" :is-edit="true" @geojson="setGeojson" />
+              </transition-group>
             </template>
             <template v-else>
-              <file-kml @geojson="setGeojson" />
+              <transition>
+                <file-kml @geojson="setGeojson" />
+              </transition>
             </template>
           </div>
         </template>
@@ -171,8 +196,10 @@
 
     <div class="flex w-full bg-gray-100 justify-center p-5">
       <button
-        class="font-simibold bg-spurb text-white rounded py-2 px-6 mr-2"
+        class="font-simibold text-white rounded py-2 px-6 mr-2"
+        :class="disabledSubmit ? 'bg-gray-500 cursor-not-allowed' : 'bg-spurb'"
         type="button"
+        :disabled="disabledSubmit"
         @click.prevent="salvarProjeto"
       >
         Salvar
@@ -200,7 +227,10 @@ export default {
   },
   data: () => {
     return {
+      step: 0,
+      countArquivos: 0,
       isEdit: false,
+      disabledSubmit: true,
       arquivos: [],
       geojson: [],
       projeto: {
@@ -241,17 +271,31 @@ export default {
       tramitacoes: state => state.tramitacoes
     })
   },
+  watch: {
+    projeto: {
+      deep: true,
+      handler (value) {
+        if (
+          value.nome.length > 3 && value.elementoMEM &&
+          value.areaTotal && value.ultimaAtualizacao.length === 10 &&
+          value.id_origens !== 0 && value.id_proponentes !== 0 &&
+          value.id_tramitacao !== 0
+        ) {
+          this.disabledSubmit = false
+        } else {
+          this.disabledSubmit = true
+        }
+      }
+    }
+  },
+  created () {
+    !this.create ? this.isEdit = true : this.isEdit = false
+  },
   methods: {
     salvarProjeto () {
-      if (
-        this.projeto.nome && this.projeto.descricao &&
-        this.projeto.elementoMEM && this.projeto.areaTotal &&
-        this.projeto.ultimaAtualizacao && this.projeto.id_origens !== 0 &&
-        this.projeto.id_proponentes !== 0 && this.projeto.id_tramitacao !== 0
-      ) {
-        console.log('tudo ok meu consagrado')
-      } else {
-        console.log('ta faltando coisa ai meu')
+      if (!this.disabledSubmit) {
+        this.step = this.step + 1
+        this.isEdit = true
       }
     },
     setTramitacao (tramitacao) {
@@ -263,7 +307,7 @@ export default {
     setProponente (proponente) {
       this.projeto.id_proponentes = proponente
     },
-    setGeojson (geojson) {
+    setGeojson (geojson) { // post de geojson
       this.geojson = [geojson]
     },
     /** metodos para os inputs :: Selects :: POST, PUT */
@@ -309,9 +353,9 @@ export default {
         this.upOrigem = inArray
       }
     },
-    sendTramitacao () { return this.upTramitacao },
-    sendProponente () { return this.upProponente },
-    sendOrigem () { return this.upOrigem },
+    sendTramitacao () { return this.upTramitacao }, // PUT :: Tramitacao
+    sendProponente () { return this.upProponente }, // PUT :: Proponente
+    sendOrigem () { return this.upOrigem }, // PUT :: Origem
     clearTramitacao () { this.upTramitacao = [] },
     clearProponente () { this.upProponente = [] },
     clearOrigem () { this.upOrigem = [] }

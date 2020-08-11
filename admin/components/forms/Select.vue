@@ -4,6 +4,7 @@
       class="flex items-center justify-between cursor-pointer appearance-none w-full border
       border-gray-200 text-gray-700 py-3 px-4 rounded leading-tight focus:outline-none
       focus:bg-white focus:border-gray-500 flex"
+      :class="value > 0 ? 'bg-white' : 'bg-gray-200'"
       @click="isOpen = !isOpen"
     >
       {{ value > 0 ? text : titulo }}

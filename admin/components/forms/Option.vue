@@ -1,5 +1,5 @@
 <template>
-  <div class="w-full flex items-center justify-between p-2" :class="isEdit ? 'bg-gray-500' : ''">
+  <div class="w-full h-full flex items-center justify-between p-2" :class="isEdit ? 'bg-gray-500' : ''">
     <template v-if="!isEdit">
       <div :class="!inEdit ? 'w-full' : ''" @click="!inEdit ? selected(option) : false">
         {{ option.nome }}
