@@ -20,7 +20,9 @@
               v-for="projeto in tramitacao.projetos"
               :key="`projeto-${projeto.id}`"
             >
-              <CardProjeto :is-open="isOpen" :projeto="projeto" />
+              <nuxt-link :to="`editar?id=${projeto.id}`">
+                <CardProjeto :is-open="isOpen" :projeto="projeto" />
+              </nuxt-link>
             </div>
           </div>
         </template>

@@ -157,6 +157,11 @@ export default {
     options: {
       type: Array,
       required: true
+    },
+    idselect: {
+      type: Number,
+      required: false,
+      default: 0
     }
   },
   data: () => {
@@ -176,6 +181,13 @@ export default {
       if (!this.isOpen) {
         this.isEdit = false
       }
+    }
+  },
+  mounted () {
+    const value = this.options.filter(op => op.id === this.idselect)
+    if (value.length > 0) {
+      this.text = value[0].nome
+      this.value = value[0].id
     }
   },
   methods: {

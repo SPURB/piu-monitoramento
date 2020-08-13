@@ -34,13 +34,7 @@ export default {
     this.setupOn()
   },
   methods: {
-    ...mapActions('crud-projeto', ['getOrigens', 'getProponentes']),
-    ...mapActions('home', ['getTramitacao']),
-    setupOn () {
-      this.getTramitacao()
-      this.getOrigens()
-      this.getProponentes()
-    }
+    ...mapActions('mix', ['setupOn'])
   }
 }
 </script>

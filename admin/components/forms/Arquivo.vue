@@ -47,7 +47,7 @@
         <Select
           titulo="Selecione um grupo"
           :options="grupos"
-          :selected="arquivo.id_grupo"
+          :idselect="arquivo.id_grupo"
           @options="setGrupo"
           @create="createGrupo"
           @update="updateGrupo"
@@ -62,7 +62,7 @@
         <Select
           titulo="Selecione uma fonte"
           :options="fontes"
-          :selected="arquivo.id_fonte"
+          :idselect="arquivo.id_fonte"
           @option="setFonte"
           @create="createFonte"
           @update="updateFonte"

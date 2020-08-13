@@ -45,6 +45,7 @@
           <Select
             :titulo="`Selecione uma tramitação`"
             :options="tramitacoes"
+            :idselect="projeto.id_tramitacao"
             @option="setTramitacao"
             @create="createTramitacao"
             @update="updateTramitacao"
@@ -60,6 +61,7 @@
           <Select
             :titulo="`Selecione uma proponente`"
             :options="proponentes"
+            :idselect="projeto.id_proponentes"
             @option="setProponente"
             @create="createProponente"
             @update="updateProponente"
@@ -77,7 +79,6 @@
             class="appearance-none border rounded w-full py-2 px-3 text-gray-700
             leading-tight focus:bg-white focus:outline-none focus:shadow-outline"
             :class="projeto.elementoMEM.length > 0 ? 'bg-white' : 'bg-gray-200'"
-            data-form
             type="text"
             placeholder="MEM"
           >
@@ -93,6 +94,7 @@
             leading-tight focus:bg-white focus:outline-none focus:shadow-outline"
             :class="projeto.areaTotal.length > 0 ? 'bg-white' : 'bg-gray-200'"
             type="number"
+            step="0.01"
             placeholder="0"
           >
         </div>
@@ -104,6 +106,7 @@
           <Select
             :titulo="`Selecione uma origem`"
             :options="origens"
+            :idselect="projeto.id_origens"
             @option="setOrigem"
             @create="createOrigem"
             @update="updateOrigem"
@@ -223,6 +226,13 @@ export default {
       type: Boolean,
       required: true,
       default: false
+    },
+    inProjeto: {
+      type: Object,
+      default () {
+        return undefined
+      },
+      required: false
     }
   },
   data: () => {
@@ -233,18 +243,7 @@ export default {
       disabledSubmit: true,
       arquivos: [],
       geojson: [],
-      projeto: {
-        nome: '',
-        consultaAberta: false,
-        descricao: '',
-        elementoMEM: '',
-        areaTotal: '',
-        ultimaAtualizacao: '',
-        id_origens: 0,
-        proponentePrivado: false,
-        id_proponentes: 0,
-        id_tramitacao: 0
-      },
+      projeto: {},
       editorOption: {
         theme: 'snow',
         placeholder: 'Insira a descrição aqui...',
@@ -290,6 +289,23 @@ export default {
   },
   created () {
     !this.create ? this.isEdit = true : this.isEdit = false
+
+    if (this.inProjeto) {
+      this.projeto = this.inProjeto
+    } else {
+      this.projeto = {
+        nome: '',
+        consultaAberta: false,
+        descricao: '',
+        elementoMEM: '',
+        areaTotal: '',
+        ultimaAtualizacao: '',
+        id_origens: 0,
+        proponentePrivado: false,
+        id_proponentes: 0,
+        id_tramitacao: 0
+      }
+    }
   },
   methods: {
     salvarProjeto () {
