@@ -205,8 +205,8 @@ export default {
     clearFonte () { this.upFonte = [] },
     salvar () {
       this.isEdit
-        ? this.$emit('editar', this.arquivo) // PUT de dados do arquivo
-        : this.$emit('salvar', this.arquivo) // POST de dados de novo arquivo
+        ? console.log('editar') // PUT de dados do arquivo
+        : console.log('salvar') // POST de dados de novo arquivo
     },
     cancelar () {
       this.isEdit
