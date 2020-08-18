@@ -1,78 +1,83 @@
 <template>
-  <div class="container">
-    <div>
-      <Logo />
-      <h1 class="title">
-        admin
+  <div class="flex flex-col lg:p-10 xg:p-10">
+    <preloader v-if="fetching" />
+
+    <div class="flex flex-col lg:flex-row xg:flex-row items-center justify-between py-3 pb-2 pl-2 text-gray-700">
+      <h1 class="text-3xl">
+        Monitoramento
       </h1>
-      <div class="links">
-        <a
-          href="https://nuxtjs.org/"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="button--green"
-        >
-          Documentation
-        </a>
-        <a
-          href="https://github.com/nuxt/nuxt.js"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="button--grey"
-        >
-          GitHub
-        </a>
+      <div
+        class="text-base font-bold flex items-center hover:text-gray-600 cursor-pointer"
+        @click="isOpen = !isOpen"
+      >
+        <template v-if="isOpen">
+          <p>Comprimir lista</p>
+          <span class="pt-2 pl-2 fill-current">
+            <svg class="h-6 w-6" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+              <path d="M3 3C2.73478 3 2.48043 3.10536 2.29289 3.29289C2.10536 3.48043 2 3.73478 2 4C2 4.26522 2.10536 4.51957 2.29289 4.70711C2.48043 4.89464 2.73478 5 3 5H14C14.2652 5 14.5196 4.89464 14.7071 4.70711C14.8946 4.51957 15 4.26522 15 4C15 3.73478 14.8946 3.48043 14.7071 3.29289C14.5196 3.10536 14.2652 3 14 3H3ZM3 7C2.73478 7 2.48043 7.10536 2.29289 7.29289C2.10536 7.48043 2 7.73478 2 8C2 8.26522 2.10536 8.51957 2.29289 8.70711C2.48043 8.89464 2.73478 9 3 9H8C8.26522 9 8.51957 8.89464 8.70711 8.70711C8.89464 8.51957 9 8.26522 9 8C9 7.73478 8.89464 7.48043 8.70711 7.29289C8.51957 7.10536 8.26522 7 8 7H3ZM3 11C2.73478 11 2.48043 11.1054 2.29289 11.2929C2.10536 11.4804 2 11.7348 2 12C2 12.2652 2.10536 12.5196 2.29289 12.7071C2.48043 12.8946 2.73478 13 3 13H7C7.26522 13 7.51957 12.8946 7.70711 12.7071C7.89464 12.5196 8 12.2652 8 12C8 11.7348 7.89464 11.4804 7.70711 11.2929C7.51957 11.1054 7.26522 11 7 11H3ZM13 16C13 16.2652 13.1054 16.5196 13.2929 16.7071C13.4804 16.8946 13.7348 17 14 17C14.2652 17 14.5196 16.8946 14.7071 16.7071C14.8946 16.5196 15 16.2652 15 16V10.414L16.293 11.707C16.4816 11.8892 16.7342 11.99 16.9964 11.9877C17.2586 11.9854 17.5094 11.8802 17.6948 11.6948C17.8802 11.5094 17.9854 11.2586 17.9877 10.9964C17.99 10.7342 17.8892 10.4816 17.707 10.293L14.707 7.293C14.5195 7.10553 14.2652 7.00021 14 7.00021C13.7348 7.00021 13.4805 7.10553 13.293 7.293L10.293 10.293C10.1975 10.3852 10.1213 10.4956 10.0689 10.6176C10.0165 10.7396 9.9889 10.8708 9.98775 11.0036C9.9866 11.1364 10.0119 11.2681 10.0622 11.391C10.1125 11.5139 10.1867 11.6255 10.2806 11.7194C10.3745 11.8133 10.4861 11.8875 10.609 11.9378C10.7319 11.9881 10.8636 12.0134 10.9964 12.0123C11.1292 12.0111 11.2604 11.9835 11.3824 11.9311C11.5044 11.8787 11.6148 11.8025 11.707 11.707L13 10.414V16Z" />
+            </svg>
+          </span>
+        </template>
+        <template v-else>
+          <p>Expandir lista</p>
+          <span class="pt-2 pl-2 fill-current">
+            <svg class="h-6 w-6" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+              <path d="M1 0C0.734784 0 0.48043 0.105357 0.292893 0.292893C0.105357 0.48043 0 0.734784 0 1C0 1.26522 0.105357 1.51957 0.292893 1.70711C0.48043 1.89464 0.734784 2 1 2H12C12.2652 2 12.5196 1.89464 12.7071 1.70711C12.8946 1.51957 13 1.26522 13 1C13 0.734784 12.8946 0.48043 12.7071 0.292893C12.5196 0.105357 12.2652 0 12 0H1ZM1 4C0.734784 4 0.48043 4.10536 0.292893 4.29289C0.105357 4.48043 0 4.73478 0 5C0 5.26522 0.105357 5.51957 0.292893 5.70711C0.48043 5.89464 0.734784 6 1 6H8C8.26522 6 8.51957 5.89464 8.70711 5.70711C8.89464 5.51957 9 5.26522 9 5C9 4.73478 8.89464 4.48043 8.70711 4.29289C8.51957 4.10536 8.26522 4 8 4H1ZM1 8C0.734784 8 0.48043 8.10536 0.292893 8.29289C0.105357 8.48043 0 8.73478 0 9C0 9.26522 0.105357 9.51957 0.292893 9.70711C0.48043 9.89464 0.734784 10 1 10H5C5.26522 10 5.51957 9.89464 5.70711 9.70711C5.89464 9.51957 6 9.26522 6 9C6 8.73478 5.89464 8.48043 5.70711 8.29289C5.51957 8.10536 5.26522 8 5 8H1ZM13 5C13 4.73478 12.8946 4.48043 12.7071 4.29289C12.5196 4.10536 12.2652 4 12 4C11.7348 4 11.4804 4.10536 11.2929 4.29289C11.1054 4.48043 11 4.73478 11 5V10.586L9.707 9.293C9.5184 9.11084 9.2658 9.01005 9.0036 9.01233C8.7414 9.0146 8.49059 9.11977 8.30518 9.30518C8.11977 9.49059 8.0146 9.7414 8.01233 10.0036C8.01005 10.2658 8.11084 10.5184 8.293 10.707L11.293 13.707C11.4805 13.8945 11.7348 13.9998 12 13.9998C12.2652 13.9998 12.5195 13.8945 12.707 13.707L15.707 10.707C15.8892 10.5184 15.99 10.2658 15.9877 10.0036C15.9854 9.7414 15.8802 9.49059 15.6948 9.30518C15.5094 9.11977 15.2586 9.0146 14.9964 9.01233C14.7342 9.01005 14.4816 9.11084 14.293 9.293L13 10.586V5Z" />
+            </svg>
+          </span>
+        </template>
       </div>
     </div>
+    <hr class="mb-5">
+    <ListaProjetos v-if="isReady" :is-open="isOpen" :tramitacoes="projetos" />
   </div>
 </template>
 
 <script>
-export default {}
+import { mapActions, mapState } from 'vuex'
+export default {
+  layout: 'DefaultLayout',
+  name: 'Index',
+  data: () => {
+    return {
+      isOpen: true
+    }
+  },
+  computed: {
+    ...mapState('home', {
+      fetching: state => state.fetching,
+      error: state => state.error,
+      tramitacoes: state => state.tramitacoes,
+      projetosTramitacao: state => state.projetosTramitacao
+    }),
+    isReady () {
+      return !this.error && !this.fetching
+    },
+    projetos () {
+      return this.projetosTramitacao.length > 0 ? this.projetosTramitacao : []
+    }
+  },
+  watch: {
+    tramitacoes () { this.agruparByTramitacao() }
+  },
+  created () {
+    this.setupLoad()
+  },
+  methods: {
+    ...mapActions('home', ['getProjetos', 'getTramitacao', 'agruparByTramitacao']),
+    setupLoad () {
+      this.getProjetos()
+      this.getTramitacao()
+    }
+  }
+}
 </script>
 
 <style>
-/* Sample `apply` at-rules with Tailwind CSS
-.container {
-@apply min-h-screen flex justify-center items-center text-center mx-auto;
+.fade-enter-active, .fade-leave-active {
+  transition: opacity .5s;
 }
-*/
-.container {
-  margin: 0 auto;
-  min-height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-}
-
-.title {
-  font-family:
-    'Quicksand',
-    'Source Sans Pro',
-    -apple-system,
-    BlinkMacSystemFont,
-    'Segoe UI',
-    Roboto,
-    'Helvetica Neue',
-    Arial,
-    sans-serif;
-  display: block;
-  font-weight: 300;
-  font-size: 100px;
-  color: #35495e;
-  letter-spacing: 1px;
-}
-
-.subtitle {
-  font-weight: 300;
-  font-size: 42px;
-  color: #526488;
-  word-spacing: 5px;
-  padding-bottom: 15px;
-}
-
-.links {
-  padding-top: 15px;
+.fade-enter, .fade-leave-to /* .fade-leave-active em versões anteriores a 2.1.8 */ {
+  opacity: 0;
 }
 </style>
