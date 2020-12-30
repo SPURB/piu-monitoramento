@@ -84,7 +84,7 @@ export default {
 		},
 		registrosAdministrativos () {
 			if (!this.arquivosTramitacao.length) return []
-			return this.arquivosTramitacao.filter(arquivo => arquivo.id_tramitacao === 13 && arquivo.id_projetos === this.projeto.id)
+			return this.arquivosTramitacao.filter(arquivo => arquivo.id_tramitacao === 200 && arquivo.id_projetos === this.projeto.id)
 		},
 		linkPaginaCompleta () {
 			return this.arquivosTramitacao.find(link => link.id_tramitacao == 12 && link.id_projetos === this.projeto.id)

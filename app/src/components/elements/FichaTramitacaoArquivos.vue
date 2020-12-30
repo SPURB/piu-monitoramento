@@ -42,13 +42,20 @@ export default {
 		setFilename ({ data, documento, evento }) {
 			return `${
 				data && data !== ''
-					? data + ' - '
+					? data
 					: ''
 				}${
-				evento && evento !== ''
-					? evento + ' | '
+					data && evento ? ' - ' : ''
+				}${
+				evento && evento !== '' && evento !== '0'
+					? evento 
 					: ''
-				}${documento}`
+				}${
+					documento && evento && evento !== '0' ? ' | ' : ''
+				}
+				${
+					documento ? documento : ''
+				}`
 		}
 	},
 }
