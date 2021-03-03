@@ -9,10 +9,10 @@
 				</ul>
 			</div>
 			<div class="downloadBase">
-				<a :href="kmlSrc" id="dlKml">
+				<a :href="fileDir + kmlSrc" id="dlKml">
 					<i class="material-icons">get_app</i> KML
 				</a>
-				<a :href="shpSrc" id="dlShp">
+				<a :href="fileDir + shpSrc" id="dlShp">
 					<i class="material-icons">get_app</i> Shapefile
 				</a>
 			</div>
@@ -85,7 +85,8 @@ export default {
 			}),
 			activeLayers: [],
 			center: [],
-			breadcrumb: false
+			breadcrumb: false,
+			fileDir: '/wp-content/themes/gestaourbana-1.4/SPA/piu-monitoramento/'
 		}
 	},
 	computed: {
