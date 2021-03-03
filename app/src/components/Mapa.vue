@@ -86,7 +86,7 @@ export default {
 			activeLayers: [],
 			center: [],
 			breadcrumb: false,
-			fileDir: '/wp-content/themes/gestaourbana-1.4/SPA/piu-monitoramento/'
+			fileDir: publicPath
 		}
 	},
 	computed: {
@@ -109,7 +109,7 @@ export default {
 		shpSrc () {
 			if (this.clickedId === 0) return `0_PIUs_gestao_urbana.rar`
 			return `${this.projetoSelecionado.shape}`
-		}
+		},
 	},
 	mounted () {
 		this.mapa = esteMapa(this.view, base)
