@@ -53,7 +53,14 @@ module.exports = (sequelize, Sequelize, db) => {
         model: db.tramitacao,
         key: 'id'
       }
-    }    
+    },
+    id_origens: {
+      type: Sequelize.INTEGER,
+      references: {
+        model: db.origens,
+        key: 'id'
+      }
+    }
   })
 
   return Projetos

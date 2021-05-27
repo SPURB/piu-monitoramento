@@ -24,7 +24,8 @@ db.origens = require("./models/origens.model.js")(sequelize, Sequelize)
 db.grupos = require("./models/grupos.model.js")(sequelize, Sequelize)
 db.projetos = require("./models/projetos.model.js")(sequelize, Sequelize, db)
 db.data_tramitacao = require("./models/data_tramitacao.model.js")(sequelize, Sequelize, db)
-db.fontes = require("./models/fontes.model.js")(sequelize, Sequelize)
+// db.fontes = require("./models/fontes.model.js")(sequelize, Sequelize)
+db.documentos = require("./models/documentos.model.js")(sequelize, Sequelize)
 db.arquivos_tramitacao = require("./models/arquivos_tramitacao.model.js")(sequelize, Sequelize, db)
 
 // relacionamentos tabela `projetos`
@@ -34,8 +35,9 @@ db.projetos.belongsTo(db.proponentes, { foreignKey: 'id_proponentes' })
 // relacionamentos tabela `arquivos_tramitacoes`
 db.arquivos_tramitacao.belongsTo(db.tramitacao, { foreignKey: 'id_tramitacao' })
 db.arquivos_tramitacao.belongsTo(db.grupos, { foreignKey: 'id_grupo' })
-db.arquivos_tramitacao.belongsTo(db.fontes, { foreignKey: 'id_fonte' })
+// db.arquivos_tramitacao.belongsTo(db.fontes, { foreignKey: 'id_fonte' })
 db.arquivos_tramitacao.belongsTo(db.projetos, { foreignKey: 'id_projetos' })
+db.arquivos_tramitacao.belongsTo(db.documentos, { foreignKey: 'id_documento' })
 
 // relacionamentos tabela `data_tramitacao`
 db.data_tramitacao.belongsTo(db.tramitacao, { foreignKey: 'id_tramitacao' })

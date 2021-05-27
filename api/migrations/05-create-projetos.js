@@ -64,6 +64,14 @@ module.exports = {
         },
         allowNull: false
       },
+      id_origens: {
+        type: Sequelize.INTEGER,
+        references: {
+          model: 'origens',
+          key: 'id'
+        },
+        allowNull: false
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,

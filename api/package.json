@@ -12,7 +12,8 @@
     "dev:preseeder": "nodemon --exec babel-node ./preseeders/index.debug",
     "preseeder": "babel-node ./preseeders/index",
     "db:init": "sequelize-cli db:create && sequelize-cli db:migrate && sequelize-cli db:seed:all",
-    "db:reset": "sequelize-cli db:drop && sequelize-cli db:create && sequelize-cli db:migrate && sequelize-cli db:seed:all"
+    "db:reset": "sequelize-cli db:drop && sequelize-cli db:create && sequelize-cli db:migrate && sequelize-cli db:seed:all",
+    "db:drop": "sequelize-cli db:drop"
   },
   "repository": {
     "type": "git",

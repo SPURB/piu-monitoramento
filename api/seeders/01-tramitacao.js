@@ -1,14 +1,9 @@
 'use strict';
 
 module.exports = {
-  up: (queryInterface, Sequelize) => {
-    return queryInterface.bulkInsert('tramitacao', [
-      { nome: 'Em proposição' },
-      { nome: 'Em andamento' },
-      { nome: 'Implantação' },
-      { nome: 'Suspenso'  },
-      { nome: 'Arquivado' }
-   ], {})
+  up: (queryInterface, Sequelize) => {    
+    const tramitacao = require('./json/tramitacao.json')
+    return queryInterface.bulkInsert('tramitacao', tramitacao, {})
 },
 
   down: (queryInterface, Sequelize) => {

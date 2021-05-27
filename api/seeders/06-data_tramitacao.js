@@ -2,11 +2,8 @@
 
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.bulkInsert('data_tramitacao', [
-      { status: 'Protocolado', registroSeiPrimeiro: '2020-04-17', id_projetos: 1, id_tramitacao: 1 },
-      { status: 'Protocolado', registroSeiPrimeiro: '2020-04-18', id_projetos: 2, id_tramitacao: 2 },
-      { status: 'Protocolado', registroSeiPrimeiro: '2020-04-18', id_projetos: 2, id_tramitacao: 1 },
-   ], {})
+    const dataTramitacao = require('./json/data_tramitacao.json')
+    return queryInterface.bulkInsert('data_tramitacao', dataTramitacao, {})
 },
 
   down: (queryInterface, Sequelize) => {

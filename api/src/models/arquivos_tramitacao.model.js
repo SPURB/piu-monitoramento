@@ -4,7 +4,7 @@ module.exports = (sequelize, Sequelize, db) => {
       type: Sequelize.DATE,
       allowNull: false
     },
-    documento: {
+    documento_complemento: {
       type: Sequelize.STRING,
       allowNull: false
     },
@@ -30,13 +30,20 @@ module.exports = (sequelize, Sequelize, db) => {
         key: 'id'
       }
     },
-    id_fonte: {
+    id_documento: {
+      type: Sequelize.INTEGER,
+      references: {
+        model: db.documentos,
+        key: 'id'
+      }
+    },
+    /* id_fonte: {
       type: Sequelize.INTEGER,
       references: {
         model: db.fontes,
         key: 'id'
       }
-    },
+    }, */
     id_grupo: {
       type: Sequelize.INTEGER,
       references: {
